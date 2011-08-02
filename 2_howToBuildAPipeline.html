@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to build a pipeline &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation" href="index.html" />
+    <link rel="next" title="Prepare Data for Nipype" href="3_preparedata.html" />
+    <link rel="prev" title="Introduction" href="1_introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="3_preparedata.html" title="Prepare Data for Nipype"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1_introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to build a pipeline</a><ul>
+<li><a class="reference internal" href="#what-is-a-pipeline">What is a pipeline?</a></li>
+<li><a class="reference internal" href="#create-the-framework-of-your-own-pipeline">Create the framework of your own pipeline</a><ul>
+<li><a class="reference internal" href="#import-appropriate-modules">Import appropriate modules</a></li>
+<li><a class="reference internal" href="#define-nodes">Define nodes</a><ul>
+<li><a class="reference internal" href="#node-initiation">Node Initiation</a></li>
+<li><a class="reference internal" href="#node-parameters">Node Parameters</a></li>
+<li><a class="reference internal" href="#node-specification">Node Specification</a></li>
+<li><a class="reference internal" href="#iterables-optional">Iterables (optional)</a></li>
+<li><a class="reference internal" href="#iterfields">Iterfields</a></li>
+<li><a class="reference internal" href="#stand-alone-node">stand-alone node</a></li>
+<li><a class="reference internal" href="#individual-nodes">Individual nodes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#define-pipeline-s">Define pipeline(s)</a><ul>
+<li><a class="reference internal" href="#cloning">Cloning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-connections">Create connections</a><ul>
+<li><a class="reference internal" href="#connect-nodes-to-each-other">Connect nodes to each other</a></li>
+<li><a class="reference internal" href="#connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines">Connect pipelines to each other (necessary if you have multiple pipelines)</a></li>
+<li><a class="reference internal" href="#add-node-s-to-pipeline-optional">Add node(s) to pipeline (optional)</a></li>
+<li><a class="reference internal" href="#modifying-inputs-to-nodes">Modifying inputs to nodes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#visualize-pipeline">Visualize pipeline</a></li>
+<li><a class="reference internal" href="#execute-pipeline">Execute pipeline</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-get-data-into-and-out-of-your-pipeline">How to get data into and out of your pipeline</a><ul>
+<li><a class="reference internal" href="#infosource">Infosource</a></li>
+<li><a class="reference internal" href="#datasource">Datasource</a></li>
+<li><a class="reference internal" href="#inputnode-optional">Inputnode (optional)</a></li>
+<li><a class="reference internal" href="#datasink-optional">Datasink (optional)</a></li>
+<li><a class="reference internal" href="#model-specification">Model Specification</a><ul>
+<li><a class="reference internal" href="#contrasts">Contrasts</a></li>
+<li><a class="reference internal" href="#session-info">Session info</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#connect-new-nodes-to-your-pipeline">Connect new nodes to your pipeline</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1_introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="3_preparedata.html"
+                        title="next chapter">Prepare Data for Nipype</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/2_howToBuildAPipeline.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-build-a-pipeline">
+<h1>How to build a pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">¶</a></h1>
+<p>This section is meant as a step by step introduction to building your own pipeline. At the end you should know what the important characteristics of a pipeline is, how it is constructed, how its parts are connected, so that you are ready to implement your own pipeline.</p>
+<div class="section" id="what-is-a-pipeline">
+<h2>What is a pipeline?<a class="headerlink" href="#what-is-a-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline or also called workflow is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The main advantage of the pipeline is that it can use different modules from different packages (e.g. SPM, FSL, FreeSurfer, Camino, AFNI, Slicer) and is able to exchange the data between them.</p>
+</div>
+<div class="section" id="create-the-framework-of-your-own-pipeline">
+<h2>Create the framework of your own pipeline<a class="headerlink" href="#create-the-framework-of-your-own-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>There are many ways to construct a pipeline but in the end it comes down to the following steps:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Import appropriate modules</li>
+<li>Define nodes</li>
+<li>Define pipeline(s)</li>
+<li>Create connections</li>
+<li>Visualize pipeline</li>
+<li>Execute pipeline</li>
+</ol>
+</blockquote>
+<div class="section" id="import-appropriate-modules">
+<h3>Import appropriate modules<a class="headerlink" href="#import-appropriate-modules" title="Permalink to this headline">¶</a></h3>
+<p>The first thing you&#8217;ll have to do is to import the interfaces you want to use. That depends on the nodes and algorithms you want to use in your pipeline. You can either import an interface and give it a specific name or import only a desired algorithm of it.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c"># imports the engine interface as &#39;pe&#39;</span>
+<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>
+
+<span class="c"># imports only the function Bunch from the base interface</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">Bunch</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>If you use the freesurfer interface, please make sure to tell freesurfer where the subjects directory is by using the following command:</p>
+<div class="last highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>
+<span class="n">freesurfer_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/freesurfer&#39;</span>
+<span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">freesurfer_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="define-nodes">
+<h3>Define nodes<a class="headerlink" href="#define-nodes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="node-initiation">
+<h4>Node Initiation<a class="headerlink" href="#node-initiation" title="Permalink to this headline">¶</a></h4>
+<p>Before the parameters of a node can be specified they first have to be initiated. The initiation is quite simple and done as follows:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;visibleName&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>nodename</strong>: name of the variable which identifies the node in the code</li>
+<li><strong>pe.Node</strong>: defines the characteristic of the node, which can be a Node, a MapNode or a Workflow</li>
+<li><strong>interface</strong>: name of the imported interface you want to use (e.g. SPM, FSL, FreeSurfer,...)</li>
+<li><strong>algorithm</strong>: name of the algorithm you want the node to execute</li>
+<li><strong>visibleName</strong>: name which is used for the naming of the folder the node output is stored in and the name of a node in the pipeline graph (recommended to be the same as nodename)</li>
+</ul>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Example of an initiation of a spm-realignment node</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>
+<span class="n">realign</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">Realign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;realign&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The difference between a Node and a MapNode is explained <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html">here</a></p>
+</div>
+</div>
+<div class="section" id="node-parameters">
+<h4>Node Parameters<a class="headerlink" href="#node-parameters" title="Permalink to this headline">¶</a></h4>
+<p>Depending on the purpose of a node and its underlying algorithm, different parameters can be specified. They can be distinguished into:</p>
+<ol class="arabic simple">
+<li><strong>mandatory inputs</strong>: inputs that have to be given</li>
+<li><strong>optional inputs</strong>: inputs to get the node to behave in a specific way</li>
+<li><strong>outputs</strong>: the possible outputs that a node creates</li>
+</ol>
+<p>But how can you find out what the possible inputs and outputs of a node are?</p>
+<ul class="simple">
+<li>check the section <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html">Interfaces and Algorithms</a> on the nipype homepage by clicking on the node you&#8217;re interested in</li>
+<li>use the help method of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.Smooth.help()</span></tt>)</li>
+<li>view the docstring of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.MCFLIRT?</span></tt>) which showes you the documentation and an example of an implementation in the command window.</li>
+</ul>
+</div>
+<div class="section" id="node-specification">
+<h4>Node Specification<a class="headerlink" href="#node-specification" title="Permalink to this headline">¶</a></h4>
+<p>The specification of a node can be done in three ways.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#1. specify parameters in the during initiation</span>
+<span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;foo.nii&#39;</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="s">&#39;bar.nii&#39;</span><span class="p">)</span>
+
+<span class="c">#2. specify parameters after initiation</span>
+<span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">()</span>
+<span class="n">mybet</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;foo.nii&#39;</span>
+<span class="n">mybet</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s">&#39;bar.nii&#39;</span>
+
+<span class="c">#3. specify parameters when running a node</span>
+<span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">()</span>
+<span class="n">mybet</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;foo.nii&#39;</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="s">&#39;bar.nii&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iterables-optional">
+<h4>Iterables (optional)<a class="headerlink" href="#iterables-optional" title="Permalink to this headline">¶</a></h4>
+<p>If you want a node to be executed over different sets of data (e.g. different subjects, different conditions, different smoothing kernels,...) you have to use iterables.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;input_to_iterate_over&#39;</span><span class="p">,[</span><span class="n">conditions_to_iterate_over</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>E.g. If you want to execute a pipeline for subject1 and subject2 and you want to run the pipeline with a smoothing kernel of 4 and one of 8 you do the following:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">startnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">])</span>
+<span class="n">smoothnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;fwhm&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iterfields">
+<h4>Iterfields<a class="headerlink" href="#iterfields" title="Permalink to this headline">¶</a></h4>
+<p>If you&#8217;ll use MapNodes you&#8217;ll also have to use an iterfield. This enables running the underlying interface over a set of inputs and is particularly useful when the interface can only operate on a single input. A good tutorial to iterables and iterfields can be found at <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html">MapNode, iterfield, and iterables explained</a></p>
+</div>
+<div class="section" id="stand-alone-node">
+<h4>stand-alone node<a class="headerlink" href="#stand-alone-node" title="Permalink to this headline">¶</a></h4>
+<p>If you want to run an algorithm without being a node or being a part of a pipeline you only have to define the nodename, interface and algorithm.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">smooth</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Smooth</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is most of the time used if you want to test a node or if you want to use the nipype environment to run the different kind of algorithms without using them inside a pipeline. For example, it isn&#8217;t recommended to use the <tt class="docutils literal"><span class="pre">recon-all</span></tt> algorithm inside a pipeline or more extrem in parallel mode because of its computational and time costs. Nonetheless you can use Nipype to execute the recon-all process.</p>
+</div>
+<div class="section" id="individual-nodes">
+<h4>Individual nodes<a class="headerlink" href="#individual-nodes" title="Permalink to this headline">¶</a></h4>
+<p>If you want to create an individual node by yourself that doesn&#8217;t use an algorithm of an interface already specified and you want to use the advantage of input and output fileds you can build your own node with the <tt class="docutils literal"><span class="pre">IdentityInterface</span></tt> method of the <tt class="docutils literal"><span class="pre">utility</span></tt> interface.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#import the utility interface</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>
+
+<span class="c">#define the fields you want to use</span>
+<span class="n">individualnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;field1&#39;</span><span class="p">,</span><span class="s">&#39;field2&#39;</span><span class="p">]),</span>
+                         <span class="n">name</span><span class="o">=</span><span class="s">&#39;individualnodename&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we have designed our own node with the in- and output field &#8216;field1&#8217; and &#8216;field2&#8217;. If you now want the node to execute a specific kind of algorithm, you&#8217;ll have to add a function to the connections to the inputnode. How this can be done is described in <strong>4. Create connections - Modifying inputs to nodes</strong>.</p>
+</div>
+</div>
+<div class="section" id="define-pipeline-s">
+<h3>Define pipeline(s)<a class="headerlink" href="#define-pipeline-s" title="Permalink to this headline">¶</a></h3>
+<p>The initiation of a pipeline is quite the same as the one of a node. Except that you don&#8217;t need to declare an interface.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">workflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;preproc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="cloning">
+<h4>Cloning<a class="headerlink" href="#cloning" title="Permalink to this headline">¶</a></h4>
+<p>If you&#8217;ve already created a pipeline with all its connections and want to reuse it in another part of the workflow you can simply clone it with the <tt class="docutils literal"><span class="pre">clone</span></tt> method.</p>
+<p>For example, if you&#8217;ve already created an analysis pipeline for the workflow after a volume preprocess and want now to reuse this algorithm for the analysis of preprocessed sufacedata you can clone the volanalysis like this:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This cloneing has to be done, because if you would use the volanalysis again, the data of the volanalysis would be overwritten. Because of that and because of the ambiguity of the connections in the workflow, the pipeline would not run. To solve this problem, every node and pipeline has to have its unique name.</p>
+<p>If you want to change some parameters of the pipeline after cloning you just have to specify the exact pipeline, node and parameter you want to change:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">level1design</span><span class="o">.</span><span class="n">timing_units</span> <span class="o">=</span> <span class="s">&#39;secs&#39;</span>
+</pre></div>
+</div>
+<p>Which now would set the input field <tt class="docutils literal"><span class="pre">timing_units</span></tt> of the level1design node which is part of the surfanalysis pipeline to &#8216;secs&#8217;.</p>
+</div>
+</div>
+<div class="section" id="create-connections">
+<h3>Create connections<a class="headerlink" href="#create-connections" title="Permalink to this headline">¶</a></h3>
+<p>This is the essential part of creating a pipeline and leads to the main advantage of the pipeline which is to execute everything autonomous, in one workflow and if you want to in parallel.</p>
+<div class="section" id="connect-nodes-to-each-other">
+<h4>Connect nodes to each other<a class="headerlink" href="#connect-nodes-to-each-other" title="Permalink to this headline">¶</a></h4>
+<p>There is a basic and an advanced way to create connections between two nodes. The basic way allows only to connect two nodes at a time whereas the advanced one can establish multiple connections at once.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#basic way to connect two nodes</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">nodename1</span><span class="p">,</span> <span class="s">&#39;out_files_node1&#39;</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,</span> <span class="s">&#39;in_files_node2&#39;</span><span class="p">)</span>
+
+<span class="c">#advanced way to connect multiple nodes</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;output_node1&#39;</span><span class="p">,</span> <span class="s">&#39;input_node2&#39;</span><span class="p">)]),</span>
+                      <span class="p">(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename3</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;output_node1&#39;</span><span class="p">,</span> <span class="s">&#39;input1_node3&#39;</span><span class="p">)]),</span>
+                      <span class="p">(</span><span class="n">nodename2</span><span class="p">,</span> <span class="n">nodename3</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;output1_node2&#39;</span><span class="p">,</span> <span class="s">&#39;input1_node3&#39;</span><span class="p">),</span>
+                                              <span class="p">(</span><span class="s">&#39;output2_node2&#39;</span><span class="p">,</span> <span class="s">&#39;input2_node3&#39;</span><span class="p">)</span>
+                                              <span class="p">])</span>
+                      <span class="p">])</span>
+</pre></div>
+</div>
+<p>The advanced connection example would as a detailed graph look like this:</p>
+<img alt="_images/example_node_connection.png" src="_images/example_node_connection.png" />
+<p>It is important to point out that you don&#8217;t just have to connect the nodes, but rather to connect the output and input fields of each node.</p>
+</div>
+<div class="section" id="connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines">
+<h4>Connect pipelines to each other (necessary if you have multiple pipelines)<a class="headerlink" href="#connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines" title="Permalink to this headline">¶</a></h4>
+<p>If you have multiple pipelines, like one for preprocessing, one for modelestimation and one for volume analysis, you can&#8217;t just connect the nodes to each other. You have to connect the pipelines to each other instead.</p>
+<p>Assumed that we have a node &#8220;realign&#8221; which is part of a pipeline called &#8220;preprocess&#8221; and that we have a node called &#8220;modelspec&#8221; which is part of a pipeline called &#8220;modelestimation&#8221;. If we now want to connect does to pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">frameflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;frameflow&#39;</span><span class="p">)</span>
+<span class="n">frameflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preprocess</span><span class="p">,</span> <span class="n">modelestimation</span><span class="p">,[(</span><span class="s">&#39;realign.out_files&#39;</span><span class="p">,</span> <span class="s">&#39;modelspec.in_files&#39;</span><span class="p">)</span>
+                                                 <span class="p">])</span>
+                   <span class="p">])</span>
+</pre></div>
+</div>
+<p>You see that the main difference to the connections between nodes is that you connect the pipelines, but have to specify which nodes with which output should be connected to which nodes with which input.</p>
+</div>
+<div class="section" id="add-node-s-to-pipeline-optional">
+<h4>Add node(s) to pipeline (optional)<a class="headerlink" href="#add-node-s-to-pipeline-optional" title="Permalink to this headline">¶</a></h4>
+<p>If you want to run a node by itself without connecting it to any other node, you can do that with the add_nodes method.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#adds node smooth and node realign to the pipeline</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_nodes</span><span class="p">([</span><span class="n">smoother</span><span class="p">,</span> <span class="n">realign</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modifying-inputs-to-nodes">
+<h4>Modifying inputs to nodes<a class="headerlink" href="#modifying-inputs-to-nodes" title="Permalink to this headline">¶</a></h4>
+<p>If you want to modify the output of a node before sending it to the next one you can do that by adding a function into the connection process.</p>
+<p>First you have to define your function that modifies the data and returns the new output. If you have done this, than you can insert the function into the connection process.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#your function that does something</span>
+<span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">input_from_node</span><span class="p">):</span>
+
+    <span class="c">#changes the data as you defined</span>
+    <span class="n">output_for_node_2</span> <span class="o">=</span> <span class="n">input_from_node</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="c">#return the output</span>
+    <span class="k">return</span> <span class="n">output_for_node_2</span>
+
+
+<span class="c">#connection of two nodes with a function in between</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,[((</span><span class="s">&#39;out_file_node1&#39;</span><span class="p">,</span> <span class="n">myfunction</span><span class="p">),</span>
+                                               <span class="s">&#39;in_file_node2&#39;</span><span class="p">)]),</span>
+                      <span class="p">])</span>
+</pre></div>
+</div>
+<p>This will take the output of &#8216;out_file_node1&#8217; and give it as an argument to the function <tt class="docutils literal"><span class="pre">myfunction</span></tt>. The return value that will be returned by <tt class="docutils literal"><span class="pre">myfunction</span></tt> then will be forwarded as input to &#8216;in_file_node2&#8217;.</p>
+<p>If you want to insert more than one parameter into the function do as follows:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">input_from_node</span><span class="p">,</span> <span class="n">additional_input</span><span class="p">):</span>
+
+    <span class="n">output_for_node_2</span> <span class="o">=</span> <span class="n">input_from_node</span> <span class="o">+</span> <span class="n">additional_input</span>
+    <span class="k">return</span> <span class="n">output_for_node_2</span>
+
+
+<span class="c">#connection of two nodes with a function in between which takes two arguments</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,[((</span><span class="s">&#39;out_file_node1&#39;</span><span class="p">,</span> <span class="n">myfunction</span><span class="p">,</span> <span class="n">additional_input</span><span class="p">),</span>
+                                               <span class="s">&#39;in_file_node2&#39;</span><span class="p">)]),</span>
+                      <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="visualize-pipeline">
+<h3>Visualize pipeline<a class="headerlink" href="#visualize-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>To visualize the flow of a pipeline you can use the method <tt class="docutils literal"><span class="pre">write_graph()</span></tt>.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Example of using write_graph</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This method will create two files:</p>
+<ul class="simple">
+<li><strong>graph.dot:</strong> which contains the general connections between nodes</li>
+<li><strong>graph_detailed.dot:</strong> which contains the detailed connections between nodes with the individual output and input fileds.</li>
+</ul>
+<p>If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere.</p>
+<p>You can also specify the deepness you want the graph to show by changing the argument <tt class="docutils literal"><span class="pre">graph2use</span></tt>:</p>
+<ul class="simple">
+<li><strong>&#8216;orig&#8217;:</strong> only the highest level of the workflow will be visualized (e.g. this would show you only the frameflow and leave the contained pipelines out)</li>
+<li><strong>&#8216;flat&#8217;:</strong> all levels of the workflow are visualized once</li>
+<li><strong>&#8216;exec&#8217;:</strong> all levels of the workflow are visualized and an iteration of a field will lead to a splitting of the graph (this is a very good way to see what the benefit of executing the pipeline in parallel mode is)</li>
+</ul>
+</div>
+<div class="section" id="execute-pipeline">
+<h3>Execute pipeline<a class="headerlink" href="#execute-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>After setting everything up, the pipeline can be executed with <tt class="docutils literal"><span class="pre">run()</span></tt>. You can run a pipeline either in serial or in parallel mode.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#To run the pipeline serial</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;Linear&#39;</span><span class="p">)</span>
+
+<span class="c">#To run the pipeline paralle using 2 processes</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">A good tutorial how to set up the parallel mode can be found under <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/parallel_processing.html#distributed-processing-with-nipype">Distributed processing with nipype</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-get-data-into-and-out-of-your-pipeline">
+<h2>How to get data into and out of your pipeline<a class="headerlink" href="#how-to-get-data-into-and-out-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>After constructing the framework of the pipeline in the previous section, we&#8217;re almost ready to execute the pipeline. But first we have to define the data we want to run the pipeline on and the results we want to get out of it. To do that we have to concider the following points:</p>
+<ol class="arabic simple">
+<li><strong>Infosource:</strong> to define the list of subjects on which the pipeline will be executed</li>
+<li><strong>Datasource:</strong> to grab the data you want to use and insert it into the pipeline</li>
+<li><strong>Inputnode:</strong> to distribute the data and experiment specific parameters to the pipeline (optional)</li>
+<li><strong>Datasink:</strong> to store specific outputs at a given place (optional but recommended)</li>
+<li><strong>Model Specification:</strong> to feed the pipeline with model specific components like contrast, conditions, onset times etc.</li>
+<li><strong>Connect new nodes to your pipeline:</strong> to connect the infosource, datasource, inputnode and datasink with the framework of your pipeline</li>
+</ol>
+<div class="section" id="infosource">
+<h3>Infosource<a class="headerlink" href="#infosource" title="Permalink to this headline">¶</a></h3>
+<p>The best way to tell a pipeline on which subjects it should be executed on is to build an infosource node. The only thing that this node contains is a list of the subjects and the instructions to execute the pipeline on each of this subjects. This is done with the iterables method.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#import the utility interface</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>
+
+<span class="c">#initiate the infosource node</span>
+<span class="n">infosource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span>
+                     <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource&quot;</span><span class="p">)</span>
+
+<span class="c">#define the list of subjects your pipeline should be executed on</span>
+<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="datasource">
+<h3>Datasource<a class="headerlink" href="#datasource" title="Permalink to this headline">¶</a></h3>
+<p>To get the subject specific data into the pipeline we need the datasource node. As the name of the algorithm implies the DataGrabber grabs the data from a specified folder and stores it in the specified output fields.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#initiate the DataGrabber node with the infield: &#39;subject_id&#39;</span>
+<span class="c">#and the outfield: &#39;func&#39; and &#39;struct&#39;</span>
+<span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">],</span>
+                                               <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;func&#39;</span><span class="p">,</span> <span class="s">&#39;struct&#39;</span><span class="p">]),</span>
+                     <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To use the datagrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:</p>
+<img alt="_images/datastructure.png" src="_images/datastructure.png" />
+<p>As you can see all the necessary data is stored in the experiment folder. The data of each subject is stored in its individual subject_folder. The name of this folder changes with each subject. There are two ways how you can define the structure of data you want to grab.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#to specify the location of the experiment folder</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="s">&#39;~/experiment_folder&#39;</span>
+
+<span class="c">#define the structure of the data folders and files.</span>
+<span class="c">#Each &#39;%s&#39; will later be filled by a template argument.</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">.nii&#39;</span>
+
+<span class="c">#First way: define the arguments for the template &#39;%s/%s.nii&#39; for each field individual</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span><span class="p">[</span><span class="s">&#39;func&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;func1&#39;</span><span class="p">,</span><span class="s">&#39;func2&#39;</span><span class="p">]]]</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span><span class="p">[</span><span class="s">&#39;struct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;struct&#39;</span><span class="p">]]</span>
+
+<span class="c">#Second way: store all the arguments for the template in a dictionairy and ...</span>
+<span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;func1&#39;</span><span class="p">,</span><span class="s">&#39;func2&#39;</span><span class="p">]]],</span>
+            <span class="n">struct</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;struct&#39;</span><span class="p">]])</span>
+<span class="c">#... pass it to template_args.</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="n">info</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The values defined in <tt class="docutils literal"><span class="pre">template_args</span></tt> will be filled into the placeholders of <tt class="docutils literal"><span class="pre">template</span></tt>. Because &#8216;subject_id&#8217; is defined as [&#8216;subject1&#8217;,&#8217;subject2&#8217;,&#8217;subject3&#8217;] (see definition of infosource node), the outfield &#8216;func&#8217; of the datagrabber node will store &#8216;subject1/func1.nii&#8217;, &#8216;subject1/func2.nii&#8217; and &#8216;subject1/struct.nii&#8217; in the &#8216;struct&#8217; outfield for subject1.</p>
+</div>
+</div>
+<div class="section" id="inputnode-optional">
+<h3>Inputnode (optional)<a class="headerlink" href="#inputnode-optional" title="Permalink to this headline">¶</a></h3>
+<p>If you want to keep a clearly arranged distribution of the input data it is suggested to create an inputnode that serves that purpose. This inputnode specifies and collects all the inputs that are needed for the workflow and distributes them to specific places in the pipeline.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#import the utility interface</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>
+
+<span class="c">#define the inputnode with the fields you want to distribute</span>
+<span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;func&#39;</span><span class="p">,</span>
+                                                             <span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
+                                                             <span class="s">&#39;session_info&#39;</span><span class="p">,</span>
+                                                             <span class="s">&#39;contrasts&#39;</span><span class="p">]),</span>
+                 <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="datasink-optional">
+<h3>Datasink (optional)<a class="headerlink" href="#datasink-optional" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes you have some output you want to store at an easy accessible place so that you don&#8217;t have to search in the depth of your workingdir where all in- and outputs of every node is stored. For this purpose the datasink node was created:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#import i/o routines</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>
+
+<span class="c">#initiate node</span>
+<span class="n">datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
+
+<span class="c">#specify the name and location of the datasink folder</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="s">&#39;name_of_datasink_folder&#39;</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="s">&#39;~/experiment_folder&#39;</span>
+
+<span class="c">#define the outputs you want to store by connecting them to the datasink node</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">frameflow</span><span class="p">,</span><span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;preproc.bbregister.out_reg_file&#39;</span><span class="p">,</span>
+                                        <span class="s">&#39;bbregister&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s">&#39;volanalysis.contrastestimate.spm_mat_file&#39;</span><span class="p">,</span>
+                                        <span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
+                                       <span class="p">])</span>
+                  <span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The name that you give the input-filed of the datasink node (here &#8216;bbregister&#8217; and &#8216;spm_mat_file&#8217;) will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.</p>
+</div>
+<p>The datasink node is really usefull to keep controll over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not creat a workingdir at all. For more information go to <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/config_file.html">Configuration File</a>.</p>
+</div>
+<div class="section" id="model-specification">
+<h3>Model Specification<a class="headerlink" href="#model-specification" title="Permalink to this headline">¶</a></h3>
+<p>Before we can run our pipeline we have to feed it with model specific components as the name of the conditions, the contrasts and onset times. We might also want to add some parametric modulators or regressors etc.</p>
+<div class="section" id="contrasts">
+<h4>Contrasts<a class="headerlink" href="#contrasts" title="Permalink to this headline">¶</a></h4>
+<p>To insert all the contrast specific values into the pipeline we first have to save them into a variable, in this case called <tt class="docutils literal"><span class="pre">contrasts</span></tt>. The structure of this variable is a list of lists. The inner list specifies the contrasts and has the following format - [Name, Stat, [list of condition names], [weights on those conditions]. The condition names must be the same we later feed into <tt class="docutils literal"><span class="pre">subjectinfo</span></tt> function described below.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Names of different conditions</span>
+<span class="n">namesOfConditions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;condition1&#39;</span><span class="p">,</span><span class="s">&#39;condition2&#39;</span><span class="p">,</span><span class="s">&#39;condition3&#39;</span><span class="p">]</span>
+
+<span class="c">#contrasts for all sessions</span>
+<span class="n">contrast_1</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;basic vs. conditions&#39;</span><span class="p">,</span><span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">namesOfConditions</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">contrast_2</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;all vs. condition1&#39;</span><span class="p">,</span>  <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">namesOfConditions</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">contrast_3</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;all vs. condition2&#39;</span><span class="p">,</span>  <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">namesOfConditions</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">contrast_4</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;all vs. condition3&#39;</span><span class="p">,</span>  <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">namesOfConditions</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c">#contrasts for e.g. session 1 and 3 out of [&#39;session1&#39;,&#39;session2&#39;,&#39;session3&#39;]</span>
+<span class="n">contrast_5</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;1+3 vs. condition1&#39;</span><span class="p">,</span>  <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">namesOfConditions</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">contrast_6</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;1+3 vs. condition2&#39;</span><span class="p">,</span>  <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">namesOfConditions</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">contrast_7</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;1+3 vs. condition3&#39;</span><span class="p">,</span>  <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">namesOfConditions</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c">#store all contrasts into a list</span>
+<span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="n">contrast_1</span><span class="p">,</span><span class="n">contrast_2</span><span class="p">,</span><span class="n">contrast_3</span><span class="p">,</span><span class="n">contrast_4</span><span class="p">,</span>
+             <span class="n">contrast_5</span><span class="p">,</span><span class="n">contrast_6</span><span class="p">,</span><span class="n">contrast_7</span><span class="p">,</span><span class="n">contrast_8</span><span class="p">]</span>
+
+<span class="c">#feed those contrasts to the inputnode filed &#39;contrasts&#39;</span>
+<span class="n">frameflow</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">inputnode</span><span class="o">.</span><span class="n">contrasts</span> <span class="o">=</span> <span class="n">contrasts</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="session-info">
+<h4>Session info<a class="headerlink" href="#session-info" title="Permalink to this headline">¶</a></h4>
+<p>Here we create a function that returns session specific information about the experimental paradigm. This is needed by the SpecifyModel function to create the information necessary to generate an SPM design matrix. This function <tt class="docutils literal"><span class="pre">subjectinfo</span></tt> is used to feed the inputnode <tt class="docutils literal"><span class="pre">session_info</span></tt> for each subject with the paradigm conditions.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="k">def</span> <span class="nf">subjectinfo</span><span class="p">(</span><span class="n">subject_id</span><span class="p">):</span>
+
+    <span class="c">#import Bunch from interface base</span>
+    <span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">Bunch</span>
+
+    <span class="c">#restate the names of</span>
+    <span class="n">namesOfConditions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;condition1&#39;</span><span class="p">,</span><span class="s">&#39;condition2&#39;</span><span class="p">,</span><span class="s">&#39;condition3&#39;</span><span class="p">]</span>
+
+    <span class="c">#Onset Times in seconds for condition [&#39;basic&#39;,&#39;condition1&#39;,&#39;condition2&#39;,&#39;condition3&#39;</span>
+    <span class="n">onsetTimes</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mf">49.6</span><span class="p">,</span><span class="mf">66.1</span><span class="p">,</span><span class="mf">74.1</span><span class="p">,</span><span class="mf">97.6</span><span class="p">,</span><span class="mf">113.6</span><span class="p">,</span><span class="mf">122.2</span><span class="p">,</span><span class="mf">130.2</span><span class="p">,</span><span class="mf">137.2</span><span class="p">,</span><span class="mf">153.7</span><span class="p">,</span><span class="mf">169.2</span><span class="p">,</span>
+                   <span class="mf">185.7</span><span class="p">,</span><span class="mf">201.8</span><span class="p">,</span><span class="mf">290.4</span><span class="p">,</span><span class="mf">313.4</span><span class="p">,</span><span class="mf">321.4</span><span class="p">,</span><span class="mf">377.5</span><span class="p">,</span><span class="mf">401.5</span><span class="p">,</span><span class="mi">410</span><span class="p">,</span><span class="mf">418.6</span><span class="p">,</span><span class="mf">442.1</span><span class="p">,</span><span class="mf">473.6</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mf">17.5</span><span class="p">,</span><span class="mf">82.1</span><span class="p">,</span><span class="mf">89.6</span><span class="p">,</span><span class="mf">145.2</span><span class="p">,</span><span class="mf">225.3</span><span class="p">,</span><span class="mf">242.3</span><span class="p">,</span><span class="mf">281.4</span><span class="p">,</span><span class="mf">426.6</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">26</span><span class="p">,</span><span class="mf">162.2</span><span class="p">,</span><span class="mf">209.3</span><span class="p">,</span><span class="mf">249.3</span><span class="p">,</span><span class="mf">265.9</span><span class="p">,</span><span class="mf">205.4</span><span class="p">,</span><span class="mf">450.1</span><span class="p">,</span><span class="mi">386</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">34</span><span class="p">,</span><span class="mf">273.4</span><span class="p">,</span><span class="mf">329.5</span><span class="p">,</span><span class="mf">338.5</span><span class="p">,</span><span class="mi">354</span><span class="p">,</span><span class="mi">362</span><span class="p">,</span><span class="mi">370</span><span class="p">,</span><span class="mf">466.4</span><span class="p">]</span>
+                  <span class="p">]</span>
+
+    <span class="c">#to define two parametric modulators for &#39;condition1&#39;,&#39;condition2&#39;,&#39;condition3&#39;</span>
+    <span class="n">para_modu</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">base</span><span class="o">.</span><span class="n">Bunch</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;target2&#39;</span><span class="p">,</span><span class="s">&#39;target3&#39;</span><span class="p">],</span> <span class="n">poly</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]],</span>
+                            <span class="n">param</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]),</span>
+                 <span class="n">base</span><span class="o">.</span><span class="n">Bunch</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;target2&#39;</span><span class="p">,</span><span class="s">&#39;target3&#39;</span><span class="p">],</span> <span class="n">poly</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]],</span>
+                            <span class="n">param</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]),</span>
+                 <span class="n">base</span><span class="o">.</span><span class="n">Bunch</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;target2&#39;</span><span class="p">,</span><span class="s">&#39;target3&#39;</span><span class="p">],</span> <span class="n">poly</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]],</span>
+                            <span class="n">param</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]]),</span>
+                 <span class="p">]</span>
+
+    <span class="c">#to feed this information to the inputnode we have to store the information</span>
+    <span class="c">#in a list &#39;output&#39; which we will return later</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c">#the parameters get added three times if we have three sessions like in this example.</span>
+    <span class="c">#if you need to, you would be able here to specify the session specific parameters</span>
+    <span class="c">#for each session differently</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Bunch</span><span class="p">(</span><span class="n">conditions</span><span class="o">=</span><span class="n">namesOfConditions</span><span class="p">,</span>
+                            <span class="n">onsets</span><span class="o">=</span><span class="n">onsetTimes</span><span class="p">,</span>
+                            <span class="n">durations</span><span class="o">=</span><span class="p">[[</span><span class="mi">8</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">namesOfConditions</span><span class="p">],</span>
+                            <span class="n">amplitudes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                            <span class="n">tmod</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                            <span class="n">pmod</span><span class="o">=</span><span class="n">para_modu</span><span class="p">,</span>
+                            <span class="n">regressor_names</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                            <span class="n">regressors</span><span class="o">=</span><span class="bp">None</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A detailed instruction on how to set the model specific parameters can be found in the in the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/model_specification.html">Model Specification</a>    section.</p>
+</div>
+</div>
+</div>
+<div class="section" id="connect-new-nodes-to-your-pipeline">
+<h3>Connect new nodes to your pipeline<a class="headerlink" href="#connect-new-nodes-to-your-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>Before you can run your pipeline you will have to connect infosource, datasource, inputnode and datasink to each other and to the pipelines of your framework workflow, here called frameflow. For this purpose you will have to create a meta pipeline.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#initiate the meta workflow</span>
+<span class="n">metaflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;metaflow&#39;</span><span class="p">)</span>
+
+<span class="c">#connect infosource, datasource and inputnode to each other</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">datasource</span><span class="p">,</span><span class="n">inputnode</span><span class="p">,[(</span><span class="s">&#39;func&#39;</span><span class="p">,</span><span class="s">&#39;func&#39;</span><span class="p">),</span>
+                                         <span class="p">((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjectinfo</span><span class="p">),</span><span class="s">&#39;session_info&#39;</span><span class="p">),</span>
+                                         <span class="p">]),</span>
+                  <span class="c">#connect the inputnode to your workflow</span>
+                  <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">frameflow</span><span class="p">,[(</span><span class="s">&#39;func&#39;</span><span class="p">,</span><span class="s">&#39;surfsmooth.in_file&#39;</span><span class="p">),</span>
+                                         <span class="c">#...etc...</span>
+                                         <span class="p">])</span>
+                  <span class="c">#connect output you want to be stored into datasink</span>
+                  <span class="p">(</span><span class="n">frameflow</span><span class="p">,</span><span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;preproc.bbregister.out_reg_file&#39;</span><span class="p">,</span>
+                                        <span class="s">&#39;bbregister&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s">&#39;volanalysis.contrastestimate.spm_mat_file&#39;</span><span class="p">,</span>
+                                        <span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
+                                       <span class="p">])</span>
+                  <span class="p">])</span>
+</pre></div>
+</div>
+<p>Now you&#8217;re done and can run your pipeline.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;Linear&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="3_preparedata.html" title="Prepare Data for Nipype"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1_introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Michael Notter.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,559 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to extract region of interest (ROI) &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to extract region of interest (ROI)</a><ul>
+<li><a class="reference internal" href="#title1">Title1</a></li>
+<li><a class="reference internal" href="#anatomical-rois">Anatomical ROIs</a><ul>
+<li><a class="reference internal" href="#import-modules">Import modules</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">Anatomical ROIs</a><ul>
+<li><a class="reference internal" href="#id2">Import modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/6_regionofinterest.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-extract-region-of-interest-roi">
+<h1>How to extract region of interest (ROI)<a class="headerlink" href="#how-to-extract-region-of-interest-roi" title="Permalink to this headline">¶</a></h1>
+<p>TEXT wasi meine</p>
+<div class="section" id="title1">
+<h2>Title1<a class="headerlink" href="#title1" title="Permalink to this headline">¶</a></h2>
+<p>Text</p>
+<ul>
+<li><dl class="first docutils">
+<dt><strong>All consuming pipeline:</strong></dt>
+<dd><ul class="first last">
+<li><p class="first">Infosource</p>
+</li>
+<li><p class="first">Datagrabber</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Metaworkflow:</strong></dt>
+<dd><ul class="first last">
+<li><p class="first">Inputnode (func, subject_id, session_info, contrasts)</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Preprocess pipeline:</strong></dt>
+<dd><ul class="first last simple">
+<li>SliceTiming</li>
+<li>Realign</li>
+<li>ArtifactDetect</li>
+<li>BBRegister</li>
+<li>Smooth</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Volume analysis pipeline:</strong></dt>
+<dd><ul class="first last simple">
+<li>SpecifyModel</li>
+<li>Level1Design</li>
+<li>EstimateModel</li>
+<li>EstimateContrast</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Normalization pipeline:</strong></dt>
+<dd><ul class="first last simple">
+<li>MRIConvert</li>
+<li>FreeSurferSource</li>
+<li>Segment</li>
+<li>ApplyVolTransform</li>
+<li>Normalize</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Datasink</p>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Below I&#8217;ve visualized the structure of our pipeline and most of the connections
+between the nodes.</p>
+<img alt="workflow.png" src="workflow.png" style="width: 600px;" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Some may ask  why we haven&#8217;t included the infosource, datagrabber and datasink
+nodes into the metaworkflow.</p>
+<p class="last">Because those nodes dependent highly on the paradigma specific parameters and
+will change for every model we want to separat them from the metaworkflow which
+will stay more or less the same for similar experiments. This does also give us
+the opportunity to just import this metaworkflow from this script into a new
+pipeline script and reuse it.</p>
+</div>
+</div>
+<div class="section" id="anatomical-rois">
+<h2>Anatomical ROIs<a class="headerlink" href="#anatomical-rois" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have defined how the structure of our pipeline and the connections
+should be we can start with writing the pipeline script.</p>
+<div class="section" id="import-modules">
+<h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
+<p>First we have to import all necessary modules.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Import modules</span>
+<span class="sd">==============</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>    <span class="c"># freesurfer</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>           <span class="c"># i/o routines</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>     <span class="c"># utility</span>
+<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>          <span class="c"># pypeline engine</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Define experiment specific parameters</span>
+<span class="sd">=====================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c">#To better access the parent folder of the experiment</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">Workingdir</span> <span class="o">=</span> <span class="s">&#39;/result/workingdir_ROI_diffHG&#39;</span>
+<span class="n">ROIOutput</span> <span class="o">=</span>  <span class="s">&#39;result/ROI_Output_diffHG&#39;</span>
+
+<span class="c">#name of the subjects, functional fiels and output folders</span>
+<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;asens_4&#39;</span><span class="p">,</span><span class="s">&#39;asens_5&#39;</span><span class="p">,</span><span class="s">&#39;asens_6&#39;</span><span class="p">,</span><span class="s">&#39;asens_7&#39;</span><span class="p">,</span><span class="s">&#39;asens_8&#39;</span><span class="p">,</span><span class="s">&#39;asens_9&#39;</span><span class="p">,</span>
+            <span class="s">&#39;asens_10&#39;</span><span class="p">,</span><span class="s">&#39;asens_12&#39;</span><span class="p">,</span><span class="s">&#39;asens_13&#39;</span><span class="p">,</span><span class="s">&#39;asens_14&#39;</span><span class="p">,</span><span class="s">&#39;asens_15&#39;</span><span class="p">,</span>
+            <span class="s">&#39;asens_16&#39;</span><span class="p">,</span><span class="s">&#39;asens_17&#39;</span><span class="p">,</span><span class="s">&#39;asens_18&#39;</span><span class="p">,</span><span class="s">&#39;asens_19&#39;</span><span class="p">,</span><span class="s">&#39;asens_20&#39;</span><span class="p">,</span><span class="s">&#39;asens_21&#39;</span><span class="p">]</span>
+
+<span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;03&#39;</span><span class="p">,</span><span class="s">&#39;10&#39;</span><span class="p">,</span><span class="s">&#39;11&#39;</span><span class="p">]</span>
+
+<span class="n">ROIregions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;1001&#39;</span><span class="p">,</span><span class="s">&#39;2001&#39;</span><span class="p">,</span><span class="s">&#39;1030&#39;</span><span class="p">,</span><span class="s">&#39;2030&#39;</span><span class="p">,</span><span class="s">&#39;1031&#39;</span><span class="p">,</span><span class="s">&#39;2031&#39;</span><span class="p">,</span><span class="s">&#39;1034&#39;</span><span class="p">,</span><span class="s">&#39;2034&#39;</span><span class="p">,</span><span class="s">&#39;1035&#39;</span><span class="p">,</span><span class="s">&#39;2035&#39;</span><span class="p">,</span><span class="s">&#39;1135&#39;</span><span class="p">,</span><span class="s">&#39;2135&#39;</span><span class="p">,</span><span class="s">&#39;1136&#39;</span><span class="p">,</span><span class="s">&#39;2136&#39;</span><span class="p">]</span>
+
+<span class="n">ROIregions2009</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;11&#39;</span><span class="p">,</span><span class="s">&#39;50&#39;</span><span class="p">,</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="s">&#39;51&#39;</span><span class="p">,</span><span class="s">&#39;11104&#39;</span><span class="p">,</span><span class="s">&#39;12104&#39;</span><span class="p">,</span><span class="s">&#39;11107&#39;</span><span class="p">,</span><span class="s">&#39;12107&#39;</span><span class="p">,</span><span class="s">&#39;11108&#39;</span><span class="p">,</span><span class="s">&#39;12108&#39;</span><span class="p">,</span>
+                  <span class="s">&#39;11117&#39;</span><span class="p">,</span><span class="s">&#39;12117&#39;</span><span class="p">,</span><span class="s">&#39;11118&#39;</span><span class="p">,</span><span class="s">&#39;12118&#39;</span><span class="p">,</span><span class="s">&#39;11126&#39;</span><span class="p">,</span><span class="s">&#39;12126&#39;</span><span class="p">,</span><span class="s">&#39;11133&#39;</span><span class="p">,</span><span class="s">&#39;12133&#39;</span><span class="p">,</span><span class="s">&#39;11134&#39;</span><span class="p">,</span>
+                  <span class="s">&#39;12134&#39;</span><span class="p">,</span><span class="s">&#39;11136&#39;</span><span class="p">,</span><span class="s">&#39;12136&#39;</span><span class="p">,</span><span class="s">&#39;11141&#39;</span><span class="p">,</span><span class="s">&#39;12141&#39;</span><span class="p">,</span><span class="s">&#39;11148&#39;</span><span class="p">,</span><span class="s">&#39;12148&#39;</span><span class="p">,</span><span class="s">&#39;11149&#39;</span><span class="p">,</span><span class="s">&#39;12149&#39;</span><span class="p">,</span>
+                  <span class="s">&#39;11150&#39;</span><span class="p">,</span><span class="s">&#39;12150&#39;</span><span class="p">,</span><span class="s">&#39;11174&#39;</span><span class="p">,</span><span class="s">&#39;12174&#39;</span><span class="p">,</span><span class="s">&#39;11175&#39;</span><span class="p">,</span><span class="s">&#39;12175&#39;</span><span class="p">]</span>
+
+<span class="n">datasink_con_dir</span> <span class="o">=</span> <span class="s">&#39;level1_diff&#39;</span>
+
+<span class="n">nameOfFirstCondition</span> <span class="o">=</span> <span class="s">&#39;high1&#39;</span>
+
+<span class="c">#####################################################################################</span>
+<span class="c">#FREESURFER COLOR TABLE CAN BE FOUND HERE:</span>
+<span class="c">#http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT</span>
+
+
+<span class="c"># Tell freesurfer what subjects directory to use</span>
+<span class="n">subjects_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/freesurfer&#39;</span>
+<span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">subjects_dir</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Define a ROI workflow</span>
+<span class="sd">=====================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c">#Initiation of the ROI extraction workflow</span>
+<span class="n">ROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;ROIflow&#39;</span><span class="p">)</span>
+<span class="n">ROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">Workingdir</span>
+
+<span class="c">#Node: SubjectData</span>
+<span class="n">infosource1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">],</span><span class="n">mandatory_inputs</span> <span class="o">=</span> <span class="bp">False</span><span class="p">),</span>
+                     <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource1&quot;</span><span class="p">)</span>
+<span class="n">infosource1</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">)</span>
+
+<span class="n">infosource2</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span><span class="n">mandatory_inputs</span> <span class="o">=</span> <span class="bp">False</span><span class="p">),</span>
+                     <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource2&quot;</span><span class="p">)</span>
+<span class="n">infosource2</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrasts</span><span class="p">)</span>
+
+
+<span class="c">#Node: DataGrabber - To grab the input data</span>
+<span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span><span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span><span class="s">&#39;bb_id&#39;</span><span class="p">]),</span>
+                     <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;result/&#39;</span><span class="o">+</span><span class="n">datasink_con_dir</span><span class="o">+</span><span class="s">&#39;/</span><span class="si">%s</span><span class="s">/_subject_id_</span><span class="si">%s</span><span class="s">/</span><span class="si">%s%s%s</span><span class="s">&#39;</span>
+
+<span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;vol_contrasts&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;con_00&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span><span class="s">&#39;.img&#39;</span><span class="p">]],</span>
+            <span class="n">bb_id</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;bbregister&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;mean&#39;</span><span class="o">+</span><span class="n">nameOfFirstCondition</span><span class="o">+</span><span class="s">&#39;_bbreg_&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;.dat&#39;</span><span class="p">]])</span>
+
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="n">info</span>
+
+<span class="c">#Node: FreeSurferSource</span>
+<span class="n">fssource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">FreeSurferSource</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fssource&#39;</span><span class="p">)</span>
+<span class="n">fssource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">subjects_dir</span> <span class="o">=</span> <span class="n">subjects_dir</span>
+
+<span class="c">#Node: MRIConvert</span>
+<span class="n">MRIconversion</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">MRIConvert</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;MRIconversion&#39;</span><span class="p">)</span>
+<span class="n">MRIconversion</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_type</span> <span class="o">=</span> <span class="s">&#39;nii&#39;</span>
+
+<span class="c">#Resample contrasts into anatomicale space - creating con_*.anat.bb.mgh</span>
+<span class="n">transformation</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">ApplyVolTransform</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;transformation&#39;</span><span class="p">)</span>
+<span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fs_target</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">interp</span> <span class="o">=</span> <span class="s">&#39;nearest&#39;</span>
+
+<span class="c">#Node: SegStats</span>
+<span class="n">segmentation</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segmentation&#39;</span><span class="p">)</span>
+<span class="n">segmentation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">color_table_file</span> <span class="o">=</span> <span class="s">&#39;/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt&#39;</span>
+<span class="n">segmentation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segment_id</span> <span class="o">=</span> <span class="n">ROIregions</span>
+
+<span class="c">#Node: SegStats2009</span>
+<span class="n">segmentation2009</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segmentation2009&#39;</span><span class="p">)</span>
+<span class="n">segmentation2009</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">color_table_file</span> <span class="o">=</span> <span class="s">&#39;/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt&#39;</span>
+<span class="n">segmentation2009</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segment_id</span> <span class="o">=</span> <span class="n">ROIregions2009</span>
+
+<span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
+<span class="n">datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">ROIOutput</span>
+
+<span class="k">def</span> <span class="nf">getVersion</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+       <span class="k">return</span> <span class="n">in_file</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="k">return</span> <span class="n">in_file</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c">#Connect up all components</span>
+<span class="n">ROIflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource1</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">infosource2</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="s">&#39;contrast_id&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">infosource1</span><span class="p">,</span> <span class="n">fssource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">segmentation</span><span class="p">,[((</span><span class="s">&#39;aparc_aseg&#39;</span><span class="p">,</span><span class="n">getVersion</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">segmentation2009</span><span class="p">,[((</span><span class="s">&#39;aparc_aseg&#39;</span><span class="p">,</span><span class="n">getVersion</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">MRIconversion</span><span class="p">,[(</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">MRIconversion</span><span class="p">,</span> <span class="n">transformation</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">transformation</span><span class="p">,[(</span><span class="s">&#39;bb_id&#39;</span><span class="p">,</span> <span class="s">&#39;reg_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">transformation</span><span class="p">,</span> <span class="n">segmentation</span><span class="p">,[(</span><span class="s">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">transformation</span><span class="p">,</span> <span class="n">segmentation2009</span><span class="p">,[(</span><span class="s">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">segmentation</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span> <span class="s">&#39;segstat&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">segmentation2009</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span> <span class="s">&#39;segstat2009&#39;</span><span class="p">)]),</span>
+                 <span class="p">])</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Run the pipeline and generate the graph</span>
+<span class="sd">=======================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">ROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+<span class="n">ROIflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Summarizing the output in a cvs-file</span>
+<span class="sd">====================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15000</span><span class="p">):</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="s">&#39;LABEL&#39;</span><span class="p">])</span>
+
+    <span class="n">subjectNumber</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
+
+        <span class="c">#Find the location of the two output files</span>
+        <span class="n">statsFile</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">ROIOutput</span><span class="o">+</span><span class="s">&#39;/segstat/_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;/_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span><span class="o">+</span><span class="s">&#39;/summary.stats&#39;</span>
+        <span class="n">statsFile2009</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">ROIOutput</span><span class="o">+</span><span class="s">&#39;/segstat2009/_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;/_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span><span class="o">+</span><span class="s">&#39;/summary.stats&#39;</span>
+
+        <span class="c">#Get the data from the two output files</span>
+        <span class="n">dataFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">statsFile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">dataFile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">dataFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">dataFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">statsFile2009</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">data2009</span> <span class="o">=</span> <span class="n">dataFile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">dataFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c">#to check where the data starts</span>
+        <span class="k">def</span> <span class="nf">findStartOfData</span><span class="p">(</span><span class="n">datafile</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">datafile</span><span class="p">[</span><span class="n">line</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;#&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">line</span>
+
+        <span class="n">tempresult</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">&lt;</span> <span class="n">findStartOfData</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">line</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">tempresult</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">5</span><span class="p">])])</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data2009</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">&lt;</span> <span class="n">findStartOfData</span><span class="p">(</span><span class="n">data2009</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">data2009</span><span class="p">[</span><span class="n">line</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">tempresult</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">5</span><span class="p">])])</span>
+
+        <span class="n">tempresult</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tempresult</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">tempresult</span><span class="p">[</span><span class="n">line</span><span class="p">]</span> <span class="o">==</span> <span class="n">tempresult</span><span class="p">[</span><span class="n">line</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tempresult</span><span class="p">[</span><span class="n">line</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">ROI</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">output</span><span class="p">[</span><span class="n">ROI</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;LABEL&#39;</span><span class="p">:</span>
+               <span class="n">output</span><span class="p">[</span><span class="n">ROI</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ROI</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">ROI</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ROI</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">ROI</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ROI</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">subjectNumber</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span>
+               <span class="n">ROI</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="n">subjectNumber</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+    <span class="n">output</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,[</span><span class="s">&#39;SegId&#39;</span><span class="p">,</span><span class="s">&#39;StructName&#39;</span><span class="p">])</span>
+    <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">subjects</span><span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="n">ROI</span> <span class="k">for</span> <span class="n">ROI</span> <span class="ow">in</span> <span class="n">output</span> <span class="k">if</span> <span class="n">ROI</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;LABEL&#39;</span><span class="p">]</span>
+
+
+    <span class="kn">import</span> <span class="nn">csv</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ROIOutput</span><span class="o">+</span><span class="s">&#39;/ROI_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;_result.csv&#39;</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
+    <span class="n">outputFile</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">outputFile</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Anatomical ROIs<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have defined how the structure of our pipeline and the connections
+should be we can start with writing the pipeline script.</p>
+<div class="section" id="id2">
+<h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>First we have to import all necessary modules.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Import modules</span>
+<span class="sd">==============</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.fsl</span> <span class="kn">as</span> <span class="nn">fsl</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>           <span class="c"># i/o routines</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>     <span class="c"># utility</span>
+<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>          <span class="c"># pypeline engine</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Define experiment specific parameters</span>
+<span class="sd">=====================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c">#To better access the parent folder of the experiment</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">workingdir</span> <span class="o">=</span> <span class="s">&#39;/result/workingdir_fROI_6b&#39;</span>
+<span class="n">fROIOutput</span> <span class="o">=</span>  <span class="s">&#39;result/fROI_Output_6b&#39;</span>
+
+<span class="c">#name of the subjects, functional fiels and output folders</span>
+<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;asens_4&#39;</span><span class="p">,</span><span class="s">&#39;asens_5&#39;</span><span class="p">,</span><span class="s">&#39;asens_6&#39;</span><span class="p">,</span><span class="s">&#39;asens_7&#39;</span><span class="p">,</span><span class="s">&#39;asens_8&#39;</span><span class="p">,</span><span class="s">&#39;asens_9&#39;</span><span class="p">,</span>
+            <span class="s">&#39;asens_10&#39;</span><span class="p">,</span><span class="s">&#39;asens_12&#39;</span><span class="p">,</span><span class="s">&#39;asens_13&#39;</span><span class="p">,</span><span class="s">&#39;asens_14&#39;</span><span class="p">,</span><span class="s">&#39;asens_15&#39;</span><span class="p">,</span>
+            <span class="s">&#39;asens_16&#39;</span><span class="p">,</span><span class="s">&#39;asens_17&#39;</span><span class="p">,</span><span class="s">&#39;asens_18&#39;</span><span class="p">,</span><span class="s">&#39;asens_19&#39;</span><span class="p">,</span><span class="s">&#39;asens_20&#39;</span><span class="p">,</span><span class="s">&#39;asens_21&#39;</span><span class="p">]</span>
+
+<span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">fROIcoordinations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">183</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="mi">136</span><span class="p">]</span>
+<span class="n">sphereSize</span> <span class="o">=</span> <span class="mi">3</span>
+
+
+<span class="c">#to find the peak use this code</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">import nipype.interfaces.fsl as fsl</span>
+<span class="sd">cl = fsl.Cluster()</span>
+<span class="sd">cl.inputs.threshold = 0</span>
+<span class="sd">cl.inputs.in_file = &#39;/mindhive/gablab/u/mnotter/att_sens/result/level2_diff/level2/_con_3/level2conestimate/spmT_0001.img&#39;</span>
+<span class="sd">cl.run()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c">#to calculate where the ROI beginns</span>
+<span class="n">startROI</span> <span class="o">=</span> <span class="p">[</span><span class="n">fROIcoordinations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">sphereSize</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">fROIcoordinations</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sphereSize</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">fROIcoordinations</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">sphereSize</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Define a ROI workflow</span>
+<span class="sd">=====================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c">#Initiation of the fROI extraction workflow</span>
+<span class="n">fROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fROIflow&#39;</span><span class="p">)</span>
+<span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">workingdir</span>
+
+<span class="c">#Node: SubjectData</span>
+<span class="n">infosource1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource1&quot;</span><span class="p">)</span>
+<span class="n">infosource1</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">)</span>
+<span class="n">infosource2</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource2&quot;</span><span class="p">)</span>
+<span class="n">infosource2</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrasts</span><span class="p">)</span>
+
+<span class="c">#Node: DataGrabber - To grab the input data</span>
+<span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span><span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">]),</span>
+                     <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;asens_normbrains_diff/</span><span class="si">%s</span><span class="s">/normcons/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]])</span>
+
+<span class="c">#Node: ImageMaths - to create the ROI</span>
+<span class="n">maths1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;maths1&quot;</span><span class="p">)</span>
+<span class="n">maths1</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul 0 -add 1 -roi </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> 0 1&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">startROI</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">sphereSize</span><span class="p">,</span><span class="n">startROI</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">sphereSize</span><span class="p">,</span><span class="n">startROI</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">sphereSize</span><span class="p">)</span>
+<span class="n">maths1</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
+<span class="n">maths1</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;/mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/</span><span class="si">%s</span><span class="s">/normcons/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c">#Node: ImageMaths - to make the ROI spherical</span>
+<span class="n">maths2</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;maths2&quot;</span><span class="p">)</span>
+<span class="n">maths2</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-kernel sphere </span><span class="si">%d</span><span class="s"> -fmean -thr 0.0000010000 -bin&#39;</span><span class="o">%</span><span class="n">sphereSize</span>
+<span class="n">maths2</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
+
+<span class="c">#Node: SegStats - to calculate the segmentation</span>
+<span class="n">segstat</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segstat&#39;</span><span class="p">)</span>
+
+<span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
+<span class="n">datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">fROIOutput</span>
+
+<span class="c">#Connect up all components</span>
+<span class="n">fROIflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">maths1</span><span class="p">,</span> <span class="n">maths2</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource1</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource2</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="s">&#39;contrast_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">maths2</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">segstat</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span> <span class="s">&#39;@statistic&#39;</span><span class="p">)]),</span>
+                  <span class="p">])</span>
+
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Run the pipeline and generate the graph</span>
+<span class="sd">=======================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">fROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+<span class="n">fROIflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Summarizing the output in a cvs-file</span>
+<span class="sd">====================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;coordinations:&#39;</span><span class="p">,</span><span class="n">fROIcoordinations</span><span class="p">,</span><span class="s">&#39;sphereSize:&#39;</span><span class="p">,</span><span class="n">sphereSize</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
+    <span class="n">contrast</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">contrast</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;contrast:&#39;</span><span class="p">,</span><span class="n">contrast</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
+
+        <span class="n">statFile</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">fROIOutput</span> <span class="o">+</span> <span class="s">&#39;/_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;/_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span><span class="o">+</span><span class="s">&#39;/summary.stats&#39;</span>
+
+        <span class="c">#Get the data from the output file</span>
+        <span class="n">dataFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">statFile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">dataFile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">dataFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">subject</span><span class="p">,</span><span class="n">data</span><span class="p">[</span><span class="mi">49</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">5</span><span class="p">]])</span>
+
+    <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fROIOutput</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">fROIcoordinations</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">sphereSize</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="n">outputFile</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+    <span class="n">outputFile</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Michael Notter.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

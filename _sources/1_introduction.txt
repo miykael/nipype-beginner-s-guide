@@ -1,0 +1,47 @@
+============
+Introduction
+============
+
+
+Welcome to Nipype
+=================
+
+The Beginner's Guide will introduce you to the main aspects of **Nipype**, a user-friendly software written in Python that provides a uniform interface to existing neuroimaging softwares like `SPM <http://www.fil.ion.ucl.ac.uk/spm/>`_, `FSL <http://www.fmrib.ox.ac.uk/fsl/>`_, `FreeSurfer <http://surfer.nmr.mgh.harvard.edu/>`_, `Camino <http://web4.cs.ucl.ac.uk/research/medic/camino/pmwiki/pmwiki.php>`_, `AFNI <http://afni.nimh.nih.gov/afni>`_, `Slicer <http://slicer.org/>`_, etc.
+
+This guide will teach you all you need to know to get started. It will explain all you need to know about the basics of Nipype, how a pipeline is structured and how you can create your own pipeline. It will show you in a step by step example how to set up a first and a second level analysis on the volume or the surface. It will introduce you to some additional knowledge about how to use Nipype to extract anatomical or functional regions of interests (ROIs) and how to create some basic pictures of functional slices.
+
+Note that this guide is ment as a general introduction. The implementation of Nipype is nearly unlimited and there is alot of advanced knowledge that won't be covered by this guide but can be looked up at various places on the `nipype homepage <http://www.mit.edu/~satra/nipype-nightly/>`_.
+
+.. note::
+
+   There are also alot of very good tutorials specific for different usages of Nipype like using FreeSurfer for smoothing, using FSL for DTI analysis, for fMRI analysis with FEEDS data, for fMRI analysis or using SPM for analysis on auditory dataset etc. They all can be found in the `tutorial section <http://www.mit.edu/~satra/nipype-nightly/users/pipeline_tutorial.html>`_ of the Nipype homepage.
+
+
+What if you're lost?
+====================
+
+If you have any questions about Nipype and can't find the answer on the `nipype homepage <http://www.mit.edu/~satra/nipype-nightly/>`_ feel free to contact the `Nipype mailinglist <http://groups.google.com/group/nipy-user>`_ or to search  its archive. You can sign up `here <http://groups.google.com/group/nipy-user/subscribe?note=1>`_.
+
+If you have any questions about this Beginner's Guide or want to give its author any kind of feedback or suggestions, please contact me at `mnotter@mit.edu <mnotter@mit.edu>`_. It's highly appreciated.
+
+
+But first... Preparation!
+=========================
+
+Befor you can start, make sure that you have all the necessary modules and software installed on your system. For more information go to the `download and install <http://www.mit.edu/~satra/nipype-nightly/users/install.html>`_ section.
+
+Befor you can run a nipype python script make also sure to set up the necessary environment variables, meaning to source to your corresponding Nipype and FreeSurfer and to export the corresponding FreeSurfer and Matlab paths. With the current Nipype v0.4 and FreeSurfer v5.1.0 the terminal commands can look like that:
+
+.. code-block:: ruby
+
+    source /software/python/setup-nipype-0.4.sh 
+    source /software/Freesurfer/5.1.0/SetUpFreeSurfer.sh
+    
+    export MATLABCMD=$pathtomatlabdir/bin/$platform/MATLAB
+    
+    export FREESURFER_HOME=/software/Freesurfer/5.1.0
+    export FSFAST_HOME=/software/Freesurfer/5.1.0/fsfast
+    export SUBJECTS_DIR=/software/Freesurfer/5.1.0/subjects
+    export MNI_DIR=/software/Freesurfer/5.1.0/mni
+
+After you've installed everything and set up all the necessary environment variables you can start iPython (command: ``ipython``), a strongly recommended interactive python environment. Now you're good to go!
