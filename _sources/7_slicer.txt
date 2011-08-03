@@ -1,0 +1,202 @@
+===========================
+How to create slice figures
+===========================
+
+TEXT wasi meine
+
+Title1
+======
+
+Text
+
+* **All consuming pipeline:**
+   * Infosource
+   * Datagrabber
+   * **Metaworkflow:**
+      * Inputnode (func, subject_id, session_info, contrasts)
+      * **Preprocess pipeline:**
+         * SliceTiming
+         * Realign
+         * ArtifactDetect
+         * BBRegister
+         * Smooth
+      * **Volume analysis pipeline:**
+         * SpecifyModel
+         * Level1Design
+         * EstimateModel
+         * EstimateContrast
+      * **Normalization pipeline:**
+         * MRIConvert
+         * FreeSurferSource
+         * Segment
+         * ApplyVolTransform
+         * Normalize
+   * Datasink
+
+
+Below I've visualized the structure of our pipeline and most of the connections
+between the nodes.
+
+.. image:: workflow.png
+   :width: 600 px
+
+
+.. note::
+
+   Some may ask  why we haven't included the infosource, datagrabber and datasink
+   nodes into the metaworkflow.
+
+   Because those nodes dependent highly on the paradigma specific parameters and
+   will change for every model we want to separat them from the metaworkflow which
+   will stay more or less the same for similar experiments. This does also give us
+   the opportunity to just import this metaworkflow from this script into a new
+   pipeline script and reuse it.
+
+
+Write pipeline script
+=====================
+
+Now that we have defined how the structure of our pipeline and the connections
+should be we can start with writing the pipeline script.
+
+
+Import modules
+~~~~~~~~~~~~~~
+
+First we have to import all necessary modules.
+
+.. testcode::
+
+   """
+   Import modules
+   """
+   import os                                    # system functions
+   import nipype.interfaces.io as nio           # i/o routines
+   import nipype.interfaces.spm as spm          # spm
+   import nipype.interfaces.utility as util     # utility
+   import nipype.pipeline.engine as pe          # pypeline engine
+   import nipype.interfaces.fsl as fsl #eg. for BET for scalp strip
+   
+   """
+   Define experiment specific parameters
+   """
+   #To better access the parent folder of the experiment
+   experiment_dir = os.getcwd()
+   
+   #name of the subjects, functional fiels and output folders
+   subjects = ['_con_19','_con_20',
+               '_con_21','_con_22','_con_23','_con_24','_con_25','_con_26','_con_27','_con_28','_con_29','_con_30',
+               '_con_31','_con_32','_con_33','_con_34','_con_35','_con_36','_con_37','_con_38','_con_39','_con_40',
+               '_con_41','_con_42','_con_43','_con_44','_con_45','_con_46','_con_47','_con_48']
+   
+   condition = 'serial_2try'
+   nameOfWorkingdir = '/workingdir_slicer_%s'%condition
+   numberOfContrasts = 1
+   
+   """
+   Define a pipeline for the creation of sliced output
+   """
+   #Initiation of the volume analysis workflow
+   output_creator = pe.Workflow(name='output_creator')
+   
+   #Node: Select- to select each contrast for reporting.
+   selectcontrast = pe.Node(interface=util.Select(), name="selectcontrast")
+   # Iterate over each contrast and create report images.
+   selectcontrast.iterables = ('index',[[i] for i in range(numberOfContrasts)])
+   
+   #Node: Overlay - to combine the statistical output of the contrast estimate and a background image into one volume.
+   overlaystats = pe.Node(interface=fsl.Overlay(), name="overlaystats")
+   overlaystats.inputs.stat_thresh = (1.301,10)
+   overlaystats.inputs.show_negative_stats=True
+   overlaystats.inputs.auto_thresh_bg=True
+   overlaystats.inputs.transparency = True
+
+   #Node: Slicer - to create images of the overlaid statistical volumes for a report of the first-level results.
+   slicestats = pe.Node(interface=fsl.Slicer(), name="slicestats")
+   #slicestats.inputs.all_axial = True
+   slicestats.inputs.single_slice = 'y'
+   #slicestats.inputs.image_width = 1000
+   #slicestats.inputs.label_slices = True
+   #slicestats.inputs.show_orientation = True
+   slices = range(120,140)
+   #slices = [120]
+   slicestats.iterables = ('slice_number', slices)
+   
+   #Connect up the volume analysis components
+   output_creator.connect([(selectcontrast,overlaystats,[('out','stat_image')]),
+                           (overlaystats,slicestats,[('out_file','in_file')])
+                           ])
+   
+
+   """
+   Define inputnode, infosource, datagrabber and datasink
+   ======================================================
+   """
+   #Node: Inputnode - For this workflow the only necessary inputs are the functional
+   #      images, a freesurfer subject id corresponding to recon-all processed data,
+   #      the session information for the functional runs and the contrasts to be evaluated.
+   inputnode = pe.Node(interface=util.IdentityInterface(fields=['subject_id','contrast','struct']),
+                       name='inputnode')
+   
+   #Node: SubjectData - we use IdentityInterface to creat our own node, to specify
+   #      the list of subjects the pipeline should be executed on
+   infosource = pe.Node(interface=util.IdentityInterface(fields=['subject_id']),name="infosource")
+   infosource.iterables = ('subject_id', subjects)
+   
+   
+   #Node: DataGrabber - To grab the input data
+   datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id'],
+                                                  outfields=['struct','contrast']),
+                        name = 'datasource')
+   
+   #Node: DataGrabber - To grab the input data
+   datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id'],
+                                                  outfields=['struct','contrast']),
+                        name = 'datasource')
+   
+   #Define the main folder where the data is stored at and define the structure of it
+   datasource.inputs.base_directory = experiment_dir
+   datasource.inputs.template = '%s%s/%s'
+   datasource.inputs.template_args['struct'] = [['','','Asens_Normbrain.nii.gz']]
+   datasource.inputs.template_args['contrast'] = [['result/level2_%s/level2/'%condition,'subject_id','level2thresh/spmT_0001_thr.img']]
+   
+   
+   #Node: Datasink - Create a datasink node to store important outputs
+   datasink = pe.Node(interface=nio.DataSink(), name="datasink")
+   datasink.inputs.base_directory = experiment_dir + '/result'
+   datasink.inputs.container = experiment_dir + '/result'
+   
+   """
+   Define the metaflow
+   """
+   metaflow = pe.Workflow(name="metaflow")
+   metaflow.base_dir = experiment_dir + '/result' + nameOfWorkingdir
+   metaflow.connect([(infosource,datasource,[('subject_id','subject_id')]),
+                     (datasource,inputnode,[('struct','struct'),
+                                            ('contrast','contrast'),
+                                            ]),
+                     (infosource,inputnode,[('subject_id','subject_id')]),
+                     (inputnode,selectcontrast,[('contrast','inlist')]),
+                     (inputnode,output_creator,[('struct','overlaystats.background_image')]),
+                     (output_creator,datasink,[('slicestats.out_file','slices_%s.@slice'%condition)]),
+                     ])
+   
+   """
+   Run the pipeline and generate the graph
+   """
+   metaflow.write_graph(graph2use='flat')
+   metaflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+   
+   
+
+   #to collect the outfiles of each con in 1 folder
+   for i in range(18,18+sum(1 for subj in subjects)):
+       i += 1
+       for s in slices:
+           oldfile = experiment_dir + '/result/slices_%s/_subject_id__con_%d/_index_0/_slice_number_%d/spmT_0001_thr_overlay.png'%(condition,i,s)
+           newfile = experiment_dir + '/result/slices_%s/_subject_id__con_%d/thresholded_map_overlay_%s.png'%(condition,i,s)
+           os.system("mv %s %s"%(oldfile,newfile))
+       outputfolder = experiment_dir + '/result/slices_%s/_subject_id__con_%d/_index_0'%(condition,i)
+       os.system("rm -rf %s"%outputfolder)
+
+
