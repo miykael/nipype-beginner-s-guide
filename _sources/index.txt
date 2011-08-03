@@ -5,13 +5,13 @@ Beginner's Guide to Nipype
 .. toctree::
    :maxdepth: 2
 
-   1_introduction
-   2_howToBuildAPipeline
-   3_preparedata
-   4_firstlevelexample
+   introduction
+   howToBuildAPipeline
+   preparedata
+   firstLevelExample
    underConstruction
 
 
 .. note::
 
-   This Guide can also be downloaded as a PDF file here: `Nipype Beginner's Guide <https://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_
+   This Userguide can be downloaded as a PDF file here: `Nipype Beginner's Guide <https://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_

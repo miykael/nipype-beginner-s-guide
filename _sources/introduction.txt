@@ -20,7 +20,7 @@ Note that this guide is ment as a general introduction. The implementation of Ni
 What if you're lost?
 ====================
 
-If you have any questions about Nipype and can't find the answer on the `nipype homepage <http://www.mit.edu/~satra/nipype-nightly/>`_ feel free to contact the `Nipype mailinglist <http://groups.google.com/group/nipy-user>`_ or to search  its archive. You can sign up `here <http://groups.google.com/group/nipy-user/subscribe?note=1>`_.
+If you have any questions about Nipype and can't find the answer on the `nipype homepage <http://www.mit.edu/~satra/nipype-nightly/>`_ feel free to contact the `Nipype mailinglist <http://groups.google.com/group/nipy-user>`_ or to search  its archive. Sign up for the mailinglist `here <http://groups.google.com/group/nipy-user/subscribe?note=1>`_.
 
 If you have any questions about this Beginner's Guide or want to give its author any kind of feedback or suggestions, please contact me at `mnotter@mit.edu <mnotter@mit.edu>`_. It's highly appreciated.
 
@@ -28,7 +28,7 @@ If you have any questions about this Beginner's Guide or want to give its author
 But first... Preparation!
 =========================
 
-Befor you can start, make sure that you have all the necessary modules and software installed on your system. For more information go to the `download and install <http://www.mit.edu/~satra/nipype-nightly/users/install.html>`_ section.
+Befor you can start using nipype, make sure that you have installed all the necessary modules and software on your system. For more information go to the `download and install <http://www.mit.edu/~satra/nipype-nightly/users/install.html>`_ section.
 
 Befor you can run a nipype python script make also sure to set up the necessary environment variables, meaning to source to your corresponding Nipype and FreeSurfer and to export the corresponding FreeSurfer and Matlab paths. With the current Nipype v0.4 and FreeSurfer v5.1.0 the terminal commands can look like that:
 
