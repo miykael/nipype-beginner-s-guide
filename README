@@ -1,0 +1,36 @@
+=======================
+Nipype Beginner's Guide
+=======================
+
+This homepage provides a beginner's guide for Nipype, a user-friendly software written in Python that provides a uniform interface to existing neuroimaging softwares like SPM, FSL, FreeSurfer, Camino, AFNI, Slicer, etc.
+
+
+Website
+-------
+
+Nipype Beginner's Guide is located here:
+http://miykael.github.com/nipype-beginner-s-guide/
+
+Nipype website is located here:
+http://nipy.sourceforge.net/nipype/
+
+
+Documentation
+-------------
+
+A PDF-Version of this beginner's guide can be found above or here:
+http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true
+
+
+Examples
+--------
+
+All examples and codes which are used in the guide can be found above or here:
+http://github.com/miykael/nipype-beginner-s-guide
+
+
+Contact
+-------
+
+You can contact me on:
+mnotter@mit.edu
