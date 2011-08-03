@@ -1,5 +1,5 @@
 ==========================
-Beginnnnnner's Guide to Nipype
+Beginner's Guide to Nipype
 ==========================
 
 .. toctree::
