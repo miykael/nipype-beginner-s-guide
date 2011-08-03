@@ -3,10 +3,10 @@ Introduction
 ============
 
 
-Welcome to Nipype
+Welcome to Nipype 
 =================
 
-The Beginner's Guide will introduce you to the main aspects of **Nipype**, a user-friendly software written in Python that provides a uniform interface to existing neuroimaging softwares like `SPM <http://www.fil.ion.ucl.ac.uk/spm/>`_, `FSL <http://www.fmrib.ox.ac.uk/fsl/>`_, `FreeSurfer <http://surfer.nmr.mgh.harvard.edu/>`_, `Camino <http://web4.cs.ucl.ac.uk/research/medic/camino/pmwiki/pmwiki.php>`_, `AFNI <http://afni.nimh.nih.gov/afni>`_, `Slicer <http://slicer.org/>`_, etc.
+This Beginner's Guide will introduce you to the main aspects of **Nipype**. Nipype is an abbreviation of Neuroimaging in Python Pipeline, a user-friendly software written in Python that provides a uniform interface to existing neuroimaging softwares like `SPM <http://www.fil.ion.ucl.ac.uk/spm/>`_, `FSL <http://www.fmrib.ox.ac.uk/fsl/>`_, `FreeSurfer <http://surfer.nmr.mgh.harvard.edu/>`_, `Camino <http://web4.cs.ucl.ac.uk/research/medic/camino/pmwiki/pmwiki.php>`_, `AFNI <http://afni.nimh.nih.gov/afni>`_, `Slicer <http://slicer.org/>`_, etc.
 
 This guide will teach you all you need to know to get started. It will explain all you need to know about the basics of Nipype, how a pipeline is structured and how you can create your own pipeline. It will show you in a step by step example how to set up a first and a second level analysis on the volume or the surface. It will introduce you to some additional knowledge about how to use Nipype to extract anatomical or functional regions of interests (ROIs) and how to create some basic pictures of functional slices.
 

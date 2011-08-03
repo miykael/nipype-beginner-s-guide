@@ -14,4 +14,4 @@ Beginner's Guide to Nipype
 
 .. note::
 
-   This Userguide can be downloaded as a PDF file here: `Nipype Beginner's Guide <https://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_
+   This Userguide can be downloaded as a PDF file here: `Nipype Beginner's Guide <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_
