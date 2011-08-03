@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation" href="index.html" />
+    <link rel="next" title="How to build a pipeline" href="2_howToBuildAPipeline.html" />
+    <link rel="prev" title="Beginner’s Guide to Nipype" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2_howToBuildAPipeline.html" title="How to build a pipeline"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Beginner’s Guide to Nipype"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#welcome-to-nipype">Welcome to Nipype</a></li>
+<li><a class="reference internal" href="#what-if-you-re-lost">What if you&#8217;re lost?</a></li>
+<li><a class="reference internal" href="#but-first-preparation">But first... Preparation!</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Beginner&#8217;s Guide to Nipype</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2_howToBuildAPipeline.html"
+                        title="next chapter">How to build a pipeline</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/1_introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="welcome-to-nipype">
+<h2>Welcome to Nipype<a class="headerlink" href="#welcome-to-nipype" title="Permalink to this headline">¶</a></h2>
+<p>The Beginner&#8217;s Guide will introduce you to the main aspects of <strong>Nipype</strong>, a user-friendly software written in Python that provides a uniform interface to existing neuroimaging softwares like <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a>, <a class="reference external" href="http://www.fmrib.ox.ac.uk/fsl/">FSL</a>, <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a>, <a class="reference external" href="http://web4.cs.ucl.ac.uk/research/medic/camino/pmwiki/pmwiki.php">Camino</a>, <a class="reference external" href="http://afni.nimh.nih.gov/afni">AFNI</a>, <a class="reference external" href="http://slicer.org/">Slicer</a>, etc.</p>
+<p>This guide will teach you all you need to know to get started. It will explain all you need to know about the basics of Nipype, how a pipeline is structured and how you can create your own pipeline. It will show you in a step by step example how to set up a first and a second level analysis on the volume or the surface. It will introduce you to some additional knowledge about how to use Nipype to extract anatomical or functional regions of interests (ROIs) and how to create some basic pictures of functional slices.</p>
+<p>Note that this guide is ment as a general introduction. The implementation of Nipype is nearly unlimited and there is alot of advanced knowledge that won&#8217;t be covered by this guide but can be looked up at various places on the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/">nipype homepage</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are also alot of very good tutorials specific for different usages of Nipype like using FreeSurfer for smoothing, using FSL for DTI analysis, for fMRI analysis with FEEDS data, for fMRI analysis or using SPM for analysis on auditory dataset etc. They all can be found in the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/pipeline_tutorial.html">tutorial section</a> of the Nipype homepage.</p>
+</div>
+</div>
+<div class="section" id="what-if-you-re-lost">
+<h2>What if you&#8217;re lost?<a class="headerlink" href="#what-if-you-re-lost" title="Permalink to this headline">¶</a></h2>
+<p>If you have any questions about Nipype and can&#8217;t find the answer on the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/">nipype homepage</a> feel free to contact the <a class="reference external" href="http://groups.google.com/group/nipy-user">Nipype mailinglist</a> or to search  its archive. You can sign up <a class="reference external" href="http://groups.google.com/group/nipy-user/subscribe?note=1">here</a>.</p>
+<p>If you have any questions about this Beginner&#8217;s Guide or want to give its author any kind of feedback or suggestions, please contact me at <a class="reference external" href="mailto:mnotter&#37;&#52;&#48;mit&#46;edu">mnotter<span>&#64;</span>mit<span>&#46;</span>edu</a>. It&#8217;s highly appreciated.</p>
+</div>
+<div class="section" id="but-first-preparation">
+<h2>But first... Preparation!<a class="headerlink" href="#but-first-preparation" title="Permalink to this headline">¶</a></h2>
+<p>Befor you can start, make sure that you have all the necessary modules and software installed on your system. For more information go to the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/install.html">download and install</a> section.</p>
+<p>Befor you can run a nipype python script make also sure to set up the necessary environment variables, meaning to source to your corresponding Nipype and FreeSurfer and to export the corresponding FreeSurfer and Matlab paths. With the current Nipype v0.4 and FreeSurfer v5.1.0 the terminal commands can look like that:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">source</span><span class="sr"> /software/</span><span class="n">python</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">nipype</span><span class="o">-</span><span class="mi">0</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">source</span><span class="sr"> /software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="no">SetUpFreeSurfer</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">export</span> <span class="no">MATLABCMD</span><span class="o">=</span><span class="vg">$pathtomatlabdir</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="vg">$platform</span><span class="o">/</span><span class="no">MATLAB</span>
+
+<span class="n">export</span> <span class="no">FREESURFER_HOME</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">export</span> <span class="no">FSFAST_HOME</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">fsfast</span>
+<span class="n">export</span> <span class="no">SUBJECTS_DIR</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">subjects</span>
+<span class="n">export</span> <span class="no">MNI_DIR</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">mni</span>
+</pre></div>
+</div>
+<p>After you&#8217;ve installed everything and set up all the necessary environment variables you can start iPython (command: <tt class="docutils literal"><span class="pre">ipython</span></tt>), a strongly recommended interactive python environment. Now you&#8217;re good to go!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2_howToBuildAPipeline.html" title="How to build a pipeline"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Beginner’s Guide to Nipype"
+             >previous</a> |</li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Michael Notter.
+      Last updated on Aug 03, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>
