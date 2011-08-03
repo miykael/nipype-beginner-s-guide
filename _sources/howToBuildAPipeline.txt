@@ -228,8 +228,6 @@ There is a basic and an advanced way to create connections between two nodes. Th
 The advanced connection example would as a detailed graph look like this:
 
 .. image:: example_node_connection.png
-   :width: 1080
-
 
 It is important to point out that you don't just have to connect the nodes, but rather to connect the output and input fields of each node.
 
@@ -396,7 +394,7 @@ To get the subject specific data into the pipeline we need the datasource node. 
 To use the datagrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:
 
 .. image:: datastructure.png
-   :width: 1080
+   :width: 640
 
 As you can see all the necessary data is stored in the experiment folder. The data of each subject is stored in its individual subject_folder. The name of this folder changes with each subject. There are two ways how you can define the structure of data you want to grab.
 

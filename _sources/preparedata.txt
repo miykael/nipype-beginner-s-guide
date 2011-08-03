@@ -199,7 +199,7 @@ Now we can start with the connection of the nodes.
                         (infosource, dicom2nifti,[(('subject_id', pathfinder, 'dicom_dir_name'),
                                                     'dicom_dir')]),
                         (infosource, dcminfo,[(('subject_id', pathfinder, 'dicom_dir_name'),
-                                                    'dicom_dir')]),
+                                                'dicom_dir')]),
                         ])
 
 Perhaps it's best if we take a closer look at the second connection. As it is written, the function ``pathfinder`` takes ``'subject_id'`` as its first argument which will represent ``subjectname`` in the function. ``'dicom_dir_name'`` will be given as the second argument ``foldername`` to the ``pathfinder`` function. The return value of the ``pathfinder`` function  will than be sent as input ``'dicom_dir'`` to the ``dicom2nifti`` node.
@@ -267,8 +267,7 @@ prepareflow/_subject_id_subject1/dcminfo'`` and we want to move it into ``'/mind
 
 .. note::
 
-   | 
-   | **Following are the values of the variables we are using**
+   | **Following are the values of the variables we are using:**
    | ``prepareflow.base_dir               = '~SOMEPATH/experiment/workingdir_prepareflow'``
    | ``prepareflow.name                   = 'prepareflow'``
    | ``'_subject_id_%s'%subject           = '_subject_id_subject1'`` for the first run
@@ -299,31 +298,28 @@ There are different kinds of graphs you can creat. But basically there is a simp
 graph2use='flat' - graph.dot
 ****************************
 
-.. image:: graph_normal_flat-colored.png
-   :align: center
-   :width: 1080
-
 In the normal-dot file you can see how the nodes are connected generally. The name is composed in the format of ``nodename.algorithm.interface``
+
+.. image:: graph_normal_flat-colored.png
+   :width: 756
+
 
 
 graph2use='flat' - graph_detailed.dot
 *************************************
 
-.. image:: graph_detailed_flat-colored.png
-   :align: center
-   :width: 1080
-
 The detailed version of the graph gives you better informations about which input is connected to which output.
+
+.. image:: graph_detailed_flat-colored.png
 
 
 graph2use='exec' - graph_detailed.dot
 *************************************
 
-.. image:: graph_detailed_exec-colored.png
-   :align: center
-   :width: 1080
+If you set ``graph2use`` to ``'exec'`` you get the same level of detail as if you would run it with ``'flat'`` but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: `a0`, `a1` and `a2`
 
-If you set ``graph2use`` to ``'exec'`` you get the same level of detail as if you would run it with ``'flat'`` but all the runs that would be running in parallel are shown at once.
+.. image:: graph_detailed_exec-colored.png
+   :width: 1134
 
 
 Run Recon-All with Nipype

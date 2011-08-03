@@ -258,7 +258,7 @@ StudyTime 083819.578000
                      <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">dicom2nifti</span><span class="p">,[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span> <span class="s">&#39;dicom_dir_name&#39;</span><span class="p">),</span>
                                                  <span class="s">&#39;dicom_dir&#39;</span><span class="p">)]),</span>
                      <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">dcminfo</span><span class="p">,[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span> <span class="s">&#39;dicom_dir_name&#39;</span><span class="p">),</span>
-                                                 <span class="s">&#39;dicom_dir&#39;</span><span class="p">)]),</span>
+                                             <span class="s">&#39;dicom_dir&#39;</span><span class="p">)]),</span>
                      <span class="p">])</span>
 </pre></div>
 </div>
@@ -316,8 +316,7 @@ StudyTime 083819.578000
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <div class="last line-block">
-<div class="line"><br /></div>
-<div class="line"><strong>Following are the values of the variables we are using</strong></div>
+<div class="line"><strong>Following are the values of the variables we are using:</strong></div>
 <div class="line"><tt class="docutils literal"><span class="pre">prepareflow.base_dir</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">=</span> <span class="pre">'~SOMEPATH/experiment/workingdir_prepareflow'</span></tt></div>
 <div class="line"><tt class="docutils literal"><span class="pre">prepareflow.name</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">=</span> <span class="pre">'prepareflow'</span></tt></div>
 <div class="line"><tt class="docutils literal"><span class="pre">'_subject_id_%s'%subject</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">=</span> <span class="pre">'_subject_id_subject1'</span></tt> for the first run</div>
@@ -341,18 +340,18 @@ StudyTime 083819.578000
 <p>There are different kinds of graphs you can creat. But basically there is a simple overview graph called graph.dot that shows you the basic connections between nodes. In the more detailed version which creates a graph_detailed.dot file you can also see which outputs and inputs are connected together.</p>
 <div class="section" id="graph2use-flat-graph-dot">
 <h3>graph2use=&#8217;flat&#8217; - graph.dot<a class="headerlink" href="#graph2use-flat-graph-dot" title="Permalink to this headline">¶</a></h3>
-<img alt="_images/graph_normal_flat-colored.png" class="align-center" src="_images/graph_normal_flat-colored.png" style="width: 1080px;" />
 <p>In the normal-dot file you can see how the nodes are connected generally. The name is composed in the format of <tt class="docutils literal"><span class="pre">nodename.algorithm.interface</span></tt></p>
+<img alt="_images/graph_normal_flat-colored.png" src="_images/graph_normal_flat-colored.png" style="width: 756px;" />
 </div>
 <div class="section" id="graph2use-flat-graph-detailed-dot">
 <h3>graph2use=&#8217;flat&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-flat-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
-<img alt="_images/graph_detailed_flat-colored.png" class="align-center" src="_images/graph_detailed_flat-colored.png" style="width: 1080px;" />
 <p>The detailed version of the graph gives you better informations about which input is connected to which output.</p>
+<img alt="_images/graph_detailed_flat-colored.png" src="_images/graph_detailed_flat-colored.png" />
 </div>
 <div class="section" id="graph2use-exec-graph-detailed-dot">
 <h3>graph2use=&#8217;exec&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-exec-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
-<img alt="_images/graph_detailed_exec-colored.png" class="align-center" src="_images/graph_detailed_exec-colored.png" style="width: 1080px;" />
-<p>If you set <tt class="docutils literal"><span class="pre">graph2use</span></tt> to <tt class="docutils literal"><span class="pre">'exec'</span></tt> you get the same level of detail as if you would run it with <tt class="docutils literal"><span class="pre">'flat'</span></tt> but all the runs that would be running in parallel are shown at once.</p>
+<p>If you set <tt class="docutils literal"><span class="pre">graph2use</span></tt> to <tt class="docutils literal"><span class="pre">'exec'</span></tt> you get the same level of detail as if you would run it with <tt class="docutils literal"><span class="pre">'flat'</span></tt> but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: <cite>a0</cite>, <cite>a1</cite> and <cite>a2</cite></p>
+<img alt="_images/graph_detailed_exec-colored.png" src="_images/graph_detailed_exec-colored.png" style="width: 1134px;" />
 </div>
 </div>
 <div class="section" id="run-recon-all-with-nipype">

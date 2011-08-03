@@ -299,7 +299,7 @@
 </pre></div>
 </div>
 <p>The advanced connection example would as a detailed graph look like this:</p>
-<img alt="_images/example_node_connection.png" src="_images/example_node_connection.png" style="width: 1080px;" />
+<img alt="_images/example_node_connection.png" src="_images/example_node_connection.png" />
 <p>It is important to point out that you don&#8217;t just have to connect the nodes, but rather to connect the output and input fields of each node.</p>
 </div>
 <div class="section" id="connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines">
@@ -431,7 +431,7 @@
 </pre></div>
 </div>
 <p>To use the datagrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:</p>
-<img alt="_images/datastructure.png" src="_images/datastructure.png" style="width: 1080px;" />
+<img alt="_images/datastructure.png" src="_images/datastructure.png" style="width: 640px;" />
 <p>As you can see all the necessary data is stored in the experiment folder. The data of each subject is stored in its individual subject_folder. The name of this folder changes with each subject. There are two ways how you can define the structure of data you want to grab.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#to specify the location of the experiment folder</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="s">&#39;~/experiment_folder&#39;</span>
