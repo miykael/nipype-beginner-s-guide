@@ -1,0 +1,12 @@
+==========================
+Beginner's Guide to Nipype
+==========================
+
+.. toctree::
+   :maxdepth: 2
+
+   1_introduction
+   2_howToBuildAPipeline
+   3_preparedata
+   4_firstlevelexample
+   underConstruction
