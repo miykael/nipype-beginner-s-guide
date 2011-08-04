@@ -206,9 +206,9 @@
 <span class="n">realign</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">Realign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;realign&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The difference between a Node and a MapNode is explained <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html">here</a></p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The difference between a Node and a MapNode is explained in more detailed <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html">here</a></p>
 </div>
 </div>
 <div class="section" id="node-parameters">
@@ -520,6 +520,10 @@
 <p class="last">The name that you give the input-filed of the datasink node (here &#8216;bbregister&#8217; and &#8216;spm_mat_file&#8217;) will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.</p>
 </div>
 <p>The datasink node is really useful to keep control over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/config_file.html">Configuration File</a>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">For a more detailed explanation to Datainformation go to Datasource and Datasink, go to: <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html">DataGrabber and DataSink explained</a>.</p>
+</div>
 </div>
 <div class="section" id="model-specification">
 <h3>Model Specification<a class="headerlink" href="#model-specification" title="Permalink to this headline">¶</a></h3>

@@ -74,9 +74,9 @@ Before the parameters of a node can be specified they first have to be initiated
    import nipype.interfaces.spm as spm
    realign = pe.Node(interface=spm.Realign(), name='realign')
 
-.. note::
+.. hint::
 
-   The difference between a Node and a MapNode is explained `here <http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html>`_
+   The difference between a Node and a MapNode is explained in more detailed `here <http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html>`_
 
 
 Node Parameters
@@ -471,6 +471,12 @@ Sometimes you have some output you want to store at an easy accessible place so 
 
 
 The datasink node is really useful to keep control over your storage capacity. If you store all important files that you'll need for further analysis in this folder you can delete the ``workingdir`` of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to `Configuration File <http://www.mit.edu/~satra/nipype-nightly/users/config_file.html>`_.
+
+
+.. hint::
+   For a more detailed explanation to Datainformation go to Datasource and Datasink, go to: `DataGrabber and DataSink explained <http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html>`_.
+
+
 
 
 Model Specification

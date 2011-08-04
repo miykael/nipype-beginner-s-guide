@@ -9,6 +9,7 @@ Beginner's Guide to Nipype
    howToBuildAPipeline
    preparedata
    firstLevelExample
+   secondLevelExample
    underConstruction
 
 

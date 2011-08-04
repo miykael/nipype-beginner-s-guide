@@ -2,24 +2,24 @@
 Example of a first level analysis pipeline
 ==========================================
 
-This is an example of a simple first level analysis pipeline. This pipeline takes the raw nifti data, does some preprocessing (e.g. realignment and smoothing) which is followed by the estimation of the concrete model.
+This is an example of a simple first level analysis pipeline. This pipeline takes the raw nifti data, does some preprocessing (e.g. realignment, smoothing, etc.) and finally estimates the concrete model.
 
 .. note::
 
-   The normalization of the results to a common template will not be covered by this chapter. A brief instruction on how to normalize your date with ANTS will be given in a latter chapter.
+   The normalization of the results to a common template will not be done by this pipeline. A brief instruction on how to normalize your date with ANTS will be given in a latter chapter.
 
 Define structure of your pipeline
 =================================
 
 The best way to build your own pipeline is first to think about the workflow the data should go through. In this example we want to first run some preprocessing like `SliceTiming`, `Realignment`, `ArtifactDetection`, `BBRegister` and `Smoothing`. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing. All this will be accommodate in a **preprocess pipeline**. After that we want to estimate a concrete model by running first `SpecifyModel`, create a `Level1Design`, `EstimateModel` and finally `EstimateContrast`. This will be done in a **volume analysis pipeline**.
 
-The preprocess and the volume analysis pipeline together with the inputnode, will create the basic **framework workflow**. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I'd like to call **meta workflow**. Visualized this pipeline would look like the following:
+The preprocess and the volume analysis pipeline together with the inputnode, will create the basic **framework workflow**. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I'd like to call **meta workflow**. Visualized this pipeline would look like this:
 
 .. image:: metaworkflow.png
    :align: center
-   :width: 1080
+   :width: 756
 
-The connections between the nodes will make more sense once we look at the inputs a given node needs. Some may also ask why we haven't included the infosource, datagrabber and datasink nodes into the frameflow? The reason is that those nodes dependent highly on the paradigm specific parameters and will change for every model/experiment. That's why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.
+The connections between the nodes will make more sense once we look at the inputs the given nodes need. Some may also ask why we haven't included the infosource, datagrabber and datasink nodes into the frameflow? The reason is that those nodes  highly dependent on the paradigm specific parameters and will change for every model/experiment. That's why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.
 
 
 Write your pipeline script
@@ -68,7 +68,7 @@ I suggest to keep things that change often between versions, models, experiments
    fs.FSCommand.set_default_subjects_dir(subjects_dir)
 
 
-Those specification mean that the name of the subjectfolders are "subject1", "subject2" and "subject3" and that each of those folders contain a "func1.nii" and "func2.nii" file which represents the nifti files for the first and the second functional run. But the exact structure will be defined with the datagrabber node.
+Those specification mean that the name of the subjectfolders are "subject1", "subject2" and "subject3" and that each of those folders contain a "func1.nii" and "func2.nii" file which represents the nifti files for the first and the second functional run. But the exact structure of the folder will be later defined by the implementation of the datagrabber node.
 
 
 Define a pipeline for the preprocess
@@ -144,7 +144,7 @@ We first define the preprocess pipeline with a node for slicetiming, realignment
 
 .. note::
 
-   If you are wondering how we knew which parameters to specify and which connections to establish. It is simple: Define or connect all mandatory inputs for each node. All the other optional inputs can be defined as you please and more importantly as your model demands. For more informations go to `Interfaces and Algorithms <http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html>`_.
+   If you are wondering how we knew which parameters to specify and which connections to establish. It is simple: Define or connect all mandatory inputs for each node. All the other optional inputs can be set as you please and more importantly as your model demands. For more informations about what is mandatory and what not, go to `Interfaces and Algorithms <http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html>`_.
 
 
 Define a pipeline for the volume analysis
@@ -197,7 +197,7 @@ We than define the pipeline for the volume analysis with a node for model specif
 Define a framework workflow that contains the preprocess and the volume analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As we planed at the beginning we now want to integrate those two pipelines into a bigger framework workflow and want to add an inputnode that feeds these pipelines with parameters.
+As we planed at the beginning we now want to integrate those two pipelines into a bigger framework workflow and add an inputnode that feeds these pipelines with parameters.
 
 .. code-block:: py
 
@@ -233,7 +233,7 @@ As we planed at the beginning we now want to integrate those two pipelines into 
 Define infosource, datagrabber and datasink
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We now have to create the infosource that defines the subjectlist, the datagrabber that grabs the input and the datasink which defines where we want to store the important output at.
+We now have to create the infosource that defines the subjectlist, the datagrabber that grabs the inputs and the datasink which defines where we want to store the important outputs at.
 
 .. code-block:: py
 
@@ -332,9 +332,9 @@ We now set up the model specific components like contrasts, names of conditions,
 
 
 Define the meta pipeline
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-After setting up all the nodes, parameters and subpipelines, we now want to create the pipeline that contains everything. The one that gets executed at the end.
+After setting up all nodes, parameters and subpipelines, we now want to create the pipeline that contains everything. The one that gets executed at the end.
 
 .. code-block:: py
 
@@ -381,7 +381,7 @@ Finally, after everything is set up correctly we can run the pipeline and let it
 
 
 Visualization of the metaflow
-===========================================
+=============================
 
 Here are now the basic and the detailed graph of this example of our meta pipeline. Both graphs were created with the graph2use parameter set to 'flat'. The coloring was done additionally to underline the structure of the whole workflow.
 
@@ -402,4 +402,38 @@ The detailed graph shows how the different inputs and outputs of each individual
 .. image:: graph_first_detailed.png
    :align: center
    :width: 1080
+
+
+Adding Surface analysis part
+============================
+
+To run the first level analysis also on the surface, and not just on the volume, can be achived with just little more code.
+
+.. code-block:: py
+
+   surfanalysis = volanalysis.clone(name='surfanalysis')
+
+   frameflow.connect([(inputnode, surfanalysis,[('session_info','modelspec.subject_info'),
+                                                ('contrasts','contrastestimate.contrasts'),
+                                                ]),
+                      (preproc, surfanalysis, [('realign.realignment_parameters',
+                                                'modelspec.realignment_parameters'),
+                                               ('realign.realigned_files',
+                                                'modelspec.functional_runs'),
+                                               ('art.outlier_files',
+                                                'modelspec.outlier_files'),
+                                               ('dilate.out_file','level1design.mask_image'),
+                                               ]),
+                      ])
+
+   metaflow.connect([(frameflow,datasink,[('preproc.bbregister.out_reg_file',
+                                           'bbregister'),
+                                          ('surfanalysis.contrastestimate.spm_mat_file',
+                                           'surf_contrasts.@spm_mat'),
+                                          ('surfanalysis.contrastestimate.spmT_images',
+                                           'surf_contrasts.@T'),
+                                          ('surfanalysis.contrastestimate.con_images',
+                                           'surf_contrasts.@con'),
+                                          ])
+                     ])
 
