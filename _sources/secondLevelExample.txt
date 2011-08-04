@@ -75,71 +75,69 @@ First we have to import all necessary modules.
    ###################################
    
    l2flow = pe.Workflow(name='l2_surf')
-l2flow.base_dir = experiment_dir + nameOflevel2Out + '_surf'
+   l2flow.base_dir = experiment_dir + nameOflevel2Out + '_surf'
 
-#Setup a dummy node to iterate over contrasts and hemispheres
-l2inputnode = pe.Node(interface=util.IdentityInterface(fields=['contrasts','hemi']),
-                      name='inputnode')
-l2inputnode.iterables = [('contrasts', range(1,len(contrasts)+1)),
-                         ('hemi', ['lh','rh'])]
-                                   
-#Use a datagrabber node to collect contrast images and registration files
-l2source_surf = pe.Node(interface=nio.DataGrabber(infields=['con_id'],
-                                                  outfields=['con','reg']),
-                        name='l2source_surf')
-l2source_surf.inputs.base_directory = experiment_dir + '/' + nameOflevel1Out + '/'
-l2source_surf.inputs.template = '*'
-l2source_surf.inputs.field_template = dict(con='surf_contrasts/_subject_id_*/con_%04d.img',
-                                           reg='bbregister/_subject_id_*/*.dat')
-l2source_surf.inputs.template_args = dict(con=[['con_id']],reg=[[]])
+   #Setup a dummy node to iterate over contrasts and hemispheres
+   l2inputnode = pe.Node(interface=util.IdentityInterface(fields=['contrasts','hemi']),
+                         name='inputnode')
+   l2inputnode.iterables = [('contrasts', range(1,len(contrasts)+1)),
+                            ('hemi', ['lh','rh'])]
+                                       
+   #Use a datagrabber node to collect contrast images and registration files
+   l2source_surf = pe.Node(interface=nio.DataGrabber(infields=['con_id'],
+                                                     outfields=['con','reg']),
+                           name='l2source_surf')
+   l2source_surf.inputs.base_directory = experiment_dir + '/' + nameOflevel1Out + '/'
+   l2source_surf.inputs.template = '*'
+   l2source_surf.inputs.field_template = dict(con='surf_contrasts/_subject_id_*/con_%04d.img',
+                                              reg='bbregister/_subject_id_*/*.dat')
+   l2source_surf.inputs.template_args = dict(con=[['con_id']],reg=[[]])
 
-#Merge contrast images and registration files
-mergenode = pe.Node(interface=util.Merge(2, axis='hstack'),name='merge')
+   #Merge contrast images and registration files
+   mergenode = pe.Node(interface=util.Merge(2, axis='hstack'),name='merge')
 
-def ordersubjects(files, subj_list):
-    outlist = []
-    for s in subj_list:
-        for f in files:
-            if '/_subject_id_%s/'%s in f:
-                outlist.append(f)
-                continue
-    print outlist
-    return outlist
-
-   #Concatenate contrast images projected to fsaverage
-   l2concat = pe.Node(interface=fs.MRISPreproc(), name='concat')
-   l2concat.inputs.target = 'fsaverage'
-   l2concat.inputs.fwhm = 5
-   
-   def list2tuple(listoflist):
-       return [tuple(x) for x in listoflist]
-   
-   #Node: OneSampleTTest - Perform a one sample t-test
-   l2ttest = pe.Node(interface=fs.OneSampleTTest(), name='onesample')
-   
-   #Node: Datasink - Create a datasink node to store important outputs
-   datasink_2l = pe.Node(interface=nio.DataSink(), name="datasink_2l")
-   datasink_2l.inputs.base_directory = experiment_dir
-   datasink_2l.inputs.container = nameOflevel2Out[1:] + '_surf'
-   
-   #Create 2-level surf pipeline and connect up all components
-   l2flow.connect([(l2inputnode,l2source_surf,[('contrasts','con_id')]),
-                   (l2inputnode,l2concat,[('hemi','hemi')]),
-                   (l2source_surf,mergenode,[(('con', ordersubjects, subjects),'in1'),
-                                             (('reg', ordersubjects, subjects),'in2')]),
-                   (mergenode,l2concat,[(('out', list2tuple),'vol_measure_file')]),
-                   (l2concat,l2ttest,[('out_file','in_file')]),
-                   (l2ttest,datasink_2l,[('sig_file','sig_file')]),
-                   ])
-   
-
-   
-   ###############################################
-   """Run the pipeline and generate the graph""" #
-   ###############################################
-   
-   level2.write_graph(graph2use='flat')
-   level2.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
-   
-   #l2flow.write_graph(graph2use='flat')
-   #l2flow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+   def ordersubjects(files, subj_list):
+       outlist = []
+       for s in subj_list:
+           for f in files:
+               if '/_subject_id_%s/'%s in f:
+                   outlist.append(f)
+                   continue
+       print outlist
+       return outlist
+       #Concatenate contrast images projected to fsaverage
+      l2concat = pe.Node(interface=fs.MRISPreproc(), name='concat')
+      l2concat.inputs.target = 'fsaverage'
+      l2concat.inputs.fwhm = 5
+      
+      def list2tuple(listoflist):
+          return [tuple(x) for x in listoflist]
+      
+      #Node: OneSampleTTest - Perform a one sample t-test
+      l2ttest = pe.Node(interface=fs.OneSampleTTest(), name='onesample')
+      
+      #Node: Datasink - Create a datasink node to store important outputs
+      datasink_2l = pe.Node(interface=nio.DataSink(), name="datasink_2l")
+      datasink_2l.inputs.base_directory = experiment_dir
+      datasink_2l.inputs.container = nameOflevel2Out[1:] + '_surf'
+      
+      #Create 2-level surf pipeline and connect up all components
+      l2flow.connect([(l2inputnode,l2source_surf,[('contrasts','con_id')]),
+                      (l2inputnode,l2concat,[('hemi','hemi')]),
+                      (l2source_surf,mergenode,[(('con', ordersubjects, subjects),'in1'),
+                                                (('reg', ordersubjects, subjects),'in2')]),
+                      (mergenode,l2concat,[(('out', list2tuple),'vol_measure_file')]),
+                      (l2concat,l2ttest,[('out_file','in_file')]),
+                      (l2ttest,datasink_2l,[('sig_file','sig_file')]),
+                      ])
+      
+       
+      ###############################################
+      """Run the pipeline and generate the graph""" #
+      ###############################################
+      
+      level2.write_graph(graph2use='flat')
+      level2.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+      
+      #l2flow.write_graph(graph2use='flat')
+      #l2flow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
