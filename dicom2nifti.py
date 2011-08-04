@@ -24,7 +24,7 @@ data_dir_name = 'data'   #if the path to the data should be: '~SOMEPATH/experime
 """
 Define nodes to use
 """
-#Node: Infosource - we use IdentityInterface to creat our own node, to specify
+#Node: Infosource - we use IdentityInterface to create our own node, to specify
 #                   the list of subjects the pipeline should be executed on
 infosource = pe.Node(interface=util.IdentityInterface(fields=['subject_id']),
                                                       name="infosource")
@@ -91,7 +91,7 @@ for subject in subjects_list:
     from_path = os.path.join(prepareflow.base_dir,prepareflow.name,'_subject_id_%s'%subject,
                              dcminfo.name,dcminfo.inputs.dicom_info_file)
 
-    #specify where to store the  nifti_overview.txt file at
+    #specify where to store the nifti_overview.txt file at
     to_path = os.path.join(dicom2nifti.inputs.base_output_dir,subject)
 
     #with os.system('text') you're able to state the command 'text' in your terminal

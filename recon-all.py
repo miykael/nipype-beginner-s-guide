@@ -15,7 +15,7 @@ subjects_list = ['subject1','subject2','subject3','subject4']
 #Specification of the output folder - where the T1 file can be found
 data_dir_name = 'data'
  
-#Node: SubjectData - we use IdentityInterface to creat our own node, to specify
+#Node: SubjectData - we use IdentityInterface to create our own node, to specify
 #      the list of subjects the pipeline should be executed on
 infosource = pe.Node(interface=util.IdentityInterface(fields=['subject_id']),
                                                       name="infosource")
