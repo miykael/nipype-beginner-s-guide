@@ -21,12 +21,12 @@ body {
     letter-spacing: -0.01em;
     line-height: 150%;
     text-align: center;
-    background-color: #BFD1D4;
+    background-color: #505050;
     color: black;
     padding: 0;
-    border: 1px solid #aaa;
+    border: 1px solid #000000;
 
-    margin: 0px 80px 0px 80px;
+    margin: 5px 80px 5px 80px;
     min-width: 740px;
 }
 
@@ -39,7 +39,7 @@ div.document {
 
 div.bodywrapper {
     margin: 0 240px 0 0;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #505050;
 }
 
 div.body {
@@ -54,8 +54,8 @@ div.related {
 div.related ul {
     background-image: url(navigation.png);
     height: 2em;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #505050;
+    border-bottom: 1px solid #505050;
 }
 
 div.related ul li {
@@ -73,16 +73,16 @@ div.related ul li.right {
 div.related ul li a {
     margin: 0;
     padding: 0 5px 0 5px;
-    line-height: 1.75em;
-    color: #EE9816;
+    line-height: 2em;
+    color: #EE4B00;
 }
 
 div.related ul li a:hover {
-    color: #3CA8E7;
+    color: #2400D9;
 }
 
 div.sphinxsidebarwrapper {
-    padding: 0;
+    padding: 0px;
 }
 
 div.sphinxsidebar {
@@ -90,7 +90,7 @@ div.sphinxsidebar {
     padding: 0.5em 15px 15px 0;
     width: 210px;
     float: right;
-    font-size: 1em;
+    font-size: 14px;
     text-align: left;
 }
 
@@ -98,13 +98,13 @@ div.sphinxsidebar h3, div.sphinxsidebar h4 {
     margin: 1em 0 0.5em 0;
     font-size: 1em;
     padding: 0.1em 0 0.1em 0.5em;
-    color: white;
-    border: 1px solid #86989B;
-    background-color: #AFC1C4;
+    color: black;
+    border: 1px solid #000000;
+    background-color: #A2A2A2;
 }
 
 div.sphinxsidebar h3 a {
-    color: white;
+    color: black;
 }
 
 div.sphinxsidebar ul {
@@ -119,8 +119,8 @@ div.sphinxsidebar ul ul {
 }
 
 div.footer {
-    background-color: #E3EFF1;
-    color: #86989B;
+    background-color: #A2A2A2;
+    color: black;
     padding: 3px 8px 3px 0;
     clear: both;
     font-size: 0.8em;
@@ -128,8 +128,8 @@ div.footer {
 }
 
 div.footer a {
-    color: #86989B;
-    text-decoration: underline;
+    color: #2400D9;
+    text-decoration: none;
 }
 
 /* -- body styles ----------------------------------------------------------- */
@@ -139,34 +139,42 @@ p {
 }
 
 a {
-    color: #CA7900;
+    color: #EE4B00;
     text-decoration: none;
 }
 
 a:hover {
-    color: #2491CF;
+    color: #2400D9;
 }
 
 div.body a {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 h1 {
     margin: 0;
-    padding: 0.7em 0 0.3em 0;
-    font-size: 1.5em;
-    color: #11557C;
+    padding: 0.8em 0 0.4em 0;
+    font-size: 2em;
+    color: black;
 }
 
 h2 {
-    margin: 1.3em 0 0.2em 0;
-    font-size: 1.35em;
+    margin: 1em 0 0 0;
+    font-size: 1.5em;
     padding: 0;
+    color: #2400D9;
 }
 
 h3 {
-    margin: 1em 0 -0.3em 0;
-    font-size: 1.2em;
+    margin: 0.5em 0 0 0;
+    font-size: 1.3em;
+    color: #505050
+}
+
+h4 {
+    margin: 0.5em 0 -0.5em 0;
+    font-size: 1.1em;
+    color: black;
 }
 
 div.body h1 a, div.body h2 a, div.body h3 a, div.body h4 a, div.body h5 a, div.body h6 a {
@@ -212,9 +220,9 @@ cite, code, tt {
 }
 
 tt {
-    background-color: #f2f2f2;
+    background-color: #F2F2F2;
     border-bottom: 1px solid #ddd;
-    color: #333;
+    color: black;
 }
 
 tt.descname, tt.descclassname, tt.xref {
@@ -228,8 +236,8 @@ hr {
 
 a tt {
     border: 0;
-    color: #CA7900;
-}
+    color: #EE4B00;
+}	
 
 a tt:hover {
     color: #2491CF;
@@ -242,7 +250,7 @@ pre {
     letter-spacing: 0.015em;
     line-height: 120%;
     padding: 0.5em;
-    border: 1px solid #ccc;
+    border: 1px solid #505050;
     background-color: #f8f8f8;
 }
 
@@ -279,8 +287,8 @@ table td, table th {
 div.admonition, div.warning {
     font-size: 0.9em;
     margin: 1em 0 1em 0;
-    border: 1px solid #86989B;
-    background-color: #f7f7f7;
+    border: 1px solid #505050;
+    background-color: #d8d8d8;
     padding: 0;
 }
 
@@ -298,9 +306,9 @@ div.warning p.admonition-title {
     margin: 0;
     padding: 0.1em 0 0.1em 0.5em;
     color: white;
-    border-bottom: 1px solid #86989B;
+    border-bottom: 1px solid #505050;
     font-weight: bold;
-    background-color: #AFC1C4;
+    background-color: #505050;
 }
 
 div.warning {
