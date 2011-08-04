@@ -2,7 +2,7 @@
 Under construction
 ==================
 
-**Guide about a second level analysis, an example how to prepare your data, how to create some basic functional slice pictures and perhaps even how to use ANTS for normalization is still under construction.**
+**Guide about how to create some basic functional slice pictures, extracting structural and functional ROIs and perhaps even how to use ANTS for normalization is still under construction.**
 
 **It all will follow as soon as possible.**
 
