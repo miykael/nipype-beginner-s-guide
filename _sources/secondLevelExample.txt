@@ -1,57 +1,6 @@
-===========================
-How to create slice figures
-===========================
-
-TEXT wasi meine
-
-Title1
-======
-
-Text
-
-* **All consuming pipeline:**
-   * Infosource
-   * Datagrabber
-   * **Metaworkflow:**
-      * Inputnode (func, subject_id, session_info, contrasts)
-      * **Preprocess pipeline:**
-         * SliceTiming
-         * Realign
-         * ArtifactDetect
-         * BBRegister
-         * Smooth
-      * **Volume analysis pipeline:**
-         * SpecifyModel
-         * Level1Design
-         * EstimateModel
-         * EstimateContrast
-      * **Normalization pipeline:**
-         * MRIConvert
-         * FreeSurferSource
-         * Segment
-         * ApplyVolTransform
-         * Normalize
-   * Datasink
-
-
-Below I've visualized the structure of our pipeline and most of the connections
-between the nodes.
-
-.. image:: workflow.png
-   :width: 600 px
-
-
-.. note::
-
-   Some may ask  why we haven't included the infosource, datagrabber and datasink
-   nodes into the metaworkflow.
-
-   Because those nodes dependent highly on the paradigma specific parameters and
-   will change for every model we want to separat them from the metaworkflow which
-   will stay more or less the same for similar experiments. This does also give us
-   the opportunity to just import this metaworkflow from this script into a new
-   pipeline script and reuse it.
-
+==============================
+Example: Second Level Pipeline
+==============================
 
 Write pipeline script
 =====================

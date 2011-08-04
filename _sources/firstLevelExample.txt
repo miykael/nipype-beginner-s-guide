@@ -1,6 +1,6 @@
-==========================================
-Example of a first level analysis pipeline
-==========================================
+=============================
+Example: First Level Pipeline
+=============================
 
 This is an example of a simple first level analysis pipeline. This pipeline takes the raw nifti data, does some preprocessing (e.g. realignment, smoothing, etc.) and finally estimates the concrete model.
 
