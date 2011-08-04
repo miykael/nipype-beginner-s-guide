@@ -104,40 +104,41 @@ First we have to import all necessary modules.
                    outlist.append(f)
                    continue
        print outlist
-       return outlist
-       #Concatenate contrast images projected to fsaverage
-      l2concat = pe.Node(interface=fs.MRISPreproc(), name='concat')
-      l2concat.inputs.target = 'fsaverage'
-      l2concat.inputs.fwhm = 5
-      
-      def list2tuple(listoflist):
-          return [tuple(x) for x in listoflist]
-      
-      #Node: OneSampleTTest - Perform a one sample t-test
-      l2ttest = pe.Node(interface=fs.OneSampleTTest(), name='onesample')
-      
-      #Node: Datasink - Create a datasink node to store important outputs
-      datasink_2l = pe.Node(interface=nio.DataSink(), name="datasink_2l")
-      datasink_2l.inputs.base_directory = experiment_dir
-      datasink_2l.inputs.container = nameOflevel2Out[1:] + '_surf'
-      
-      #Create 2-level surf pipeline and connect up all components
-      l2flow.connect([(l2inputnode,l2source_surf,[('contrasts','con_id')]),
-                      (l2inputnode,l2concat,[('hemi','hemi')]),
-                      (l2source_surf,mergenode,[(('con', ordersubjects, subjects),'in1'),
-                                                (('reg', ordersubjects, subjects),'in2')]),
-                      (mergenode,l2concat,[(('out', list2tuple),'vol_measure_file')]),
-                      (l2concat,l2ttest,[('out_file','in_file')]),
-                      (l2ttest,datasink_2l,[('sig_file','sig_file')]),
-                      ])
-      
-       
-      ###############################################
-      """Run the pipeline and generate the graph""" #
-      ###############################################
-      
-      level2.write_graph(graph2use='flat')
-      level2.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
-      
-      #l2flow.write_graph(graph2use='flat')
-      #l2flow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+   return outlist
+
+   #Concatenate contrast images projected to fsaverage
+   l2concat = pe.Node(interface=fs.MRISPreproc(), name='concat')
+   l2concat.inputs.target = 'fsaverage'
+   l2concat.inputs.fwhm = 5
+
+   def list2tuple(listoflist):
+       return [tuple(x) for x in listoflist]
+
+   #Node: OneSampleTTest - Perform a one sample t-test
+   l2ttest = pe.Node(interface=fs.OneSampleTTest(), name='onesample')
+
+   #Node: Datasink - Create a datasink node to store important outputs
+   datasink_2l = pe.Node(interface=nio.DataSink(), name="datasink_2l")
+   datasink_2l.inputs.base_directory = experiment_dir
+   datasink_2l.inputs.container = nameOflevel2Out[1:] + '_surf'
+
+   #Create 2-level surf pipeline and connect up all components
+   l2flow.connect([(l2inputnode,l2source_surf,[('contrasts','con_id')]),
+                   (l2inputnode,l2concat,[('hemi','hemi')]),
+	               (l2source_surf,mergenode,[(('con', ordersubjects, subjects),'in1'),
+	                                         (('reg', ordersubjects, subjects),'in2')]),
+                   (mergenode,l2concat,[(('out', list2tuple),'vol_measure_file')]),
+                   (l2concat,l2ttest,[('out_file','in_file')]),
+	               (l2ttest,datasink_2l,[('sig_file','sig_file')]),
+	               ])
+
+
+   ###############################################
+   """Run the pipeline and generate the graph""" #
+   ###############################################
+
+   level2.write_graph(graph2use='flat')
+   level2.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+
+   #l2flow.write_graph(graph2use='flat')
+   #l2flow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
