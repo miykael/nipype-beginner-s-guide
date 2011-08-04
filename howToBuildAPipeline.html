@@ -223,7 +223,7 @@
 <ul class="simple">
 <li>check the section <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html">Interfaces and Algorithms</a> on the nipype homepage by clicking on the node you&#8217;re interested in</li>
 <li>use the help method of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.Smooth.help()</span></tt>)</li>
-<li>view the docstring of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.MCFLIRT?</span></tt>) which showes you the documentation and an example of an implementation in the command window.</li>
+<li>view the docstring of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.MCFLIRT?</span></tt>) which shows you the documentation and an example of an implementation in the command window.</li>
 </ul>
 </div>
 <div class="section" id="node-specification">
@@ -265,11 +265,11 @@
 <div class="highlight-py"><div class="highlight"><pre><span class="n">smooth</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Smooth</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>This is most of the time used if you want to test a node or if you want to use the nipype environment to run the different kind of algorithms without using them inside a pipeline. For example, it isn&#8217;t recommended to use the <tt class="docutils literal"><span class="pre">recon-all</span></tt> algorithm inside a pipeline or more extrem in parallel mode because of its computational and time costs. Nonetheless you can use Nipype to execute the recon-all process.</p>
+<p>This is most of the time used if you want to test a node or if you want to use the nipype environment to run the different kind of algorithms without using them inside a pipeline. For example, it isn&#8217;t recommended to use the <tt class="docutils literal"><span class="pre">recon-all</span></tt> algorithm inside a pipeline or more extreme in parallel mode because of its computational and time costs. Nonetheless you can use Nipype to execute the recon-all process.</p>
 </div>
 <div class="section" id="individual-nodes">
 <h4>Individual nodes<a class="headerlink" href="#individual-nodes" title="Permalink to this headline">¶</a></h4>
-<p>If you want to create an individual node by yourself that doesn&#8217;t use an algorithm of an interface already specified and you want to use the advantage of input and output fileds you can build your own node with the <tt class="docutils literal"><span class="pre">IdentityInterface</span></tt> method of the <tt class="docutils literal"><span class="pre">utility</span></tt> interface.</p>
+<p>If you want to create an individual node by yourself that doesn&#8217;t use an algorithm of an interface already specified and you want to use the advantage of input and output fields you can build your own node with the <tt class="docutils literal"><span class="pre">IdentityInterface</span></tt> method of the <tt class="docutils literal"><span class="pre">utility</span></tt> interface.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#import the utility interface</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>
 
@@ -290,7 +290,7 @@
 <div class="section" id="cloning">
 <h4>Cloning<a class="headerlink" href="#cloning" title="Permalink to this headline">¶</a></h4>
 <p>If you&#8217;ve already created a pipeline with all its connections and want to reuse it in another part of the workflow you can simply clone it with the <tt class="docutils literal"><span class="pre">clone</span></tt> method.</p>
-<p>For example, if you&#8217;ve already created an analysis pipeline for the workflow after a volume preprocess and want now to reuse this algorithm for the analysis of preprocessed sufacedata you can clone the volanalysis like this:</p>
+<p>For example, if you&#8217;ve already created an analysis pipeline for the workflow after a volume preprocess and want now to reuse this algorithm for the analysis of preprocessed surfacedata you can clone the volanalysis like this:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -390,7 +390,7 @@
 <p>This method will create two files:</p>
 <ul class="simple">
 <li><strong>graph.dot:</strong> which contains the general connections between nodes</li>
-<li><strong>graph_detailed.dot:</strong> which contains the detailed connections between nodes with the individual output and input fileds.</li>
+<li><strong>graph_detailed.dot:</strong> which contains the detailed connections between nodes with the individual output and input fields.</li>
 </ul>
 <p>If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere.</p>
 <p>You can also specify the deepness you want the graph to show by changing the argument <tt class="docutils literal"><span class="pre">graph2use</span></tt>:</p>
@@ -418,7 +418,7 @@
 </div>
 <div class="section" id="how-to-get-data-into-and-out-of-your-pipeline">
 <h2>How to get data into and out of your pipeline<a class="headerlink" href="#how-to-get-data-into-and-out-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>After constructing the framework of the pipeline in the previous section, we&#8217;re almost ready to execute the pipeline. But first we have to define the data we want to run the pipeline on and the results we want to get out of it. To do that we have to concider the following points:</p>
+<p>After constructing the framework of the pipeline in the previous section, we&#8217;re almost ready to execute the pipeline. But first we have to define the data we want to run the pipeline on and the results we want to get out of it. To do that we have to consider the following points:</p>
 <ol class="arabic simple">
 <li><strong>Infosource:</strong> to define the list of subjects on which the pipeline will be executed</li>
 <li><strong>Datasource:</strong> to grab the data you want to use and insert it into the pipeline</li>
@@ -466,7 +466,7 @@
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span><span class="p">[</span><span class="s">&#39;func&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;func1&#39;</span><span class="p">,</span><span class="s">&#39;func2&#39;</span><span class="p">]]]</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span><span class="p">[</span><span class="s">&#39;struct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;struct&#39;</span><span class="p">]]</span>
 
-<span class="c">#Second way: store all the arguments for the template in a dictionairy and ...</span>
+<span class="c">#Second way: store all the arguments for the template in a dictionary and ...</span>
 <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;func1&#39;</span><span class="p">,</span><span class="s">&#39;func2&#39;</span><span class="p">]]],</span>
             <span class="n">struct</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;struct&#39;</span><span class="p">]])</span>
 <span class="c">#... pass it to template_args.</span>
@@ -519,7 +519,7 @@
 <p class="first admonition-title">Note</p>
 <p class="last">The name that you give the input-filed of the datasink node (here &#8216;bbregister&#8217; and &#8216;spm_mat_file&#8217;) will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.</p>
 </div>
-<p>The datasink node is really usefull to keep controll over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not creat a workingdir at all. For more information go to <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/config_file.html">Configuration File</a>.</p>
+<p>The datasink node is really useful to keep control over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/config_file.html">Configuration File</a>.</p>
 </div>
 <div class="section" id="model-specification">
 <h3>Model Specification<a class="headerlink" href="#model-specification" title="Permalink to this headline">¶</a></h3>
@@ -600,7 +600,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A detailed instruction on how to set the model specific parameters can be found in the in the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/model_specification.html">Model Specification</a>    section.</p>
+<p class="last">A detailed instruction on how to set the model specific parameters can be found in the in the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/model_specification.html">Model Specification</a> section.</p>
 </div>
 </div>
 </div>
@@ -660,7 +660,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 04, 2011.
+      Last updated on August 05, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

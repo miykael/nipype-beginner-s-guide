@@ -13,7 +13,7 @@ Let us start with the conversion of the 3D dicoms into 4D nifti files.
 Import modules
 **************
 
-The first step of every pipeline is always to import all the necessary modules. In this case we only need the basic modules ``os``, ``util``, ``pipeline.engine`` and the ``freesurfer interfase``.
+The first step of every pipeline is always to import all the necessary modules. In this case we only need the basic modules ``os``, ``util``, ``pipeline.engine`` and the ``freesurfer interface``.
 
 .. code-block:: py
 
@@ -48,7 +48,7 @@ Let us now construct the three nodes we want to use to create our preparation pi
 
 .. code-block:: py
 
-   #Node: Infosource - we use IdentityInterface to creat our own node, to specify
+   #Node: Infosource - we use IdentityInterface to create our own node, to specify
    #                   the list of subjects the pipeline should be executed on
    infosource = pe.Node(interface=util.IdentityInterface(fields=['subject_id']),
                                                          name="infosource")
@@ -63,7 +63,7 @@ Now we define the main node for the data conversion, DICOMConvert.
    dicom2nifti = pe.Node(interface=fs.DICOMConvert(), name="dicom2nifti")
 
 
-If we now look at the secion nipype.interfaces.freesurfer.preprocess about the `DICOMConvert <http://www.mit.edu/~satra/nipype-nightly/interfaces/generated/nipype.interfaces.freesurfer.preprocess.html#dicomconvert>`_ node we see the following:
+If we now look at the section nipype.interfaces.freesurfer.preprocess about the `DICOMConvert <http://www.mit.edu/~satra/nipype-nightly/interfaces/generated/nipype.interfaces.freesurfer.preprocess.html#dicomconvert>`_ node we see the following:
 
 **[Mandatory]**
 ::
@@ -72,7 +72,7 @@ If we now look at the secion nipype.interfaces.freesurfer.preprocess about the `
   dicom_dir : (an existing directory name)
               dicom directory from which to convert dicom files
 
-Remember that the path to the dicoms changes from subject to subject. Therefore we can't declare the varible ``dicom_dir`` right away. But because we already have an ``infosource`` node, we will be able to overcome this problem when we establish the connections between the nodes. Let us first define the path to the output dir:
+Remember that the path to the dicoms changes from subject to subject. Therefore we can't declare the variable ``dicom_dir`` right away. But because we already have an ``infosource`` node, we will be able to overcome this problem when we establish the connections between the nodes. Let us first define the path to the output dir:
 
 .. code-block:: py
 
@@ -88,7 +88,7 @@ Now we have to specify the **optional** inputs ``file_mapping``, ``out_type`` an
    dicom2nifti.inputs.subject_dir_template = '%s'
 
 
-This ``dicom2nifti`` node will convert the dicoms into niftis and create a summary text file calles **shortinfo.txt** which contains most of the important informations about the dicoms:
+This ``dicom2nifti`` node will convert the dicoms into niftis and create a summary text file calls **shortinfo.txt** which contains most of the important informations about the dicoms:
 
 .. code-block:: none
 
@@ -108,7 +108,7 @@ This ``dicom2nifti`` node will convert the dicoms into niftis and create a summa
    10 epfid2d1_96 ge_functionals_125 578000-10-10.dcm
 
 
-But because we also want to know how many timepoints were acquired and what the resolution of the dicoms are we'll have to run a node called ``ParseDICOMDIR`` which gives us an output text file with the following content:
+But because we also want to know how many time points were acquired and what the resolution of the dicoms are we'll have to run a node called ``ParseDICOMDIR`` which gives us an output text file with the following content:
 
 .. code-block:: none
 
@@ -124,7 +124,7 @@ But because we also want to know how many timepoints were acquired and what the 
     585 578000-10-1.dcm  10 1     2 1   96  96  28  60    8.0000  30.0000 ge_functionals_125
 
 
-This output shows us that the T1-file has resoluiton of 256x256x176 and that the two functional runs, file 9 and 10, have 60 timepoints. Now, let us implement this ``ParseDICOMDir`` node.
+This output shows us that the T1-file has resolution of 256x256x176 and that the two functional runs, file 9 and 10, have 60 time points. Now, let us implement this ``ParseDICOMDir`` node.
 
 .. code-block:: py
 
@@ -244,7 +244,7 @@ After the connection of the nodes there is only one last thing to do. To actuall
 Clean up (optional)
 *******************
 
-After running the prepareflow we now have a folder called **data** that contains the converted nifti files. Additionally the pipeline has created a folder **workingdir_prepareflow** which contains alot of unnecessary outputs. But within this pile of data lie our ``nifti_overview.txt`` files for each subject, created by the ``dcminfo node``. That's why I would recommend to add some additional python code after the run command to save those outputs in the corresponding subject subfolders in the data folder.
+After running the prepareflow we now have a folder called **data** that contains the converted nifti files. Additionally the pipeline has created a folder **workingdir_prepareflow** which contains a lot of unnecessary outputs. But within this pile of data lie our ``nifti_overview.txt`` files for each subject, created by the ``dcminfo node``. That's why I would recommend to add some additional python code after the run command to save those outputs in the corresponding subject subfolders in the data folder.
 
 In our case the data we are interested in is in the folder ``'~SOMEPATH/experiment/workingdir_prepareflow/
 prepareflow/_subject_id_subject1/dcminfo'`` and we want to move it into ``'/mindhive/gablab/u/mnotter/Desktop/TEST/data/subject1'``. This can be accomplished with the following code:
@@ -258,7 +258,7 @@ prepareflow/_subject_id_subject1/dcminfo'`` and we want to move it into ``'/mind
        from_path = os.path.join(prepareflow.base_dir,prepareflow.name,'_subject_id_%s'%subject,
                                 dcminfo.name,dcminfo.inputs.dicom_info_file)
 
-       #specify where to store the  nifti_overview.txt file at
+       #specify where to store the nifti_overview.txt file at
        to_path = os.path.join(dicom2nifti.inputs.base_output_dir,subject)
 
        #with os.system('text') you're able to state the command 'text' in your terminal
@@ -283,16 +283,21 @@ To finally delete the workingdirectory of the prepare pipeline with all it's con
    os.system('rm -rf %s'%prepareflow.base_dir)
 
 
+.. hint::
+
+   The code to this section can be found here: `dicom2nifti.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/dicom2nifti.py>`_
+
+
 How to create and read graph.dot files
 ======================================
 
-After the connction of all nodes is established we are able to creat a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:
+After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:
 
 .. code-block:: py
 
    prepareflow.write_graph(graph2use='flat')
 
-There are different kinds of graphs you can creat. But basically there is a simple overview graph called graph.dot that shows you the basic connections between nodes. In the more detailed version which creates a graph_detailed.dot file you can also see which outputs and inputs are connected together.
+There are different kinds of graphs you can create. But basically there is a simple overview graph called graph.dot that shows you the basic connections between nodes. In the more detailed version which creates a graph_detailed.dot file you can also see which outputs and inputs are connected together.
 
 
 graph2use='flat' - graph.dot
@@ -348,7 +353,7 @@ First let us again import all necessary modules and specify the experiment speci
    #Specification of the output folder - where the T1 file can be found
    data_dir_name = 'data'
    
-   #Node: SubjectData - we use IdentityInterface to creat our own node, to specify
+   #Node: SubjectData - we use IdentityInterface to create our own node, to specify
    #      the list of subjects the pipeline should be executed on
    infosource = pe.Node(interface=util.IdentityInterface(fields=['subject_id']),
                                                          name="infosource")
@@ -379,7 +384,7 @@ Now we are ready to implement the pipeline and connection the ``infosource`` wit
 
 .. code-block:: py
 
-   #implementation of the workflow   
+   #implementation of the workflow
    reconflow = pe.Workflow(name="reconflow")
    reconflow.base_dir = experiment_dir + '/workingdir_reconflow'
    
@@ -401,3 +406,7 @@ Now we are ready to implement the pipeline and connection the ``infosource`` wit
    #to delete the workingdir of the reconflow we use again the shell-command "rm".
    #The important recon-all files are already stored in the "freesurfer_data" folder
    os.system('rm -rf %s'%reconflow.base_dir)
+
+.. hint::
+
+   The code to this section can be found here: `recon-all.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/recon-all.py>`_

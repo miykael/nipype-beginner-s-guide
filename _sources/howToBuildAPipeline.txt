@@ -93,7 +93,7 @@ But how can you find out what the possible inputs and outputs of a node are?
 
 * check the section `Interfaces and Algorithms <http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html>`_ on the nipype homepage by clicking on the node you're interested in
 * use the help method of a module in iPython (e.g. ``fsl.Smooth.help()``)
-* view the docstring of a module in iPython (e.g. ``fsl.MCFLIRT?``) which showes you the documentation and an example of an implementation in the command window.
+* view the docstring of a module in iPython (e.g. ``fsl.MCFLIRT?``) which shows you the documentation and an example of an implementation in the command window.
 
 
 Node Specification
@@ -148,13 +148,13 @@ If you want to run an algorithm without being a node or being a part of a pipeli
 
    smooth = spm.Smooth()
 
-This is most of the time used if you want to test a node or if you want to use the nipype environment to run the different kind of algorithms without using them inside a pipeline. For example, it isn't recommended to use the ``recon-all`` algorithm inside a pipeline or more extrem in parallel mode because of its computational and time costs. Nonetheless you can use Nipype to execute the recon-all process.
+This is most of the time used if you want to test a node or if you want to use the nipype environment to run the different kind of algorithms without using them inside a pipeline. For example, it isn't recommended to use the ``recon-all`` algorithm inside a pipeline or more extreme in parallel mode because of its computational and time costs. Nonetheless you can use Nipype to execute the recon-all process.
 
 
 Individual nodes
 ~~~~~~~~~~~~~~~~
 
-If you want to create an individual node by yourself that doesn't use an algorithm of an interface already specified and you want to use the advantage of input and output fileds you can build your own node with the ``IdentityInterface`` method of the ``utility`` interface.
+If you want to create an individual node by yourself that doesn't use an algorithm of an interface already specified and you want to use the advantage of input and output fields you can build your own node with the ``IdentityInterface`` method of the ``utility`` interface.
 
 .. code-block:: py
 
@@ -184,7 +184,7 @@ Cloning
 
 If you've already created a pipeline with all its connections and want to reuse it in another part of the workflow you can simply clone it with the ``clone`` method.
 
-For example, if you've already created an analysis pipeline for the workflow after a volume preprocess and want now to reuse this algorithm for the analysis of preprocessed sufacedata you can clone the volanalysis like this:
+For example, if you've already created an analysis pipeline for the workflow after a volume preprocess and want now to reuse this algorithm for the analysis of preprocessed surfacedata you can clone the volanalysis like this:
 
 .. code-block:: py
 
@@ -317,7 +317,7 @@ To visualize the flow of a pipeline you can use the method ``write_graph()``.
 This method will create two files:
 
 * **graph.dot:** which contains the general connections between nodes
-* **graph_detailed.dot:** which contains the detailed connections between nodes with the individual output and input fileds.
+* **graph_detailed.dot:** which contains the detailed connections between nodes with the individual output and input fields.
 
 If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere.
 
@@ -350,7 +350,7 @@ After setting everything up, the pipeline can be executed with ``run()``. You ca
 How to get data into and out of your pipeline
 =============================================
 
-After constructing the framework of the pipeline in the previous section, we're almost ready to execute the pipeline. But first we have to define the data we want to run the pipeline on and the results we want to get out of it. To do that we have to concider the following points:
+After constructing the framework of the pipeline in the previous section, we're almost ready to execute the pipeline. But first we have to define the data we want to run the pipeline on and the results we want to get out of it. To do that we have to consider the following points:
 
 1. **Infosource:** to define the list of subjects on which the pipeline will be executed
 2. **Datasource:** to grab the data you want to use and insert it into the pipeline
@@ -411,7 +411,7 @@ As you can see all the necessary data is stored in the experiment folder. The da
    datasource.inputs.template_args['func'] = [['subject_id', ['func1','func2']]]
    datasource.inputs.template_args['struct'] = [['subject_id','struct']]
 
-   #Second way: store all the arguments for the template in a dictionairy and ...
+   #Second way: store all the arguments for the template in a dictionary and ...
    info = dict(func=[['subject_id', ['func1','func2']]],
                struct=[['subject_id','struct']])
    #... pass it to template_args.
@@ -470,7 +470,7 @@ Sometimes you have some output you want to store at an easy accessible place so 
    The name that you give the input-filed of the datasink node (here 'bbregister' and 'spm_mat_file') will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.
 
 
-The datasink node is really usefull to keep controll over your storage capacity. If you store all important files that you'll need for further analysis in this folder you can delete the ``workingdir`` of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not creat a workingdir at all. For more information go to `Configuration File <http://www.mit.edu/~satra/nipype-nightly/users/config_file.html>`_.
+The datasink node is really useful to keep control over your storage capacity. If you store all important files that you'll need for further analysis in this folder you can delete the ``workingdir`` of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to `Configuration File <http://www.mit.edu/~satra/nipype-nightly/users/config_file.html>`_.
 
 
 Model Specification
@@ -561,7 +561,7 @@ Here we create a function that returns session specific information about the ex
 
 .. note::
 
-   A detailed instruction on how to set the model specific parameters can be found in the in the `Model Specification <http://www.mit.edu/~satra/nipype-nightly/users/model_specification.html>`_    section.
+   A detailed instruction on how to set the model specific parameters can be found in the in the `Model Specification <http://www.mit.edu/~satra/nipype-nightly/users/model_specification.html>`_ section.
 
 
 Connect new nodes to your pipeline
