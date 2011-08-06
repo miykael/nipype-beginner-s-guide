@@ -1,6 +1,7 @@
 """
 Prepare modules and important variables
 """
+
 import os                                    # system functions
 import nipype.interfaces.freesurfer as fs    # freesurfer
 import nipype.interfaces.utility as util     # utility
@@ -36,6 +37,7 @@ T1_identifier = 'struct.nii' #This is the name we manually gave the T1-file
 """
 Implement pipeline and connect its components
 """
+
 #implementation of the workflow   
 reconflow = pe.Workflow(name="reconflow")
 reconflow.base_dir = experiment_dir + '/workingdir_reconflow'

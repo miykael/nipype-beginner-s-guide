@@ -1,6 +1,7 @@
 """
 Import modules
 """
+
 import os                                    # system functions
 import nipype.interfaces.freesurfer as fs    # freesurfer
 import nipype.interfaces.utility as util     # utility
@@ -10,6 +11,7 @@ import nipype.pipeline.engine as pe          # pypeline engine
 """
 Define experiment specific parameters
 """
+
 #Specification of the folder where the dicom-files are located at
 experiment_dir = '~SOMEPATH/experiment'
 
@@ -24,6 +26,7 @@ data_dir_name = 'data'   #if the path to the data should be: '~SOMEPATH/experime
 """
 Define nodes to use
 """
+
 #Node: Infosource - we use IdentityInterface to create our own node, to specify
 #                   the list of subjects the pipeline should be executed on
 infosource = pe.Node(interface=util.IdentityInterface(fields=['subject_id']),
@@ -49,6 +52,7 @@ dcminfo.inputs.dicom_info_file = 'nifti_overview.txt'
 """
 Define pipeline
 """
+
 #Initiation of the preparation pipeline
 prepareflow = pe.Workflow(name="prepareflow")
   
@@ -59,6 +63,7 @@ prepareflow.base_dir = experiment_dir + '/workingdir_prepareflow'
 """
 Specify node connections
 """
+
 #Define pathfinder function
 def pathfinder(subject, foldername):
     import os
@@ -77,6 +82,7 @@ prepareflow.connect([(infosource, dicom2nifti,[('subject_id', 'subject_id')]),
 """
 Run pipeline and create graph
 """
+
 prepareflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 prepareflow.write_graph(graph2use='flat')
 
@@ -84,6 +90,7 @@ prepareflow.write_graph(graph2use='flat')
 """
 Clean up (optional)
 """
+
 #to run the loop for each subject
 for subject in subjects_list:
 
