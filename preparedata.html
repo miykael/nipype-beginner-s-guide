@@ -277,9 +277,9 @@ StudyTime 083819.578000
 <p>Now we can start with the connection of the nodes.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Connect all components</span>
 <span class="n">prepareflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">dicom2nifti</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                     <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">dicom2nifti</span><span class="p">,[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span> <span class="s">&#39;dicom_dir_name&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">dicom2nifti</span><span class="p">,[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span> <span class="n">dicom_dir_name</span><span class="p">),</span>
                                                  <span class="s">&#39;dicom_dir&#39;</span><span class="p">)]),</span>
-                     <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">dcminfo</span><span class="p">,[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span> <span class="s">&#39;dicom_dir_name&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">dcminfo</span><span class="p">,[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span> <span class="n">dicom_dir_name</span><span class="p">),</span>
                                              <span class="s">&#39;dicom_dir&#39;</span><span class="p">)]),</span>
                      <span class="p">])</span>
 </pre></div>

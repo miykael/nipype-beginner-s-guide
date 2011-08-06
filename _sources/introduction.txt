@@ -44,4 +44,8 @@ Before you can run a nipype python script make also sure to set up the necessary
     export SUBJECTS_DIR=/software/Freesurfer/5.1.0/subjects
     export MNI_DIR=/software/Freesurfer/5.1.0/mni
 
-After you've installed everything and set up all the necessary environment variables you can start iPython (command: ``ipython``), a strongly recommended interactive python environment. Now you're good to go!
+    #After you've installed everything and set up all the necessary
+    #environment variables you can start iPython
+    ipython
+
+**Now you're good to go!**
