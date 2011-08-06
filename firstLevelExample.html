@@ -87,7 +87,7 @@
 <li><a class="reference internal" href="#detailed-graph">Detailed graph</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#adding-surface-analysis-part">Adding Surface analysis part</a></li>
+<li><a class="reference internal" href="#adding-a-pipeline-for-the-surface-analysis">Adding a pipeline for the surface analysis</a></li>
 </ul>
 </li>
 </ul>
@@ -241,7 +241,7 @@
                  <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,[(</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">,</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">),</span>
                                 <span class="p">(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span><span class="s">&#39;mask_file&#39;</span><span class="p">),</span>
                                 <span class="p">]),</span>
-              <span class="p">])</span>
+                 <span class="p">])</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -470,7 +470,7 @@
 <div class="section" id="basic-graph">
 <h3>Basic graph<a class="headerlink" href="#basic-graph" title="Permalink to this headline">¶</a></h3>
 <p>The basic graph shows how the nodes are connected to each other.</p>
-<img alt="_images/graph_first_basic.png" class="align-center" src="_images/graph_first_basic.png" style="width: 1080px;" />
+<img alt="_images/graph_first_basic.png" class="align-center" src="_images/graph_first_basic.png" style="width: 810px;" />
 </div>
 <div class="section" id="detailed-graph">
 <h3>Detailed graph<a class="headerlink" href="#detailed-graph" title="Permalink to this headline">¶</a></h3>
@@ -478,11 +478,16 @@
 <img alt="_images/graph_first_detailed.png" class="align-center" src="_images/graph_first_detailed.png" style="width: 1080px;" />
 </div>
 </div>
-<div class="section" id="adding-surface-analysis-part">
-<h2>Adding Surface analysis part<a class="headerlink" href="#adding-surface-analysis-part" title="Permalink to this headline">¶</a></h2>
-<p>To run the first level analysis also on the surface, and not just on the volume, can be achived with just little more code.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
-
+<div class="section" id="adding-a-pipeline-for-the-surface-analysis">
+<h2>Adding a pipeline for the surface analysis<a class="headerlink" href="#adding-a-pipeline-for-the-surface-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Running the first level analysis also on the surface, and not just on the volume, can be achieved with just little more code. Because the <strong>surface analysis pipeline</strong> is similar to the one on the volume we can just clone the <strong>volume analysis pipeline</strong>:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#creates a clone of volanaylsis called surfanalysis</span>
+<span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we have to integrate this surfanalysis into the frameflow and into the metaflow. The connections are almost the same as they are for the <strong>volume analysis pipeline</strong>. In this example the only difference is that we don&#8217;t want to use smoothed data for the analysis on the surface because we will be smoothing the data latter on the second level surface analysis.</p>
+<p>This means instead of taking the smoothed files from the preprocess pipeline and feeding them to the <tt class="docutils literal"><span class="pre">modelspec</span></tt> node we will take the files directly from the <tt class="docutils literal"><span class="pre">realign</span></tt> node.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#integration  of the surfanalysis into the frameflow</span>
 <span class="n">frameflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">surfanalysis</span><span class="p">,[(</span><span class="s">&#39;session_info&#39;</span><span class="p">,</span><span class="s">&#39;modelspec.subject_info&#39;</span><span class="p">),</span>
                                              <span class="p">(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span><span class="s">&#39;contrastestimate.contrasts&#39;</span><span class="p">),</span>
                                              <span class="p">]),</span>
@@ -496,6 +501,7 @@
                                             <span class="p">]),</span>
                    <span class="p">])</span>
 
+<span class="c">#integration  of the surfanalysis into the metaflow</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">frameflow</span><span class="p">,</span><span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;preproc.bbregister.out_reg_file&#39;</span><span class="p">,</span>
                                         <span class="s">&#39;bbregister&#39;</span><span class="p">),</span>
                                        <span class="p">(</span><span class="s">&#39;surfanalysis.contrastestimate.spm_mat_file&#39;</span><span class="p">,</span>
@@ -507,6 +513,14 @@
                                        <span class="p">])</span>
                   <span class="p">])</span>
 </pre></div>
+</div>
+<p>Now that the <strong>surface analysis pipeline</strong> is integrated into the metaflow we can run the metaflow:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The code to a first level analysis on the volume and the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/recon-all.py">recon-all.py</a></p>
 </div>
 </div>
 </div>
@@ -535,7 +549,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 05, 2011.
+      Last updated on August 06, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

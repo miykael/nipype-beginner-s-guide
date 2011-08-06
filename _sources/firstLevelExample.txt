@@ -140,7 +140,7 @@ We first define the preprocess pipeline with a node for slicetiming, realignment
                     (realign, art,[('realignment_parameters','realignment_parameters'),
                                    ('mean_image','mask_file'),
                                    ]),
-                 ])
+                    ])
 
 .. note::
 
@@ -392,7 +392,7 @@ The basic graph shows how the nodes are connected to each other.
 
 .. image:: graph_first_basic.png
    :align: center
-   :width: 1080
+   :width: 810
 
 Detailed graph
 ~~~~~~~~~~~~~~
@@ -404,15 +404,23 @@ The detailed graph shows how the different inputs and outputs of each individual
    :width: 1080
 
 
-Adding Surface analysis part
-============================
+Adding a pipeline for the surface analysis
+==========================================
 
-To run the first level analysis also on the surface, and not just on the volume, can be achived with just little more code.
+Running the first level analysis also on the surface, and not just on the volume, can be achieved with just little more code. Because the **surface analysis pipeline** is similar to the one on the volume we can just clone the **volume analysis pipeline**:
 
 .. code-block:: py
 
+   #creates a clone of volanaylsis called surfanalysis
    surfanalysis = volanalysis.clone(name='surfanalysis')
 
+Now we have to integrate this surfanalysis into the frameflow and into the metaflow. The connections are almost the same as they are for the **volume analysis pipeline**. In this example the only difference is that we don't want to use smoothed data for the analysis on the surface because we will be smoothing the data latter on the second level surface analysis.
+
+This means instead of taking the smoothed files from the preprocess pipeline and feeding them to the ``modelspec`` node we will take the files directly from the ``realign`` node.
+
+.. code-block:: py
+
+   #integration  of the surfanalysis into the frameflow
    frameflow.connect([(inputnode, surfanalysis,[('session_info','modelspec.subject_info'),
                                                 ('contrasts','contrastestimate.contrasts'),
                                                 ]),
@@ -426,6 +434,7 @@ To run the first level analysis also on the surface, and not just on the volume,
                                                ]),
                       ])
 
+   #integration  of the surfanalysis into the metaflow
    metaflow.connect([(frameflow,datasink,[('preproc.bbregister.out_reg_file',
                                            'bbregister'),
                                           ('surfanalysis.contrastestimate.spm_mat_file',
@@ -437,3 +446,13 @@ To run the first level analysis also on the surface, and not just on the volume,
                                           ])
                      ])
 
+Now that the **surface analysis pipeline** is integrated into the metaflow we can run the metaflow:
+
+.. code-block:: py
+
+   metaflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+
+
+.. hint::
+
+   The code to a first level analysis on the volume and the surface can be found here: `recon-all.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/recon-all.py>`_

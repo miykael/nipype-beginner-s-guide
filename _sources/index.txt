@@ -10,6 +10,7 @@ Beginner's Guide to Nipype
    preparedata
    firstLevelExample
    secondLevelExample
+   regionOfInterest
    underConstruction
 
 
