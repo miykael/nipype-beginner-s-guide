@@ -72,9 +72,9 @@ def pathfinder(subject, foldername):
 
 #Connect all components
 prepareflow.connect([(infosource, dicom2nifti,[('subject_id', 'subject_id')]),
-                     (infosource, dicom2nifti,[(('subject_id', pathfinder, 'dicom_dir_name'),
+                     (infosource, dicom2nifti,[(('subject_id', pathfinder, dicom_dir_name),
                                                  'dicom_dir')]),
-                     (infosource, dcminfo,[(('subject_id', pathfinder, 'dicom_dir_name'),
+                     (infosource, dcminfo,[(('subject_id', pathfinder, dicom_dir_name),
                                              'dicom_dir')]),
                      ])
   
