@@ -3,6 +3,10 @@ How to extract region of interest (ROI)
 =======================================
 
 In this part we will learn how to extract statistical data from a strictly specified region or in other words our **region of interest (ROI)**.
+
+Anatomical vs. Functional ROI
+=============================
+
 We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the definition of the ROI-region.
 
 Anatomical ROI

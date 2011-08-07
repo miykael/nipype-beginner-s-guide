@@ -69,27 +69,30 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How to extract region of interest (ROI)</a><ul>
+<li><a class="reference internal" href="#anatomical-vs-functional-roi">Anatomical vs. Functional ROI</a><ul>
 <li><a class="reference internal" href="#anatomical-roi">Anatomical ROI</a></li>
-<li><a class="reference internal" href="#functional-roi">Functional ROI</a><ul>
-<li><a class="reference internal" href="#anatomical-rois">Anatomical ROIs</a></li>
+<li><a class="reference internal" href="#functional-roi">Functional ROI</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#anatomical-rois">Anatomical ROIs</a><ul>
 <li><a class="reference internal" href="#import-modules">Import modules</a></li>
 <li><a class="reference internal" href="#define-experiment-specific-parameters">Define experiment specific parameters</a></li>
 <li><a class="reference internal" href="#define-anatomical-regions-of-interest">Define anatomical regions of interest</a></li>
 <li><a class="reference internal" href="#define-of-nodes">Define of Nodes</a></li>
 <li><a class="reference internal" href="#definition-of-anatomical-roi-workflow">Definition of anatomical ROI workflow</a></li>
 <li><a class="reference internal" href="#run-pipeline-and-generate-graph">Run pipeline and generate graph</a></li>
-<li><a class="reference internal" href="#summarizing-the-output-in-a-cvs-file">Summarizing the output in a cvs-file</a><ul>
-<li><a class="reference internal" href="#functional-rois">Functional ROIs</a></li>
+<li><a class="reference internal" href="#summarizing-the-output-in-a-cvs-file">Summarizing the output in a cvs-file</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#functional-rois">Functional ROIs</a><ul>
 <li><a class="reference internal" href="#id2">Import modules</a></li>
 <li><a class="reference internal" href="#id3">Define experiment specific parameters</a></li>
 <li><a class="reference internal" href="#definition-of-nodes">Definition of Nodes</a></li>
 <li><a class="reference internal" href="#definition-of-functioanl-roi-workflow">Definition of functioanl ROI workflow</a></li>
 <li><a class="reference internal" href="#run-the-pipeline-and-generate-the-graph">Run the pipeline and generate the graph</a></li>
 <li><a class="reference internal" href="#id4">Summarizing the output in a cvs-file</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -128,10 +131,12 @@
             
   <div class="section" id="how-to-extract-region-of-interest-roi">
 <h1>How to extract region of interest (ROI)<a class="headerlink" href="#how-to-extract-region-of-interest-roi" title="Permalink to this headline">¶</a></h1>
-<p>In this part we will learn how to extract statistical data from a strictly specified region or in other words our <strong>region of interest (ROI)</strong>.
-We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the definition of the ROI-region.</p>
+<p>In this part we will learn how to extract statistical data from a strictly specified region or in other words our <strong>region of interest (ROI)</strong>.</p>
+<div class="section" id="anatomical-vs-functional-roi">
+<h2>Anatomical vs. Functional ROI<a class="headerlink" href="#anatomical-vs-functional-roi" title="Permalink to this headline">¶</a></h2>
+<p>We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the definition of the ROI-region.</p>
 <div class="section" id="anatomical-roi">
-<h2>Anatomical ROI<a class="headerlink" href="#anatomical-roi" title="Permalink to this headline">¶</a></h2>
+<h3>Anatomical ROI<a class="headerlink" href="#anatomical-roi" title="Permalink to this headline">¶</a></h3>
 <p>The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by <strong>Nipype</strong> as default is the <strong>FreeSurfer Color Table</strong>, which can be found <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT">here</a>.</p>
 <p>This colortable subdivides the brain in different anatomcial regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the <strong>2005</strong> region specification) or a more detailed specifciation categorie that divides the brain into +200 regions (the <strong>2009</strong> region specification)</p>
 <p><strong>Visualization of 2005 Segmentation</strong></p>
@@ -144,18 +149,18 @@ We will learn how to extract anatomical and functional ROIs, two ways of extract
 </div>
 </div>
 <div class="section" id="functional-roi">
-<h2>Functional ROI<a class="headerlink" href="#functional-roi" title="Permalink to this headline">¶</a></h2>
+<h3>Functional ROI<a class="headerlink" href="#functional-roi" title="Permalink to this headline">¶</a></h3>
 <p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exaclty what we will be doing in this script.</p>
 <p><strong>Visualization of a functional ROI</strong></p>
 <p>Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.</p>
 <img alt="_images/functionalROI.jpg" src="_images/functionalROI.jpg" style="width: 200px;" />
+</div>
+</div>
 <div class="section" id="anatomical-rois">
-<h3>Anatomical ROIs<a class="headerlink" href="#anatomical-rois" title="Permalink to this headline">¶</a></h3>
+<h2>Anatomical ROIs<a class="headerlink" href="#anatomical-rois" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s now begin with the creation of an <strong>anatomical ROI pipeline</strong>.</p>
-</div>
-</div>
 <div class="section" id="import-modules">
-<h2>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h2>
+<h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>    <span class="c"># freesurfer</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>           <span class="c"># i/o routines</span>
@@ -165,7 +170,7 @@ We will learn how to extract anatomical and functional ROIs, two ways of extract
 </div>
 </div>
 <div class="section" id="define-experiment-specific-parameters">
-<h2>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h2>
+<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
@@ -194,7 +199,7 @@ We will learn how to extract anatomical and functional ROIs, two ways of extract
 </div>
 </div>
 <div class="section" id="define-anatomical-regions-of-interest">
-<h2>Define anatomical regions of interest<a class="headerlink" href="#define-anatomical-regions-of-interest" title="Permalink to this headline">¶</a></h2>
+<h3>Define anatomical regions of interest<a class="headerlink" href="#define-anatomical-regions-of-interest" title="Permalink to this headline">¶</a></h3>
 <p>As mentioned above we are using the FreeSurfer Color Table to define the anatomical regions. This table can be found <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT">here</a>. Let&#8217;s assume that we want to extract the following regions:</p>
 <ul class="simple">
 <li>id: 1001 ; region xxxxxx ; from coding part 2005</li>
@@ -215,7 +220,7 @@ We will learn how to extract anatomical and functional ROIs, two ways of extract
 </div>
 </div>
 <div class="section" id="define-of-nodes">
-<h2>Define of Nodes<a class="headerlink" href="#define-of-nodes" title="Permalink to this headline">¶</a></h2>
+<h3>Define of Nodes<a class="headerlink" href="#define-of-nodes" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
 <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
@@ -278,7 +283,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 </div>
 <div class="section" id="definition-of-anatomical-roi-workflow">
-<h2>Definition of anatomical ROI workflow<a class="headerlink" href="#definition-of-anatomical-roi-workflow" title="Permalink to this headline">¶</a></h2>
+<h3>Definition of anatomical ROI workflow<a class="headerlink" href="#definition-of-anatomical-roi-workflow" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the ROI extraction workflow</span>
 <span class="n">aROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;aROIflow&#39;</span><span class="p">)</span>
 <span class="n">aROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">aROIWorkingdir</span>
@@ -302,7 +307,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 </div>
 <div class="section" id="run-pipeline-and-generate-graph">
-<h2>Run pipeline and generate graph<a class="headerlink" href="#run-pipeline-and-generate-graph" title="Permalink to this headline">¶</a></h2>
+<h3>Run pipeline and generate graph<a class="headerlink" href="#run-pipeline-and-generate-graph" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">aROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
 <span class="n">aROIflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
@@ -311,7 +316,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <img alt="_images/aROIgraph.jpg" src="_images/aROIgraph.jpg" style="width: 200px;" />
 </div>
 <div class="section" id="summarizing-the-output-in-a-cvs-file">
-<h2>Summarizing the output in a cvs-file<a class="headerlink" href="#summarizing-the-output-in-a-cvs-file" title="Permalink to this headline">¶</a></h2>
+<h3>Summarizing the output in a cvs-file<a class="headerlink" href="#summarizing-the-output-in-a-cvs-file" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
@@ -398,12 +403,12 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <p class="first admonition-title">Hint</p>
 <p class="last">The code for this anatomical ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py">aROIpipeline.py</a></p>
 </div>
+</div>
+</div>
 <div class="section" id="functional-rois">
-<h3>Functional ROIs<a class="headerlink" href="#functional-rois" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
+<h2>Functional ROIs<a class="headerlink" href="#functional-rois" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h2>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>    <span class="c"># freesurfer</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>           <span class="c"># i/o routines</span>
@@ -414,7 +419,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 </div>
 <div class="section" id="id3">
-<h2>Define experiment specific parameters<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h3>Define experiment specific parameters<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
@@ -440,7 +445,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 </div>
 <div class="section" id="definition-of-nodes">
-<h2>Definition of Nodes<a class="headerlink" href="#definition-of-nodes" title="Permalink to this headline">¶</a></h2>
+<h3>Definition of Nodes<a class="headerlink" href="#definition-of-nodes" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: SubjectData</span>
 <span class="n">infosource1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource1&quot;</span><span class="p">)</span>
 <span class="n">infosource1</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">)</span>
@@ -480,7 +485,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 </div>
 <div class="section" id="definition-of-functioanl-roi-workflow">
-<h2>Definition of functioanl ROI workflow<a class="headerlink" href="#definition-of-functioanl-roi-workflow" title="Permalink to this headline">¶</a></h2>
+<h3>Definition of functioanl ROI workflow<a class="headerlink" href="#definition-of-functioanl-roi-workflow" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
 <span class="n">fROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fROIflow&#39;</span><span class="p">)</span>
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">fROIWorkingdir</span>
@@ -497,14 +502,14 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 </div>
 <div class="section" id="run-the-pipeline-and-generate-the-graph">
-<h2>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h2>
+<h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">fROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id4">
-<h2>Summarizing the output in a cvs-file<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h3>Summarizing the output in a cvs-file<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;coordinations:&#39;</span><span class="p">,</span><span class="n">fROIcoordinations</span><span class="p">,</span><span class="s">&#39;sphereSize:&#39;</span><span class="p">,</span><span class="n">sphereSize</span><span class="p">])</span>
 
@@ -536,6 +541,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">The code for this functional ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py.py">fROIpipeline.py</a></p>
+</div>
 </div>
 </div>
 </div>
