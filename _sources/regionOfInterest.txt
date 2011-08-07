@@ -2,110 +2,172 @@
 How to extract region of interest (ROI)   
 =======================================
 
-TEXT wasi meine
+In this part we will learn how to extract statistical data from a strictly specified region or in other words our **region of interest (ROI)**.
+We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the definition of the ROI-region.
+
+Anatomical ROI
+~~~~~~~~~~~~~~
+
+The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by **Nipype** as default is the **FreeSurfer Color Table**, which can be found `here <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_.
+
+
+
+This colortable subdivides the brain in different anatomcial regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the **2005** region specification) or a more detailed specifciation categorie that divides the brain into +200 regions (the **2009** region specification)
+
+**Visualization of 2005 Segmentation**
+
+.. image:: 2005segmentation.png
+   :width: 810 px
+
+
+**Visualization of 2009 Segmentation**
+
+.. image:: 2009segmentation.png
+   :width: 810 px
+
+
+.. hint::
+
+   If you want to explore those regions by ourself I recommend to open a **FreeSurfer** capable viewing tool and overlay the ``fsaverage`` file with an annotation-file. More information how this is done can be found here: **MISSING_LINK**
+
+
+Functional ROI
+~~~~~~~~~~~~~~
+
+The region of functional ROIs is solely defined by what point in "brain"-space you are interested in. You're region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exaclty what we will be doing in this script.
+
+**Visualization of a functional ROI**
+
+Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.
+
+.. image:: functionalROI.jpg
+   :width: 810 px
 
 
 Anatomical ROIs
 ===============
 
+Let's now begin with the creation of an **anatomical ROI pipeline**.
+
+
+Import modules
+~~~~~~~~~~~~~~
 
 .. code-block:: py
 
-   """
-   Import modules
-   ==============
-   """
    import os                                    # system functions
    import nipype.interfaces.freesurfer as fs    # freesurfer
    import nipype.interfaces.io as nio           # i/o routines
    import nipype.interfaces.utility as util     # utility
    import nipype.pipeline.engine as pe          # pypeline engine
-   import numpy as np
-   
-   """
-   Define experiment specific parameters
-   =====================================
-   """
-   #To better access the parent folder of the experiment
-   experiment_dir = os.getcwd()
-   Workingdir = '/result/workingdir_ROI_diffHG'
-   ROIOutput =  'result/ROI_Output_diffHG'
-   
-   #name of the subjects, functional fiels and output folders
-   subjects = ['asens_4','asens_5','asens_6','asens_7','asens_8','asens_9',
-               'asens_10','asens_12','asens_13','asens_14','asens_15',
-               'asens_16','asens_17','asens_18','asens_19','asens_20','asens_21']
-   
-   contrasts = ['03','10','11']
-   
-   ROIregions = ['1001','2001','1030','2030','1031','2031','1034','2034','1035','2035','1135','2135','1136','2136']
-   
-   ROIregions2009 = ['11','50','12','51','11104','12104','11107','12107','11108','12108',
-                     '11117','12117','11118','12118','11126','12126','11133','12133','11134',
-                     '12134','11136','12136','11141','12141','11148','12148','11149','12149',
-                     '11150','12150','11174','12174','11175','12175']
-   
-   datasink_con_dir = 'level1_diff'
-   
-   nameOfFirstCondition = 'high1'
-   
-   #####################################################################################
-   #FREESURFER COLOR TABLE CAN BE FOUND HERE:
-   #http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT
-   
 
-   # Tell freesurfer what subjects directory to use
-   subjects_dir = experiment_dir + '/freesurfer'
-   fs.FSCommand.set_default_subjects_dir(subjects_dir)
-   
-   """
-   Define a ROI workflow
-   =====================
-   """
-   #Initiation of the ROI extraction workflow
-   ROIflow = pe.Workflow(name='ROIflow')
-   ROIflow.base_dir = experiment_dir + Workingdir
-   
-   #Node: SubjectData
-   infosource1 = pe.Node(interface=util.IdentityInterface(fields=['subject_id'],mandatory_inputs = False),
-                        name="infosource1")
-   infosource1.iterables = ('subject_id', subjects)
-   
-   infosource2 = pe.Node(interface=util.IdentityInterface(fields=['contrast_id'],mandatory_inputs = False),
-                        name="infosource2")
-   infosource2.iterables = ('contrast_id', contrasts)
-   
 
-   #Node: DataGrabber - To grab the input data
-   datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id','contrast_id'],outfields=['contrast','bb_id']),
+Define experiment specific parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
+
+   #to better access the parent folder of the experiment
+   experiment_dir = '~SOMEPATH/experiment'
+
+   ###   # Tell freesurfer what subjects directory to use
+   ###   subjects_dir = experiment_dir + '/freesurfer_data'
+   ###   fs.FSCommand.set_default_subjects_dir(subjects_dir)
+
+   #dirnames for anatomical ROI pipeline
+   aROIWorkingdir = '/result/aROI_workingdir' #location and name of workingdir
+   aROIOutput = 'result/aROI_Output'         #location and name of aROI datasink
+   l1contrastDir = 'level1_output'            #name of first level datasink
+   
+   #list of subjectnames
+   subjects = ['subject1', 'subject2', 'subject3']
+   
+   #list of contrastnumbers the pipeline should consider
+   contrasts = ['01','02','03','04','05']
+
+   ###   #name of the first condition from the first level pipeline
+   ###   nameOfFirstCondition = 'basic'
+   
+.. note::
+
+   The name of the first condition is necessary, because the bbregister file from the first level pipeline contains the name of the first condition in its name. E.g. if the first condition is named ``basic``, than the name of the bbregister file for the first subject would be: ``meanbasic_bbreg_subject1.dat')``
+
+Define anatomical regions of interest
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As mentioned above we are using the FreeSurfer Color Table to define the anatomical regions. This table can be found `here <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_. Let's assume that we want to extract the following regions:
+
+* id: 1001 ; region xxxxxx ; from coding part 2005
+* id: 2001 ; region xxxxxx ; from coding part 2005
+* id: 1030 ; region xxxxxx ; from coding part 2005
+* id: 2030 ; region xxxxxx ; from coding part 2005
+* id: 11 ; region xxxxxx ; from coding part 2009
+* id: 50 ; region xxxxxx ; from coding part 2009
+* id: 12 ; region xxxxxx ; from coding part 2009
+* id: 51 ; region xxxxxx ; from coding part 2009
+* id: 11104 ; region xxxxxx ; from coding part 2009
+* id: 12104 ; region xxxxxx ; from coding part 2009
+
+.. code-block:: py
+
+   #Specification of the regions from the 2005 and 2009 part of the FreeSurfer Color Table
+   ROIregions2005 = ['1001','2001','1030','2030']
+   ROIregions2009 = ['11','50','12','51','11104','12104']
+      
+
+Define of Nodes
+~~~~~~~~~~~~~~~
+
+.. code-block:: py
+
+   #Node: IdentityInterface - to iterate over subjects and contrasts
+   inputnode = pe.Node(interface=util.IdentityInterface(fields=['subject_id','contrast_id']),
+                       name='inputnode')
+   inputnode.iterables = [('subject_id', subjects),
+                          ('contrast_id', contrasts)]
+
+As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: '~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img' and the bbregister file for the first subject can be found at: '~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meancond1_bbreg_01.dat'
+Knowing this, we can build our ``datagrabber`` node as follows:
+
+.. code-block:: py
+
+   #Node: DataGrabber - to grab the input data
+   datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id','contrast_id'],
+                                                  outfields=['contrast','bb_id']),
                         name = 'datasource')
-   datasource.inputs.base_directory = experiment_dir
-   datasource.inputs.template = 'result/'+datasink_con_dir+'/%s/_subject_id_%s/%s%s%s'
+   datasource.inputs.base_directory = experiment_dir + 'result/' + l1contrastDir
+   datasource.inputs.template = '/%s/_subject_id_%s/%s%s%s'
    
    info = dict(contrast = [['vol_contrasts','subject_id','con_00','contrast_id','.img']],
-               bb_id = [['bbregister','subject_id','mean'+nameOfFirstCondition+'_bbreg_','subject_id','.dat']])
+               bb_id = [['bbregister','subject_id','mean'+nameOfFirstCondition+'_bbreg_',
+                         'subject_id','.dat']])
    
    datasource.inputs.template_args = info
    
-   #Node: FreeSurferSource
+Let's now continue with the implementation of the other nodes we need for our **anatomical ROI pipeline**.
+   
+.. code-block:: py
+
+   #Node: FreeSurferSource - to grab FreeSurfer files from the recon-all process
    fssource = pe.Node(interface=nio.FreeSurferSource(),name='fssource')
    fssource.inputs.subjects_dir = subjects_dir
    
-   #Node: MRIConvert
+   #Node: MRIConvert - to convert files from FreeSurfer format into nifti format
    MRIconversion = pe.Node(interface=fs.MRIConvert(),name='MRIconversion')
    MRIconversion.inputs.out_type = 'nii'
    
-   #Resample contrasts into anatomicale space - creating con_*.anat.bb.mgh
+   #Node: ApplyVolTransform - to transform contrasts into anatomicale space
+   #                          creats 'con_*.anat.bb.mgh' files
    transformation = pe.Node(interface=fs.ApplyVolTransform(),name='transformation')
    transformation.inputs.fs_target = True
    transformation.inputs.interp = 'nearest'
    
-   #Node: SegStats
-   segmentation = pe.Node(interface=fs.SegStats(),name='segmentation')
-   segmentation.inputs.color_table_file = '/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt'
-   segmentation.inputs.segment_id = ROIregions
+   #Node: SegStats2005 - to extract specified regions from the 2005 part of the color table
+   segmentation2005 = pe.Node(interface=fs.SegStats(),name='segmentation2005')
+   segmentation2005.inputs.color_table_file = '/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt'
+   segmentation2005.inputs.segment_id = ROIregions2005
    
-   #Node: SegStats2009
+   #Node: SegStats2009 - to extract specified regions from the 2009 part of the color table
    segmentation2009 = pe.Node(interface=fs.SegStats(),name='segmentation2009')
    segmentation2009.inputs.color_table_file = '/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt'
    segmentation2009.inputs.segment_id = ROIregions2009
@@ -113,42 +175,60 @@ Anatomical ROIs
    #Node: Datasink - Create a datasink node to store important outputs
    datasink = pe.Node(interface=nio.DataSink(), name="datasink")
    datasink.inputs.base_directory = experiment_dir
-   datasink.inputs.container = ROIOutput
+   datasink.inputs.container = aROIOutput 
    
    def getVersion(in_file, version):
        if version == 0:
           return in_file[0]
        else:
           return in_file[1]
-   
+
+
+Definition of anatomical ROI workflow
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
+
+   #Initiation of the ROI extraction workflow
+   aROIflow = pe.Workflow(name='aROIflow')
+   aROIflow.base_dir = experiment_dir + aROIWorkingdir
+
    #Connect up all components
-   ROIflow.connect([(infosource1, datasource,[('subject_id', 'subject_id')]),
-                    (infosource2, datasource,[('contrast_id', 'contrast_id')]),
-                    (infosource1, fssource,[('subject_id', 'subject_id')]),
-                    (fssource, segmentation,[(('aparc_aseg',getVersion,0), 'segmentation_file')]),
-                    (fssource, segmentation2009,[(('aparc_aseg',getVersion,1), 'segmentation_file')]),
-                    (datasource, MRIconversion,[('contrast', 'in_file')]),
-                    (MRIconversion, transformation,[('out_file', 'source_file')]),
-                    (datasource, transformation,[('bb_id', 'reg_file')]),
-                    (transformation, segmentation,[('transformed_file', 'in_file')]),
-                    (transformation, segmentation2009,[('transformed_file', 'in_file')]),
-                    (segmentation, datasink,[('summary_file', 'segstat')]),
-                    (segmentation2009, datasink,[('summary_file', 'segstat2009')]),
-                    ])
+   aROIflow.connect([(inputnode, datasource,[('subject_id', 'subject_id'),
+                                             ('contrast_id', 'contrast_id'),
+                                             ]),
+                     (inputnode, fssource,[('subject_id', 'subject_id')]),
+                     (fssource, segmentation2005,[(('aparc_aseg',getVersion,0), 'segmentation_file')]),
+                     (fssource, segmentation2009,[(('aparc_aseg',getVersion,1), 'segmentation_file')]),
+                     (datasource, MRIconversion,[('contrast', 'in_file')]),
+                     (MRIconversion, transformation,[('out_file', 'source_file')]),
+                     (datasource, transformation,[('bb_id', 'reg_file')]),
+                     (transformation, segmentation2005,[('transformed_file', 'in_file')]),
+                     (transformation, segmentation2009,[('transformed_file', 'in_file')]),
+                     (segmentation2005, datasink,[('summary_file', 'segstat')]),
+                     (segmentation2009, datasink,[('summary_file', 'segstat2009')]),
+                     ])
    
 
-   """
-   Run the pipeline and generate the graph
-   =======================================
-   """
-   ROIflow.write_graph(graph2use='flat')
-   ROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+Run pipeline and generate graph
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   
-   """
-   Summarizing the output in a cvs-file
-   ====================================
-   """
+.. code-block:: py
+
+   aROIflow.write_graph(graph2use='flat')
+   aROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+
+
+**Visualization of anatomical ROI pipeline**
+
+.. image:: aROIgraph.jpg
+   :width: 810 px
+
+
+Summarizing the output in a cvs-file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
    
    for contrast in contrasts:
    
@@ -161,8 +241,8 @@ Anatomical ROIs
        for subject in subjects:
    
            #Find the location of the two output files
-           statsFile = experiment_dir+'/'+ROIOutput+'/segstat/_contrast_id_'+contrast+'/_subject_id_'+subject+'/summary.stats'
-           statsFile2009 = experiment_dir+'/'+ROIOutput+'/segstat2009/_contrast_id_'+contrast+'/_subject_id_'+subject+'/summary.stats'
+           statsFile = experiment_dir+'/'+aROIOutput +'/segstat/_contrast_id_'+contrast+'/_subject_id_'+subject+'/summary.stats'
+           statsFile2009 = experiment_dir+'/'+aROIOutput +'/segstat2009/_contrast_id_'+contrast+'/_subject_id_'+subject+'/summary.stats'
    
            #Get the data from the two output files
            dataFile = open(statsFile, 'r')
@@ -223,7 +303,7 @@ Anatomical ROIs
    
 
        import csv
-       f = open(ROIOutput+'/ROI_'+contrast+'_result.csv','wb')
+       f = open(aROIOutput +'/ROI_'+contrast+'_result.csv','wb')
        outputFile = csv.writer(f)
    
        for line in output:
@@ -232,64 +312,59 @@ Anatomical ROIs
        f.close()
 
 
-Functional ROIs?
-================
+.. hint::
+
+   The code for this anatomical ROI pipeline can be found here: `aROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py>`_
+
+
+Functional ROIs
+===============
+
+Import modules
+~~~~~~~~~~~~~~
 
 .. code-block:: py
 
-   """
-   Import modules
-   ==============
-   """
    import os                                    # system functions
-   import nipype.interfaces.fsl as fsl
-   import nipype.interfaces.freesurfer as fs
+   import nipype.interfaces.freesurfer as fs    # freesurfer
    import nipype.interfaces.io as nio           # i/o routines
    import nipype.interfaces.utility as util     # utility
    import nipype.pipeline.engine as pe          # pypeline engine
-   import numpy as np
+   import nipype.interfaces.fsl as fsl          # fsl module
+
+
+Define experiment specific parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
+
+   #to better access the parent folder of the experiment
+   experiment_dir = '~SOMEPATH/experiment'
+
+   #dirnames for functional ROI pipeline
+   fROIWorkingdir = '/result/fROI_workingdir' #location and name of workingdir
+   fROIOutput = 'result/fROI_Output'          #location and name of fROI datasink
    
-   """
-   Define experiment specific parameters
-   =====================================
-   """
-   #To better access the parent folder of the experiment
-   experiment_dir = os.getcwd()
-   workingdir = '/result/workingdir_fROI_6b'
-   fROIOutput =  'result/fROI_Output_6b'
+   #list of subjectnames
+   subjects = ['subject1', 'subject2', 'subject3']
    
-   #name of the subjects, functional fiels and output folders
-   subjects = ['asens_4','asens_5','asens_6','asens_7','asens_8','asens_9',
-               'asens_10','asens_12','asens_13','asens_14','asens_15',
-               'asens_16','asens_17','asens_18','asens_19','asens_20','asens_21']
-   
-   contrasts = [10,11,3]
+   #list of contrastnumbers the pipeline should consider
+   contrasts = ['01','02','03','04','05']
+
+
    fROIcoordinations = [183,134,136]
    sphereSize = 3
-   
-   
-   #to find the peak use this code
-   """
-   import nipype.interfaces.fsl as fsl
-   cl = fsl.Cluster()
-   cl.inputs.threshold = 0
-   cl.inputs.in_file = '/mindhive/gablab/u/mnotter/att_sens/result/level2_diff/level2/_con_3/level2conestimate/spmT_0001.img'
-   cl.run()
-   """
-   
 
    #to calculate where the ROI beginns
    startROI = [fROIcoordinations[0]-sphereSize/2,
                fROIcoordinations[1]-sphereSize/2,
                fROIcoordinations[2]-sphereSize/2]
    
-   """
-   Define a ROI workflow
-   =====================
-   """
-   #Initiation of the fROI extraction workflow
-   fROIflow = pe.Workflow(name='fROIflow')
-   fROIflow.base_dir = experiment_dir + workingdir
+
+Definition of Nodes
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
    
    #Node: SubjectData
    infosource1 = pe.Node(interface=util.IdentityInterface(fields=['subject_id']),name="infosource1")
@@ -322,6 +397,21 @@ Functional ROIs?
    datasink = pe.Node(interface=nio.DataSink(), name="datasink")
    datasink.inputs.base_directory = experiment_dir
    datasink.inputs.container = fROIOutput
+
+
+.. note::
+
+   If you are interested in what command actually will be executed by the ``maths1`` node you just simplie can execute ``maths1.cmdline``. In this example this will give you the following output: ``blablabla``
+
+
+Definition of functioanl ROI workflow
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
+
+   #Initiation of the fROI extraction workflow
+   fROIflow = pe.Workflow(name='fROIflow')
+   fROIflow.base_dir = experiment_dir + fROIWorkingdir
    
    #Connect up all components
    fROIflow.connect([(maths1, maths2,[('out_file', 'in_file')]),
@@ -334,18 +424,19 @@ Functional ROIs?
    
    
 
-   """
-   Run the pipeline and generate the graph
-   =======================================
-   """
+Run the pipeline and generate the graph
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
+
    fROIflow.write_graph(graph2use='flat')
    fROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 4})
    
 
-   """
-   Summarizing the output in a cvs-file
-   ====================================
-   """
+Summarizing the output in a cvs-file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: py
 
    output = []
    output.append(['coordinations:',fROIcoordinations,'sphereSize:',sphereSize])
@@ -373,4 +464,9 @@ Functional ROIs?
    for line in output:
        outputFile.writerow(line)
    f.close()
+
+
+.. hint::
+
+   The code for this functional ROI pipeline can be found here: `fROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py.py>`_
 

@@ -55,7 +55,7 @@ I suggest to keep things that change often between versions, models, experiments
 .. code-block:: py
 
    #To better access the parent folder of the experiment
-   experiment_dir = os.getcwd()
+   experiment_dir = '~SOMEPATH/experiment'
 
    #name of the subjects, functional files and output folders
    subjects = ['subject1','subject2','subject3']
@@ -159,8 +159,8 @@ We than define the pipeline for the volume analysis with a node for model specif
 
    #Node: SpecifyModel - Generate SPM-specific design information
    modelspec = pe.Node(interface=model.SpecifySparseModel(), name= "modelspec")
-   modelspec.inputs.input_units             = 'secs'
-   modelspec.inputs.time_repetition         = 8.
+   modelspec.inputs.input_units = 'secs'
+   modelspec.inputs.time_repetition = 8.
    modelspec.inputs.high_pass_filter_cutoff = 128
    modelspec.inputs.model_hrf = True
    modelspec.inputs.scale_regressors = True
@@ -455,4 +455,4 @@ Now that the **surface analysis pipeline** is integrated into the metaflow we ca
 
 .. hint::
 
-   The code to a first level analysis on the volume and the surface can be found here: `firstlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py>`_
+   The code for a first level analysis on the volume and the surface can be found here: `firstlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py>`_

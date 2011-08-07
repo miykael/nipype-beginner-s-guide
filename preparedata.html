@@ -159,7 +159,7 @@
 </div>
 <div class="section" id="define-nodes-to-use">
 <h3>Define nodes to use<a class="headerlink" href="#define-nodes-to-use" title="Permalink to this headline">¶</a></h3>
-<p>Let us now construct the three nodes we want to use to create our preparation pipeline. First we need to define the infosource-node which specifies on which subjects the workflow is run on.</p>
+<p>Let us now construct the three nodes we want to use to create our preparation pipeline. First we need to define the infosource node which specifies on which subjects the workflow is run on.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: Infosource - we use IdentityInterface to create our own node, to specify</span>
 <span class="c">#                   the list of subjects the pipeline should be executed on</span>
 <span class="n">infosource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span>
@@ -246,7 +246,6 @@ StudyTime 083819.578000
 <h3>Specify node connections<a class="headerlink" href="#specify-node-connections" title="Permalink to this headline">¶</a></h3>
 <p>Now we&#8217;ve defined all the nodes and implemented the preparation pipeline. The only thing missing is the connection of the different nodes in the pipeline. But before we can do this, it is important to be aware about outputs, that get created and the inputs that have to be provided and more importantly how they look like.</p>
 <div class="line-block">
-<div class="line"><br /></div>
 <div class="line"><strong>infosource</strong>:</div>
 <div class="line">This node provides an output called <tt class="docutils literal"><span class="pre">subject_id</span></tt> that is either</div>
 <div class="line"><tt class="docutils literal"><span class="pre">'subject1'</span></tt>,</div>
@@ -485,7 +484,7 @@ StudyTime 083819.578000
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 06, 2011.
+      Last updated on August 08, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

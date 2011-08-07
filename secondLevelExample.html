@@ -69,8 +69,28 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Example: Second Level Pipeline</a><ul>
-<li><a class="reference internal" href="#write-pipeline-script">Write pipeline script</a><ul>
+<li><a class="reference internal" href="#preparation">Preparation</a><ul>
 <li><a class="reference internal" href="#import-modules">Import modules</a></li>
+<li><a class="reference internal" href="#define-experiment-specific-parameters">Define experiment specific parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#analysis-on-the-volume">Analysis on the Volume</a><ul>
+<li><a class="reference internal" href="#grab-the-data">Grab the data</a></li>
+<li><a class="reference internal" href="#define-nodes">Define nodes</a></li>
+<li><a class="reference internal" href="#establish-a-second-level-volume-pipeline">Establish a second level volume pipeline</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#analysis-on-the-surface">Analysis on the Surface</a><ul>
+<li><a class="reference internal" href="#id1">Grab the data</a></li>
+<li><a class="reference internal" href="#id2">Define nodes</a></li>
+<li><a class="reference internal" href="#establish-a-second-level-surface-pipeline">Establish a second level surface pipeline</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#datasink-optional">Datasink (optional)</a></li>
+<li><a class="reference internal" href="#run-pipeline">Run pipeline</a></li>
+<li><a class="reference internal" href="#visualization">Visualization</a><ul>
+<li><a class="reference internal" href="#second-level-volume-pipeline">Second Level Volume Pipeline</a></li>
+<li><a class="reference internal" href="#second-level-surface-pipeline">Second Level Surface Pipeline</a></li>
 </ul>
 </li>
 </ul>
@@ -111,141 +131,236 @@
             
   <div class="section" id="example-second-level-pipeline">
 <h1>Example: Second Level Pipeline<a class="headerlink" href="#example-second-level-pipeline" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="write-pipeline-script">
-<h2>Write pipeline script<a class="headerlink" href="#write-pipeline-script" title="Permalink to this headline">¶</a></h2>
-<p>Now that we have defined how the structure of our pipeline and the connections
-should be we can start with writing the pipeline script.</p>
+<p>In this example you will learn how to do a <strong>second level analysis</strong> on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines seperately.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before we can run the <strong>second level analysis</strong> on the volume we have to normalize the estimated volume contrasts from the first level pipeline into a common subject space. One method how you can achieve this will be covered in the chapter about ANTS.
+This normalization isn&#8217;t required for a <strong>second level analysis</strong> on the surface. Because the second level surface analysis will be done with FreeSurfer, we can use the subject specific informations won from the recon-all process.</p>
+</div>
+<div class="section" id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
+<p>It doesn&#8217;t matter if you are running you&#8217;re analysis only on the volume, on the surface or both. As always we&#8217;re beginning by importing the necessary modules and implementation of the experiment specific parameters.</p>
 <div class="section" id="import-modules">
 <h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
-<p>First we have to import all necessary modules.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">##################################</span>
-<span class="sd">&quot;&quot;&quot;Setup level 2 vol pipeline&quot;&quot;&quot;</span> <span class="c">#</span>
-<span class="c">##################################</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span> <span class="c"># freesurfer</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>        <span class="c"># i/o routines</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>       <span class="c"># spm</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>  <span class="c"># utility</span>
+<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>       <span class="c"># pypeline engine</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-experiment-specific-parameters">
+<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
-<span class="c"># collect all the con images for each contrast.</span>
-<span class="n">contrast_ids</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">contrasts</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">l2source</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2source&quot;</span><span class="p">)</span>
-<span class="n">l2source</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span><span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/asens_normbrains_diff/asens_*/normcons/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
-<span class="n">l2source</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="n">contrast_ids</span><span class="p">)]</span> <span class="c"># iterate over all contrast images</span>
+<span class="c">#list of subjectnames</span>
+<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span> <span class="s">&#39;subject2&#39;</span><span class="p">,</span> <span class="s">&#39;subject3&#39;</span><span class="p">]</span>
 
-<span class="c">#Node: OneSampleTTest - to perform a simple statistical analysis of the contrasts from the group of subjects</span>
-<span class="n">onesamplettestdes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">OneSampleTTestDesign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;onesampttestdes&quot;</span><span class="p">)</span>
+<span class="c">#second level analysis pipeline specific components</span>
+<span class="n">level2Dir</span> <span class="o">=</span> <span class="s">&#39;results/level2&#39;</span>
+<span class="n">numberOfContrasts</span> <span class="o">=</span> <span class="mi">5</span> <span class="c">#number of contrasts you specified in the first level analysis</span>
+<span class="n">contrast_ids</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">numberOfContrasts</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c">#to create a list with value [1,2,3,4,5]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to only analyse the 3rd and 4th contrasts, you could specify <tt class="docutils literal"><span class="pre">contrast_ids</span></tt> as <tt class="docutils literal"><span class="pre">range(3,5)</span></tt> which would create the list <tt class="docutils literal"><span class="pre">[3,4]</span></tt></p>
+</div>
+</div>
+</div>
+<div class="section" id="analysis-on-the-volume">
+<h2>Analysis on the Volume<a class="headerlink" href="#analysis-on-the-volume" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="grab-the-data">
+<h3>Grab the data<a class="headerlink" href="#grab-the-data" title="Permalink to this headline">¶</a></h3>
+<p>As always we first have to specify where the datagrabber node can find the data. Le&#8217;s assume that we have stored our normalized estimated volume contrasts at &#8216;~SOMEPATH/experiment/result/level1_output/subject_name/normcons/&#8217;. This means the third contrast of the second subject would be at: &#8216;~SOMEPATH/experiment/result/level1_output/subject2/normcons/con_0001.nii&#8217;</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect all the con images for each contrast</span>
+<span class="n">l2volSource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2volSource&quot;</span><span class="p">)</span>
+<span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/result/level1_output/subject*/normcons/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
+<span class="n">l2volSource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="n">contrast_ids</span><span class="p">)]</span> <span class="c"># iterate over all contrast images</span>
+</pre></div>
+</div>
+<p>You might be confused with the asterisk in <tt class="docutils literal"><span class="pre">l2volSource.inputs.template</span></tt> and that we didn&#8217;t iterated over the subjects. This is because of the nature of a second level analysis. We take all estimated contrasts of each subject at once into the analysis, therefore the asterisk. We only have to iterate the conditions e.g. the number of the contrasts.</p>
+</div>
+<div class="section" id="define-nodes">
+<h3>Define nodes<a class="headerlink" href="#define-nodes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: OneSampleTTest - to perform an one sample t-test analysis</span>
+<span class="n">oneSampleTTestDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">OneSampleTTestDesign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;oneSampleTTestDes&quot;</span><span class="p">)</span>
 
-<span class="c">#Node: MultipleRegressionDesign - to perform a simple statistical analysis of the contrasts from the group of subjects</span>
-<span class="c">#multipleRegDes = pe.Node(interface=spm.MultipleRegressionDesign(), name=&quot;multipleRegDes&quot;)</span>
-<span class="c">#multipleRegDes.inputs.covariates = [dict(vector=[-0.301,0.521,1.759,0.097,1.388,0.445,0.304,2.421,1.595,-0.276,0.361,0.301,1.506,0.985,-1.039],</span>
-<span class="c">#                                         name=&#39;metric_dprime_diff&#39;),</span>
-<span class="c">#                                    dict(vector=[1.555,1.806,0.767,1.5,1.878,0.582,0.99,0.574,2.12,3.423,0.909,0.783,-0.33,2.549,1.857],</span>
-<span class="c">#                                         name=&#39;diff_dprime_diff&#39;)]</span>
-
-<span class="c">#Node: EstimateModel</span>
-<span class="n">l2estimate</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">EstimateModel</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;level2estimate&quot;</span><span class="p">)</span>
+<span class="c">#Node: EstimateModel - to estimate the model</span>
+<span class="n">l2estimate</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">EstimateModel</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2estimate&quot;</span><span class="p">)</span>
 <span class="n">l2estimate</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">estimation_method</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Classical&#39;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
 
-<span class="c">#Node: EstimateContrast</span>
-<span class="n">l2conestimate</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">EstimateContrast</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;level2conestimate&quot;</span><span class="p">)</span>
+<span class="c">#Node: EstimateContrast - to estimate the contrast (in this example just one)</span>
+<span class="n">l2conestimate</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">EstimateContrast</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2conestimate&quot;</span><span class="p">)</span>
 <span class="n">cont1</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Group&#39;</span><span class="p">,</span><span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">l2conestimate</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="n">cont1</span><span class="p">]</span>
 <span class="n">l2conestimate</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">group_contrast</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="c">#Node: Threshold</span>
+<span class="c">#Node: Threshold - to threshold the estimated contrast</span>
 <span class="n">level2thresh</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Threshold</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;level2thresh&quot;</span><span class="p">)</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">contrast_index</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c">#mandatory - contrast_index : (an integer) which contrast in the SPM.mat to use</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_fdr_p_threshold</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">height_threshold</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_threshold</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">contrast_index</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_fwe_correction</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_topo_fdr</span> <span class="o">=</span> <span class="bp">True</span>
-
-<span class="c">#Create 2-level pipeline and connect up all components</span>
-<span class="n">level2</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;level2&quot;</span><span class="p">)</span>
-<span class="n">level2</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">nameOflevel2Out</span>
-<span class="n">level2</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">l2source</span><span class="p">,</span><span class="n">onesamplettestdes</span><span class="p">,[(</span><span class="s">&#39;outfiles&#39;</span><span class="p">,</span><span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">onesamplettestdes</span><span class="p">,</span><span class="n">l2estimate</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">l2estimate</span><span class="p">,</span><span class="n">l2conestimate</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
-                                           <span class="p">(</span><span class="s">&#39;beta_images&#39;</span><span class="p">,</span><span class="s">&#39;beta_images&#39;</span><span class="p">),</span>
-                                           <span class="p">(</span><span class="s">&#39;residual_image&#39;</span><span class="p">,</span><span class="s">&#39;residual_image&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">l2conestimate</span><span class="p">,</span> <span class="n">level2thresh</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
-                                              <span class="p">(</span><span class="s">&#39;spmT_images&#39;</span><span class="p">,</span><span class="s">&#39;stat_image&#39;</span><span class="p">),</span>
+<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_threshold</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c">#voxel threshold</span>
+<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_fdr_p_threshold</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="c">#cluster threshold (value is in -ln()): 1.301 = 0.05; 2 = 0.01; 3 = 0.001,</span>
+<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">height_threshold</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Of course you can all different kinds of statistical analysis. Another example beside a one sample t-test would be multiple regression analysis. Such a node would look this:</p>
+<div class="last highlight-py"><div class="highlight"><pre><span class="c">#Node: MultipleRegressionDesign - to perform a multiple regression analysis</span>
+<span class="n">multipleRegDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">MultipleRegressionDesign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;multipleRegDes&quot;</span><span class="p">)</span>
+<span class="n">multipleRegDes</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">covariates</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.30</span><span class="p">,</span><span class="mf">0.52</span><span class="p">,</span><span class="mf">1.75</span><span class="p">],</span> <span class="c">#regressor1 for 3 subjects</span>
+                                         <span class="n">name</span><span class="o">=</span><span class="s">&#39;nameOfRegressor1&#39;</span><span class="p">),</span>
+                                    <span class="nb">dict</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="p">[</span><span class="mf">1.55</span><span class="p">,</span><span class="o">-</span><span class="mf">1.80</span><span class="p">,</span><span class="mf">0.77</span><span class="p">],</span> <span class="c">#regressor2 for 3 subjects</span>
+                                         <span class="n">name</span><span class="o">=</span><span class="s">&#39;nameOfRegressor2&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="establish-a-second-level-volume-pipeline">
+<h3>Establish a second level volume pipeline<a class="headerlink" href="#establish-a-second-level-volume-pipeline" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Create 2-level vol pipeline and connect up all components</span>
+<span class="n">l2volflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;l2volflow&quot;</span><span class="p">)</span>
+<span class="n">l2volflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">level2Dir</span> <span class="o">+</span> <span class="s">&#39;_vol&#39;</span>
+<span class="n">l2volflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">l2volSource</span><span class="p">,</span><span class="n">onesamplettestdes</span><span class="p">,[(</span><span class="s">&#39;outfiles&#39;</span><span class="p">,</span><span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
+                   <span class="p">(</span><span class="n">onesamplettestdes</span><span class="p">,</span><span class="n">l2estimate</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
+                   <span class="p">(</span><span class="n">l2estimate</span><span class="p">,</span><span class="n">l2conestimate</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
+                                              <span class="p">(</span><span class="s">&#39;beta_images&#39;</span><span class="p">,</span><span class="s">&#39;beta_images&#39;</span><span class="p">),</span>
+                                              <span class="p">(</span><span class="s">&#39;residual_image&#39;</span><span class="p">,</span><span class="s">&#39;residual_image&#39;</span><span class="p">)</span>
                                               <span class="p">]),</span>
+                   <span class="p">(</span><span class="n">l2conestimate</span><span class="p">,</span> <span class="n">l2volflowthresh</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
+                                                    <span class="p">(</span><span class="s">&#39;spmT_images&#39;</span><span class="p">,</span><span class="s">&#39;stat_image&#39;</span><span class="p">),</span>
+                                                    <span class="p">]),</span>
+                   <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="analysis-on-the-surface">
+<h2>Analysis on the Surface<a class="headerlink" href="#analysis-on-the-surface" title="Permalink to this headline">¶</a></h2>
+<p>An important difference between the format of the volume and the surface data is, that the surface data are img-files and are seperated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left (&#8216;lh&#8217;) and the right (&#8216;rh&#8217;) hemisphere.</p>
+<div class="section" id="id1">
+<h3>Grab the data<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned above, our <strong>second level surface pipeline</strong> does have to iterate over the different contrasts <strong>and</strong> the left and right hemisphere. This can be done with the usual individually defined <tt class="docutils literal"><span class="pre">IdentityInterface</span></tt> node.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over contrasts and hemispheres</span>
+<span class="n">l2surfinputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span><span class="s">&#39;hemi&#39;</span><span class="p">]),</span>
+                          <span class="n">name</span><span class="o">=</span><span class="s">&#39;l2surfinputnode&#39;</span><span class="p">)</span>
+<span class="n">l2surfinputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span> <span class="n">contrast_ids</span><span class="p">),</span>
+                             <span class="p">(</span><span class="s">&#39;hemi&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;lh&#39;</span><span class="p">,</span><span class="s">&#39;rh&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+<p>Again we have to be aware about the structure of our data folder. We know from the <strong>first level analaysis pipeline</strong> that our estimated surface contrasts are stored at: &#8216;~SOMEPATH/experiment/result/level1_output/&#8217;. This will be defined as <tt class="docutils literal"><span class="pre">base_directory</span></tt> of the datagrabber node.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect contrast images and registration files</span>
+<span class="n">l2surfSource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con_id&#39;</span><span class="p">],</span>
+                                                 <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;reg&#39;</span><span class="p">]),</span>
+                       <span class="n">name</span><span class="o">=</span><span class="s">&#39;l2surfSource&#39;</span><span class="p">)</span>
+<span class="n">l2surfSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/level1_output/&#39;</span>
+<span class="n">l2surfSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;*&#39;</span>
+<span class="n">l2surfSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">field_template</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">con</span><span class="o">=</span><span class="s">&#39;surf_contrasts/_subject_id_*/con_</span><span class="si">%04d</span><span class="s">.img&#39;</span><span class="p">,</span>
+                                          <span class="n">reg</span><span class="o">=</span><span class="s">&#39;bbregister/_subject_id_*/*.dat&#39;</span><span class="p">)</span>
+<span class="n">l2surfSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">con</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;con_id&#39;</span><span class="p">]],</span><span class="n">reg</span><span class="o">=</span><span class="p">[[]])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Define nodes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have defined where our data comes frome, we can start with implementing the nodes.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: Merge - to merge contrast images and registration files</span>
+<span class="n">merge</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">Merge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s">&#39;hstack&#39;</span><span class="p">),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;merge&#39;</span><span class="p">)</span>
 
-                <span class="p">])</span>
-
-
-<span class="c">###################################</span>
-<span class="sd">&quot;&quot;&quot;Setup level 2 surf pipeline&quot;&quot;&quot;</span> <span class="c">#</span>
-<span class="c">###################################</span>
-
-<span class="n">l2flow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;l2_surf&#39;</span><span class="p">)</span>
-<span class="n">l2flow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">nameOflevel2Out</span> <span class="o">+</span> <span class="s">&#39;_surf&#39;</span>
-
-<span class="c">#Setup a dummy node to iterate over contrasts and hemispheres</span>
-<span class="n">l2inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span><span class="s">&#39;hemi&#39;</span><span class="p">]),</span>
-                      <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
-<span class="n">l2inputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">contrasts</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)),</span>
-                         <span class="p">(</span><span class="s">&#39;hemi&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;lh&#39;</span><span class="p">,</span><span class="s">&#39;rh&#39;</span><span class="p">])]</span>
-
-<span class="c">#Use a datagrabber node to collect contrast images and registration files</span>
-<span class="n">l2source_surf</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con_id&#39;</span><span class="p">],</span>
-                                                  <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;reg&#39;</span><span class="p">]),</span>
-                        <span class="n">name</span><span class="o">=</span><span class="s">&#39;l2source_surf&#39;</span><span class="p">)</span>
-<span class="n">l2source_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">nameOflevel1Out</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span>
-<span class="n">l2source_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;*&#39;</span>
-<span class="n">l2source_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">field_template</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">con</span><span class="o">=</span><span class="s">&#39;surf_contrasts/_subject_id_*/con_</span><span class="si">%04d</span><span class="s">.img&#39;</span><span class="p">,</span>
-                                           <span class="n">reg</span><span class="o">=</span><span class="s">&#39;bbregister/_subject_id_*/*.dat&#39;</span><span class="p">)</span>
-<span class="n">l2source_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">con</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;con_id&#39;</span><span class="p">]],</span><span class="n">reg</span><span class="o">=</span><span class="p">[[]])</span>
-
-<span class="c">#Merge contrast images and registration files</span>
-<span class="n">mergenode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">Merge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s">&#39;hstack&#39;</span><span class="p">),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;merge&#39;</span><span class="p">)</span>
-
+<span class="c">#function to create a list of all subjects and the location of their specific files</span>
 <span class="k">def</span> <span class="nf">ordersubjects</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">subj_list</span><span class="p">):</span>
     <span class="n">outlist</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">subj_list</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s">&#39;/_subject_id_</span><span class="si">%s</span><span class="s">/&#39;</span><span class="o">%</span><span class="n">s</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">outlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subj_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">subj_file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s">&#39;/_subject_id_</span><span class="si">%s</span><span class="s">/&#39;</span><span class="o">%</span><span class="n">subject</span> <span class="ow">in</span> <span class="n">subj_file</span><span class="p">:</span>
+                <span class="n">outlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subj_file</span><span class="p">)</span>
                 <span class="k">continue</span>
-    <span class="k">print</span> <span class="n">outlist</span>
 <span class="k">return</span> <span class="n">outlist</span>
 
-<span class="c">#Concatenate contrast images projected to fsaverage</span>
-<span class="n">l2concat</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">MRISPreproc</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;concat&#39;</span><span class="p">)</span>
-<span class="n">l2concat</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="s">&#39;fsaverage&#39;</span>
-<span class="n">l2concat</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c">#Node: MRISPreproc - to concatenate contrast images projected to fsaverage</span>
+<span class="n">concat</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">MRISPreproc</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;concat&#39;</span><span class="p">)</span>
+<span class="n">concat</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="s">&#39;fsaverage&#39;</span>
+<span class="n">concat</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c">#the smoothing of the surface data happens here</span>
 
+<span class="c">#function that transformes a given list into tuples</span>
 <span class="k">def</span> <span class="nf">list2tuple</span><span class="p">(</span><span class="n">listoflist</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">listoflist</span><span class="p">]</span>
 
-<span class="c">#Node: OneSampleTTest - Perform a one sample t-test</span>
-<span class="n">l2ttest</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">OneSampleTTest</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;onesample&#39;</span><span class="p">)</span>
-
-<span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
-<span class="n">datasink_2l</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink_2l&quot;</span><span class="p">)</span>
-<span class="n">datasink_2l</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
-<span class="n">datasink_2l</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">nameOflevel2Out</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="s">&#39;_surf&#39;</span>
-
-<span class="c">#Create 2-level surf pipeline and connect up all components</span>
-<span class="n">l2flow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">l2inputnode</span><span class="p">,</span><span class="n">l2source_surf</span><span class="p">,[(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span><span class="s">&#39;con_id&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">l2inputnode</span><span class="p">,</span><span class="n">l2concat</span><span class="p">,[(</span><span class="s">&#39;hemi&#39;</span><span class="p">,</span><span class="s">&#39;hemi&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">l2source_surf</span><span class="p">,</span><span class="n">mergenode</span><span class="p">,[((</span><span class="s">&#39;con&#39;</span><span class="p">,</span> <span class="n">ordersubjects</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span><span class="s">&#39;in1&#39;</span><span class="p">),</span>
-                                              <span class="p">((</span><span class="s">&#39;reg&#39;</span><span class="p">,</span> <span class="n">ordersubjects</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span><span class="s">&#39;in2&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">mergenode</span><span class="p">,</span><span class="n">l2concat</span><span class="p">,[((</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">list2tuple</span><span class="p">),</span><span class="s">&#39;vol_measure_file&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">l2concat</span><span class="p">,</span><span class="n">l2ttest</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">l2ttest</span><span class="p">,</span><span class="n">datasink_2l</span><span class="p">,[(</span><span class="s">&#39;sig_file&#39;</span><span class="p">,</span><span class="s">&#39;sig_file&#39;</span><span class="p">)]),</span>
-                    <span class="p">])</span>
-
-
-<span class="c">###############################################</span>
-<span class="sd">&quot;&quot;&quot;Run the pipeline and generate the graph&quot;&quot;&quot;</span> <span class="c">#</span>
-<span class="c">###############################################</span>
-
-<span class="n">level2</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
-<span class="n">level2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
-
-<span class="c">#l2flow.write_graph(graph2use=&#39;flat&#39;)</span>
-<span class="c">#l2flow.run(plugin=&#39;MultiProc&#39;, plugin_args={&#39;n_procs&#39; : 2})</span>
+<span class="c">###   #Node: OneSampleTTest - to perform a one sample t-test</span>
+<span class="c">###   oneSampleTTestDes = pe.Node(interface=fs.OneSampleTTest(), name=&#39;oneSampleTTestDes&#39;)</span>
 </pre></div>
 </div>
+<p><strong>!!!!!!!!!!!!gaht das überhaupt?!!!!!!!!!!!!!!</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As you can see the oneSampleTTestDes in this surface pipeline is actually the same as the one from the volume pipeline. Because we are not integrating those two pipeline in a common parent workflow we won&#8217;t have any issue with duplication and connection errors because the surface and the volume pipeline will always we executed independent of each other.</p>
+</div>
+</div>
+<div class="section" id="establish-a-second-level-surface-pipeline">
+<h3>Establish a second level surface pipeline<a class="headerlink" href="#establish-a-second-level-surface-pipeline" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Create 2-level surf pipeline and connect up all components</span>
+<span class="n">l2surfflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;l2surfflow&#39;</span><span class="p">)</span>
+<span class="n">l2surfflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">level2Dir</span> <span class="o">+</span> <span class="s">&#39;_surf&#39;</span>
+<span class="n">l2surfflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">l2surfinputnode</span><span class="p">,</span><span class="n">l2surfSource</span><span class="p">,[(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span><span class="s">&#39;con_id&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">l2surfinputnode</span><span class="p">,</span><span class="n">concat</span><span class="p">,[(</span><span class="s">&#39;hemi&#39;</span><span class="p">,</span><span class="s">&#39;hemi&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">l2surfSource</span><span class="p">,</span><span class="n">merge</span><span class="p">,[((</span><span class="s">&#39;con&#39;</span><span class="p">,</span> <span class="n">ordersubjects</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span><span class="s">&#39;in1&#39;</span><span class="p">),</span>
+                                         <span class="p">((</span><span class="s">&#39;reg&#39;</span><span class="p">,</span> <span class="n">ordersubjects</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span><span class="s">&#39;in2&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">merge</span><span class="p">,</span><span class="n">concat</span><span class="p">,[((</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">list2tuple</span><span class="p">),</span><span class="s">&#39;vol_measure_file&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">concat</span><span class="p">,</span><span class="n">oneSampleTTestDes</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                         <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="datasink-optional">
+<h2>Datasink (optional)<a class="headerlink" href="#datasink-optional" title="Permalink to this headline">¶</a></h2>
+<p>If you want to store the data from the second level volume and surface pipeline at a common location you should use a <tt class="docutils literal"><span class="pre">datasink</span></tt> node. As with the <tt class="docutils literal"><span class="pre">oneSampleTTestDes</span></tt> node before you can use the same <tt class="docutils literal"><span class="pre">datasink</span></tt> node for both pipelines because you aren&#8217;t running both pipelines in the same run.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
+<span class="n">l2datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2datasink&quot;</span><span class="p">)</span>
+<span class="n">l2datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
+<span class="n">l2datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">level2Dir</span> <span class="o">+</span> <span class="s">&#39;_datasink&#39;</span>
+
+<span class="c">#integration of the datasink into the volume analysis pipeline</span>
+<span class="c">###   l2volflow.connect([(l2conestimate,l2datasink,[(&#39;inputbla&#39;,&#39;outputbla&#39;)]),</span>
+<span class="c">###                      (l2volflowthresh,l2datasink,[(&#39;inputbla&#39;,&#39;outputbla&#39;)]),</span>
+<span class="c">###                      ])</span>
+
+<span class="c">#integration of the datasink into the surface analysis pipeline</span>
+<span class="n">l2surfflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">oneSampleTTestDes</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;sig_file&#39;</span><span class="p">,</span><span class="s">&#39;sig_file&#39;</span><span class="p">)])])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-pipeline">
+<h2>Run pipeline<a class="headerlink" href="#run-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have set up both pipelines we are able to run them. Note that those lines of codes mean that the <strong>second level surface pipeline</strong> won&#8217;t be started before the <strong>second level volume pipeline</strong> has terminated.</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">l2volflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+<span class="n">l2volflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+
+<span class="n">l2surfflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+<span class="n">l2surfflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">This code for the second level pipeline on the volume and on the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/secondlevelpipeline.py">secondlevelpipeline.py</a></p>
+</div>
+</div>
+<div class="section" id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="second-level-volume-pipeline">
+<h3>Second Level Volume Pipeline<a class="headerlink" href="#second-level-volume-pipeline" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/l2vol.jpg" src="_images/l2vol.jpg" style="width: 810px;" />
+</div>
+<div class="section" id="second-level-surface-pipeline">
+<h3>Second Level Surface Pipeline<a class="headerlink" href="#second-level-surface-pipeline" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/l2surf.jpg" src="_images/l2surf.jpg" style="width: 810px;" />
 </div>
 </div>
 </div>
@@ -274,7 +389,7 @@ should be we can start with writing the pipeline script.</p>
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 06, 2011.
+      Last updated on August 08, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

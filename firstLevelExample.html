@@ -161,7 +161,7 @@
 <h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <p>I suggest to keep things that change often between versions, models, experiments like subject names, output folders and name of functional runs at one place so that they can be accessed more easily in case you want to change them.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#To better access the parent folder of the experiment</span>
-<span class="n">experiment_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">#name of the subjects, functional files and output folders</span>
 <span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">]</span>
@@ -257,8 +257,8 @@
 
 <span class="c">#Node: SpecifyModel - Generate SPM-specific design information</span>
 <span class="n">modelspec</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">SpecifySparseModel</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span> <span class="s">&quot;modelspec&quot;</span><span class="p">)</span>
-<span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_units</span>             <span class="o">=</span> <span class="s">&#39;secs&#39;</span>
-<span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">time_repetition</span>         <span class="o">=</span> <span class="mf">8.</span>
+<span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_units</span> <span class="o">=</span> <span class="s">&#39;secs&#39;</span>
+<span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">time_repetition</span> <span class="o">=</span> <span class="mf">8.</span>
 <span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">high_pass_filter_cutoff</span> <span class="o">=</span> <span class="mi">128</span>
 <span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">model_hrf</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">scale_regressors</span> <span class="o">=</span> <span class="bp">True</span>
@@ -520,7 +520,7 @@
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The code to a first level analysis on the volume and the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py">firstlevelpipeline.py</a></p>
+<p class="last">The code for a first level analysis on the volume and the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py">firstlevelpipeline.py</a></p>
 </div>
 </div>
 </div>
@@ -549,7 +549,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 06, 2011.
+      Last updated on August 08, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

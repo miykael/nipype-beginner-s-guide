@@ -44,7 +44,7 @@ After importing the modules, it is recommended to specify all the necessary vari
 Define nodes to use
 *******************
 
-Let us now construct the three nodes we want to use to create our preparation pipeline. First we need to define the infosource-node which specifies on which subjects the workflow is run on.
+Let us now construct the three nodes we want to use to create our preparation pipeline. First we need to define the infosource node which specifies on which subjects the workflow is run on.
 
 .. code-block:: py
 
@@ -157,7 +157,6 @@ Specify node connections
 
 Now we've defined all the nodes and implemented the preparation pipeline. The only thing missing is the connection of the different nodes in the pipeline. But before we can do this, it is important to be aware about outputs, that get created and the inputs that have to be provided and more importantly how they look like.
 
-| 
 | **infosource**:
 | This node provides an output called ``subject_id`` that is either
 | ``'subject1'``,
