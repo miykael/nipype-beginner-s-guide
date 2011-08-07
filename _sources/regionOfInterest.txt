@@ -48,8 +48,8 @@ Here you can see a spherical region with radius 3 voxel around the point [a,b,c]
    :width: 200 px
 
 
-Anatomical ROIs
-===============
+Anatomical ROI Pipeline
+=======================
 
 Let's now begin with the creation of an **anatomical ROI pipeline**.
 
@@ -321,8 +321,8 @@ Summarizing the output in a cvs-file
    The code for this anatomical ROI pipeline can be found here: `aROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py>`_
 
 
-Functional ROIs
-===============
+Functional ROI Pipeline
+=======================
 
 Import modules
 ~~~~~~~~~~~~~~
