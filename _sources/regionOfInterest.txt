@@ -17,13 +17,13 @@ This colortable subdivides the brain in different anatomcial regions. With the F
 **Visualization of 2005 Segmentation**
 
 .. image:: 2005segmentation.png
-   :width: 810 px
+   :width: 200 px
 
 
 **Visualization of 2009 Segmentation**
 
 .. image:: 2009segmentation.png
-   :width: 810 px
+   :width: 200 px
 
 
 .. hint::
@@ -41,7 +41,7 @@ The region of functional ROIs is solely defined by what point in "brain"-space y
 Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.
 
 .. image:: functionalROI.jpg
-   :width: 810 px
+   :width: 200 px
 
 
 Anatomical ROIs
@@ -222,7 +222,7 @@ Run pipeline and generate graph
 **Visualization of anatomical ROI pipeline**
 
 .. image:: aROIgraph.jpg
-   :width: 810 px
+   :width: 200 px
 
 
 Summarizing the output in a cvs-file

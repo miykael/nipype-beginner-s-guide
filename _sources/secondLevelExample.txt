@@ -271,11 +271,11 @@ Second Level Volume Pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. image:: l2vol.jpg
-   :width: 810 px
+   :width: 200 px
 
 
 Second Level Surface Pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. image:: l2surf.jpg
-   :width: 810 px
+   :width: 200 px

@@ -135,9 +135,9 @@ We will learn how to extract anatomical and functional ROIs, two ways of extract
 <p>The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by <strong>Nipype</strong> as default is the <strong>FreeSurfer Color Table</strong>, which can be found <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT">here</a>.</p>
 <p>This colortable subdivides the brain in different anatomcial regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the <strong>2005</strong> region specification) or a more detailed specifciation categorie that divides the brain into +200 regions (the <strong>2009</strong> region specification)</p>
 <p><strong>Visualization of 2005 Segmentation</strong></p>
-<img alt="_images/2005segmentation.png" src="_images/2005segmentation.png" style="width: 810px;" />
+<img alt="_images/2005segmentation.png" src="_images/2005segmentation.png" style="width: 200px;" />
 <p><strong>Visualization of 2009 Segmentation</strong></p>
-<img alt="_images/2009segmentation.png" src="_images/2009segmentation.png" style="width: 810px;" />
+<img alt="_images/2009segmentation.png" src="_images/2009segmentation.png" style="width: 200px;" />
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">If you want to explore those regions by ourself I recommend to open a <strong>FreeSurfer</strong> capable viewing tool and overlay the <tt class="docutils literal"><span class="pre">fsaverage</span></tt> file with an annotation-file. More information how this is done can be found here: <strong>MISSING_LINK</strong></p>
@@ -148,7 +148,7 @@ We will learn how to extract anatomical and functional ROIs, two ways of extract
 <p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exaclty what we will be doing in this script.</p>
 <p><strong>Visualization of a functional ROI</strong></p>
 <p>Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.</p>
-<img alt="_images/functionalROI.jpg" src="_images/functionalROI.jpg" style="width: 810px;" />
+<img alt="_images/functionalROI.jpg" src="_images/functionalROI.jpg" style="width: 200px;" />
 <div class="section" id="anatomical-rois">
 <h3>Anatomical ROIs<a class="headerlink" href="#anatomical-rois" title="Permalink to this headline">¶</a></h3>
 <p>Let&#8217;s now begin with the creation of an <strong>anatomical ROI pipeline</strong>.</p>
@@ -308,7 +308,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </pre></div>
 </div>
 <p><strong>Visualization of anatomical ROI pipeline</strong></p>
-<img alt="_images/aROIgraph.jpg" src="_images/aROIgraph.jpg" style="width: 810px;" />
+<img alt="_images/aROIgraph.jpg" src="_images/aROIgraph.jpg" style="width: 200px;" />
 </div>
 <div class="section" id="summarizing-the-output-in-a-cvs-file">
 <h2>Summarizing the output in a cvs-file<a class="headerlink" href="#summarizing-the-output-in-a-cvs-file" title="Permalink to this headline">¶</a></h2>
