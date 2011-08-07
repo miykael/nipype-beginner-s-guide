@@ -1,5 +1,5 @@
 =======================================
-How to extract region of interest (ROI)   
+How to extract region of interest (ROI)
 =======================================
 
 In this part we will learn how to extract statistical data from a strictly specified region or in other words our **region of interest (ROI)**.
@@ -16,7 +16,7 @@ The region of anatomical ROIs is as the name implies defined by the anatomical s
 
 
 
-This colortable subdivides the brain in different anatomcial regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the **2005** region specification) or a more detailed specifciation categorie that divides the brain into +200 regions (the **2009** region specification)
+This color table subdivides the brain in different anatomical regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the **2005** region specification) or a more detailed specification category that divides the brain into +200 regions (the **2009** region specification)
 
 **Visualization of 2005 Segmentation**
 
@@ -38,7 +38,7 @@ This colortable subdivides the brain in different anatomcial regions. With the F
 Functional ROI
 ~~~~~~~~~~~~~~
 
-The region of functional ROIs is solely defined by what point in "brain"-space you are interested in. You're region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exaclty what we will be doing in this script.
+The region of functional ROIs is solely defined by what point in "brain"-space you are interested in. You're region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this script.
 
 **Visualization of a functional ROI**
 
@@ -160,8 +160,8 @@ Let's now continue with the implementation of the other nodes we need for our **
    MRIconversion = pe.Node(interface=fs.MRIConvert(),name='MRIconversion')
    MRIconversion.inputs.out_type = 'nii'
    
-   #Node: ApplyVolTransform - to transform contrasts into anatomicale space
-   #                          creats 'con_*.anat.bb.mgh' files
+   #Node: ApplyVolTransform - to transform contrasts into anatomical space
+   #                          creates 'con_*.anat.bb.mgh' files
    transformation = pe.Node(interface=fs.ApplyVolTransform(),name='transformation')
    transformation.inputs.fs_target = True
    transformation.inputs.interp = 'nearest'
@@ -405,10 +405,10 @@ Definition of Nodes
 
 .. note::
 
-   If you are interested in what command actually will be executed by the ``maths1`` node you just simplie can execute ``maths1.cmdline``. In this example this will give you the following output: ``blablabla``
+   If you are interested in what command actually will be executed by the ``maths1`` node you just simply can execute ``maths1.cmdline``. In this example this will give you the following output: ``blablabla``
 
 
-Definition of functioanl ROI workflow
+Definition of functional ROI workflow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py

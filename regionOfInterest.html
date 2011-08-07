@@ -88,7 +88,7 @@
 <li><a class="reference internal" href="#id2">Import modules</a></li>
 <li><a class="reference internal" href="#id3">Define experiment specific parameters</a></li>
 <li><a class="reference internal" href="#definition-of-nodes">Definition of Nodes</a></li>
-<li><a class="reference internal" href="#definition-of-functioanl-roi-workflow">Definition of functioanl ROI workflow</a></li>
+<li><a class="reference internal" href="#definition-of-functional-roi-workflow">Definition of functional ROI workflow</a></li>
 <li><a class="reference internal" href="#run-the-pipeline-and-generate-the-graph">Run the pipeline and generate the graph</a></li>
 <li><a class="reference internal" href="#id4">Summarizing the output in a cvs-file</a></li>
 </ul>
@@ -138,7 +138,7 @@
 <div class="section" id="anatomical-roi">
 <h3>Anatomical ROI<a class="headerlink" href="#anatomical-roi" title="Permalink to this headline">¶</a></h3>
 <p>The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by <strong>Nipype</strong> as default is the <strong>FreeSurfer Color Table</strong>, which can be found <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT">here</a>.</p>
-<p>This colortable subdivides the brain in different anatomcial regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the <strong>2005</strong> region specification) or a more detailed specifciation categorie that divides the brain into +200 regions (the <strong>2009</strong> region specification)</p>
+<p>This color table subdivides the brain in different anatomical regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the <strong>2005</strong> region specification) or a more detailed specification category that divides the brain into +200 regions (the <strong>2009</strong> region specification)</p>
 <p><strong>Visualization of 2005 Segmentation</strong></p>
 <img alt="_images/2005segmentation.png" src="_images/2005segmentation.png" style="width: 200px;" />
 <p><strong>Visualization of 2009 Segmentation</strong></p>
@@ -150,7 +150,7 @@
 </div>
 <div class="section" id="functional-roi">
 <h3>Functional ROI<a class="headerlink" href="#functional-roi" title="Permalink to this headline">¶</a></h3>
-<p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exaclty what we will be doing in this script.</p>
+<p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this script.</p>
 <p><strong>Visualization of a functional ROI</strong></p>
 <p>Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.</p>
 <img alt="_images/functionalROI.jpg" src="_images/functionalROI.jpg" style="width: 200px;" />
@@ -253,8 +253,8 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <span class="n">MRIconversion</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">MRIConvert</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;MRIconversion&#39;</span><span class="p">)</span>
 <span class="n">MRIconversion</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_type</span> <span class="o">=</span> <span class="s">&#39;nii&#39;</span>
 
-<span class="c">#Node: ApplyVolTransform - to transform contrasts into anatomicale space</span>
-<span class="c">#                          creats &#39;con_*.anat.bb.mgh&#39; files</span>
+<span class="c">#Node: ApplyVolTransform - to transform contrasts into anatomical space</span>
+<span class="c">#                          creates &#39;con_*.anat.bb.mgh&#39; files</span>
 <span class="n">transformation</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">ApplyVolTransform</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;transformation&#39;</span><span class="p">)</span>
 <span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fs_target</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">interp</span> <span class="o">=</span> <span class="s">&#39;nearest&#39;</span>
@@ -481,11 +481,11 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you are interested in what command actually will be executed by the <tt class="docutils literal"><span class="pre">maths1</span></tt> node you just simplie can execute <tt class="docutils literal"><span class="pre">maths1.cmdline</span></tt>. In this example this will give you the following output: <tt class="docutils literal"><span class="pre">blablabla</span></tt></p>
+<p class="last">If you are interested in what command actually will be executed by the <tt class="docutils literal"><span class="pre">maths1</span></tt> node you just simply can execute <tt class="docutils literal"><span class="pre">maths1.cmdline</span></tt>. In this example this will give you the following output: <tt class="docutils literal"><span class="pre">blablabla</span></tt></p>
 </div>
 </div>
-<div class="section" id="definition-of-functioanl-roi-workflow">
-<h3>Definition of functioanl ROI workflow<a class="headerlink" href="#definition-of-functioanl-roi-workflow" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="definition-of-functional-roi-workflow">
+<h3>Definition of functional ROI workflow<a class="headerlink" href="#definition-of-functional-roi-workflow" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
 <span class="n">fROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fROIflow&#39;</span><span class="p">)</span>
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">fROIWorkingdir</span>

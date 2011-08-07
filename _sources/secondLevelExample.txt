@@ -2,7 +2,7 @@
 Example: Second Level Pipeline
 ==============================
 
-In this example you will learn how to do a **second level analysis** on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines seperately.
+In this example you will learn how to do a **second level analysis** on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines separately.
 
 .. note::
 
@@ -46,7 +46,7 @@ Define experiment specific parameters
 
 .. note::
 
-   If you want to only analyse the 3rd and 4th contrasts, you could specify ``contrast_ids`` as ``range(3,5)`` which would create the list ``[3,4]``
+   If you want to only analyze the 3rd and 4th contrasts, you could specify ``contrast_ids`` as ``range(3,5)`` which would create the list ``[3,4]``
 
 
 Analysis on the Volume
@@ -136,7 +136,7 @@ Establish a second level volume pipeline
 Analysis on the Surface
 =======================
 
-An important difference between the format of the volume and the surface data is, that the surface data are img-files and are seperated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left ('lh') and the right ('rh') hemisphere.
+An important difference between the format of the volume and the surface data is, that the surface data are img-files and are separated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left ('lh') and the right ('rh') hemisphere.
 
 Grab the data
 ~~~~~~~~~~~~~
@@ -152,7 +152,7 @@ As mentioned above, our **second level surface pipeline** does have to iterate o
                                 ('hemi', ['lh','rh'])]
 
 
-Again we have to be aware about the structure of our data folder. We know from the **first level analaysis pipeline** that our estimated surface contrasts are stored at: ``'~SOMEPATH/experiment/result/level1_output/'``. This will be defined as ``base_directory`` of the datagrabber node.
+Again we have to be aware about the structure of our data folder. We know from the **first level analysis pipeline** that our estimated surface contrasts are stored at: ``'~SOMEPATH/experiment/result/level1_output/'``. This will be defined as ``base_directory`` of the datagrabber node.
 
 .. code-block:: py
 
@@ -170,7 +170,7 @@ Again we have to be aware about the structure of our data folder. We know from t
 Define nodes
 ~~~~~~~~~~~~
 
-Now that we have defined where our data comes frome, we can start with implementing the nodes.
+Now that we have defined where our data comes from, we can start with implementing the nodes.
 
 .. code-block:: py
 
@@ -192,7 +192,7 @@ Now that we have defined where our data comes frome, we can start with implement
    concat.inputs.target = 'fsaverage'
    concat.inputs.fwhm = 5  #the smoothing of the surface data happens here
 
-   #function that transformes a given list into tuples
+   #function that transforms a given list into tuples
    def list2tuple(listoflist):
        return [tuple(x) for x in listoflist]
 

@@ -131,7 +131,7 @@
             
   <div class="section" id="example-second-level-pipeline">
 <h1>Example: Second Level Pipeline<a class="headerlink" href="#example-second-level-pipeline" title="Permalink to this headline">¶</a></h1>
-<p>In this example you will learn how to do a <strong>second level analysis</strong> on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines seperately.</p>
+<p>In this example you will learn how to do a <strong>second level analysis</strong> on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines separately.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Before we can run the <strong>second level analysis</strong> on the volume we have to normalize the estimated volume contrasts from the first level pipeline into a common subject space. One method how you can achieve this will be covered in the chapter about ANTS.
@@ -166,7 +166,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you want to only analyse the 3rd and 4th contrasts, you could specify <tt class="docutils literal"><span class="pre">contrast_ids</span></tt> as <tt class="docutils literal"><span class="pre">range(3,5)</span></tt> which would create the list <tt class="docutils literal"><span class="pre">[3,4]</span></tt></p>
+<p class="last">If you want to only analyze the 3rd and 4th contrasts, you could specify <tt class="docutils literal"><span class="pre">contrast_ids</span></tt> as <tt class="docutils literal"><span class="pre">range(3,5)</span></tt> which would create the list <tt class="docutils literal"><span class="pre">[3,4]</span></tt></p>
 </div>
 </div>
 </div>
@@ -244,7 +244,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 </div>
 <div class="section" id="analysis-on-the-surface">
 <h2>Analysis on the Surface<a class="headerlink" href="#analysis-on-the-surface" title="Permalink to this headline">¶</a></h2>
-<p>An important difference between the format of the volume and the surface data is, that the surface data are img-files and are seperated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left (&#8216;lh&#8217;) and the right (&#8216;rh&#8217;) hemisphere.</p>
+<p>An important difference between the format of the volume and the surface data is, that the surface data are img-files and are separated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left (&#8216;lh&#8217;) and the right (&#8216;rh&#8217;) hemisphere.</p>
 <div class="section" id="id1">
 <h3>Grab the data<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>As mentioned above, our <strong>second level surface pipeline</strong> does have to iterate over the different contrasts <strong>and</strong> the left and right hemisphere. This can be done with the usual individually defined <tt class="docutils literal"><span class="pre">IdentityInterface</span></tt> node.</p>
@@ -255,7 +255,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
                              <span class="p">(</span><span class="s">&#39;hemi&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;lh&#39;</span><span class="p">,</span><span class="s">&#39;rh&#39;</span><span class="p">])]</span>
 </pre></div>
 </div>
-<p>Again we have to be aware about the structure of our data folder. We know from the <strong>first level analaysis pipeline</strong> that our estimated surface contrasts are stored at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/'</span></tt>. This will be defined as <tt class="docutils literal"><span class="pre">base_directory</span></tt> of the datagrabber node.</p>
+<p>Again we have to be aware about the structure of our data folder. We know from the <strong>first level analysis pipeline</strong> that our estimated surface contrasts are stored at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/'</span></tt>. This will be defined as <tt class="docutils literal"><span class="pre">base_directory</span></tt> of the datagrabber node.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect contrast images and registration files</span>
 <span class="n">l2surfSource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con_id&#39;</span><span class="p">],</span>
                                                  <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;reg&#39;</span><span class="p">]),</span>
@@ -270,7 +270,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 </div>
 <div class="section" id="id2">
 <h3>Define nodes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>Now that we have defined where our data comes frome, we can start with implementing the nodes.</p>
+<p>Now that we have defined where our data comes from, we can start with implementing the nodes.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: Merge - to merge contrast images and registration files</span>
 <span class="n">merge</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">Merge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s">&#39;hstack&#39;</span><span class="p">),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;merge&#39;</span><span class="p">)</span>
 
@@ -289,7 +289,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <span class="n">concat</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="s">&#39;fsaverage&#39;</span>
 <span class="n">concat</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c">#the smoothing of the surface data happens here</span>
 
-<span class="c">#function that transformes a given list into tuples</span>
+<span class="c">#function that transforms a given list into tuples</span>
 <span class="k">def</span> <span class="nf">list2tuple</span><span class="p">(</span><span class="n">listoflist</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">listoflist</span><span class="p">]</span>
 
