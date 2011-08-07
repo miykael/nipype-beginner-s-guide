@@ -19,7 +19,7 @@ Define experiment specific parameters
 """
 
 #To better access the parent folder of the experiment
-experiment_dir = os.getcwd()
+experiment_dir = '~SOMEPATH/experiment'
 
 #name of the subjects, functional files and output folders
 subjects = ['subject1','subject2','subject3']
@@ -110,8 +110,8 @@ volanalysis = pe.Workflow(name='volanalysis')
 
 #Node: SpecifyModel - Generate SPM-specific design information
 modelspec = pe.Node(interface=model.SpecifySparseModel(), name= "modelspec")
-modelspec.inputs.input_units             = 'secs'
-modelspec.inputs.time_repetition         = 8.
+modelspec.inputs.input_units = 'secs'
+modelspec.inputs.time_repetition = 8.
 modelspec.inputs.high_pass_filter_cutoff = 128
 modelspec.inputs.model_hrf = True
 modelspec.inputs.scale_regressors = True
