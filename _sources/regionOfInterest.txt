@@ -130,7 +130,7 @@ Define of Nodes
    inputnode.iterables = [('subject_id', subjects),
                           ('contrast_id', contrasts)]
 
-As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: '~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img' and the bbregister file for the first subject can be found at: '~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meancond1_bbreg_01.dat'
+As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img'`` and the bbregister file for the first subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meancond1_bbreg_01.dat'``
 Knowing this, we can build our ``datagrabber`` node as follows:
 
 .. code-block:: py

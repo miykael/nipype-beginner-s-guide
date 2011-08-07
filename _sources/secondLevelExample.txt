@@ -55,7 +55,7 @@ Analysis on the Volume
 Grab the data
 ~~~~~~~~~~~~~
 
-As always we first have to specify where the datagrabber node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at '~SOMEPATH/experiment/result/level1_output/subject_name/normcons/'. This means the third contrast of the second subject would be at: '~SOMEPATH/experiment/result/level1_output/subject2/normcons/con_0001.nii'
+As always we first have to specify where the datagrabber node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at: ``'~SOMEPATH/experiment/result/level1_output/subject_name/normcons/'``. This means the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/result/level1_output/subject2/normcons/con_0001.nii'``
 
 .. code-block:: py
 
@@ -152,7 +152,7 @@ As mentioned above, our **second level surface pipeline** does have to iterate o
                                 ('hemi', ['lh','rh'])]
 
 
-Again we have to be aware about the structure of our data folder. We know from the **first level analaysis pipeline** that our estimated surface contrasts are stored at: '~SOMEPATH/experiment/result/level1_output/'. This will be defined as ``base_directory`` of the datagrabber node.
+Again we have to be aware about the structure of our data folder. We know from the **first level analaysis pipeline** that our estimated surface contrasts are stored at: ``'~SOMEPATH/experiment/result/level1_output/'``. This will be defined as ``base_directory`` of the datagrabber node.
 
 .. code-block:: py
 
