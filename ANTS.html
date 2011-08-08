@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
+ 
+<meta name="keywords" content="nipype, python, guide">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24958678-1']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  <body>
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+ <a href="index.html">
+  <img src="_static/nipype-beginners-guide-banner-bg.png" alt="NIPY logo"  border="0" />
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to use ANTS to create your own Normbraintemplate</a><ul>
+<li><a class="reference internal" href="#instruction">Instruction</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ANTS.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-use-ants-to-create-your-own-normbraintemplate">
+<h1>How to use ANTS to create your own Normbraintemplate<a class="headerlink" href="#how-to-use-ants-to-create-your-own-normbraintemplate" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="instruction">
+<h2>Instruction<a class="headerlink" href="#instruction" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nb">export </span><span class="nv">FREESURFER_HOME</span><span class="o">=</span>/software/Freesurfer/5.0.0
+<span class="nb">source</span> /software/Freesurfer/5.0.0/SetUpFreeSurfer.sh
+
+<span class="c">#################################################################</span>
+<span class="c"># USER DEFINED VARIABLES (Necessary for the gragT1files function)</span>
+
+<span class="c"># Location of your freesurfer folder</span>
+<span class="nv">SUBJECTS_DIR</span><span class="o">=</span>/mindhive/gablab/u/mnotter/att_sens/freesurfer
+
+<span class="c"># List of subjects which should be used for the creation of the template</span>
+<span class="nv">SUBJECTS_LIST</span><span class="o">=</span><span class="s2">&quot;asens_4 asens_5 asens_6 asens_7 asens_8 asens_9 asens_10 asens_12 asens_13 asens_14 asens_15 asens_16 asens_17 asens_18 asens_19 asens_20 asens_21&quot;</span>
+
+<span class="c">#NOTE: If you don&#39;t want to use the T1-files from your recon-all output, comment line 808</span>
+<span class="c">#      Use last parameter (e.g. *_T1.nii.gz) to specify which T1 files from the current folder should be used instead</span>
+
+<span class="c">###################################################################################</span>
+<span class="c"># ORIGINAL buildtemplateparalle.sh SCRIPT WITH ALTERED DEFAULT VALUES AND FUNCTIONS</span>
+<span class="c"># Altered by Michael Notter, mnotter@mit.edu</span>
+<span class="c">#</span>
+<span class="c"># the altered defaults are:</span>
+<span class="c"># -c = 1     parallel computation with SGE qsub</span>
+<span class="c"># -i = 4     Iteration limit</span>
+<span class="c"># -m = 33x99x11      Max-iterations</span>
+<span class="c"># -s = CC    similarity metric</span>
+<span class="c"># -t = GR    transformation model</span>
+<span class="c">#</span>
+<span class="c"># Before it starts your iteration with your -i and -m value, a fast</span>
+<span class="c"># set with -i = 4 and -m = 10x10x0x0 gets created.</span>
+<span class="c">#</span>
+<span class="c"># If additionally created the function killingjobs, grabT1files and storingresults</span>
+<span class="c"># to save the main results in one folder.</span>
+
+
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/software/ANTS-dev:<span class="nv">$PATH</span>
+<span class="nb">export </span><span class="nv">ANTSPATH</span><span class="o">=</span>/software/ANTS-dev/
+
+
+<span class="k">function </span>jobfnamepadding <span class="o">{</span>
+
+    <span class="nv">files</span><span class="o">=</span><span class="sb">`</span>ls job*.sh<span class="sb">`</span>
+    <span class="nv">BASENAME1</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$files</span><span class="o">[</span>1<span class="o">]</span> | cut -d <span class="s1">&#39;b&#39;</span> -f 1<span class="sb">`</span>
+
+    <span class="k">for </span>file in <span class="k">${</span><span class="nv">files</span><span class="k">}</span>
+      <span class="k">do</span>
+
+<span class="k">      if</span> <span class="o">[</span> <span class="s2">&quot;${#file}&quot;</span> -eq <span class="s2">&quot;9&quot;</span> <span class="o">]</span>
+          <span class="k">then</span>
+<span class="k">          </span><span class="nv">BASENAME2</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$file</span> | cut -d <span class="s1">&#39;b&#39;</span> -f 2 <span class="sb">`</span>
+          mv <span class="s2">&quot;$file&quot;</span> <span class="s2">&quot;${BASENAME1}b_000${BASENAME2}&quot;</span>
+
+      <span class="k">elif</span> <span class="o">[</span> <span class="s2">&quot;${#file}&quot;</span> -eq <span class="s2">&quot;10&quot;</span> <span class="o">]</span>
+          <span class="k">then</span>
+<span class="k">          </span><span class="nv">BASENAME2</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$file</span> | cut -d <span class="s1">&#39;b&#39;</span> -f 2 <span class="sb">`</span>
+          mv <span class="s2">&quot;$file&quot;</span> <span class="s2">&quot;${BASENAME1}b_00${BASENAME2}&quot;</span>
+
+      <span class="k">elif</span> <span class="o">[</span> <span class="s2">&quot;${#file}&quot;</span> -eq <span class="s2">&quot;11&quot;</span> <span class="o">]</span>
+          <span class="k">then</span>
+<span class="k">          </span><span class="nv">BASENAME2</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$file</span> | cut -d <span class="s1">&#39;b&#39;</span> -f 2 <span class="sb">`</span>
+          mv <span class="s2">&quot;$file&quot;</span> <span class="s2">&quot;${BASENAME1}b_0${BASENAME2}&quot;</span>
+      <span class="k">fi</span>
+<span class="k">    done</span>
+
+<span class="o">}</span>
+
+<span class="k">function </span>killingjobs <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$DOQSUB</span> -eq 1 <span class="o">]</span> ; <span class="k">then</span>
+
+<span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot; Killing SGE jobs...&quot;</span>
+
+    <span class="k">for </span>job in <span class="nv">$jobIDs</span>
+    <span class="k">do</span>
+<span class="k">       </span>qdel <span class="nv">$job</span>
+    <span class="k">done</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------------------&quot;</span>
+
+    <span class="k">fi</span>
+
+<span class="o">}</span>
+
+<span class="c"># GETS THE T1 FILES FROM YOUR FREESURFER FOLDER</span>
+<span class="k">function </span>grabT1files <span class="o">{</span>
+
+    <span class="nv">TARGETPOSTFIX</span><span class="o">=</span><span class="k">${</span><span class="nv">IMAGESETVARIABLE</span><span class="p">#?</span><span class="k">}</span>        <span class="c"># e.g. &#39;_T1.nii.gz&#39;</span>
+    <span class="nv">TARGETPOSTFIX2</span><span class="o">=</span><span class="k">${</span><span class="nv">TARGETPOSTFIX</span><span class="p">%.*.*</span><span class="k">}</span>       <span class="c"># e.g. &#39;_T1&#39;</span>
+
+    <span class="c"># checks if the ants_template folder already exists</span>
+    <span class="k">if</span> <span class="o">[</span> ! -d <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/ants_template <span class="o">]</span>
+    <span class="k">then</span>
+<span class="k">        </span>mkdir -p <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/ants_template
+    <span class="k">fi</span>
+
+<span class="k">    </span><span class="nb">cd</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/ants_template
+
+    <span class="k">if</span> <span class="o">[</span> ! -f <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/ants_template/<span class="nv">$OUTPUTNAME</span><span class="s1">&#39;template.nii.gz&#39;</span> <span class="o">]</span>
+    <span class="k">then</span>
+
+        <span class="c"># gets subject T1 files if they doesn&#39;t exist yet and converts them into nii format</span>
+        <span class="k">for </span>subject in <span class="sb">`</span><span class="nb">echo</span> <span class="nv">$SUBJECTS_LIST</span><span class="sb">`</span>
+        <span class="k">do</span>
+<span class="k">            if</span> <span class="o">[</span> ! -f <span class="s1">&#39;./&#39;</span><span class="nv">$subject$TARGETPOSTFIX</span> <span class="o">]</span>
+                <span class="k">then</span>
+<span class="k">                </span>cp <span class="nv">$SUBJECTS_DIR</span>/<span class="nv">$subject</span>/mri/brain.mgz <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/<span class="nv">$subject$TARGETPOSTFIX2</span>.mgz
+                mri_convert <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/<span class="nv">$subject$TARGETPOSTFIX2</span>.mgz <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/<span class="nv">$subject$TARGETPOSTFIX</span>
+                rm <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/<span class="nv">$subject$TARGETPOSTFIX2</span>.mgz
+            <span class="k">fi</span>
+<span class="k">        done</span>
+
+        <span class="c">#IMPORTANT: To update the template population</span>
+        <span class="nv">IMAGESETVARIABLE</span><span class="o">=</span><span class="sb">`</span>ls *.nii.gz<span class="sb">`</span>
+
+    <span class="k">fi</span>
+
+<span class="o">}</span>
+
+
+<span class="c">#Be aware that this function will delete all other files that exist in the current folder!!!</span>
+<span class="k">function </span>storingresults <span class="o">{</span>
+
+    <span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot; Storing results in folder results...&quot;</span>
+    <span class="nb">cd</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/ants_template
+
+    mkdir results
+    mv *<span class="nv">$TARGETPOSTFIX</span> results/
+    mv <span class="nv">$OUTPUTNAME</span><span class="s1">&#39;template.nii.gz&#39;</span> results/
+
+    <span class="nb">echo</span> <span class="s2">&quot; ...storing done.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------------------&quot;</span>
+
+<span class="o">}</span>
+
+
+
+cleanup<span class="o">()</span>
+<span class="c"># example cleanup function</span>
+<span class="o">{</span>
+
+   <span class="o">[</span>...<span class="o">]</span>
+
+   killingjobs
+   storingresults
+
+   <span class="o">[</span>...<span class="o">]</span>
+
+<span class="o">}</span>
+
+<span class="nv">MAXITERATIONS</span><span class="o">=</span>33x99x11
+<span class="nv">LABELIMAGE</span><span class="o">=</span>0 <span class="c"># initialize optional parameter</span>
+<span class="nv">METRICTYPE</span><span class="o">=</span>CC <span class="c"># initialize optional parameter</span>
+<span class="nv">TRANSFORMATIONTYPE</span><span class="o">=</span><span class="s2">&quot;GR&quot;</span> <span class="c"># initialize optional parameter</span>
+<span class="nv">N3CORRECT</span><span class="o">=</span>1 <span class="c"># initialize optional parameter</span>
+<span class="nv">DOQSUB</span><span class="o">=</span>1 <span class="c"># By default, buildtemplateparallel tries to do things in parallel</span>
+<span class="nv">GRADIENTSTEP</span><span class="o">=</span>0.25 <span class="c"># Gradient step size, smaller in magnitude means more smaller (more cautious) steps</span>
+<span class="nv">ITERATIONLIMIT</span><span class="o">=</span>4
+<span class="nv">CORES</span><span class="o">=</span>2
+<span class="nv">TDIM</span><span class="o">=</span>0
+<span class="nv">RIGID</span><span class="o">=</span>0
+<span class="nv">RIGIDTYPE</span><span class="o">=</span><span class="s2">&quot; --do-rigid&quot;</span> <span class="c"># set to an empty string to use affine initialization</span>
+<span class="nv">range</span><span class="o">=</span>0
+<span class="nv">REGTEMPLATE</span><span class="o">=</span>target
+<span class="nv">cpu_count</span><span class="o">=</span><span class="sb">`</span>cat /proc/cpuinfo | grep processor | wc -l<span class="sb">`</span>
+
+
+<span class="c">##IF YOU DON&#39;T WANT TO GRAB THE T1_FILES OUT OF YOUR FREESURFER FOLDER COMMENT THIS PART OUT</span>
+grabT1files
+<span class="c">##</span>
+
+<span class="c">#if you want to keep the temporary files, comment this part out</span>
+killingjobs
+storingresults
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Michael Notter.
+      Last updated on August 09, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+<div class="footer">This page uses <a href="http://analytics.google.com/">
+Google Analytics</a> to collect statistics. You can disable it by blocking
+the JavaScript coming from www.google-analytics.com.
+</div>
+
+  </body>
+</html>

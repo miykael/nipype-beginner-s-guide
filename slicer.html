@@ -61,18 +61,14 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How to create slice figures</a><ul>
-<li><a class="reference internal" href="#title1">Title1</a></li>
-<li><a class="reference internal" href="#write-pipeline-script">Write pipeline script</a><ul>
 <li><a class="reference internal" href="#import-modules">Import modules</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
 
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/7_slicer.txt"
+    <li><a href="_sources/slicer.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -98,91 +94,11 @@
             
   <div class="section" id="how-to-create-slice-figures">
 <h1>How to create slice figures<a class="headerlink" href="#how-to-create-slice-figures" title="Permalink to this headline">¶</a></h1>
-<p>TEXT wasi meine</p>
-<div class="section" id="title1">
-<h2>Title1<a class="headerlink" href="#title1" title="Permalink to this headline">¶</a></h2>
-<p>Text</p>
-<ul>
-<li><dl class="first docutils">
-<dt><strong>All consuming pipeline:</strong></dt>
-<dd><ul class="first last">
-<li><p class="first">Infosource</p>
-</li>
-<li><p class="first">Datagrabber</p>
-</li>
-<li><dl class="first docutils">
-<dt><strong>Metaworkflow:</strong></dt>
-<dd><ul class="first last">
-<li><p class="first">Inputnode (func, subject_id, session_info, contrasts)</p>
-</li>
-<li><dl class="first docutils">
-<dt><strong>Preprocess pipeline:</strong></dt>
-<dd><ul class="first last simple">
-<li>SliceTiming</li>
-<li>Realign</li>
-<li>ArtifactDetect</li>
-<li>BBRegister</li>
-<li>Smooth</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><strong>Volume analysis pipeline:</strong></dt>
-<dd><ul class="first last simple">
-<li>SpecifyModel</li>
-<li>Level1Design</li>
-<li>EstimateModel</li>
-<li>EstimateContrast</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><strong>Normalization pipeline:</strong></dt>
-<dd><ul class="first last simple">
-<li>MRIConvert</li>
-<li>FreeSurferSource</li>
-<li>Segment</li>
-<li>ApplyVolTransform</li>
-<li>Normalize</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p class="first">Datasink</p>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>Below I&#8217;ve visualized the structure of our pipeline and most of the connections
-between the nodes.</p>
-<img alt="workflow.png" src="workflow.png" style="width: 600px;" />
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>Some may ask  why we haven&#8217;t included the infosource, datagrabber and datasink
-nodes into the metaworkflow.</p>
-<p class="last">Because those nodes dependent highly on the paradigma specific parameters and
-will change for every model we want to separat them from the metaworkflow which
-will stay more or less the same for similar experiments. This does also give us
-the opportunity to just import this metaworkflow from this script into a new
-pipeline script and reuse it.</p>
-</div>
-</div>
-<div class="section" id="write-pipeline-script">
-<h2>Write pipeline script<a class="headerlink" href="#write-pipeline-script" title="Permalink to this headline">¶</a></h2>
-<p>Now that we have defined how the structure of our pipeline and the connections
-should be we can start with writing the pipeline script.</p>
+<p>If you want</p>
 <div class="section" id="import-modules">
-<h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
+<h2>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h2>
 <p>First we have to import all necessary modules.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Import modules</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
@@ -199,10 +115,7 @@ should be we can start with writing the pipeline script.</p>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
 <span class="c">#name of the subjects, functional fiels and output folders</span>
-<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;_con_19&#39;</span><span class="p">,</span><span class="s">&#39;_con_20&#39;</span><span class="p">,</span>
-            <span class="s">&#39;_con_21&#39;</span><span class="p">,</span><span class="s">&#39;_con_22&#39;</span><span class="p">,</span><span class="s">&#39;_con_23&#39;</span><span class="p">,</span><span class="s">&#39;_con_24&#39;</span><span class="p">,</span><span class="s">&#39;_con_25&#39;</span><span class="p">,</span><span class="s">&#39;_con_26&#39;</span><span class="p">,</span><span class="s">&#39;_con_27&#39;</span><span class="p">,</span><span class="s">&#39;_con_28&#39;</span><span class="p">,</span><span class="s">&#39;_con_29&#39;</span><span class="p">,</span><span class="s">&#39;_con_30&#39;</span><span class="p">,</span>
-            <span class="s">&#39;_con_31&#39;</span><span class="p">,</span><span class="s">&#39;_con_32&#39;</span><span class="p">,</span><span class="s">&#39;_con_33&#39;</span><span class="p">,</span><span class="s">&#39;_con_34&#39;</span><span class="p">,</span><span class="s">&#39;_con_35&#39;</span><span class="p">,</span><span class="s">&#39;_con_36&#39;</span><span class="p">,</span><span class="s">&#39;_con_37&#39;</span><span class="p">,</span><span class="s">&#39;_con_38&#39;</span><span class="p">,</span><span class="s">&#39;_con_39&#39;</span><span class="p">,</span><span class="s">&#39;_con_40&#39;</span><span class="p">,</span>
-            <span class="s">&#39;_con_41&#39;</span><span class="p">,</span><span class="s">&#39;_con_42&#39;</span><span class="p">,</span><span class="s">&#39;_con_43&#39;</span><span class="p">,</span><span class="s">&#39;_con_44&#39;</span><span class="p">,</span><span class="s">&#39;_con_45&#39;</span><span class="p">,</span><span class="s">&#39;_con_46&#39;</span><span class="p">,</span><span class="s">&#39;_con_47&#39;</span><span class="p">,</span><span class="s">&#39;_con_48&#39;</span><span class="p">]</span>
+<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;_con_19&#39;</span><span class="p">,</span><span class="s">&#39;_con_20&#39;</span><span class="p">]</span>
 
 <span class="n">condition</span> <span class="o">=</span> <span class="s">&#39;serial_2try&#39;</span>
 <span class="n">nameOfWorkingdir</span> <span class="o">=</span> <span class="s">&#39;/workingdir_slicer_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">condition</span>
@@ -317,7 +230,6 @@ should be we can start with writing the pipeline script.</p>
 </div>
 </div>
 </div>
-</div>
 
 
           </div>
@@ -337,7 +249,7 @@ should be we can start with writing the pipeline script.</p>
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 08, 2011.
+      Last updated on August 09, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

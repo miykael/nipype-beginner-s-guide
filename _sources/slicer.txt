@@ -2,62 +2,7 @@
 How to create slice figures
 ===========================
 
-TEXT wasi meine
-
-Title1
-======
-
-Text
-
-* **All consuming pipeline:**
-   * Infosource
-   * Datagrabber
-   * **Metaworkflow:**
-      * Inputnode (func, subject_id, session_info, contrasts)
-      * **Preprocess pipeline:**
-         * SliceTiming
-         * Realign
-         * ArtifactDetect
-         * BBRegister
-         * Smooth
-      * **Volume analysis pipeline:**
-         * SpecifyModel
-         * Level1Design
-         * EstimateModel
-         * EstimateContrast
-      * **Normalization pipeline:**
-         * MRIConvert
-         * FreeSurferSource
-         * Segment
-         * ApplyVolTransform
-         * Normalize
-   * Datasink
-
-
-Below I've visualized the structure of our pipeline and most of the connections
-between the nodes.
-
-.. image:: workflow.png
-   :width: 600 px
-
-
-.. note::
-
-   Some may ask  why we haven't included the infosource, datagrabber and datasink
-   nodes into the metaworkflow.
-
-   Because those nodes dependent highly on the paradigma specific parameters and
-   will change for every model we want to separat them from the metaworkflow which
-   will stay more or less the same for similar experiments. This does also give us
-   the opportunity to just import this metaworkflow from this script into a new
-   pipeline script and reuse it.
-
-
-Write pipeline script
-=====================
-
-Now that we have defined how the structure of our pipeline and the connections
-should be we can start with writing the pipeline script.
+If you want 
 
 
 Import modules
@@ -65,7 +10,7 @@ Import modules
 
 First we have to import all necessary modules.
 
-.. testcode::
+.. code-block:: py
 
    """
    Import modules
@@ -84,10 +29,7 @@ First we have to import all necessary modules.
    experiment_dir = os.getcwd()
    
    #name of the subjects, functional fiels and output folders
-   subjects = ['_con_19','_con_20',
-               '_con_21','_con_22','_con_23','_con_24','_con_25','_con_26','_con_27','_con_28','_con_29','_con_30',
-               '_con_31','_con_32','_con_33','_con_34','_con_35','_con_36','_con_37','_con_38','_con_39','_con_40',
-               '_con_41','_con_42','_con_43','_con_44','_con_45','_con_46','_con_47','_con_48']
+   subjects = ['_con_19','_con_20']
    
    condition = 'serial_2try'
    nameOfWorkingdir = '/workingdir_slicer_%s'%condition

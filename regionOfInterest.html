@@ -77,7 +77,7 @@
 <li><a class="reference internal" href="#anatomical-roi-pipeline">Anatomical ROI Pipeline</a><ul>
 <li><a class="reference internal" href="#import-modules">Import modules</a></li>
 <li><a class="reference internal" href="#define-experiment-specific-parameters">Define experiment specific parameters</a></li>
-<li><a class="reference internal" href="#define-anatomical-regions-of-interest">Define anatomical regions of interest</a></li>
+<li><a class="reference internal" href="#define-aroi-specific-parameters">Define aROI specific parameters</a></li>
 <li><a class="reference internal" href="#define-of-nodes">Define of Nodes</a></li>
 <li><a class="reference internal" href="#definition-of-anatomical-roi-workflow">Definition of anatomical ROI workflow</a></li>
 <li><a class="reference internal" href="#run-pipeline-and-generate-graph">Run pipeline and generate graph</a></li>
@@ -87,6 +87,7 @@
 <li><a class="reference internal" href="#functional-roi-pipeline">Functional ROI Pipeline</a><ul>
 <li><a class="reference internal" href="#id2">Import modules</a></li>
 <li><a class="reference internal" href="#id3">Define experiment specific parameters</a></li>
+<li><a class="reference internal" href="#define-froi-specific-parameters">Define fROI specific parameters</a></li>
 <li><a class="reference internal" href="#definition-of-nodes">Definition of Nodes</a></li>
 <li><a class="reference internal" href="#definition-of-functional-roi-workflow">Definition of functional ROI workflow</a></li>
 <li><a class="reference internal" href="#run-the-pipeline-and-generate-the-graph">Run the pipeline and generate the graph</a></li>
@@ -153,7 +154,7 @@
 <p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this script.</p>
 <p><strong>Visualization of a functional ROI</strong></p>
 <p>Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.</p>
-<img alt="_images/functionalROI.jpg" src="_images/functionalROI.jpg" style="width: 200px;" />
+<img alt="_images/functionalROI.png" src="_images/functionalROI.png" style="width: 200px;" />
 </div>
 </div>
 <div class="section" id="anatomical-roi-pipeline">
@@ -198,8 +199,8 @@
 <p class="last">The name of the first condition is necessary, because the bbregister file from the first level pipeline contains the name of the first condition in its name. E.g. if the first condition is named <tt class="docutils literal"><span class="pre">basic</span></tt>, than the name of the bbregister file for the first subject would be: <tt class="docutils literal"><span class="pre">meanbasic_bbreg_subject1.dat')</span></tt></p>
 </div>
 </div>
-<div class="section" id="define-anatomical-regions-of-interest">
-<h3>Define anatomical regions of interest<a class="headerlink" href="#define-anatomical-regions-of-interest" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="define-aroi-specific-parameters">
+<h3>Define aROI specific parameters<a class="headerlink" href="#define-aroi-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <p>As mentioned above we are using the FreeSurfer Color Table to define the anatomical regions. This table can be found <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT">here</a>. Let&#8217;s assume that we want to extract the following regions:</p>
 <ul class="simple">
 <li>id: 1001 ; region xxxxxx ; from coding part 2005</li>
@@ -258,27 +259,43 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <span class="n">transformation</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">ApplyVolTransform</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;transformation&#39;</span><span class="p">)</span>
 <span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fs_target</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">interp</span> <span class="o">=</span> <span class="s">&#39;nearest&#39;</span>
-
-<span class="c">#Node: SegStats2005 - to extract specified regions from the 2005 part of the color table</span>
+</pre></div>
+</div>
+<p>As you know we want to extract some regions from the 2005 and some from the 2009 segmentation classification. But if you
+look at the mandatory inputs of the <tt class="docutils literal"><span class="pre">SegStats</span></tt> node you will see that we have to specify a value for <tt class="docutils literal"><span class="pre">segment_id</span></tt>
+and one for <tt class="docutils literal"><span class="pre">segmentation_file</span></tt>. Because we specified the list of segmentation ids separately for the 2005 and 2009 part, we have to specify
+two</p>
+<p>###möglich wäre es natürlich auch iteration zu machen
+wieso mach ich überhauüt separation???
+chönt mer ned alles grad i 1 liste inetue?</p>
+<p>segment_id
+aparc_aseg
+segmentation_file =  segmentation volume path</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: SegStats2005 - to extract specified regions from the 2005 part of the color table</span>
 <span class="n">segmentation2005</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segmentation2005&#39;</span><span class="p">)</span>
 <span class="n">segmentation2005</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">color_table_file</span> <span class="o">=</span> <span class="s">&#39;/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt&#39;</span>
-<span class="n">segmentation2005</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segment_id</span> <span class="o">=</span> <span class="n">ROIregions2005</span>
+<span class="n">segmentation2005</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segment_id</span> <span class="o">=</span> <span class="n">ROIregions2005</span> <span class="c">#2005 segmentation ids</span>
 
 <span class="c">#Node: SegStats2009 - to extract specified regions from the 2009 part of the color table</span>
 <span class="n">segmentation2009</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segmentation2009&#39;</span><span class="p">)</span>
 <span class="n">segmentation2009</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">color_table_file</span> <span class="o">=</span> <span class="s">&#39;/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt&#39;</span>
-<span class="n">segmentation2009</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segment_id</span> <span class="o">=</span> <span class="n">ROIregions2009</span>
-
-<span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
-<span class="n">datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
-<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
-<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">aROIOutput</span>
+<span class="n">segmentation2009</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segment_id</span> <span class="o">=</span> <span class="n">ROIregions2009</span> <span class="c">#2009 segmentation ids</span>
 
 <span class="k">def</span> <span class="nf">getVersion</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
        <span class="k">return</span> <span class="n">in_file</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
        <span class="k">return</span> <span class="n">in_file</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you don&#8217;t define a list of segmentation ids (input: <tt class="docutils literal"><span class="pre">segment_id</span></tt>) the pipeline would just extract all possible regions. This is not bad but would just take a while.</p>
+</div>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: Datasink - Creates a datasink node to store important outputs</span>
+<span class="n">datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">aROIOutput</span>
 </pre></div>
 </div>
 </div>
@@ -313,7 +330,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </pre></div>
 </div>
 <p><strong>Visualization of anatomical ROI pipeline</strong></p>
-<img alt="_images/aROIgraph.jpg" src="_images/aROIgraph.jpg" style="width: 200px;" />
+<img alt="_images/aROIgraph.png" src="_images/aROIgraph.png" style="width: 200px;" />
 </div>
 <div class="section" id="summarizing-the-output-in-a-cvs-file">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#summarizing-the-output-in-a-cvs-file" title="Permalink to this headline">¶</a></h3>
@@ -407,6 +424,25 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 <div class="section" id="functional-roi-pipeline">
 <h2>Functional ROI Pipeline<a class="headerlink" href="#functional-roi-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>As said before, the most important difference to the extraction of an antomical ROI is that the region of interest isn&#8217;t predifined by some atlas.
+We define the region we are interested in solely by a point in &#8220;brain&#8221;-space and by a the radius of a sphere around this point. The procedure to this is quite simple:</p>
+<ol class="arabic simple">
+<li>define a point of interest and create a sphere around it</li>
+<li>overlay this sphere on to a subject</li>
+<li>extract the data from this sphere</li>
+</ol>
+<p>Our <strong>functional ROI pipeline</strong> does almost exactly this. The only difference is that we have to divide the first step into some smaller substeps:
+a. Take a subject specific contrast, multiply all voxels by 0 and add the value 1 to each. This leads  to a contrast file where all voxels have the value 1
+b. Define a cubic area around your point of interest (this is done by defining a corner of the cube and the length of its sides)
+c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cube have values 1 and all outside this region have the value 0 and smooth this cube to a sphere</p>
+<p>A visualization of those steps would look like this:</p>
+<p><strong>Step A</strong></p>
+<img alt="_images/fROIsubstepA.png" src="_images/fROIsubstepA.png" style="width: 200px;" />
+<p><strong>Step B</strong></p>
+<img alt="_images/fROIsubstepB.png" src="_images/fROIsubstepB.png" style="width: 200px;" />
+<p><strong>Step C</strong></p>
+<img alt="_images/fROIsubstepC.png" src="_images/fROIsubstepC.png" style="width: 200px;" />
+<p>Let&#8217;s now begin with the creation of a <strong>functional ROI pipeline</strong>.</p>
 <div class="section" id="id2">
 <h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
@@ -432,45 +468,53 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 
 <span class="c">#list of contrastnumbers the pipeline should consider</span>
 <span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span><span class="s">&#39;02&#39;</span><span class="p">,</span><span class="s">&#39;03&#39;</span><span class="p">,</span><span class="s">&#39;04&#39;</span><span class="p">,</span><span class="s">&#39;05&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-froi-specific-parameters">
+<h3>Define fROI specific parameters<a class="headerlink" href="#define-froi-specific-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#define the coordination of point of interest</span>
+<span class="n">centerOfROI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">183</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="mi">136</span><span class="p">]</span>
 
+<span class="c">#define the diameter of the sphere of interest</span>
+<span class="n">diameter</span> <span class="o">=</span> <span class="mi">3</span>
 
-<span class="n">fROIcoordinations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">183</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="mi">136</span><span class="p">]</span>
-<span class="n">sphereSize</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="c">#to calculate where the ROI beginns</span>
-<span class="n">startROI</span> <span class="o">=</span> <span class="p">[</span><span class="n">fROIcoordinations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">sphereSize</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
-            <span class="n">fROIcoordinations</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sphereSize</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
-            <span class="n">fROIcoordinations</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">sphereSize</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="c">#calculates the beginning corner of the cubic ROI</span>
+<span class="n">corner</span> <span class="o">=</span> <span class="p">[</span><span class="n">centerOfROI</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">diameter</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span>
+          <span class="n">centerOfROI</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">diameter</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span>
+          <span class="n">centerOfROI</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">diameter</span><span class="o">/</span><span class="mf">2.0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="definition-of-nodes">
 <h3>Definition of Nodes<a class="headerlink" href="#definition-of-nodes" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: SubjectData</span>
-<span class="n">infosource1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource1&quot;</span><span class="p">)</span>
-<span class="n">infosource1</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">)</span>
-<span class="n">infosource2</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource2&quot;</span><span class="p">)</span>
-<span class="n">infosource2</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrasts</span><span class="p">)</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
+<span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
+<span class="n">inputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrasts</span><span class="p">)]</span>
+
 
 <span class="c">#Node: DataGrabber - To grab the input data</span>
-<span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span><span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">]),</span>
+<span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span>
+                                               <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">]),</span>
                      <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
-<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
-<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;asens_normbrains_diff/</span><span class="si">%s</span><span class="s">/normcons/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;result/&#39;</span> <span class="o">+</span> <span class="n">l1contrastDir</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;/</span><span class="si">%s</span><span class="s">/normcons/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]])</span>
 
-<span class="c">#Node: ImageMaths - to create the ROI</span>
-<span class="n">maths1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;maths1&quot;</span><span class="p">)</span>
-<span class="n">maths1</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul 0 -add 1 -roi </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> 0 1&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">startROI</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">sphereSize</span><span class="p">,</span><span class="n">startROI</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">sphereSize</span><span class="p">,</span><span class="n">startROI</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">sphereSize</span><span class="p">)</span>
-<span class="n">maths1</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
-<span class="n">maths1</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;/mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/</span><span class="si">%s</span><span class="s">/normcons/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c">#Node: ImageMaths - to create the cubic ROI with value 1</span>
+<span class="n">cubemask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;cubemask&quot;</span><span class="p">)</span>
+<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul 0 -add 1 -roi </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> 0 1&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">corner</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">diameter</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">diameter</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">diameter</span><span class="p">)</span>
+<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
+<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;/mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/</span><span class="si">%s</span><span class="s">/normcons/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<span class="c">#Node: ImageMaths - to make the ROI spherical</span>
-<span class="n">maths2</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;maths2&quot;</span><span class="p">)</span>
-<span class="n">maths2</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-kernel sphere </span><span class="si">%d</span><span class="s"> -fmean -thr 0.0000010000 -bin&#39;</span><span class="o">%</span><span class="n">sphereSize</span>
-<span class="n">maths2</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
+<span class="c">#Node: ImageMaths - to smooth the cubic ROI to a sphere</span>
+<span class="n">spheremask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;spheremask&quot;</span><span class="p">)</span>
+<span class="n">spheremask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-kernel sphere </span><span class="si">%d</span><span class="s"> -fmean -thr 0.0000010000 -bin&#39;</span><span class="o">%</span><span class="n">diameter</span>
+<span class="n">spheremask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
 
-<span class="c">#Node: SegStats - to calculate the segmentation</span>
+<span class="c">#Node: SegStats - to extract the statistic from a given segmentation</span>
 <span class="n">segstat</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segstat&#39;</span><span class="p">)</span>
 
 <span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
@@ -481,7 +525,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you are interested in what command actually will be executed by the <tt class="docutils literal"><span class="pre">maths1</span></tt> node you just simply can execute <tt class="docutils literal"><span class="pre">maths1.cmdline</span></tt>. In this example this will give you the following output: <tt class="docutils literal"><span class="pre">blablabla</span></tt></p>
+<p class="last">If you are interested in what command actually will be executed by the <tt class="docutils literal"><span class="pre">cubemask</span></tt> node you just simply can execute <tt class="docutils literal"><span class="pre">cubemask.cmdline</span></tt>. In this example this will give you the following output: <tt class="docutils literal"><span class="pre">blablabla</span></tt></p>
 </div>
 </div>
 <div class="section" id="definition-of-functional-roi-workflow">
@@ -491,10 +535,10 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">fROIWorkingdir</span>
 
 <span class="c">#Connect up all components</span>
-<span class="n">fROIflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">maths1</span><span class="p">,</span> <span class="n">maths2</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+<span class="n">fROIflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">cubemask</span><span class="p">,</span> <span class="n">spheremask</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
                   <span class="p">(</span><span class="n">infosource1</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
                   <span class="p">(</span><span class="n">infosource2</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="s">&#39;contrast_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">maths2</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">spheremask</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
                   <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
                   <span class="p">(</span><span class="n">segstat</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span> <span class="s">&#39;@statistic&#39;</span><span class="p">)]),</span>
                   <span class="p">])</span>
@@ -511,7 +555,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <div class="section" id="id4">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;coordinations:&#39;</span><span class="p">,</span><span class="n">fROIcoordinations</span><span class="p">,</span><span class="s">&#39;sphereSize:&#39;</span><span class="p">,</span><span class="n">sphereSize</span><span class="p">])</span>
+<span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;coordinations:&#39;</span><span class="p">,</span><span class="n">centerOfROI</span><span class="p">,</span><span class="s">&#39;diameter:&#39;</span><span class="p">,</span><span class="n">diameter</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
     <span class="n">contrast</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">contrast</span><span class="p">)</span>
@@ -531,7 +575,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
     <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fROIOutput</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">fROIcoordinations</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">sphereSize</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fROIOutput</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">centerOfROI</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">diameter</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
 <span class="n">outputFile</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
     <span class="n">outputFile</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
@@ -570,7 +614,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 08, 2011.
+      Last updated on August 09, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">
