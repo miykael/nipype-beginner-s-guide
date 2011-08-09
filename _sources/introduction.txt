@@ -16,6 +16,11 @@ Note that this guide is meant as a general introduction. The implementation of N
 
    There are also a lot of very good tutorials specific for different usages of Nipype like using FreeSurfer for smoothing, using FSL for DTI analysis, for fMRI analysis with FEEDS data, for fMRI analysis or using SPM for analysis on auditory dataset etc. They all can be found in the `tutorial section <http://www.mit.edu/~satra/nipype-nightly/users/pipeline_tutorial.html>`_ of the Nipype homepage.
 
+.. important::
+
+   It is important to mention that the examples of this beginner's guide are tuned for the environment of the `Gabrieli Lab <http://gablab.mit.edu/>`_ at `MIT <http://mit.edu/>`_. So it might be possible that you have to change some paths or environment variables.
+
+
 
 What if you're lost?
 ====================
@@ -45,9 +50,6 @@ Before you can run a nipype python script make also sure to set up the necessary
     export SUBJECTS_DIR=/software/Freesurfer/5.1.0/subjects
     export MNI_DIR=/software/Freesurfer/5.1.0/mni
 
-.. note::
-
-   The names and specification of paths and files in this example are tuned for the environment at MIT and may vary from your environment.
 
 After all installations are done and you've set up all necessary environment variables you can start iPython:
 

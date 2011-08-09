@@ -326,6 +326,40 @@ div.warning ul, div.warning ol {
     padding: 0;
 }
 
+
+
+
+
+
+
+
+div.important {
+    border: 1px solid black;
+}
+
+div.important p.admonition-title {
+    background-color: #EE4B00;
+    border-bottom-color: black;
+    color: black;
+}
+
+div.hint {
+    border: 1px solid black;
+}
+
+div.hint p.admonition-title {
+    background-color: #2400D9;
+    border-bottom-color: black;
+    color: white;
+}
+
+
+
+
+
+
+
+
 div.versioninfo {
     margin: 1em 0 0 0;
     border: 1px solid #ccc;

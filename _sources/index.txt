@@ -12,6 +12,6 @@ Beginner's Guide to Nipype
    underConstruction
 
 
-.. note::
+.. hint::
 
    This user guide can be downloaded as a PDF file here: `Nipype Beginner's Guide <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_
