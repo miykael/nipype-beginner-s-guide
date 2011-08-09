@@ -32,7 +32,8 @@ Before you can start using nipype, make sure that you have installed all the nec
 
 Before you can run a nipype python script make also sure to set up the necessary environment variables, meaning to source to your corresponding Nipype and FreeSurfer and to export the corresponding FreeSurfer and Matlab paths. With the current Nipype v0.4 and FreeSurfer v5.1.0 the terminal commands can look like that:
 
-.. code-block:: ruby
+.. code-block:: sh
+   :linenos:
 
     source /software/python/setup-nipype-0.4.sh 
     source /software/Freesurfer/5.1.0/SetUpFreeSurfer.sh
@@ -44,8 +45,15 @@ Before you can run a nipype python script make also sure to set up the necessary
     export SUBJECTS_DIR=/software/Freesurfer/5.1.0/subjects
     export MNI_DIR=/software/Freesurfer/5.1.0/mni
 
-    #After you've installed everything and set up all the necessary
-    #environment variables you can start iPython
+.. note::
+
+   The names and specification of paths and files in this example are tuned for the environment at MIT and may vary from your environment.
+
+After all installations are done and you've set up all necessary environment variables you can start iPython:
+
+.. code-block:: sh
+   :linenos:
+
     ipython
 
-**Now you're good to go!**
+**and you're good to go!**

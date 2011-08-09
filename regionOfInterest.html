@@ -23,8 +23,6 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="Under construction" href="underConstruction.html" />
-    <link rel="prev" title="Example: Second Level Pipeline" href="secondLevelExample.html" />
  
 <meta name="keywords" content="nipype, python, guide">
 <script type="text/javascript">
@@ -55,12 +53,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="underConstruction.html" title="Under construction"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="secondLevelExample.html" title="Example: Second Level Pipeline"
-             accesskey="P">previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
@@ -98,12 +90,6 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="secondLevelExample.html"
-                        title="previous chapter">Example: Second Level Pipeline</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="underConstruction.html"
-                        title="next chapter">Under construction</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/regionOfInterest.txt"
@@ -162,17 +148,40 @@
 <p>Let&#8217;s now begin with the creation of an <strong>anatomical ROI pipeline</strong>.</p>
 <div class="section" id="import-modules">
 <h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>    <span class="c"># freesurfer</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>           <span class="c"># i/o routines</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>     <span class="c"># utility</span>
 <span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>          <span class="c"># pypeline engine</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-experiment-specific-parameters">
 <h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">###   # Tell freesurfer what subjects directory to use</span>
@@ -190,13 +199,13 @@
 <span class="c">#list of contrastnumbers the pipeline should consider</span>
 <span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span><span class="s">&#39;02&#39;</span><span class="p">,</span><span class="s">&#39;03&#39;</span><span class="p">,</span><span class="s">&#39;04&#39;</span><span class="p">,</span><span class="s">&#39;05&#39;</span><span class="p">]</span>
 
-<span class="c">###   #name of the first condition from the first level pipeline</span>
-<span class="c">###   nameOfFirstCondition = &#39;basic&#39;</span>
+<span class="c">###   #name of the first session from the first level pipeline</span>
+<span class="c">###   nameOfFirstSession = &#39;func1&#39;</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The name of the first condition is necessary, because the bbregister file from the first level pipeline contains the name of the first condition in its name. E.g. if the first condition is named <tt class="docutils literal"><span class="pre">basic</span></tt>, than the name of the bbregister file for the first subject would be: <tt class="docutils literal"><span class="pre">meanbasic_bbreg_subject1.dat')</span></tt></p>
+<p class="last">The name of the first session is necessary, because the bbregister file from the first level pipeline contains the name of the first session in its name. E.g. if the first condition is named <tt class="docutils literal"><span class="pre">func1</span></tt>, than the name of the bbregister file for the first subject would be: <tt class="docutils literal"><span class="pre">meanafunc1_bbreg_subject1.dat')</span></tt></p>
 </div>
 </div>
 <div class="section" id="define-aroi-specific-parameters">
@@ -214,24 +223,41 @@
 <li>id: 11104 ; region xxxxxx ; from coding part 2009</li>
 <li>id: 12104 ; region xxxxxx ; from coding part 2009</li>
 </ul>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Specification of the regions from the 2005 and 2009 part of the FreeSurfer Color Table</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Specification of the regions from the 2005 and 2009 part of the FreeSurfer Color Table</span>
 <span class="n">ROIregions2005</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;1001&#39;</span><span class="p">,</span><span class="s">&#39;2001&#39;</span><span class="p">,</span><span class="s">&#39;1030&#39;</span><span class="p">,</span><span class="s">&#39;2030&#39;</span><span class="p">]</span>
 <span class="n">ROIregions2009</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;11&#39;</span><span class="p">,</span><span class="s">&#39;50&#39;</span><span class="p">,</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="s">&#39;51&#39;</span><span class="p">,</span><span class="s">&#39;11104&#39;</span><span class="p">,</span><span class="s">&#39;12104&#39;</span><span class="p">]</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-of-nodes">
 <h3>Define of Nodes<a class="headerlink" href="#define-of-nodes" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
 <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
 <span class="n">inputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span>
                        <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrasts</span><span class="p">)]</span>
 </pre></div>
-</div>
-<p>As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img'</span></tt> and the bbregister file for the first subject can be found at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meancond1_bbreg_01.dat'</span></tt>
+</td></tr></table></div>
+<p>As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img'</span></tt> and the bbregister file for the first subject can be found at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meanafunc1_bbreg_subject1.dat'</span></tt>
 Knowing this, we can build our <tt class="docutils literal"><span class="pre">datagrabber</span></tt> node as follows:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to grab the input data</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to grab the input data</span>
 <span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span>
                                                <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span><span class="s">&#39;bb_id&#39;</span><span class="p">]),</span>
                      <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
@@ -239,14 +265,26 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;/</span><span class="si">%s</span><span class="s">/_subject_id_</span><span class="si">%s</span><span class="s">/</span><span class="si">%s%s%s</span><span class="s">&#39;</span>
 
 <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;vol_contrasts&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;con_00&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span><span class="s">&#39;.img&#39;</span><span class="p">]],</span>
-            <span class="n">bb_id</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;bbregister&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;mean&#39;</span><span class="o">+</span><span class="n">nameOfFirstCondition</span><span class="o">+</span><span class="s">&#39;_bbreg_&#39;</span><span class="p">,</span>
+            <span class="n">bb_id</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;bbregister&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;meana&#39;</span><span class="o">+</span><span class="n">nameOfFirstSession</span><span class="o">+</span><span class="s">&#39;_bbreg_&#39;</span><span class="p">,</span>
                       <span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;.dat&#39;</span><span class="p">]])</span>
 
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="n">info</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>Let&#8217;s now continue with the implementation of the other nodes we need for our <strong>anatomical ROI pipeline</strong>.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: FreeSurferSource - to grab FreeSurfer files from the recon-all process</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: FreeSurferSource - to grab FreeSurfer files from the recon-all process</span>
 <span class="n">fssource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">FreeSurferSource</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fssource&#39;</span><span class="p">)</span>
 <span class="n">fssource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">subjects_dir</span> <span class="o">=</span> <span class="n">subjects_dir</span>
 
@@ -260,7 +298,7 @@ Knowing this, we can build our <tt class="docutils literal"><span class="pre">da
 <span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fs_target</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">transformation</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">interp</span> <span class="o">=</span> <span class="s">&#39;nearest&#39;</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>As you know we want to extract some regions from the 2005 and some from the 2009 segmentation classification. But if you
 look at the mandatory inputs of the <tt class="docutils literal"><span class="pre">SegStats</span></tt> node you will see that we have to specify a value for <tt class="docutils literal"><span class="pre">segment_id</span></tt>
 and one for <tt class="docutils literal"><span class="pre">segmentation_file</span></tt>. Because we specified the list of segmentation ids separately for the 2005 and 2009 part, we have to specify
@@ -271,7 +309,21 @@ chönt mer ned alles grad i 1 liste inetue?</p>
 <p>segment_id
 aparc_aseg
 segmentation_file =  segmentation volume path</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: SegStats2005 - to extract specified regions from the 2005 part of the color table</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: SegStats2005 - to extract specified regions from the 2005 part of the color table</span>
 <span class="n">segmentation2005</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segmentation2005&#39;</span><span class="p">)</span>
 <span class="n">segmentation2005</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">color_table_file</span> <span class="o">=</span> <span class="s">&#39;/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt&#39;</span>
 <span class="n">segmentation2005</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segment_id</span> <span class="o">=</span> <span class="n">ROIregions2005</span> <span class="c">#2005 segmentation ids</span>
@@ -287,21 +339,42 @@ segmentation_file =  segmentation volume path</p>
     <span class="k">else</span><span class="p">:</span>
        <span class="k">return</span> <span class="n">in_file</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you don&#8217;t define a list of segmentation ids (input: <tt class="docutils literal"><span class="pre">segment_id</span></tt>) the pipeline would just extract all possible regions. This is not bad but would just take a while.</p>
 </div>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: Datasink - Creates a datasink node to store important outputs</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Datasink - Creates a datasink node to store important outputs</span>
 <span class="n">datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">aROIOutput</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="definition-of-anatomical-roi-workflow">
 <h3>Definition of anatomical ROI workflow<a class="headerlink" href="#definition-of-anatomical-roi-workflow" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the ROI extraction workflow</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the ROI extraction workflow</span>
 <span class="n">aROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;aROIflow&#39;</span><span class="p">)</span>
 <span class="n">aROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">aROIWorkingdir</span>
 
@@ -321,20 +394,100 @@ segmentation_file =  segmentation volume path</p>
                   <span class="p">(</span><span class="n">segmentation2009</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span> <span class="s">&#39;segstat2009&#39;</span><span class="p">)]),</span>
                   <span class="p">])</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="run-pipeline-and-generate-graph">
 <h3>Run pipeline and generate graph<a class="headerlink" href="#run-pipeline-and-generate-graph" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">aROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">aROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
 <span class="n">aROIflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p><strong>Visualization of anatomical ROI pipeline</strong></p>
 <img alt="_images/aROIgraph.png" src="_images/aROIgraph.png" style="width: 200px;" />
 </div>
 <div class="section" id="summarizing-the-output-in-a-cvs-file">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#summarizing-the-output-in-a-cvs-file" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15000</span><span class="p">):</span>
@@ -415,7 +568,7 @@ segmentation_file =  segmentation volume path</p>
 
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">The code for this anatomical ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py">aROIpipeline.py</a></p>
@@ -445,18 +598,34 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
 <p>Let&#8217;s now begin with the creation of a <strong>functional ROI pipeline</strong>.</p>
 <div class="section" id="id2">
 <h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>    <span class="c"># freesurfer</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>           <span class="c"># i/o routines</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span>     <span class="c"># utility</span>
 <span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>          <span class="c"># pypeline engine</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.fsl</span> <span class="kn">as</span> <span class="nn">fsl</span>          <span class="c"># fsl module</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="id3">
 <h3>Define experiment specific parameters<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">#dirnames for functional ROI pipeline</span>
@@ -469,11 +638,20 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
 <span class="c">#list of contrastnumbers the pipeline should consider</span>
 <span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span><span class="s">&#39;02&#39;</span><span class="p">,</span><span class="s">&#39;03&#39;</span><span class="p">,</span><span class="s">&#39;04&#39;</span><span class="p">,</span><span class="s">&#39;05&#39;</span><span class="p">]</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-froi-specific-parameters">
 <h3>Define fROI specific parameters<a class="headerlink" href="#define-froi-specific-parameters" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#define the coordination of point of interest</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#define the coordination of point of interest</span>
 <span class="n">centerOfROI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">183</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="mi">136</span><span class="p">]</span>
 
 <span class="c">#define the diameter of the sphere of interest</span>
@@ -484,11 +662,43 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
           <span class="n">centerOfROI</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">diameter</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span>
           <span class="n">centerOfROI</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">diameter</span><span class="o">/</span><span class="mf">2.0</span><span class="p">]</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="definition-of-nodes">
 <h3>Definition of Nodes<a class="headerlink" href="#definition-of-nodes" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
 <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
 <span class="n">inputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span>
@@ -522,7 +732,7 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">fROIOutput</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you are interested in what command actually will be executed by the <tt class="docutils literal"><span class="pre">cubemask</span></tt> node you just simply can execute <tt class="docutils literal"><span class="pre">cubemask.cmdline</span></tt>. In this example this will give you the following output: <tt class="docutils literal"><span class="pre">blablabla</span></tt></p>
@@ -530,7 +740,18 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
 </div>
 <div class="section" id="definition-of-functional-roi-workflow">
 <h3>Definition of functional ROI workflow<a class="headerlink" href="#definition-of-functional-roi-workflow" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
 <span class="n">fROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fROIflow&#39;</span><span class="p">)</span>
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">fROIWorkingdir</span>
 
@@ -543,18 +764,44 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
                   <span class="p">(</span><span class="n">segstat</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span> <span class="s">&#39;@statistic&#39;</span><span class="p">)]),</span>
                   <span class="p">])</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="run-the-pipeline-and-generate-the-graph">
 <h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">fROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">fROIflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="id4">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;coordinations:&#39;</span><span class="p">,</span><span class="n">centerOfROI</span><span class="p">,</span><span class="s">&#39;diameter:&#39;</span><span class="p">,</span><span class="n">diameter</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
@@ -581,7 +828,7 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
     <span class="n">outputFile</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">The code for this functional ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py.py">fROIpipeline.py</a></p>
@@ -602,12 +849,6 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="underConstruction.html" title="Under construction"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="secondLevelExample.html" title="Example: Second Level Pipeline"
-             >previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>

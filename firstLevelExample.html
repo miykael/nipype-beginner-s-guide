@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="Example: Second Level Pipeline" href="secondLevelExample.html" />
+    <link rel="next" title="Under construction" href="underConstruction.html" />
     <link rel="prev" title="Prepare Data for Nipype" href="preparedata.html" />
  
 <meta name="keywords" content="nipype, python, guide">
@@ -56,7 +56,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="secondLevelExample.html" title="Example: Second Level Pipeline"
+          <a href="underConstruction.html" title="Under construction"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="preparedata.html" title="Prepare Data for Nipype"
@@ -96,8 +96,8 @@
   <p class="topless"><a href="preparedata.html"
                         title="previous chapter">Prepare Data for Nipype</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="secondLevelExample.html"
-                        title="next chapter">Example: Second Level Pipeline</a></p>
+  <p class="topless"><a href="underConstruction.html"
+                        title="next chapter">Under construction</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/firstLevelExample.txt"
@@ -144,7 +144,16 @@
 <div class="section" id="import-modules">
 <h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
 <p>First we have to import all necessary modules.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>                                    <span class="c"># system functions</span>
 <span class="kn">import</span> <span class="nn">nipype.algorithms.modelgen</span> <span class="kn">as</span> <span class="nn">model</span>   <span class="c"># model generation</span>
 <span class="kn">import</span> <span class="nn">nipype.algorithms.rapidart</span> <span class="kn">as</span> <span class="nn">ra</span>      <span class="c"># artifact detection</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>    <span class="c"># freesurfer</span>
@@ -155,12 +164,23 @@
 <span class="kn">import</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">as</span> <span class="nn">base</span>        <span class="c"># base routines</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.fsl.maths</span> <span class="kn">as</span> <span class="nn">math</span>   <span class="c">#for dilating of the mask</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-experiment-specific-parameters">
 <h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <p>I suggest to keep things that change often between versions, models, experiments like subject names, output folders and name of functional runs at one place so that they can be accessed more easily in case you want to change them.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#To better access the parent folder of the experiment</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#To better access the parent folder of the experiment</span>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">#name of the subjects, functional files and output folders</span>
@@ -173,13 +193,75 @@
 <span class="n">subjects_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/freesurfer_data&#39;</span>
 <span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">subjects_dir</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>Those specification mean that the name of the subjectfolders are &#8220;subject1&#8221;, &#8220;subject2&#8221; and &#8220;subject3&#8221; and that each of those folders contain a &#8220;func1.nii&#8221; and &#8220;func2.nii&#8221; file which represents the nifti files for the first and the second functional run. But the exact structure of the folder will be later defined by the implementation of the datagrabber node.</p>
 </div>
 <div class="section" id="define-a-pipeline-for-the-preprocess">
 <h3>Define a pipeline for the preprocess<a class="headerlink" href="#define-a-pipeline-for-the-preprocess" title="Permalink to this headline">¶</a></h3>
 <p>We first define the preprocess pipeline with a node for slicetiming, realignment, artifact detection, bbregister and smoothing.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the preprocess workflow</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the preprocess workflow</span>
 <span class="n">preproc</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;preproc&#39;</span><span class="p">)</span>
 
 <span class="c">#Node: Slicetiming</span>
@@ -243,7 +325,7 @@
                                 <span class="p">]),</span>
                  <span class="p">])</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you are wondering how we knew which parameters to specify and which connections to establish. It is simple: Define or connect all mandatory inputs for each node. All the other optional inputs can be set as you please and more importantly as your model demands. For more informations about what is mandatory and what not, go to <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html">Interfaces and Algorithms</a>.</p>
@@ -252,7 +334,44 @@
 <div class="section" id="define-a-pipeline-for-the-volume-analysis">
 <h3>Define a pipeline for the volume analysis<a class="headerlink" href="#define-a-pipeline-for-the-volume-analysis" title="Permalink to this headline">¶</a></h3>
 <p>We than define the pipeline for the volume analysis with a node for model specification, first level design, parameter estimation and contrast estimation.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the volume analysis workflow</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the volume analysis workflow</span>
 <span class="n">volanalysis</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;volanalysis&#39;</span><span class="p">)</span>
 
 <span class="c">#Node: SpecifyModel - Generate SPM-specific design information</span>
@@ -291,12 +410,38 @@
                                                         <span class="s">&#39;residual_image&#39;</span><span class="p">)]),</span>
                      <span class="p">])</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-a-framework-workflow-that-contains-the-preprocess-and-the-volume-analysis">
 <h3>Define a framework workflow that contains the preprocess and the volume analysis<a class="headerlink" href="#define-a-framework-workflow-that-contains-the-preprocess-and-the-volume-analysis" title="Permalink to this headline">¶</a></h3>
 <p>As we planed at the beginning we now want to integrate those two pipelines into a bigger framework workflow and add an inputnode that feeds these pipelines with parameters.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the framework workflow</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the framework workflow</span>
 <span class="n">frameflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;frameflow&#39;</span><span class="p">)</span>
 
 <span class="c">#Node: Inputnode - For this workflow the only necessary inputs are the functional</span>
@@ -324,12 +469,37 @@
                                            <span class="p">])</span>
                    <span class="p">])</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-infosource-datagrabber-and-datasink">
 <h3>Define infosource, datagrabber and datasink<a class="headerlink" href="#define-infosource-datagrabber-and-datasink" title="Permalink to this headline">¶</a></h3>
 <p>We now have to create the infosource that defines the subjectlist, the datagrabber that grabs the inputs and the datasink which defines where we want to store the important outputs at.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Node: Infosource - we use IdentityInterface to create our own node, to specify</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Infosource - we use IdentityInterface to create our own node, to specify</span>
 <span class="c">#      the list of subjects the pipeline should be executed on</span>
 <span class="n">infosource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span>
                      <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource&quot;</span><span class="p">)</span>
@@ -356,12 +526,68 @@
 <span class="c">#Define where the datasink input should be stored at</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">nameOflevel1Out</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-contrasts-and-model-specification">
 <h3>Define contrasts and model specification<a class="headerlink" href="#define-contrasts-and-model-specification" title="Permalink to this headline">¶</a></h3>
 <p>We now set up the model specific components like contrasts, names of conditions, parametric modulators onset, duration of a trial etc.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Names of the conditions</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Names of the conditions</span>
 <span class="n">namesOfConditions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;condition1&#39;</span><span class="p">,</span><span class="s">&#39;condition2&#39;</span><span class="p">,</span><span class="s">&#39;condition3&#39;</span><span class="p">]</span>
 
 <span class="c">#Define different contrasts</span>
@@ -419,12 +645,34 @@
                             <span class="n">regressors</span><span class="o">=</span><span class="bp">None</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">output</span>  <span class="c">#this output will later be returned to inputnode.session_info</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="define-the-meta-pipeline">
 <h3>Define the meta pipeline<a class="headerlink" href="#define-the-meta-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>After setting up all nodes, parameters and subpipelines, we now want to create the pipeline that contains everything. The one that gets executed at the end.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Initiation of the metaflow</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the metaflow</span>
 <span class="n">metaflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;metaflow&quot;</span><span class="p">)</span>
 
 <span class="c">#Define where the workingdir of the metaflow should be stored at</span>
@@ -448,7 +696,7 @@
                                        <span class="p">])</span>
                   <span class="p">])</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Some may wonder what the <tt class="docutils literal"><span class="pre">&#64;spm_mat</span></tt>, <tt class="docutils literal"><span class="pre">&#64;T</span></tt> and <tt class="docutils literal"><span class="pre">&#64;con</span></tt> cause in the connection between the <strong>frameflow</strong> and the <strong>datasink</strong>. This specification means that all the <tt class="docutils literal"><span class="pre">spm_mat_file</span></tt>, <tt class="docutils literal"><span class="pre">spmT_images</span></tt> and <tt class="docutils literal"><span class="pre">con_images</span></tt> files all get saved into the same <strong>datasink</strong> folder with the name <tt class="docutils literal"><span class="pre">vol_contrasts</span></tt>. The <tt class="docutils literal"><span class="pre">.&#64;id</span></tt> just specifies an identifier for the saving process.</p>
@@ -457,11 +705,13 @@
 <div class="section" id="run-the-pipeline-and-generate-the-graph">
 <h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <p>Finally, after everything is set up correctly we can run the pipeline and let it draw the two graphs.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#Run the analysis pipeline and create the two graphs that visually represents the workflow.</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Run the analysis pipeline and create the two graphs that visually represents the workflow.</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 </div>
 <div class="section" id="visualization-of-the-metaflow">
@@ -481,13 +731,36 @@
 <div class="section" id="adding-a-pipeline-for-the-surface-analysis">
 <h2>Adding a pipeline for the surface analysis<a class="headerlink" href="#adding-a-pipeline-for-the-surface-analysis" title="Permalink to this headline">¶</a></h2>
 <p>Running the first level analysis also on the surface, and not just on the volume, can be achieved with just little more code. Because the <strong>surface analysis pipeline</strong> is similar to the one on the volume we can just clone the <strong>volume analysis pipeline</strong>:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#creates a clone of volanaylsis called surfanalysis</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#creates a clone of volanaylsis called surfanalysis</span>
 <span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>Now we have to integrate this surfanalysis into the frameflow and into the metaflow. The connections are almost the same as they are for the <strong>volume analysis pipeline</strong>. In this example the only difference is that we don&#8217;t want to use smoothed data for the analysis on the surface because we will be smoothing the data latter on the second level surface analysis.</p>
 <p>This means instead of taking the smoothed files from the preprocess pipeline and feeding them to the <tt class="docutils literal"><span class="pre">modelspec</span></tt> node we will take the files directly from the <tt class="docutils literal"><span class="pre">realign</span></tt> node.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c">#integration  of the surfanalysis into the frameflow</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#integration  of the surfanalysis into the frameflow</span>
 <span class="n">frameflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">surfanalysis</span><span class="p">,[(</span><span class="s">&#39;session_info&#39;</span><span class="p">,</span><span class="s">&#39;modelspec.subject_info&#39;</span><span class="p">),</span>
                                              <span class="p">(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span><span class="s">&#39;contrastestimate.contrasts&#39;</span><span class="p">),</span>
                                              <span class="p">]),</span>
@@ -502,9 +775,7 @@
                    <span class="p">])</span>
 
 <span class="c">#integration  of the surfanalysis into the metaflow</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">frameflow</span><span class="p">,</span><span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;preproc.bbregister.out_reg_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;bbregister&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;surfanalysis.contrastestimate.spm_mat_file&#39;</span><span class="p">,</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">frameflow</span><span class="p">,</span><span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;surfanalysis.contrastestimate.spm_mat_file&#39;</span><span class="p">,</span>
                                         <span class="s">&#39;surf_contrasts.@spm_mat&#39;</span><span class="p">),</span>
                                        <span class="p">(</span><span class="s">&#39;surfanalysis.contrastestimate.spmT_images&#39;</span><span class="p">,</span>
                                         <span class="s">&#39;surf_contrasts.@T&#39;</span><span class="p">),</span>
@@ -513,11 +784,11 @@
                                        <span class="p">])</span>
                   <span class="p">])</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>Now that the <strong>surface analysis pipeline</strong> is integrated into the metaflow we can run the metaflow:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">The code for a first level analysis on the volume and the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py">firstlevelpipeline.py</a></p>
@@ -538,7 +809,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="secondLevelExample.html" title="Example: Second Level Pipeline"
+          <a href="underConstruction.html" title="Under construction"
              >next</a> |</li>
         <li class="right" >
           <a href="preparedata.html" title="Prepare Data for Nipype"

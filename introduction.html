@@ -129,22 +129,34 @@
 <h2>But first... Preparation!<a class="headerlink" href="#but-first-preparation" title="Permalink to this headline">¶</a></h2>
 <p>Before you can start using nipype, make sure that you have installed all the necessary modules and software on your system. For more information go to the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/install.html">download and install</a> section.</p>
 <p>Before you can run a nipype python script make also sure to set up the necessary environment variables, meaning to source to your corresponding Nipype and FreeSurfer and to export the corresponding FreeSurfer and Matlab paths. With the current Nipype v0.4 and FreeSurfer v5.1.0 the terminal commands can look like that:</p>
-<div class="highlight-ruby"><div class="highlight"><pre><span class="n">source</span><span class="sr"> /software/</span><span class="n">python</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">nipype</span><span class="o">-</span><span class="mi">0</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">source</span><span class="sr"> /software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="no">SetUpFreeSurfer</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="nb">source</span> /software/python/setup-nipype-0.4.sh
+ <span class="nb">source</span> /software/Freesurfer/5.1.0/SetUpFreeSurfer.sh
 
-<span class="n">export</span> <span class="no">MATLABCMD</span><span class="o">=</span><span class="vg">$pathtomatlabdir</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="vg">$platform</span><span class="o">/</span><span class="no">MATLAB</span>
+ <span class="nb">export </span><span class="nv">MATLABCMD</span><span class="o">=</span><span class="nv">$pathtomatlabdir</span>/bin/<span class="nv">$platform</span>/MATLAB
 
-<span class="n">export</span> <span class="no">FREESURFER_HOME</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span>
-<span class="n">export</span> <span class="no">FSFAST_HOME</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">fsfast</span>
-<span class="n">export</span> <span class="no">SUBJECTS_DIR</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">subjects</span>
-<span class="n">export</span> <span class="no">MNI_DIR</span><span class="o">=</span><span class="sr">/software/</span><span class="no">Freesurfer</span><span class="o">/</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">mni</span>
-
-<span class="c1">#After you&#39;ve installed everything and set up all the necessary</span>
-<span class="c1">#environment variables you can start iPython</span>
-<span class="n">ipython</span>
+ <span class="nb">export </span><span class="nv">FREESURFER_HOME</span><span class="o">=</span>/software/Freesurfer/5.1.0
+ <span class="nb">export </span><span class="nv">FSFAST_HOME</span><span class="o">=</span>/software/Freesurfer/5.1.0/fsfast
+ <span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span>/software/Freesurfer/5.1.0/subjects
+ <span class="nb">export </span><span class="nv">MNI_DIR</span><span class="o">=</span>/software/Freesurfer/5.1.0/mni
 </pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The names and specification of paths and files in this example are tuned for the environment at MIT and may vary from your environment.</p>
 </div>
-<p><strong>Now you&#8217;re good to go!</strong></p>
+<p>After all installations are done and you&#8217;ve set up all necessary environment variables you can start iPython:</p>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> ipython
+</pre></div>
+</td></tr></table></div>
+<p><strong>and you&#8217;re good to go!</strong></p>
 </div>
 </div>
 

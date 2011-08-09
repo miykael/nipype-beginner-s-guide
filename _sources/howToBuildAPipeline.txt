@@ -30,6 +30,7 @@ Import appropriate modules
 The first thing you'll have to do is to import the interfaces you want to use. That depends on the nodes and algorithms you want to use in your pipeline. You can either import an interface and give it a specific name or import only a desired algorithm of it.
 
 .. code-block:: py
+   :linenos:
 
    # imports the engine interface as 'pe'
    import nipype.pipeline.engine as pe
@@ -43,10 +44,13 @@ The first thing you'll have to do is to import the interfaces you want to use. T
    If you use the freesurfer interface, please make sure to tell freesurfer where the subjects directory is by using the following command:
 
    .. code-block:: py
+      :linenos:
 
       import nipype.interfaces.freesurfer as fs
-      freesurfer_dir = '~SOMEPATH/freesurfer'
+      freesurfer_dir = '~SOMEPATH/freesurfer_data'
       fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
+
+    Otherwise some nasty errors could occure.
 
 
 Define nodes
@@ -58,6 +62,7 @@ Node Initiation
 Before the parameters of a node can be specified they first have to be initiated. The initiation is quite simple and done as follows:
 
 .. code-block:: py
+   :linenos:
 
    nodename = pe.Node(interface=interface.algorithm(), name='visibleName')
 
@@ -69,6 +74,7 @@ Before the parameters of a node can be specified they first have to be initiated
 
 
 .. code-block:: py
+   :linenos:
 
    #Example of an initiation of a spm-realignment node
    import nipype.interfaces.spm as spm
@@ -102,6 +108,7 @@ Node Specification
 The specification of a node can be done in three ways.
 
 .. code-block:: py
+   :linenos:
 
    #1. specify parameters in the during initiation   
    mybet = fsl.BET(in_file='foo.nii', out_file='bar.nii')
@@ -122,12 +129,14 @@ Iterables (optional)
 If you want a node to be executed over different sets of data (e.g. different subjects, different conditions, different smoothing kernels,...) you have to use iterables. 
 
 .. code-block:: py
+   :linenos:
 
    nodename.iterables = ('input_to_iterate_over',[conditions_to_iterate_over])
 
 E.g. If you want to execute a pipeline for subject1 and subject2 and you want to run the pipeline with a smoothing kernel of 4 and one of 8 you do the following:
 
 .. code-block:: py
+   :linenos:
 
    startnode.iterables = ('subject_id', ['subject1','subject2'])
    smoothnode.iterables = ('fwhm', [4, 8])
@@ -145,6 +154,7 @@ stand-alone node
 If you want to run an algorithm without being a node or being a part of a pipeline you only have to define the nodename, interface and algorithm.
 
 .. code-block:: py
+   :linenos:
 
    smooth = spm.Smooth()
 
@@ -157,6 +167,7 @@ Individual nodes
 If you want to create an individual node by yourself that doesn't use an algorithm of an interface already specified and you want to use the advantage of input and output fields you can build your own node with the ``IdentityInterface`` method of the ``utility`` interface.
 
 .. code-block:: py
+   :linenos:
 
    #import the utility interface
    import nipype.interfaces.utility as util
@@ -175,6 +186,7 @@ Define pipeline(s)
 The initiation of a pipeline is quite the same as the one of a node. Except that you don't need to declare an interface.
 
 .. code-block:: py
+   :linenos:
 
    workflow = pe.Workflow(name='preproc')
 
@@ -187,6 +199,7 @@ If you've already created a pipeline with all its connections and want to reuse 
 For example, if you've already created an analysis pipeline for the workflow after a volume preprocess and want now to reuse this algorithm for the analysis of preprocessed surfacedata you can clone the volanalysis like this:
 
 .. code-block:: py
+   :linenos:
 
    surfanalysis = volanalysis.clone(name='surfanalysis')
 
@@ -195,6 +208,7 @@ This cloneing has to be done, because if you would use the volanalysis again, th
 If you want to change some parameters of the pipeline after cloning you just have to specify the exact pipeline, node and parameter you want to change:
 
 .. code-block:: py
+   :linenos:
 
    surfanalysis.inputs.level1design.timing_units = 'secs'
 
@@ -212,6 +226,7 @@ Connect nodes to each other
 There is a basic and an advanced way to create connections between two nodes. The basic way allows only to connect two nodes at a time whereas the advanced one can establish multiple connections at once.
 
 .. code-block:: py
+   :linenos:
 
    #basic way to connect two nodes
    workflowname.connect(nodename1, 'out_files_node1', nodename2, 'in_files_node2')
@@ -240,6 +255,7 @@ If you have multiple pipelines, like one for preprocessing, one for modelestimat
 Assumed that we have a node "realign" which is part of a pipeline called "preprocess" and that we have a node called "modelspec" which is part of a pipeline called "modelestimation". If we now want to connect does to pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:
 
 .. code-block:: py
+   :linenos:
 
    frameflow = pe.Workflow(name='frameflow')
    frameflow.connect([(preprocess, modelestimation,[('realign.out_files', 'modelspec.in_files')
@@ -256,6 +272,7 @@ Add node(s) to pipeline (optional)
 If you want to run a node by itself without connecting it to any other node, you can do that with the add_nodes method.
 
 .. code-block:: py
+   :linenos:
 
    #adds node smooth and node realign to the pipeline
    workflow.add_nodes([smoother, realign])
@@ -269,6 +286,7 @@ If you want to modify the output of a node before sending it to the next one you
 First you have to define your function that modifies the data and returns the new output. If you have done this, than you can insert the function into the connection process.
 
 .. code-block:: py
+   :linenos:
 
    #your function that does something
    def myfunction(input_from_node):
@@ -291,6 +309,7 @@ This will take the output of 'out_file_node1' and give it as an argument to the 
 If you want to insert more than one parameter into the function do as follows:
 
 .. code-block:: py
+   :linenos:
 
    def myfunction(input_from_node, additional_input):
 
@@ -310,6 +329,7 @@ Visualize pipeline
 To visualize the flow of a pipeline you can use the method ``write_graph()``.
 
 .. code-block:: py
+   :linenos:
 
    #Example of using write_graph
    workflowname.write_graph(graph2use='flat')
@@ -334,6 +354,7 @@ Execute pipeline
 After setting everything up, the pipeline can be executed with ``run()``. You can run a pipeline either in serial or in parallel mode. 
 
 .. code-block:: py
+   :linenos:
 
    #To run the pipeline serial
    workflow.run(plugin='Linear')
@@ -366,6 +387,7 @@ Infosource
 The best way to tell a pipeline on which subjects it should be executed on is to build an infosource node. The only thing that this node contains is a list of the subjects and the instructions to execute the pipeline on each of this subjects. This is done with the iterables method.
 
 .. code-block:: py
+   :linenos:
 
    #import the utility interface
    import nipype.interfaces.utility as util
@@ -384,6 +406,7 @@ Datasource
 To get the subject specific data into the pipeline we need the datasource node. As the name of the algorithm implies the DataGrabber grabs the data from a specified folder and stores it in the specified output fields.
 
 .. code-block:: py
+   :linenos:
 
    #initiate the DataGrabber node with the infield: 'subject_id'
    #and the outfield: 'func' and 'struct'
@@ -399,6 +422,7 @@ To use the datagrabber it is important to know what the exact structure of your 
 As you can see all the necessary data is stored in the experiment folder. The data of each subject is stored in its individual subject_folder. The name of this folder changes with each subject. There are two ways how you can define the structure of data you want to grab.
 
 .. code-block:: py
+   :linenos:
 
    #to specify the location of the experiment folder
    datasource.inputs.base_directory = '~/experiment_folder'
@@ -429,6 +453,7 @@ Inputnode (optional)
 If you want to keep a clearly arranged distribution of the input data it is suggested to create an inputnode that serves that purpose. This inputnode specifies and collects all the inputs that are needed for the workflow and distributes them to specific places in the pipeline.
 
 .. code-block:: py
+   :linenos:
 
    #import the utility interface
    import nipype.interfaces.utility as util
@@ -447,6 +472,7 @@ Datasink (optional)
 Sometimes you have some output you want to store at an easy accessible place so that you don't have to search in the depth of your workingdir where all in- and outputs of every node is stored. For this purpose the datasink node was created:
 
 .. code-block:: py
+   :linenos:
 
    #import i/o routines
    import nipype.interfaces.io as nio
@@ -482,7 +508,7 @@ The datasink node is really useful to keep control over your storage capacity. I
 Model Specification
 -------------------
 
-Before we can run our pipeline we have to feed it with model specific components as the name of the conditions, the contrasts and onset times. We might also want to add some parametric modulators or regressors etc.
+Before we can run our pipeline we have to feed it with model specific components. For a first level pipeline this would be the names of the conditions, the contrasts and onset times. In this part we might also want to add some parametric modulators, regressors, etc.
 
 Contrasts
 ~~~~~~~~~
@@ -490,6 +516,7 @@ Contrasts
 To insert all the contrast specific values into the pipeline we first have to save them into a variable, in this case called ``contrasts``. The structure of this variable is a list of lists. The inner list specifies the contrasts and has the following format - [Name, Stat, [list of condition names], [weights on those conditions]. The condition names must be the same we later feed into ``subjectinfo`` function described below.
 
 .. code-block:: py
+   :linenos:
 
    #Names of different conditions    
    namesOfConditions = ['basic','condition1','condition2','condition3']
@@ -519,6 +546,7 @@ Session info
 Here we create a function that returns session specific information about the experimental paradigm. This is needed by the SpecifyModel function to create the information necessary to generate an SPM design matrix. This function ``subjectinfo`` is used to feed the inputnode ``session_info`` for each subject with the paradigm conditions.
 
 .. code-block:: py
+   :linenos:
 
    def subjectinfo(subject_id):
 
@@ -576,6 +604,7 @@ Connect new nodes to your pipeline
 Before you can run your pipeline you will have to connect infosource, datasource, inputnode and datasink to each other and to the pipelines of your framework workflow, here called frameflow. For this purpose you will have to create a meta pipeline.
 
 .. code-block:: py
+   :linenos:
 
    #initiate the meta workflow
    metaflow = pe.Workflow(name='metaflow')

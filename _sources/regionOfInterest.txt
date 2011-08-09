@@ -58,6 +58,7 @@ Import modules
 ~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    import os                                    # system functions
    import nipype.interfaces.freesurfer as fs    # freesurfer
@@ -70,6 +71,7 @@ Define experiment specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #to better access the parent folder of the experiment
    experiment_dir = '~SOMEPATH/experiment'
@@ -89,12 +91,12 @@ Define experiment specific parameters
    #list of contrastnumbers the pipeline should consider
    contrasts = ['01','02','03','04','05']
 
-   ###   #name of the first condition from the first level pipeline
-   ###   nameOfFirstCondition = 'basic'
+   ###   #name of the first session from the first level pipeline
+   ###   nameOfFirstSession = 'func1'
    
 .. note::
 
-   The name of the first condition is necessary, because the bbregister file from the first level pipeline contains the name of the first condition in its name. E.g. if the first condition is named ``basic``, than the name of the bbregister file for the first subject would be: ``meanbasic_bbreg_subject1.dat')``
+   The name of the first session is necessary, because the bbregister file from the first level pipeline contains the name of the first session in its name. E.g. if the first condition is named ``func1``, than the name of the bbregister file for the first subject would be: ``meanafunc1_bbreg_subject1.dat')``
 
 Define aROI specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -113,6 +115,7 @@ As mentioned above we are using the FreeSurfer Color Table to define the anatomi
 * id: 12104 ; region xxxxxx ; from coding part 2009
 
 .. code-block:: py
+   :linenos:
 
    #Specification of the regions from the 2005 and 2009 part of the FreeSurfer Color Table
    ROIregions2005 = ['1001','2001','1030','2030']
@@ -123,6 +126,7 @@ Define of Nodes
 ~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #Node: IdentityInterface - to iterate over subjects and contrasts
    inputnode = pe.Node(interface=util.IdentityInterface(fields=['subject_id','contrast_id']),
@@ -130,10 +134,11 @@ Define of Nodes
    inputnode.iterables = [('subject_id', subjects),
                           ('contrast_id', contrasts)]
 
-As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img'`` and the bbregister file for the first subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meancond1_bbreg_01.dat'``
+As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img'`` and the bbregister file for the first subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meanafunc1_bbreg_subject1.dat'``
 Knowing this, we can build our ``datagrabber`` node as follows:
 
 .. code-block:: py
+   :linenos:
 
    #Node: DataGrabber - to grab the input data
    datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id','contrast_id'],
@@ -143,7 +148,7 @@ Knowing this, we can build our ``datagrabber`` node as follows:
    datasource.inputs.template = '/%s/_subject_id_%s/%s%s%s'
    
    info = dict(contrast = [['vol_contrasts','subject_id','con_00','contrast_id','.img']],
-               bb_id = [['bbregister','subject_id','mean'+nameOfFirstCondition+'_bbreg_',
+               bb_id = [['bbregister','subject_id','meana'+nameOfFirstSession+'_bbreg_',
                          'subject_id','.dat']])
    
    datasource.inputs.template_args = info
@@ -151,6 +156,7 @@ Knowing this, we can build our ``datagrabber`` node as follows:
 Let's now continue with the implementation of the other nodes we need for our **anatomical ROI pipeline**.
    
 .. code-block:: py
+   :linenos:
 
    #Node: FreeSurferSource - to grab FreeSurfer files from the recon-all process
    fssource = pe.Node(interface=nio.FreeSurferSource(),name='fssource')
@@ -183,7 +189,8 @@ segmentation_file =  segmentation volume path
 
 
 .. code-block:: py
-   
+   :linenos:
+
    #Node: SegStats2005 - to extract specified regions from the 2005 part of the color table
    segmentation2005 = pe.Node(interface=fs.SegStats(),name='segmentation2005')
    segmentation2005.inputs.color_table_file = '/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt'
@@ -207,7 +214,8 @@ segmentation_file =  segmentation volume path
 
 
 .. code-block:: py
-   
+   :linenos:
+
    #Node: Datasink - Creates a datasink node to store important outputs
    datasink = pe.Node(interface=nio.DataSink(), name="datasink")
    datasink.inputs.base_directory = experiment_dir
@@ -219,6 +227,7 @@ Definition of anatomical ROI workflow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #Initiation of the ROI extraction workflow
    aROIflow = pe.Workflow(name='aROIflow')
@@ -245,6 +254,7 @@ Run pipeline and generate graph
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    aROIflow.write_graph(graph2use='flat')
    aROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
@@ -260,6 +270,7 @@ Summarizing the output in a cvs-file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
    
    for contrast in contrasts:
    
@@ -388,6 +399,7 @@ Import modules
 ~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    import os                                    # system functions
    import nipype.interfaces.freesurfer as fs    # freesurfer
@@ -401,6 +413,7 @@ Define experiment specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #to better access the parent folder of the experiment
    experiment_dir = '~SOMEPATH/experiment'
@@ -420,6 +433,7 @@ Define fROI specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #define the coordination of point of interest
    centerOfROI = [183,134,136]
@@ -437,7 +451,8 @@ Definition of Nodes
 ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
-   
+   :linenos:
+
    #Node: IdentityInterface - to iterate over subjects and contrasts
    inputnode = pe.Node(interface=util.IdentityInterface(fields=['subject_id','contrast_id']),
                        name='inputnode')
@@ -482,6 +497,7 @@ Definition of functional ROI workflow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #Initiation of the fROI extraction workflow
    fROIflow = pe.Workflow(name='fROIflow')
@@ -502,6 +518,7 @@ Run the pipeline and generate the graph
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    fROIflow.write_graph(graph2use='flat')
    fROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 4})
@@ -511,6 +528,7 @@ Summarizing the output in a cvs-file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    output = []
    output.append(['coordinations:',centerOfROI,'diameter:',diameter])

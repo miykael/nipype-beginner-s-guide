@@ -16,6 +16,7 @@ Import modules
 The first step of every pipeline is always to import all the necessary modules. In this case we only need the basic modules ``os``, ``util``, ``pipeline.engine`` and the ``freesurfer interface``.
 
 .. code-block:: py
+   :linenos:
 
    import os                                    # system functions
    import nipype.interfaces.freesurfer as fs    # freesurfer
@@ -29,6 +30,7 @@ Define experiment specific parameters
 After importing the modules, it is recommended to specify all the necessary variables like the path to the experiment folder, a list of the subject identifiers etc.
 
 .. code-block:: py
+   :linenos:
 
    #Specification of the folder where the dicom-files are located at
    experiment_dir = '~SOMEPATH/experiment'
@@ -47,6 +49,7 @@ Define nodes to use
 Let us now construct the three nodes we want to use to create our preparation pipeline. First we need to define the infosource node which specifies on which subjects the workflow is run on.
 
 .. code-block:: py
+   :linenos:
 
    #Node: Infosource - we use IdentityInterface to create our own node, to specify
    #                   the list of subjects the pipeline should be executed on
@@ -57,6 +60,7 @@ Let us now construct the three nodes we want to use to create our preparation pi
 Now we define the main node for the data conversion, DICOMConvert.
 
 .. code-block:: py
+   :linenos:
 
    #Node: DICOMConvert - converts the .dcm files into .nii and moves them into
    #                     the folder "data" with a subject specific subfolder
@@ -75,6 +79,7 @@ If we now look at the section nipype.interfaces.freesurfer.preprocess about the 
 Remember that the path to the dicoms changes from subject to subject. Therefore we can't declare the variable ``dicom_dir`` right away. But because we already have an ``infosource`` node, we will be able to overcome this problem when we establish the connections between the nodes. Let us first define the path to the output dir:
 
 .. code-block:: py
+   :linenos:
 
    dicom2nifti.inputs.base_output_dir = experiment_dir + '/' + data_dir_name
    #This will store the output to '~SOMEPATH/experiment/data'
@@ -82,6 +87,7 @@ Remember that the path to the dicoms changes from subject to subject. Therefore 
 Now we have to specify the **optional** inputs ``file_mapping``, ``out_type`` and ``subject_dir``.
 
 .. code-block:: py
+   :linenos:
 
    dicom2nifti.inputs.file_mapping = [('nifti','*.nii'),('info','dicom.txt'),('dti','*dti.bv*')]
    dicom2nifti.inputs.out_type = 'nii'
@@ -127,6 +133,7 @@ But because we also want to know how many time points were acquired and what the
 This output shows us that the T1-file has resolution of 256x256x176 and that the two functional runs, file 9 and 10, have 60 time points. Now, let us implement this ``ParseDICOMDir`` node.
 
 .. code-block:: py
+   :linenos:
 
    #Node ParseDICOMDIR - for creating a nicer nifti overview textfile
    dcminfo = pe.Node(interface=fs.ParseDICOMDir(), name="dcminfo")
@@ -144,7 +151,8 @@ Define pipeline
 After we've defined all the nodes we want to use, we are ready to implement the preparation pipeline:
 
 .. code-block:: py
-   
+   :linenos:
+
    #Initiation of the preparation pipeline
    prepareflow = pe.Workflow(name="prepareflow")
    
@@ -184,6 +192,7 @@ As you can see, for both nodes ``dicom2nifti`` and ``dcminfo`` the input from di
 Let's call this function ``pathfinder``, which takes as arguments the subjectname and the foldername (either ``dicom`` or ``data``) and returns ``'~SOMEPATH/experiment/foldername/subjec_name/'``.
 
 .. code-block:: py
+   :linenos:
 
    def pathfinder(subjectname, foldername):
        return os.path.join(experiment_dir, foldername, subjectname)
@@ -192,7 +201,8 @@ Let's call this function ``pathfinder``, which takes as arguments the subjectnam
 Now we can start with the connection of the nodes.
    
 .. code-block:: py
-   
+   :linenos:
+
    #Connect all components
    prepareflow.connect([(infosource, dicom2nifti,[('subject_id', 'subject_id')]),
                         (infosource, dicom2nifti,[(('subject_id', pathfinder, dicom_dir_name),
@@ -214,7 +224,8 @@ There's an important issue about functions you have to consider in Nipype Versio
 This occurs because all values that you are using in a function have to be specified or imported within it's boundaries. Therefore we have to extend the function a bit by importing the ``os`` module and specifying the experiment_dir variable.
 
 .. code-block:: py
-     
+   :linenos:
+
    def pathfinder(subject, foldername):
        import os
        experiment_dir = '~SOMEPATH/experiment'
@@ -227,6 +238,7 @@ Run pipeline
 After the connection of the nodes there is only one last thing to do. To actually run the pipeline.
 
 .. code-block:: py
+   :linenos:
       
    prepareflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
@@ -249,6 +261,7 @@ In our case the data we are interested in is in the folder ``'~SOMEPATH/experime
 prepareflow/_subject_id_subject1/dcminfo'`` and we want to move it into ``'/mindhive/gablab/u/mnotter/Desktop/TEST/data/subject1'``. This can be accomplished with the following code:
 
 .. code-block:: py
+   :linenos:
 
    #to run the loop for each subject
    for subject in subjects_list:
@@ -278,7 +291,8 @@ prepareflow/_subject_id_subject1/dcminfo'`` and we want to move it into ``'/mind
 To finally delete the workingdirectory of the prepare pipeline with all it's content we can use the command ``rm -rf ~SOMEPATH/experiment/workingdir_prepareflow`` and we're done.
 
 .. code-block:: py
-   
+   :linenos:
+
    os.system('rm -rf %s'%prepareflow.base_dir)
 
 
@@ -293,6 +307,7 @@ How to create and read graph.dot files
 After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:
 
 .. code-block:: py
+   :linenos:
 
    prepareflow.write_graph(graph2use='flat')
 
@@ -337,6 +352,7 @@ Prepare modules and important variables
 First let us again import all necessary modules and specify the experiment specific parameters.
 
 .. code-block:: py
+   :linenos:
 
    import os                                    # system functions
    import nipype.interfaces.freesurfer as fs    # freesurfer
@@ -382,6 +398,7 @@ First let us again import all necessary modules and specify the experiment speci
 Now we are ready to implement the pipeline and connection the ``infosource`` with the ``reconall`` node. As in the example about the conversion of the dicoms into niftis, we will use again a function called ``pathfinder`` to specify the exact location of the T1-file of each subject. Note that the function takes three arguments in this case.
 
 .. code-block:: py
+   :linenos:
 
    #implementation of the workflow
    reconflow = pe.Workflow(name="reconflow")

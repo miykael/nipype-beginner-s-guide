@@ -20,6 +20,7 @@ Import modules
 ~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    import nipype.interfaces.freesurfer as fs # freesurfer
    import nipype.interfaces.io as nio        # i/o routines
@@ -32,9 +33,14 @@ Define experiment specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #to better access the parent folder of the experiment
    experiment_dir = '~SOMEPATH/experiment'
+
+   #tell FreeSurfer where the recon-all output is at
+   freesurfer_dir = '~SOMEPATH/freesurfer'
+   fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
 
    #list of subjectnames
    subjects = ['subject1', 'subject2', 'subject3']
@@ -58,6 +64,7 @@ Grab the data
 As always we first have to specify where the datagrabber node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at: ``'~SOMEPATH/experiment/result/level1_output/subject_name/normcons/'``. This means the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/result/level1_output/subject2/normcons/con_0001.nii'``
 
 .. code-block:: py
+   :linenos:
 
    #Node: DataGrabber - to collect all the con images for each contrast
    l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
@@ -72,6 +79,7 @@ Define nodes
 ~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #Node: OneSampleTTest - to perform an one sample t-test analysis
    oneSampleTTestDes = pe.Node(interface=spm.OneSampleTTestDesign(), name="oneSampleTTestDes")
@@ -103,6 +111,7 @@ Define nodes
    Of course you can all different kinds of statistical analysis. Another example beside a one sample t-test would be multiple regression analysis. Such a node would look this:
 
    .. code-block:: py
+      :linenos:
 
       #Node: MultipleRegressionDesign - to perform a multiple regression analysis
       multipleRegDes = pe.Node(interface=spm.MultipleRegressionDesign(), name="multipleRegDes")
@@ -117,6 +126,7 @@ Establish a second level volume pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    
 .. code-block:: py
+   :linenos:
 
    #Create 2-level vol pipeline and connect up all components
    l2volflow = pe.Workflow(name="l2volflow")
@@ -144,6 +154,7 @@ Grab the data
 As mentioned above, our **second level surface pipeline** does have to iterate over the different contrasts **and** the left and right hemisphere. This can be done with the usual individually defined ``IdentityInterface`` node.
 
 .. code-block:: py
+   :linenos:
 
    #Node: IdentityInterface - to iterate over contrasts and hemispheres
    l2surfinputnode = pe.Node(interface=util.IdentityInterface(fields=['contrasts','hemi']),
@@ -155,6 +166,7 @@ As mentioned above, our **second level surface pipeline** does have to iterate o
 Again we have to be aware about the structure of our data folder. We know from the **first level analysis pipeline** that our estimated surface contrasts are stored at: ``'~SOMEPATH/experiment/result/level1_output/'``. This will be defined as ``base_directory`` of the datagrabber node.
 
 .. code-block:: py
+   :linenos:
 
    #Node: DataGrabber - to collect contrast images and registration files
    l2surfSource = pe.Node(interface=nio.DataGrabber(infields=['con_id'],
@@ -173,6 +185,7 @@ Define nodes
 Now that we have defined where our data comes from, we can start with implementing the nodes.
 
 .. code-block:: py
+   :linenos:
 
    #Node: Merge - to merge contrast images and registration files
    merge = pe.Node(interface=util.Merge(2, axis='hstack'),name='merge')
@@ -211,6 +224,7 @@ Establish a second level surface pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
+   :linenos:
 
    #Create 2-level surf pipeline and connect up all components
    l2surfflow = pe.Workflow(name='l2surfflow')
@@ -230,6 +244,7 @@ Datasink (optional)
 If you want to store the data from the second level volume and surface pipeline at a common location you should use a ``datasink`` node. As with the ``oneSampleTTestDes`` node before you can use the same ``datasink`` node for both pipelines because you aren't running both pipelines in the same run.
 
 .. code-block:: py
+   :linenos:
 
    #Node: Datasink - Create a datasink node to store important outputs
    l2datasink = pe.Node(interface=nio.DataSink(), name="l2datasink")
@@ -251,6 +266,7 @@ Run pipeline
 Now that we have set up both pipelines we are able to run them. Note that those lines of codes mean that the **second level surface pipeline** won't be started before the **second level volume pipeline** has terminated.
 
 .. code-block:: py
+   :linenos:
 
    l2volflow.write_graph(graph2use='flat')
    l2volflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
