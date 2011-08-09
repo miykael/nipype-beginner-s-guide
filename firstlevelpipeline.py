@@ -324,9 +324,7 @@ frameflow.connect([(inputnode, surfanalysis,[('session_info','modelspec.subject_
                    ])
 
 #integration  of the surfanalysis into the metaflow
-metaflow.connect([(frameflow,datasink,[('preproc.bbregister.out_reg_file',
-                                        'bbregister'),
-                                       ('surfanalysis.contrastestimate.spm_mat_file',
+metaflow.connect([(frameflow,datasink,[('surfanalysis.contrastestimate.spm_mat_file',
                                         'surf_contrasts.@spm_mat'),
                                        ('surfanalysis.contrastestimate.spmT_images',
                                         'surf_contrasts.@T'),
