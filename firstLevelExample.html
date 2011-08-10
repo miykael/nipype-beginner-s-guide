@@ -88,6 +88,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#adding-a-pipeline-for-the-surface-analysis">Adding a pipeline for the surface analysis</a></li>
+<li><a class="reference internal" href="#folder-structure">Folder Structure</a></li>
 </ul>
 </li>
 </ul>
@@ -135,7 +136,7 @@
 <h2>Define structure of your pipeline<a class="headerlink" href="#define-structure-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>The best way to build your own pipeline is first to think about the workflow the data should go through. In this example we want to first run some preprocessing like <cite>SliceTiming</cite>, <cite>Realignment</cite>, <cite>ArtifactDetection</cite>, <cite>BBRegister</cite> and <cite>Smoothing</cite>. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing. All this will be accommodate in a <strong>preprocess pipeline</strong>. After that we want to estimate a concrete model by running first <cite>SpecifyModel</cite>, create a <cite>Level1Design</cite>, <cite>EstimateModel</cite> and finally <cite>EstimateContrast</cite>. This will be done in a <strong>volume analysis pipeline</strong>.</p>
 <p>The preprocess and the volume analysis pipeline together with the inputnode, will create the basic <strong>framework workflow</strong>. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I&#8217;d like to call <strong>meta workflow</strong>. Visualized this pipeline would look like this:</p>
-<img alt="_images/metaworkflow.png" class="align-center" src="_images/metaworkflow.png" style="width: 756px;" />
+<img alt="_images/metaflow.png" src="_images/metaflow.png" style="width: 756px;" />
 <p>The connections between the nodes will make more sense once we look at the inputs the given nodes need. Some may also ask why we haven&#8217;t included the infosource, datagrabber and datasink nodes into the frameflow? The reason is that those nodes  highly dependent on the paradigm specific parameters and will change for every model/experiment. That&#8217;s why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.</p>
 </div>
 <div class="section" id="write-your-pipeline-script">
@@ -794,6 +795,11 @@
 <p class="last">The code for a first level analysis on the volume and the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py">firstlevelpipeline.py</a></p>
 </div>
 </div>
+<div class="section" id="folder-structure">
+<h2>Folder Structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
+<p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> our folder structure should look like this:</p>
+<img alt="_images/firstlevel.png" src="_images/firstlevel.png" style="width: 810px;" />
+</div>
 </div>
 
 
@@ -820,7 +826,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 09, 2011.
+      Last updated on August 10, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

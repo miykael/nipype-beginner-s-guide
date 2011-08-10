@@ -90,6 +90,7 @@
 <li><a class="reference internal" href="#prepare-modules-and-important-variables">Prepare modules and important variables</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#folder-structure">Folder Structure</a></li>
 </ul>
 </li>
 </ul>
@@ -344,11 +345,11 @@ StudyTime 083819.578000
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <div class="last line-block">
-<div class="line">After running the prepareflow a folder called <strong>data</strong> gets created that contains all nifti files for each</div>
-<div class="line">subject. For further work it is recommended to rename those files. For example:</div>
+<div class="line">After running the prepareflow a folder called <strong>data</strong> gets created that contains all nifti files for</div>
+<div class="line">each subject. For further work it is recommended to rename those files. An example would be to rename:</div>
 <div class="line">- <tt class="docutils literal"><span class="pre">578000-4.nii</span></tt> into <tt class="docutils literal"><span class="pre">struct.nii</span></tt> because it is the T1 file</div>
-<div class="line">- <tt class="docutils literal"><span class="pre">578000-9.nii</span></tt> into <tt class="docutils literal"><span class="pre">func1.nii</span></tt> because it is the first functional run file</div>
-<div class="line">- <tt class="docutils literal"><span class="pre">578000-10.nii</span></tt> into <tt class="docutils literal"><span class="pre">func2.nii</span></tt> because it is the second functional run file</div>
+<div class="line">- <tt class="docutils literal"><span class="pre">578000-9.nii</span></tt> into <tt class="docutils literal"><span class="pre">func1.nii</span></tt> because it is the first functional session file</div>
+<div class="line">- <tt class="docutils literal"><span class="pre">578000-10.nii</span></tt> into <tt class="docutils literal"><span class="pre">func2.nii</span></tt> because it is the second functional session file</div>
 </div>
 </div>
 </div>
@@ -558,6 +559,11 @@ StudyTime 083819.578000
 </div>
 </div>
 </div>
+<div class="section" id="folder-structure">
+<h2>Folder Structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
+<p>After we&#8217;ve prepared our data by converting the DICOM-files into NIFTI-files and running the recon-all process our folder structure should look like this:</p>
+<img alt="_images/preparation.png" src="_images/preparation.png" style="width: 810px;" />
+</div>
 </div>
 
 
@@ -584,7 +590,7 @@ StudyTime 083819.578000
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 09, 2011.
+      Last updated on August 10, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

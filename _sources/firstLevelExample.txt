@@ -15,8 +15,7 @@ The best way to build your own pipeline is first to think about the workflow the
 
 The preprocess and the volume analysis pipeline together with the inputnode, will create the basic **framework workflow**. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I'd like to call **meta workflow**. Visualized this pipeline would look like this:
 
-.. image:: metaworkflow.png
-   :align: center
+.. image:: metaflow.png
    :width: 756
 
 The connections between the nodes will make more sense once we look at the inputs the given nodes need. Some may also ask why we haven't included the infosource, datagrabber and datasink nodes into the frameflow? The reason is that those nodes  highly dependent on the paradigm specific parameters and will change for every model/experiment. That's why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.
@@ -466,3 +465,13 @@ Now that the **surface analysis pipeline** is integrated into the metaflow we ca
 .. hint::
 
    The code for a first level analysis on the volume and the surface can be found here: `firstlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py>`_
+
+
+Folder Structure
+================
+
+After we've run our **first level analysis pipeline** our folder structure should look like this:
+
+.. image:: firstlevel.png
+   :width: 810
+

@@ -326,13 +326,6 @@ div.warning ul, div.warning ol {
     padding: 0;
 }
 
-
-
-
-
-
-
-
 div.important {
     border: 1px solid black;
 }
@@ -352,13 +345,6 @@ div.hint p.admonition-title {
     border-bottom-color: black;
     color: white;
 }
-
-
-
-
-
-
-
 
 div.versioninfo {
     margin: 1em 0 0 0;

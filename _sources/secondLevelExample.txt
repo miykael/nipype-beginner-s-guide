@@ -39,14 +39,14 @@ Define experiment specific parameters
    experiment_dir = '~SOMEPATH/experiment'
 
    #tell FreeSurfer where the recon-all output is at
-   freesurfer_dir = '~SOMEPATH/freesurfer'
+   freesurfer_dir = '~SOMEPATH/freesurfer_data'
    fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
 
    #list of subjectnames
    subjects = ['subject1', 'subject2', 'subject3']
    
    #second level analysis pipeline specific components
-   level2Dir = 'results/level2'
+   level2Dir = '/results/level2'
    numberOfContrasts = 5 #number of contrasts you specified in the first level analysis
    contrast_ids = range(1,numberOfContrasts+1) #to create a list with value [1,2,3,4,5]
 
@@ -61,14 +61,14 @@ Analysis on the Volume
 Grab the data
 ~~~~~~~~~~~~~
 
-As always we first have to specify where the datagrabber node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at: ``'~SOMEPATH/experiment/result/level1_output/subject_name/normcons/'``. This means the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/result/level1_output/subject2/normcons/con_0001.nii'``
+As always we first have to specify where the datagrabber node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject_name/'``. This means the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject2/con_0001.nii'``
 
 .. code-block:: py
    :linenos:
 
    #Node: DataGrabber - to collect all the con images for each contrast
    l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
-   l2volSource.inputs.template = experiment_dir + '/result/level1_output/subject*/normcons/con_%04d.nii'
+   l2volSource.inputs.template = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
    l2volSource.iterables = [('con',contrast_ids)] # iterate over all contrast images
    
 
@@ -82,7 +82,7 @@ Define nodes
    :linenos:
 
    #Node: OneSampleTTest - to perform an one sample t-test analysis
-   oneSampleTTestDes = pe.Node(interface=spm.OneSampleTTestDesign(), name="oneSampleTTestDes")
+   oneSampleTTestVolDes = pe.Node(interface=spm.OneSampleTTestDesign(), name="oneSampleTTestVolDes")
 
    #Node: EstimateModel - to estimate the model
    l2estimate = pe.Node(interface=spm.EstimateModel(), name="l2estimate")
@@ -95,15 +95,15 @@ Define nodes
    l2conestimate.inputs.group_contrast = True
    
    #Node: Threshold - to threshold the estimated contrast
-   level2thresh = pe.Node(interface = spm.Threshold(), name="level2thresh")
-   level2thresh.inputs.contrast_index = 1
-   level2thresh.inputs.use_fwe_correction = False
-   level2thresh.inputs.use_topo_fdr = True
-   level2thresh.inputs.extent_threshold = 1
+   l2threshold = pe.Node(interface = spm.Threshold(), name="l2threshold")
+   l2threshold.inputs.contrast_index = 1
+   l2threshold.inputs.use_fwe_correction = False
+   l2threshold.inputs.use_topo_fdr = True
+   l2threshold.inputs.extent_threshold = 1
    #voxel threshold
-   level2thresh.inputs.extent_fdr_p_threshold = 0.05
+   l2threshold.inputs.extent_fdr_p_threshold = 0.05
    #cluster threshold (value is in -ln()): 1.301 = 0.05; 2 = 0.01; 3 = 0.001,
-   level2thresh.inputs.height_threshold = 3
+   l2threshold.inputs.height_threshold = 3
 
 
 .. note::
@@ -131,15 +131,15 @@ Establish a second level volume pipeline
    #Create 2-level vol pipeline and connect up all components
    l2volflow = pe.Workflow(name="l2volflow")
    l2volflow.base_dir = experiment_dir + level2Dir + '_vol'
-   l2volflow.connect([(l2volSource,onesamplettestdes,[('outfiles','in_files')]),
-                      (onesamplettestdes,l2estimate,[('spm_mat_file','spm_mat_file')]),
+   l2volflow.connect([(l2volSource,oneSampleTTestVolDes,[('outfiles','in_files')]),
+                      (oneSampleTTestVolDes,l2estimate,[('spm_mat_file','spm_mat_file')]),
                       (l2estimate,l2conestimate,[('spm_mat_file','spm_mat_file'),
                                                  ('beta_images','beta_images'),
                                                  ('residual_image','residual_image')
                                                  ]),
-                      (l2conestimate, l2volflowthresh,[('spm_mat_file','spm_mat_file'),
-                                                       ('spmT_images','stat_image'),
-                                                       ]),
+                      (l2conestimate,l2threshold,[('spm_mat_file','spm_mat_file'),
+                                                  ('spmT_images','stat_image'),
+                                                  ]),
                       ])
 
    
@@ -209,16 +209,9 @@ Now that we have defined where our data comes from, we can start with implementi
    def list2tuple(listoflist):
        return [tuple(x) for x in listoflist]
 
-   ###   #Node: OneSampleTTest - to perform a one sample t-test
-   ###   oneSampleTTestDes = pe.Node(interface=fs.OneSampleTTest(), name='oneSampleTTestDes')
+   #Node: OneSampleTTest - to perform a one sample t-test on the surface
+   oneSampleTTestSurfDes = pe.Node(interface=fs.OneSampleTTest(), name='oneSampleTTestSurfDes')
    
-
-**!!!!!!!!!!!!gaht das überhaupt?!!!!!!!!!!!!!!**
-
-.. note::
-
-   As you can see the oneSampleTTestDes in this surface pipeline is actually the same as the one from the volume pipeline. Because we are not integrating those two pipeline in a common parent workflow we won't have any issue with duplication and connection errors because the surface and the volume pipeline will always we executed independent of each other.
-
 
 Establish a second level surface pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,16 +225,16 @@ Establish a second level surface pipeline
    l2surfflow.connect([(l2surfinputnode,l2surfSource,[('contrasts','con_id')]),
                        (l2surfinputnode,concat,[('hemi','hemi')]),
                        (l2surfSource,merge,[(('con', ordersubjects, subjects),'in1'),
-	                                    (('reg', ordersubjects, subjects),'in2')]),
+                                            (('reg', ordersubjects, subjects),'in2')]),
                        (merge,concat,[(('out', list2tuple),'vol_measure_file')]),
-                       (concat,oneSampleTTestDes,[('out_file','in_file')]),
-	                    ])
+                       (concat,oneSampleTTestSurfDes,[('out_file','in_file')]),
+                       ])
 
 
 Datasink (optional)
 ===================
 
-If you want to store the data from the second level volume and surface pipeline at a common location you should use a ``datasink`` node. As with the ``oneSampleTTestDes`` node before you can use the same ``datasink`` node for both pipelines because you aren't running both pipelines in the same run.
+If you want to store the data from the second level volume and surface pipeline at a common location you should use a ``datasink`` node. You can use the same ``datasink`` node for both pipelines because you aren't running both pipelines in the same run.
 
 .. code-block:: py
    :linenos:
@@ -250,14 +243,18 @@ If you want to store the data from the second level volume and surface pipeline 
    l2datasink = pe.Node(interface=nio.DataSink(), name="l2datasink")
    l2datasink.inputs.base_directory = experiment_dir
    l2datasink.inputs.container = level2Dir + '_datasink'
-
+   
    #integration of the datasink into the volume analysis pipeline
-   ###   l2volflow.connect([(l2conestimate,l2datasink,[('inputbla','outputbla')]),
-   ###                      (l2volflowthresh,l2datasink,[('inputbla','outputbla')]),
-   ###                      ])
-
+   l2volflow.connect([(l2conestimate,l2datasink,[('spm_mat_file','vol_contrasts.@spm_mat'),
+                                                 ('spmT_images','vol_contrasts.@T'),
+                                                 ('con_images','vol_contrasts.@con'),
+                                                 ]),
+                      (l2threshold,l2datasink,[('thresholded_map','vol_contrasts_thresh.@threshold'),
+                                               ]),
+                      ])
+   
    #integration of the datasink into the surface analysis pipeline
-   l2surfflow.connect([(oneSampleTTestDes,l2datasink,[('sig_file','sig_file')])])
+   l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','sig_file')])])
 
 
 Run pipeline
@@ -275,9 +272,11 @@ Now that we have set up both pipelines we are able to run them. Note that those 
    l2surfflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
 
-.. hint::
+Now that everything has been executed you are able to take a look at your results. I recommend to use the following tools to use:
 
-   This code for the second level pipeline on the volume and on the surface can be found here: `secondlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/secondlevelpipeline.py>`_
+* **Matlab's SPM fmri** for the results from the contrast estimation on the volume stored in datasinkfolder xxxx 
+* **FreeSurfer's Freeview** for the results from the threshold node stored in datasinkfolder xxxx 
+* **FreeSurfer's Freeview** for the results from the contrast estimation on the surface stored in datasinkfolder xxxx 
 
 
 Visualization
@@ -295,3 +294,8 @@ Second Level Surface Pipeline
 
 .. image:: l2surf.jpg
    :width: 200 px
+
+
+.. hint::
+
+   The code for the second level pipeline on the volume and on the surface can be found here: `secondlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/secondlevelpipeline.py>`_

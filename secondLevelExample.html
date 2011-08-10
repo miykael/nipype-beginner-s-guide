@@ -159,14 +159,14 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">#tell FreeSurfer where the recon-all output is at</span>
-<span class="n">freesurfer_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/freesurfer&#39;</span>
+<span class="n">freesurfer_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/freesurfer_data&#39;</span>
 <span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">freesurfer_dir</span><span class="p">)</span>
 
 <span class="c">#list of subjectnames</span>
 <span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span> <span class="s">&#39;subject2&#39;</span><span class="p">,</span> <span class="s">&#39;subject3&#39;</span><span class="p">]</span>
 
 <span class="c">#second level analysis pipeline specific components</span>
-<span class="n">level2Dir</span> <span class="o">=</span> <span class="s">&#39;results/level2&#39;</span>
+<span class="n">level2Dir</span> <span class="o">=</span> <span class="s">&#39;/results/level2&#39;</span>
 <span class="n">numberOfContrasts</span> <span class="o">=</span> <span class="mi">5</span> <span class="c">#number of contrasts you specified in the first level analysis</span>
 <span class="n">contrast_ids</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">numberOfContrasts</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c">#to create a list with value [1,2,3,4,5]</span>
 </pre></div>
@@ -181,13 +181,13 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <h2>Analysis on the Volume<a class="headerlink" href="#analysis-on-the-volume" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="grab-the-data">
 <h3>Grab the data<a class="headerlink" href="#grab-the-data" title="Permalink to this headline">¶</a></h3>
-<p>As always we first have to specify where the datagrabber node can find the data. Le&#8217;s assume that we have stored our normalized estimated volume contrasts at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/subject_name/normcons/'</span></tt>. This means the third contrast of the second subject would be at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/result/level1_output/subject2/normcons/con_0001.nii'</span></tt></p>
+<p>As always we first have to specify where the datagrabber node can find the data. Le&#8217;s assume that we have stored our normalized estimated volume contrasts at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/normcons/subject_name/'</span></tt>. This means the third contrast of the second subject would be at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/normcons/subject2/con_0001.nii'</span></tt></p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect all the con images for each contrast</span>
 <span class="n">l2volSource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2volSource&quot;</span><span class="p">)</span>
-<span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/result/level1_output/subject*/normcons/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
+<span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/level1_output/normcons/subject*/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
 <span class="n">l2volSource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="n">contrast_ids</span><span class="p">)]</span> <span class="c"># iterate over all contrast images</span>
 </pre></div>
 </td></tr></table></div>
@@ -218,7 +218,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 21
 22
 23</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: OneSampleTTest - to perform an one sample t-test analysis</span>
-<span class="n">oneSampleTTestDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">OneSampleTTestDesign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;oneSampleTTestDes&quot;</span><span class="p">)</span>
+<span class="n">oneSampleTTestVolDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">OneSampleTTestDesign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;oneSampleTTestVolDes&quot;</span><span class="p">)</span>
 
 <span class="c">#Node: EstimateModel - to estimate the model</span>
 <span class="n">l2estimate</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">EstimateModel</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2estimate&quot;</span><span class="p">)</span>
@@ -231,15 +231,15 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <span class="n">l2conestimate</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">group_contrast</span> <span class="o">=</span> <span class="bp">True</span>
 
 <span class="c">#Node: Threshold - to threshold the estimated contrast</span>
-<span class="n">level2thresh</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Threshold</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;level2thresh&quot;</span><span class="p">)</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">contrast_index</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_fwe_correction</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_topo_fdr</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_threshold</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">l2threshold</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Threshold</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2threshold&quot;</span><span class="p">)</span>
+<span class="n">l2threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">contrast_index</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">l2threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_fwe_correction</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">l2threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_topo_fdr</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">l2threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_threshold</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="c">#voxel threshold</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_fdr_p_threshold</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">l2threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_fdr_p_threshold</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="c">#cluster threshold (value is in -ln()): 1.301 = 0.05; 2 = 0.01; 3 = 0.001,</span>
-<span class="n">level2thresh</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">height_threshold</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">l2threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">height_threshold</span> <span class="o">=</span> <span class="mi">3</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
@@ -277,15 +277,15 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Create 2-level vol pipeline and connect up all components</span>
 <span class="n">l2volflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;l2volflow&quot;</span><span class="p">)</span>
 <span class="n">l2volflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">level2Dir</span> <span class="o">+</span> <span class="s">&#39;_vol&#39;</span>
-<span class="n">l2volflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">l2volSource</span><span class="p">,</span><span class="n">onesamplettestdes</span><span class="p">,[(</span><span class="s">&#39;outfiles&#39;</span><span class="p">,</span><span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                   <span class="p">(</span><span class="n">onesamplettestdes</span><span class="p">,</span><span class="n">l2estimate</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
+<span class="n">l2volflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">l2volSource</span><span class="p">,</span><span class="n">oneSampleTTestVolDes</span><span class="p">,[(</span><span class="s">&#39;outfiles&#39;</span><span class="p">,</span><span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
+                   <span class="p">(</span><span class="n">oneSampleTTestVolDes</span><span class="p">,</span><span class="n">l2estimate</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
                    <span class="p">(</span><span class="n">l2estimate</span><span class="p">,</span><span class="n">l2conestimate</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
                                               <span class="p">(</span><span class="s">&#39;beta_images&#39;</span><span class="p">,</span><span class="s">&#39;beta_images&#39;</span><span class="p">),</span>
                                               <span class="p">(</span><span class="s">&#39;residual_image&#39;</span><span class="p">,</span><span class="s">&#39;residual_image&#39;</span><span class="p">)</span>
                                               <span class="p">]),</span>
-                   <span class="p">(</span><span class="n">l2conestimate</span><span class="p">,</span> <span class="n">l2volflowthresh</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
-                                                    <span class="p">(</span><span class="s">&#39;spmT_images&#39;</span><span class="p">,</span><span class="s">&#39;stat_image&#39;</span><span class="p">),</span>
-                                                    <span class="p">]),</span>
+                   <span class="p">(</span><span class="n">l2conestimate</span><span class="p">,</span><span class="n">l2threshold</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
+                                               <span class="p">(</span><span class="s">&#39;spmT_images&#39;</span><span class="p">,</span><span class="s">&#39;stat_image&#39;</span><span class="p">),</span>
+                                               <span class="p">]),</span>
                    <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
@@ -377,15 +377,10 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <span class="k">def</span> <span class="nf">list2tuple</span><span class="p">(</span><span class="n">listoflist</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">listoflist</span><span class="p">]</span>
 
-<span class="c">###   #Node: OneSampleTTest - to perform a one sample t-test</span>
-<span class="c">###   oneSampleTTestDes = pe.Node(interface=fs.OneSampleTTest(), name=&#39;oneSampleTTestDes&#39;)</span>
+<span class="c">#Node: OneSampleTTest - to perform a one sample t-test on the surface</span>
+<span class="n">oneSampleTTestSurfDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">OneSampleTTest</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;oneSampleTTestSurfDes&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p><strong>!!!!!!!!!!!!gaht das überhaupt?!!!!!!!!!!!!!!</strong></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">As you can see the oneSampleTTestDes in this surface pipeline is actually the same as the one from the volume pipeline. Because we are not integrating those two pipeline in a common parent workflow we won&#8217;t have any issue with duplication and connection errors because the surface and the volume pipeline will always we executed independent of each other.</p>
-</div>
 </div>
 <div class="section" id="establish-a-second-level-surface-pipeline">
 <h3>Establish a second level surface pipeline<a class="headerlink" href="#establish-a-second-level-surface-pipeline" title="Permalink to this headline">¶</a></h3>
@@ -406,15 +401,15 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
                     <span class="p">(</span><span class="n">l2surfSource</span><span class="p">,</span><span class="n">merge</span><span class="p">,[((</span><span class="s">&#39;con&#39;</span><span class="p">,</span> <span class="n">ordersubjects</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span><span class="s">&#39;in1&#39;</span><span class="p">),</span>
                                          <span class="p">((</span><span class="s">&#39;reg&#39;</span><span class="p">,</span> <span class="n">ordersubjects</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span><span class="s">&#39;in2&#39;</span><span class="p">)]),</span>
                     <span class="p">(</span><span class="n">merge</span><span class="p">,</span><span class="n">concat</span><span class="p">,[((</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">list2tuple</span><span class="p">),</span><span class="s">&#39;vol_measure_file&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">concat</span><span class="p">,</span><span class="n">oneSampleTTestDes</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                         <span class="p">])</span>
+                    <span class="p">(</span><span class="n">concat</span><span class="p">,</span><span class="n">oneSampleTTestSurfDes</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                    <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 </div>
 </div>
 <div class="section" id="datasink-optional">
 <h2>Datasink (optional)<a class="headerlink" href="#datasink-optional" title="Permalink to this headline">¶</a></h2>
-<p>If you want to store the data from the second level volume and surface pipeline at a common location you should use a <tt class="docutils literal"><span class="pre">datasink</span></tt> node. As with the <tt class="docutils literal"><span class="pre">oneSampleTTestDes</span></tt> node before you can use the same <tt class="docutils literal"><span class="pre">datasink</span></tt> node for both pipelines because you aren&#8217;t running both pipelines in the same run.</p>
+<p>If you want to store the data from the second level volume and surface pipeline at a common location you should use a <tt class="docutils literal"><span class="pre">datasink</span></tt> node. You can use the same <tt class="docutils literal"><span class="pre">datasink</span></tt> node for both pipelines because you aren&#8217;t running both pipelines in the same run.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -426,18 +421,26 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
 <span class="n">l2datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2datasink&quot;</span><span class="p">)</span>
 <span class="n">l2datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
 <span class="n">l2datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">level2Dir</span> <span class="o">+</span> <span class="s">&#39;_datasink&#39;</span>
 
 <span class="c">#integration of the datasink into the volume analysis pipeline</span>
-<span class="c">###   l2volflow.connect([(l2conestimate,l2datasink,[(&#39;inputbla&#39;,&#39;outputbla&#39;)]),</span>
-<span class="c">###                      (l2volflowthresh,l2datasink,[(&#39;inputbla&#39;,&#39;outputbla&#39;)]),</span>
-<span class="c">###                      ])</span>
+<span class="n">l2volflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">l2conestimate</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span><span class="s">&#39;vol_contrasts.@spm_mat&#39;</span><span class="p">),</span>
+                                              <span class="p">(</span><span class="s">&#39;spmT_images&#39;</span><span class="p">,</span><span class="s">&#39;vol_contrasts.@T&#39;</span><span class="p">),</span>
+                                              <span class="p">(</span><span class="s">&#39;con_images&#39;</span><span class="p">,</span><span class="s">&#39;vol_contrasts.@con&#39;</span><span class="p">),</span>
+                                              <span class="p">]),</span>
+                   <span class="p">(</span><span class="n">l2threshold</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;thresholded_map&#39;</span><span class="p">,</span><span class="s">&#39;vol_contrasts_thresh.@threshold&#39;</span><span class="p">),</span>
+                                            <span class="p">]),</span>
+                   <span class="p">])</span>
 
 <span class="c">#integration of the datasink into the surface analysis pipeline</span>
-<span class="n">l2surfflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">oneSampleTTestDes</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;sig_file&#39;</span><span class="p">,</span><span class="s">&#39;sig_file&#39;</span><span class="p">)])])</span>
+<span class="n">l2surfflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">oneSampleTTestSurfDes</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;sig_file&#39;</span><span class="p">,</span><span class="s">&#39;sig_file&#39;</span><span class="p">)])])</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -455,10 +458,12 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <span class="n">l2surfflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
-<div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">This code for the second level pipeline on the volume and on the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/secondlevelpipeline.py">secondlevelpipeline.py</a></p>
-</div>
+<p>Now that everything has been executed you are able to take a look at your results. I recommend to use the following tools to use:</p>
+<ul class="simple">
+<li><strong>Matlab&#8217;s SPM fmri</strong> for the results from the contrast estimation on the volume stored in datasinkfolder xxxx</li>
+<li><strong>FreeSurfer&#8217;s Freeview</strong> for the results from the threshold node stored in datasinkfolder xxxx</li>
+<li><strong>FreeSurfer&#8217;s Freeview</strong> for the results from the contrast estimation on the surface stored in datasinkfolder xxxx</li>
+</ul>
 </div>
 <div class="section" id="visualization">
 <h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
@@ -469,6 +474,10 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <div class="section" id="second-level-surface-pipeline">
 <h3>Second Level Surface Pipeline<a class="headerlink" href="#second-level-surface-pipeline" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/l2surf.jpg" src="_images/l2surf.jpg" style="width: 200px;" />
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The code for the second level pipeline on the volume and on the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/secondlevelpipeline.py">secondlevelpipeline.py</a></p>
+</div>
 </div>
 </div>
 </div>
@@ -491,7 +500,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 09, 2011.
+      Last updated on August 10, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

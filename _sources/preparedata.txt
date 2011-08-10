@@ -245,11 +245,11 @@ After the connection of the nodes there is only one last thing to do. To actuall
 
 .. important::
 
-   | After running the prepareflow a folder called **data** gets created that contains all nifti files for each 
-   | subject. For further work it is recommended to rename those files. For example:
+   | After running the prepareflow a folder called **data** gets created that contains all nifti files for
+   | each subject. For further work it is recommended to rename those files. An example would be to rename:
    | - ``578000-4.nii`` into ``struct.nii`` because it is the T1 file
-   | - ``578000-9.nii`` into ``func1.nii`` because it is the first functional run file
-   | - ``578000-10.nii`` into ``func2.nii`` because it is the second functional run file
+   | - ``578000-9.nii`` into ``func1.nii`` because it is the first functional session file
+   | - ``578000-10.nii`` into ``func2.nii`` because it is the second functional session file
 
 
 Clean up (optional)
@@ -321,7 +321,6 @@ In the normal-dot file you can see how the nodes are connected generally. The na
 
 .. image:: graph_normal_flat-colored.png
    :width: 756
-
 
 
 graph2use='flat' - graph_detailed.dot
@@ -426,3 +425,12 @@ Now we are ready to implement the pipeline and connection the ``infosource`` wit
 .. hint::
 
    The code to this section can be found here: `recon-all.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/recon-all.py>`_
+
+
+Folder Structure
+================
+
+After we've prepared our data by converting the DICOM-files into NIFTI-files and running the recon-all process our folder structure should look like this:
+
+.. image:: preparation.png
+   :width: 810
