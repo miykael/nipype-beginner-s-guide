@@ -2,7 +2,7 @@
 How To Build A First Level Pipeline
 ===================================
 
-This is an example of a simple first level analysis pipeline. This pipeline takes the raw nifti data, does some preprocessing (e.g. realignment, smoothing, etc.) and finally estimates the concrete model.
+In this part you will learn how to do create a simple **first level analysis pipeline**. This pipeline is just an example, it takes the raw nifti data, does some preprocessing (e.g. realignment, smoothing, etc.) and finally estimates the concrete model.
 
 .. note::
 

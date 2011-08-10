@@ -1,8 +1,8 @@
-==============================
-Example: Second Level Pipeline
-==============================
+====================================
+How To Build A Second Level Pipeline
+====================================
 
-In this example you will learn how to do a **second level analysis** on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines separately.
+In this part you will learn how to do a **second level analysis** on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines separately.
 
 .. note::
 
