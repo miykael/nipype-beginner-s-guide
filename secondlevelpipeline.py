@@ -14,13 +14,17 @@ Define experiment specific parameters
 """
 
 #to better access the parent folder of the experiment
-experiment_dir = '~SOMEPATH/experiment'
+experiment_dir = '/mindhive/gablab/u/mnotter/Desktop/TEST'
+
+#tell FreeSurfer where the recon-all output is at
+freesurfer_dir = experiment_dir + '/freesurfer_data'
+fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
 
 #list of subjectnames
-subjects = ['subject1', 'subject2', 'subject3']
+subjects = ['subject1', 'subject2']
 
 #second level analysis pipeline specific components
-level2Dir = 'results/level2'
+level2Dir = '/results/level2'
 numberOfContrasts = 5 #number of contrasts you specified in the first level analysis
 contrast_ids = range(1,numberOfContrasts+1) #to create a list with value [1,2,3,4,5]
 
@@ -36,16 +40,16 @@ Grab the data
 
 #Node: DataGrabber - to collect all the con images for each contrast
 l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
-l2volSource.inputs.template = experiment_dir + '/result/level1_output/subject*/normcons/con_%04d.nii'
+l2volSource.inputs.template = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d_ants.nii'
 l2volSource.iterables = [('con',contrast_ids)] # iterate over all contrast images
-   
+  
 
 """
 Define nodes
 """
 
-#Node: OneSampleTTest - to perform an one sample t-test analysis
-oneSampleTTestDes = pe.Node(interface=spm.OneSampleTTestDesign(), name="oneSampleTTestDes")
+#Node: OneSampleTTest - to perform an one sample t-test analysis on the volume
+oneSampleTTestVolDes = pe.Node(interface=spm.OneSampleTTestDesign(), name="oneSampleTTestVolDes")
 
 #Node: EstimateModel - to estimate the model
 l2estimate = pe.Node(interface=spm.EstimateModel(), name="l2estimate")
@@ -58,15 +62,15 @@ l2conestimate.inputs.contrasts = [cont1]
 l2conestimate.inputs.group_contrast = True
 
 #Node: Threshold - to threshold the estimated contrast
-level2thresh = pe.Node(interface = spm.Threshold(), name="level2thresh")
-level2thresh.inputs.contrast_index = 1
-level2thresh.inputs.use_fwe_correction = False
-level2thresh.inputs.use_topo_fdr = True
-level2thresh.inputs.extent_threshold = 1
+l2threshold = pe.Node(interface = spm.Threshold(), name="l2threshold")
+l2threshold.inputs.contrast_index = 1
+l2threshold.inputs.use_fwe_correction = False
+l2threshold.inputs.use_topo_fdr = True
+l2threshold.inputs.extent_threshold = 1
 #voxel threshold
-level2thresh.inputs.extent_fdr_p_threshold = 0.05
+l2threshold.inputs.extent_fdr_p_threshold = 0.05
 #cluster threshold (value is in -ln()): 1.301 = 0.05; 2 = 0.01; 3 = 0.001,
-level2thresh.inputs.height_threshold = 3
+l2threshold.inputs.height_threshold = 3
 
 ##Node: MultipleRegressionDesign - to perform a multiple regression analysis
 #multipleRegDes = pe.Node(interface=spm.MultipleRegressionDesign(), name="multipleRegDes")
@@ -83,15 +87,15 @@ Establish a second level volume pipeline
 #Create 2-level vol pipeline and connect up all components
 l2volflow = pe.Workflow(name="l2volflow")
 l2volflow.base_dir = experiment_dir + level2Dir + '_vol'
-l2volflow.connect([(l2volSource,onesamplettestdes,[('outfiles','in_files')]),
-                   (onesamplettestdes,l2estimate,[('spm_mat_file','spm_mat_file')]),
+l2volflow.connect([(l2volSource,oneSampleTTestVolDes,[('outfiles','in_files')]),
+                   (oneSampleTTestVolDes,l2estimate,[('spm_mat_file','spm_mat_file')]),
                    (l2estimate,l2conestimate,[('spm_mat_file','spm_mat_file'),
                                               ('beta_images','beta_images'),
                                               ('residual_image','residual_image')
                                               ]),
-                   (l2conestimate, l2volflowthresh,[('spm_mat_file','spm_mat_file'),
-                                                    ('spmT_images','stat_image'),
-                                                    ]),
+                   (l2conestimate,l2threshold,[('spm_mat_file','spm_mat_file'),
+                                               ('spmT_images','stat_image'),
+                                               ]),
                    ])
 
 
@@ -114,7 +118,7 @@ l2surfinputnode.iterables = [('contrasts', contrast_ids),
 l2surfSource = pe.Node(interface=nio.DataGrabber(infields=['con_id'],
                                                  outfields=['con','reg']),
                        name='l2surfSource')
-l2surfSource.inputs.base_directory = experiment_dir + '/level1_output/'
+l2surfSource.inputs.base_directory = experiment_dir + '/results/level1_output/'
 l2surfSource.inputs.template = '*'
 l2surfSource.inputs.field_template = dict(con='surf_contrasts/_subject_id_*/con_%04d.img',
                                           reg='bbregister/_subject_id_*/*.dat')
@@ -136,7 +140,7 @@ def ordersubjects(files, subj_list):
             if '/_subject_id_%s/'%subject in subj_file:
                 outlist.append(subj_file)
                 continue
-return outlist
+    return outlist
 
 #Node: MRISPreproc - to concatenate contrast images projected to fsaverage
 concat = pe.Node(interface=fs.MRISPreproc(), name='concat')
@@ -147,8 +151,8 @@ concat.inputs.fwhm = 5  #the smoothing of the surface data happens here
 def list2tuple(listoflist):
     return [tuple(x) for x in listoflist]
 
-###   #Node: OneSampleTTest - to perform a one sample t-test
-###   oneSampleTTestDes = pe.Node(interface=fs.OneSampleTTest(), name='oneSampleTTestDes')
+#Node: OneSampleTTest - to perform a one sample t-test on the surface
+oneSampleTTestSurfDes = pe.Node(interface=fs.OneSampleTTest(), name='oneSampleTTestSurfDes')
 
 
 """
@@ -163,7 +167,7 @@ l2surfflow.connect([(l2surfinputnode,l2surfSource,[('contrasts','con_id')]),
                     (l2surfSource,merge,[(('con', ordersubjects, subjects),'in1'),
                                          (('reg', ordersubjects, subjects),'in2')]),
                     (merge,concat,[(('out', list2tuple),'vol_measure_file')]),
-                    (concat,oneSampleTTestDes,[('out_file','in_file')]),
+#                    (concat,oneSampleTTestSurfDes,[('out_file','in_file')]),
 	            ])
 
 
@@ -177,12 +181,16 @@ l2datasink.inputs.base_directory = experiment_dir
 l2datasink.inputs.container = level2Dir + '_datasink'
 
 #integration of the datasink into the volume analysis pipeline
-###   l2volflow.connect([(l2conestimate,l2datasink,[('inputbla','outputbla')]),
-###                      (l2volflowthresh,l2datasink,[('inputbla','outputbla')]),
-###                      ])
+l2volflow.connect([(l2conestimate,l2datasink,[('spm_mat_file','vol_contrasts.@spm_mat'),
+                                              ('spmT_images','vol_contrasts.@T'),
+                                              ('con_images','vol_contrasts.@con'),
+                                              ]),
+                   (l2threshold,l2datasink,[('thresholded_map','vol_contrasts_thresh.@threshold'),
+                                            ]),
+                   ])
 
 #integration of the datasink into the surface analysis pipeline
-l2surfflow.connect([(oneSampleTTestDes,l2datasink,[('sig_file','sig_file')])])
+l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','sig_file')])])
 
 
 """
@@ -190,10 +198,8 @@ Run pipeline
 """
 
 l2volflow.write_graph(graph2use='flat')
-#l2volflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+l2volflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
 l2surfflow.write_graph(graph2use='flat')
-#l2surfflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
-
-
+l2surfflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
