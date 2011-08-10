@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
     <link rel="next" title="Under construction" href="underConstruction.html" />
-    <link rel="prev" title="Prepare Data for Nipype" href="preparedata.html" />
+    <link rel="prev" title="How To Prepare Your Data for Nipype" href="preparedata.html" />
  
 <meta name="keywords" content="nipype, python, guide">
 <script type="text/javascript">
@@ -59,7 +59,7 @@
           <a href="underConstruction.html" title="Under construction"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="preparedata.html" title="Prepare Data for Nipype"
+          <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
       </ul>
@@ -68,8 +68,8 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Example: First Level Pipeline</a><ul>
-<li><a class="reference internal" href="#define-structure-of-your-pipeline">Define structure of your pipeline</a></li>
+<li><a class="reference internal" href="#">How To Build A First Level Pipeline</a><ul>
+<li><a class="reference internal" href="#define-the-structure-of-your-pipeline">Define the structure of your pipeline</a></li>
 <li><a class="reference internal" href="#write-your-pipeline-script">Write your pipeline script</a><ul>
 <li><a class="reference internal" href="#import-modules">Import modules</a></li>
 <li><a class="reference internal" href="#define-experiment-specific-parameters">Define experiment specific parameters</a></li>
@@ -82,20 +82,20 @@
 <li><a class="reference internal" href="#run-the-pipeline-and-generate-the-graph">Run the pipeline and generate the graph</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#visualization-of-the-metaflow">Visualization of the metaflow</a><ul>
-<li><a class="reference internal" href="#basic-graph">Basic graph</a></li>
+<li><a class="reference internal" href="#visualize-your-pipeline">Visualize your pipeline</a><ul>
+<li><a class="reference internal" href="#simple-graph">Simple graph</a></li>
 <li><a class="reference internal" href="#detailed-graph">Detailed graph</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#adding-a-pipeline-for-the-surface-analysis">Adding a pipeline for the surface analysis</a></li>
-<li><a class="reference internal" href="#folder-structure">Folder Structure</a></li>
+<li><a class="reference internal" href="#adding-a-surface-analysis-to-your-pipeline">Adding a surface analysis to your pipeline</a></li>
+<li><a class="reference internal" href="#resulting-folder-structure">Resulting Folder Structure</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="preparedata.html"
-                        title="previous chapter">Prepare Data for Nipype</a></p>
+                        title="previous chapter">How To Prepare Your Data for Nipype</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="underConstruction.html"
                         title="next chapter">Under construction</a></p>
@@ -125,15 +125,15 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="example-first-level-pipeline">
-<h1>Example: First Level Pipeline<a class="headerlink" href="#example-first-level-pipeline" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-build-a-first-level-pipeline">
+<h1>How To Build A First Level Pipeline<a class="headerlink" href="#how-to-build-a-first-level-pipeline" title="Permalink to this headline">¶</a></h1>
 <p>This is an example of a simple first level analysis pipeline. This pipeline takes the raw nifti data, does some preprocessing (e.g. realignment, smoothing, etc.) and finally estimates the concrete model.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The normalization of the results to a common template will not be done by this pipeline. A brief instruction on how to normalize your date with ANTS will be given in a latter chapter.</p>
 </div>
-<div class="section" id="define-structure-of-your-pipeline">
-<h2>Define structure of your pipeline<a class="headerlink" href="#define-structure-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="define-the-structure-of-your-pipeline">
+<h2>Define the structure of your pipeline<a class="headerlink" href="#define-the-structure-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>The best way to build your own pipeline is first to think about the workflow the data should go through. In this example we want to first run some preprocessing like <cite>SliceTiming</cite>, <cite>Realignment</cite>, <cite>ArtifactDetection</cite>, <cite>BBRegister</cite> and <cite>Smoothing</cite>. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing. All this will be accommodate in a <strong>preprocess pipeline</strong>. After that we want to estimate a concrete model by running first <cite>SpecifyModel</cite>, create a <cite>Level1Design</cite>, <cite>EstimateModel</cite> and finally <cite>EstimateContrast</cite>. This will be done in a <strong>volume analysis pipeline</strong>.</p>
 <p>The preprocess and the volume analysis pipeline together with the inputnode, will create the basic <strong>framework workflow</strong>. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I&#8217;d like to call <strong>meta workflow</strong>. Visualized this pipeline would look like this:</p>
 <img alt="_images/metaflow.png" src="_images/metaflow.png" style="width: 756px;" />
@@ -588,7 +588,8 @@
 54
 55
 56
-57</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Names of the conditions</span>
+57
+58</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Names of the conditions</span>
 <span class="n">namesOfConditions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;condition1&#39;</span><span class="p">,</span><span class="s">&#39;condition2&#39;</span><span class="p">,</span><span class="s">&#39;condition3&#39;</span><span class="p">]</span>
 
 <span class="c">#Define different contrasts</span>
@@ -624,6 +625,7 @@
     <span class="c">#Define the parametric modulators</span>
     <span class="n">para_modu</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">Bunch</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;target2&#39;</span><span class="p">,</span><span class="s">&#39;target3&#39;</span><span class="p">],</span> <span class="n">poly</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]],</span>
+
                        <span class="n">param</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]),</span>
                  <span class="n">Bunch</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;target2&#39;</span><span class="p">,</span><span class="s">&#39;target3&#39;</span><span class="p">],</span> <span class="n">poly</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]],</span>
                        <span class="n">param</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]),</span>
@@ -715,13 +717,13 @@
 </td></tr></table></div>
 </div>
 </div>
-<div class="section" id="visualization-of-the-metaflow">
-<h2>Visualization of the metaflow<a class="headerlink" href="#visualization-of-the-metaflow" title="Permalink to this headline">¶</a></h2>
-<p>Here are now the basic and the detailed graph of this example of our meta pipeline. Both graphs were created with the graph2use parameter set to &#8216;flat&#8217;. The coloring was done additionally to underline the structure of the whole workflow.</p>
-<div class="section" id="basic-graph">
-<h3>Basic graph<a class="headerlink" href="#basic-graph" title="Permalink to this headline">¶</a></h3>
-<p>The basic graph shows how the nodes are connected to each other.</p>
-<img alt="_images/graph_first_basic.png" class="align-center" src="_images/graph_first_basic.png" style="width: 810px;" />
+<div class="section" id="visualize-your-pipeline">
+<h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>Here are now the simple and the detailed graph of this example of our meta pipeline. Both graphs were created with the graph2use parameter set to &#8216;flat&#8217;. The coloring was done additionally to underline the structure of the whole workflow.</p>
+<div class="section" id="simple-graph">
+<h3>Simple graph<a class="headerlink" href="#simple-graph" title="Permalink to this headline">¶</a></h3>
+<p>The simple graph shows how the nodes are connected to each other.</p>
+<img alt="_images/graph_first_simple.png" class="align-center" src="_images/graph_first_simple.png" style="width: 810px;" />
 </div>
 <div class="section" id="detailed-graph">
 <h3>Detailed graph<a class="headerlink" href="#detailed-graph" title="Permalink to this headline">¶</a></h3>
@@ -729,8 +731,8 @@
 <img alt="_images/graph_first_detailed.png" class="align-center" src="_images/graph_first_detailed.png" style="width: 1080px;" />
 </div>
 </div>
-<div class="section" id="adding-a-pipeline-for-the-surface-analysis">
-<h2>Adding a pipeline for the surface analysis<a class="headerlink" href="#adding-a-pipeline-for-the-surface-analysis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="adding-a-surface-analysis-to-your-pipeline">
+<h2>Adding a surface analysis to your pipeline<a class="headerlink" href="#adding-a-surface-analysis-to-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>Running the first level analysis also on the surface, and not just on the volume, can be achieved with just little more code. Because the <strong>surface analysis pipeline</strong> is similar to the one on the volume we can just clone the <strong>volume analysis pipeline</strong>:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#creates a clone of volanaylsis called surfanalysis</span>
@@ -786,7 +788,7 @@
                   <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
-<p>Now that the <strong>surface analysis pipeline</strong> is integrated into the metaflow we can run the metaflow:</p>
+<p>Now that the <strong>surface analysis pipeline</strong> is integrated into the metaflow we can run the metaflow again:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
@@ -795,10 +797,24 @@
 <p class="last">The code for a first level analysis on the volume and the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py">firstlevelpipeline.py</a></p>
 </div>
 </div>
-<div class="section" id="folder-structure">
-<h2>Folder Structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
-<p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> our folder structure should look like this:</p>
+<div class="section" id="resulting-folder-structure">
+<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
+<p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> on the volume and the surface our folder structure should look like this:</p>
 <img alt="_images/firstlevel.png" src="_images/firstlevel.png" style="width: 810px;" />
+<p>Additionally to the original <tt class="docutils literal"><span class="pre">dicom</span></tt>, <tt class="docutils literal"><span class="pre">data</span></tt> and <tt class="docutils literal"><span class="pre">freesurfer_data</span></tt> folder we now have a new folder called <tt class="docutils literal"><span class="pre">results</span></tt> that contains:</p>
+<ul>
+<li><p class="first"><strong>workingdir</strong> folder that contains all the data that gets created from the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. Because this is the highest storage consumer and to save space it is <strong>highly recommended</strong> to delete this folder as soon as possible.</p>
+</li>
+<li><p class="first"><strong>level1_output</strong> folder which is the datasink of the metaflow. It contains:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>bbregister</strong> folder with the bbregister file for each subject</li>
+<li><strong>surf_contrasts</strong> folder with the estimated surface contrasts and the SPM.mat file for each subject</li>
+<li><strong>vol_contrasts</strong> folder with the estimated volume contrasts and the SPM.mat file for each subject</li>
+</ul>
+</blockquote>
+</li>
+</ul>
 </div>
 </div>
 
@@ -818,7 +834,7 @@
           <a href="underConstruction.html" title="Under construction"
              >next</a> |</li>
         <li class="right" >
-          <a href="preparedata.html" title="Prepare Data for Nipype"
+          <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
              >previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
       </ul>

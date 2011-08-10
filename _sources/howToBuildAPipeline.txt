@@ -1,6 +1,6 @@
-=======================
-How to build a pipeline
-=======================
+==================================
+How To Build A Pipeline In General
+==================================
 
 This section is meant as a step by step introduction to building your own pipeline. At the end you should know what the important characteristics of a pipeline is, how it is constructed, how its parts are connected, so that you are ready to implement your own pipeline.
 
@@ -11,8 +11,8 @@ What is a pipeline?
 A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline or also called workflow is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The main advantage of the pipeline is that it can use different modules from different packages (e.g. SPM, FSL, FreeSurfer, Camino, AFNI, Slicer) and is able to exchange the data between them.
 
 
-Create the framework of your own pipeline
-=========================================
+How to build your own pipeline
+==============================
 
 There are many ways to construct a pipeline but in the end it comes down to the following steps:
 
@@ -50,7 +50,8 @@ The first thing you'll have to do is to import the interfaces you want to use. T
       freesurfer_dir = '~SOMEPATH/freesurfer_data'
       fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
 
-    Otherwise some nasty errors could occure.
+
+   This specification has to be done before you want to use any output from FreeSurfer's recon-all process. If you don't do that, some nasty errors may occure.
 
 
 Define nodes
@@ -253,7 +254,7 @@ Connect pipelines to each other (necessary if you have multiple pipelines)
 
 If you have multiple pipelines, like one for preprocessing, one for modelestimation and one for volume analysis, you can't just connect the nodes to each other. You have to connect the pipelines to each other instead.
 
-Assumed that we have a node "realign" which is part of a pipeline called "preprocess" and that we have a node called "modelspec" which is part of a pipeline called "modelestimation". If we now want to connect does to pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:
+Assumed that we have a node "realign" which is part of a pipeline called "preprocess" and that we have a node called "modelspec" which is part of a pipeline called "modelestimation". If we now want to connect does two pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:
 
 .. code-block:: py
    :linenos:
@@ -634,3 +635,42 @@ Now you're done and can run your pipeline.
 
    metaflow.run(plugin='Linear')
 
+
+How to visualize your pipeline
+==============================
+
+After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:
+
+.. code-block:: py
+   :linenos:
+
+   metaflow.write_graph(graph2use='flat')
+
+With this command, two graph files get created with the difference in the level of detail they are showing. There is a **simple overview graph** called ``graph.dot`` that shows you the basic connections between nodes and a **more detailed overview graph** called ``graph_detailed.dot`` that shows you additionally the outputs and inputs of each node and the connections between them.
+
+The following graphs are a visualization of the **dicom2nifti preparation pipeline** or ``prepareflow`` which you will encounter in the next chapter.
+
+graph2use='flat' - graph.dot
+----------------------------
+
+In the simple version of a graph you can see how the nodes are connected together generally. The name of the nodes is composed in the format of ``nodename.algorithm.interface``
+
+.. image:: graph_normal_flat-colored.png
+   :width: 756
+
+
+graph2use='flat' - graph_detailed.dot
+-------------------------------------
+
+The detailed version of the graph gives you more detailed informations about which input is connected to which output.
+
+.. image:: graph_detailed_flat-colored.png
+
+
+graph2use='exec' - graph_detailed.dot
+-------------------------------------
+
+If you set ``graph2use`` to ``'exec'`` you get the same level of detail as if you would run it with ``'flat'`` but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: `a0`, `a1` and `a2`
+
+.. image:: graph_detailed_exec-colored.png
+   :width: 810

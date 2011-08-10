@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="Prepare Data for Nipype" href="preparedata.html" />
+    <link rel="next" title="How To Prepare Your Data for Nipype" href="preparedata.html" />
     <link rel="prev" title="Introduction" href="introduction.html" />
  
 <meta name="keywords" content="nipype, python, guide">
@@ -56,7 +56,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="preparedata.html" title="Prepare Data for Nipype"
+          <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
@@ -68,9 +68,9 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">How to build a pipeline</a><ul>
+<li><a class="reference internal" href="#">How To Build A Pipeline In General</a><ul>
 <li><a class="reference internal" href="#what-is-a-pipeline">What is a pipeline?</a></li>
-<li><a class="reference internal" href="#create-the-framework-of-your-own-pipeline">Create the framework of your own pipeline</a><ul>
+<li><a class="reference internal" href="#how-to-build-your-own-pipeline">How to build your own pipeline</a><ul>
 <li><a class="reference internal" href="#import-appropriate-modules">Import appropriate modules</a></li>
 <li><a class="reference internal" href="#define-nodes">Define nodes</a><ul>
 <li><a class="reference internal" href="#node-initiation">Node Initiation</a></li>
@@ -110,6 +110,12 @@
 <li><a class="reference internal" href="#connect-new-nodes-to-your-pipeline">Connect new nodes to your pipeline</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#how-to-visualize-your-pipeline">How to visualize your pipeline</a><ul>
+<li><a class="reference internal" href="#graph2use-flat-graph-dot">graph2use=&#8217;flat&#8217; - graph.dot</a></li>
+<li><a class="reference internal" href="#graph2use-flat-graph-detailed-dot">graph2use=&#8217;flat&#8217; - graph_detailed.dot</a></li>
+<li><a class="reference internal" href="#graph2use-exec-graph-detailed-dot">graph2use=&#8217;exec&#8217; - graph_detailed.dot</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -119,7 +125,7 @@
                         title="previous chapter">Introduction</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="preparedata.html"
-                        title="next chapter">Prepare Data for Nipype</a></p>
+                        title="next chapter">How To Prepare Your Data for Nipype</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/howToBuildAPipeline.txt"
@@ -146,15 +152,15 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="how-to-build-a-pipeline">
-<h1>How to build a pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-build-a-pipeline-in-general">
+<h1>How To Build A Pipeline In General<a class="headerlink" href="#how-to-build-a-pipeline-in-general" title="Permalink to this headline">¶</a></h1>
 <p>This section is meant as a step by step introduction to building your own pipeline. At the end you should know what the important characteristics of a pipeline is, how it is constructed, how its parts are connected, so that you are ready to implement your own pipeline.</p>
 <div class="section" id="what-is-a-pipeline">
 <h2>What is a pipeline?<a class="headerlink" href="#what-is-a-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline or also called workflow is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The main advantage of the pipeline is that it can use different modules from different packages (e.g. SPM, FSL, FreeSurfer, Camino, AFNI, Slicer) and is able to exchange the data between them.</p>
 </div>
-<div class="section" id="create-the-framework-of-your-own-pipeline">
-<h2>Create the framework of your own pipeline<a class="headerlink" href="#create-the-framework-of-your-own-pipeline" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-build-your-own-pipeline">
+<h2>How to build your own pipeline<a class="headerlink" href="#how-to-build-your-own-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>There are many ways to construct a pipeline but in the end it comes down to the following steps:</p>
 <blockquote>
 <ol class="arabic simple">
@@ -182,7 +188,15 @@
 </td></tr></table></div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">If you use the freesurfer interface, please make sure to tell freesurfer where the subjects directory is by using the following command:</p>
+<p>If you use the freesurfer interface, please make sure to tell freesurfer where the subjects directory is by using the following command:</p>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>
+<span class="n">freesurfer_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/freesurfer_data&#39;</span>
+<span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">freesurfer_dir</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p class="last">This specification has to be done before you want to use any output from FreeSurfer&#8217;s recon-all process. If you don&#8217;t do that, some nasty errors may occure.</p>
 </div>
 </div>
 <div class="section" id="define-nodes">
@@ -353,7 +367,7 @@
 <div class="section" id="connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines">
 <h4>Connect pipelines to each other (necessary if you have multiple pipelines)<a class="headerlink" href="#connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines" title="Permalink to this headline">¶</a></h4>
 <p>If you have multiple pipelines, like one for preprocessing, one for modelestimation and one for volume analysis, you can&#8217;t just connect the nodes to each other. You have to connect the pipelines to each other instead.</p>
-<p>Assumed that we have a node &#8220;realign&#8221; which is part of a pipeline called &#8220;preprocess&#8221; and that we have a node called &#8220;modelspec&#8221; which is part of a pipeline called &#8220;modelestimation&#8221;. If we now want to connect does to pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:</p>
+<p>Assumed that we have a node &#8220;realign&#8221; which is part of a pipeline called &#8220;preprocess&#8221; and that we have a node called &#8220;modelspec&#8221; which is part of a pipeline called &#8220;modelestimation&#8221;. If we now want to connect does two pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -825,6 +839,30 @@
 </div>
 </div>
 </div>
+<div class="section" id="how-to-visualize-your-pipeline">
+<h2>How to visualize your pipeline<a class="headerlink" href="#how-to-visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:</p>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>With this command, two graph files get created with the difference in the level of detail they are showing. There is a <strong>simple overview graph</strong> called <tt class="docutils literal"><span class="pre">graph.dot</span></tt> that shows you the basic connections between nodes and a <strong>more detailed overview graph</strong> called <tt class="docutils literal"><span class="pre">graph_detailed.dot</span></tt> that shows you additionally the outputs and inputs of each node and the connections between them.</p>
+<p>The following graphs are a visualization of the <strong>dicom2nifti preparation pipeline</strong> or <tt class="docutils literal"><span class="pre">prepareflow</span></tt> which you will encounter in the next chapter.</p>
+<div class="section" id="graph2use-flat-graph-dot">
+<h3>graph2use=&#8217;flat&#8217; - graph.dot<a class="headerlink" href="#graph2use-flat-graph-dot" title="Permalink to this headline">¶</a></h3>
+<p>In the simple version of a graph you can see how the nodes are connected together generally. The name of the nodes is composed in the format of <tt class="docutils literal"><span class="pre">nodename.algorithm.interface</span></tt></p>
+<img alt="_images/graph_normal_flat-colored.png" src="_images/graph_normal_flat-colored.png" style="width: 756px;" />
+</div>
+<div class="section" id="graph2use-flat-graph-detailed-dot">
+<h3>graph2use=&#8217;flat&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-flat-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
+<p>The detailed version of the graph gives you more detailed informations about which input is connected to which output.</p>
+<img alt="_images/graph_detailed_flat-colored.png" src="_images/graph_detailed_flat-colored.png" />
+</div>
+<div class="section" id="graph2use-exec-graph-detailed-dot">
+<h3>graph2use=&#8217;exec&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-exec-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
+<p>If you set <tt class="docutils literal"><span class="pre">graph2use</span></tt> to <tt class="docutils literal"><span class="pre">'exec'</span></tt> you get the same level of detail as if you would run it with <tt class="docutils literal"><span class="pre">'flat'</span></tt> but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: <cite>a0</cite>, <cite>a1</cite> and <cite>a2</cite></p>
+<img alt="_images/graph_detailed_exec-colored.png" src="_images/graph_detailed_exec-colored.png" style="width: 810px;" />
+</div>
+</div>
 </div>
 
 
@@ -840,7 +878,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="preparedata.html" title="Prepare Data for Nipype"
+          <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
              >next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"

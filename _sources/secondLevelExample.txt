@@ -299,3 +299,10 @@ Second Level Surface Pipeline
 .. hint::
 
    The code for the second level pipeline on the volume and on the surface can be found here: `secondlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/secondlevelpipeline.py>`_
+
+
+Resulting Folder Structure
+==========================
+
+**Picture Missing**
+

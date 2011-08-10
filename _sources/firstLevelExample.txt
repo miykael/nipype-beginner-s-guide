@@ -1,6 +1,6 @@
-=============================
-Example: First Level Pipeline
-=============================
+===================================
+How To Build A First Level Pipeline
+===================================
 
 This is an example of a simple first level analysis pipeline. This pipeline takes the raw nifti data, does some preprocessing (e.g. realignment, smoothing, etc.) and finally estimates the concrete model.
 
@@ -8,8 +8,8 @@ This is an example of a simple first level analysis pipeline. This pipeline take
 
    The normalization of the results to a common template will not be done by this pipeline. A brief instruction on how to normalize your date with ANTS will be given in a latter chapter.
 
-Define structure of your pipeline
-=================================
+Define the structure of your pipeline
+=====================================
 
 The best way to build your own pipeline is first to think about the workflow the data should go through. In this example we want to first run some preprocessing like `SliceTiming`, `Realignment`, `ArtifactDetection`, `BBRegister` and `Smoothing`. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing. All this will be accommodate in a **preprocess pipeline**. After that we want to estimate a concrete model by running first `SpecifyModel`, create a `Level1Design`, `EstimateModel` and finally `EstimateContrast`. This will be done in a **volume analysis pipeline**.
 
@@ -314,6 +314,7 @@ We now set up the model specific components like contrasts, names of conditions,
        #Define the parametric modulators
        para_modu = [None, 
                     Bunch(name=['target2','target3'], poly=[[1],[1]],
+
                           param = [[0,0,1,0,0,0,0,0],[0,0,0,0,1,0,0,1]]), 
                     Bunch(name=['target2','target3'], poly=[[1],[1]],
                           param = [[0,0,0,1,1,1,0,0],[1,0,0,0,0,0,1,1]]), 
@@ -388,17 +389,17 @@ Finally, after everything is set up correctly we can run the pipeline and let it
    metaflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
 
-Visualization of the metaflow
-=============================
+Visualize your pipeline
+=======================
 
-Here are now the basic and the detailed graph of this example of our meta pipeline. Both graphs were created with the graph2use parameter set to 'flat'. The coloring was done additionally to underline the structure of the whole workflow.
+Here are now the simple and the detailed graph of this example of our meta pipeline. Both graphs were created with the graph2use parameter set to 'flat'. The coloring was done additionally to underline the structure of the whole workflow.
 
-Basic graph
-~~~~~~~~~~~
+Simple graph
+~~~~~~~~~~~~
 
-The basic graph shows how the nodes are connected to each other.
+The simple graph shows how the nodes are connected to each other.
 
-.. image:: graph_first_basic.png
+.. image:: graph_first_simple.png
    :align: center
    :width: 810
 
@@ -412,7 +413,7 @@ The detailed graph shows how the different inputs and outputs of each individual
    :width: 1080
 
 
-Adding a pipeline for the surface analysis
+Adding a surface analysis to your pipeline
 ==========================================
 
 Running the first level analysis also on the surface, and not just on the volume, can be achieved with just little more code. Because the **surface analysis pipeline** is similar to the one on the volume we can just clone the **volume analysis pipeline**:
@@ -454,7 +455,7 @@ This means instead of taking the smoothed files from the preprocess pipeline and
                                           ])
                      ])
 
-Now that the **surface analysis pipeline** is integrated into the metaflow we can run the metaflow:
+Now that the **surface analysis pipeline** is integrated into the metaflow we can run the metaflow again:
 
 .. code-block:: py
    :linenos:
@@ -467,11 +468,20 @@ Now that the **surface analysis pipeline** is integrated into the metaflow we ca
    The code for a first level analysis on the volume and the surface can be found here: `firstlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py>`_
 
 
-Folder Structure
-================
+Resulting Folder Structure
+==========================
 
-After we've run our **first level analysis pipeline** our folder structure should look like this:
+After we've run our **first level analysis pipeline** on the volume and the surface our folder structure should look like this:
 
 .. image:: firstlevel.png
    :width: 810
 
+
+Additionally to the original ``dicom``, ``data`` and ``freesurfer_data`` folder we now have a new folder called ``results`` that contains:
+
+* **workingdir** folder that contains all the data that gets created from the ``metaflow``. Because this is the highest storage consumer and to save space it is **highly recommended** to delete this folder as soon as possible.
+* **level1_output** folder which is the datasink of the metaflow. It contains:
+
+   - **bbregister** folder with the bbregister file for each subject
+   - **surf_contrasts** folder with the estimated surface contrasts and the SPM.mat file for each subject
+   - **vol_contrasts** folder with the estimated volume contrasts and the SPM.mat file for each subject

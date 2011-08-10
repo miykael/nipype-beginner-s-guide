@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="Example: First Level Pipeline" href="firstLevelExample.html" />
-    <link rel="prev" title="How to build a pipeline" href="howToBuildAPipeline.html" />
+    <link rel="next" title="How To Build A First Level Pipeline" href="firstLevelExample.html" />
+    <link rel="prev" title="How To Build A Pipeline In General" href="howToBuildAPipeline.html" />
  
 <meta name="keywords" content="nipype, python, guide">
 <script type="text/javascript">
@@ -56,10 +56,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="firstLevelExample.html" title="Example: First Level Pipeline"
+          <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="howToBuildAPipeline.html" title="How to build a pipeline"
+          <a href="howToBuildAPipeline.html" title="How To Build A Pipeline In General"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
       </ul>
@@ -68,7 +68,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Prepare Data for Nipype</a><ul>
+<li><a class="reference internal" href="#">How To Prepare Your Data for Nipype</a><ul>
 <li><a class="reference internal" href="#convert-dicoms-into-niftis">Convert Dicoms into Niftis</a><ul>
 <li><a class="reference internal" href="#import-modules">Import modules</a></li>
 <li><a class="reference internal" href="#define-experiment-specific-parameters">Define experiment specific parameters</a></li>
@@ -80,27 +80,21 @@
 <li><a class="reference internal" href="#clean-up-optional">Clean up (optional)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#how-to-create-and-read-graph-dot-files">How to create and read graph.dot files</a><ul>
-<li><a class="reference internal" href="#graph2use-flat-graph-dot">graph2use=&#8217;flat&#8217; - graph.dot</a></li>
-<li><a class="reference internal" href="#graph2use-flat-graph-detailed-dot">graph2use=&#8217;flat&#8217; - graph_detailed.dot</a></li>
-<li><a class="reference internal" href="#graph2use-exec-graph-detailed-dot">graph2use=&#8217;exec&#8217; - graph_detailed.dot</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#run-recon-all-with-nipype">Run Recon-All with Nipype</a><ul>
 <li><a class="reference internal" href="#prepare-modules-and-important-variables">Prepare modules and important variables</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#folder-structure">Folder Structure</a></li>
+<li><a class="reference internal" href="#resulting-folder-structure">Resulting Folder Structure</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="howToBuildAPipeline.html"
-                        title="previous chapter">How to build a pipeline</a></p>
+                        title="previous chapter">How To Build A Pipeline In General</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="firstLevelExample.html"
-                        title="next chapter">Example: First Level Pipeline</a></p>
+                        title="next chapter">How To Build A First Level Pipeline</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/preparedata.txt"
@@ -127,8 +121,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="prepare-data-for-nipype">
-<h1>Prepare Data for Nipype<a class="headerlink" href="#prepare-data-for-nipype" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-prepare-your-data-for-nipype">
+<h1>How To Prepare Your Data for Nipype<a class="headerlink" href="#how-to-prepare-your-data-for-nipype" title="Permalink to this headline">¶</a></h1>
 <p>The first step after data acquisition is as expected: <strong>Preparation!</strong> Before we can run the data threw a pipeline we have to convert the dicoms into niftis and execute the recon-all process for each subject. Otherwise we can&#8217;t use the benefits of FreeSurfer. Because this can be done in rather little code it is a very good example to get started.</p>
 <div class="section" id="convert-dicoms-into-niftis">
 <h2>Convert Dicoms into Niftis<a class="headerlink" href="#convert-dicoms-into-niftis" title="Permalink to this headline">¶</a></h2>
@@ -407,29 +401,6 @@ StudyTime 083819.578000
 </div>
 </div>
 </div>
-<div class="section" id="how-to-create-and-read-graph-dot-files">
-<h2>How to create and read graph.dot files<a class="headerlink" href="#how-to-create-and-read-graph-dot-files" title="Permalink to this headline">¶</a></h2>
-<p>After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">prepareflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-<p>There are different kinds of graphs you can create. But basically there is a simple overview graph called graph.dot that shows you the basic connections between nodes. In the more detailed version which creates a graph_detailed.dot file you can also see which outputs and inputs are connected together.</p>
-<div class="section" id="graph2use-flat-graph-dot">
-<h3>graph2use=&#8217;flat&#8217; - graph.dot<a class="headerlink" href="#graph2use-flat-graph-dot" title="Permalink to this headline">¶</a></h3>
-<p>In the normal-dot file you can see how the nodes are connected generally. The name is composed in the format of <tt class="docutils literal"><span class="pre">nodename.algorithm.interface</span></tt></p>
-<img alt="_images/graph_normal_flat-colored.png" src="_images/graph_normal_flat-colored.png" style="width: 756px;" />
-</div>
-<div class="section" id="graph2use-flat-graph-detailed-dot">
-<h3>graph2use=&#8217;flat&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-flat-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
-<p>The detailed version of the graph gives you better informations about which input is connected to which output.</p>
-<img alt="_images/graph_detailed_flat-colored.png" src="_images/graph_detailed_flat-colored.png" />
-</div>
-<div class="section" id="graph2use-exec-graph-detailed-dot">
-<h3>graph2use=&#8217;exec&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-exec-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
-<p>If you set <tt class="docutils literal"><span class="pre">graph2use</span></tt> to <tt class="docutils literal"><span class="pre">'exec'</span></tt> you get the same level of detail as if you would run it with <tt class="docutils literal"><span class="pre">'flat'</span></tt> but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: <cite>a0</cite>, <cite>a1</cite> and <cite>a2</cite></p>
-<img alt="_images/graph_detailed_exec-colored.png" src="_images/graph_detailed_exec-colored.png" style="width: 1134px;" />
-</div>
-</div>
 <div class="section" id="run-recon-all-with-nipype">
 <h2>Run Recon-All with Nipype<a class="headerlink" href="#run-recon-all-with-nipype" title="Permalink to this headline">¶</a></h2>
 <p>Now that we are able to build a preparation pipeline, it will be a piece of cake to create a recon-all pipeline. Only after executing the recon-all algorithm will we be able to use all the benefits of the FreeSurfer interface.</p>
@@ -559,10 +530,16 @@ StudyTime 083819.578000
 </div>
 </div>
 </div>
-<div class="section" id="folder-structure">
-<h2>Folder Structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="resulting-folder-structure">
+<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve prepared our data by converting the DICOM-files into NIFTI-files and running the recon-all process our folder structure should look like this:</p>
 <img alt="_images/preparation.png" src="_images/preparation.png" style="width: 810px;" />
+<p>In your parentfolder <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment</span></tt> we have three main subfolders:</p>
+<ul class="simple">
+<li><strong>dicom</strong> folder contains the raw DICOM-files of each subject in a subject named folder</li>
+<li><strong>data</strong> folder is the result from the <tt class="docutils literal"><span class="pre">prepareflow</span></tt> and contains the NIFTI-files</li>
+<li><strong>freesurfer_data</strong> folder is the result of the <tt class="docutils literal"><span class="pre">reconflow</span></tt> and contains the output from the recon-all process</li>
+</ul>
 </div>
 </div>
 
@@ -579,10 +556,10 @@ StudyTime 083819.578000
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="firstLevelExample.html" title="Example: First Level Pipeline"
+          <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
              >next</a> |</li>
         <li class="right" >
-          <a href="howToBuildAPipeline.html" title="How to build a pipeline"
+          <a href="howToBuildAPipeline.html" title="How To Build A Pipeline In General"
              >previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
       </ul>

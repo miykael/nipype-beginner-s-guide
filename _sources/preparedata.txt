@@ -1,6 +1,6 @@
-=======================
-Prepare Data for Nipype
-=======================
+===================================
+How To Prepare Your Data for Nipype
+===================================
 
 The first step after data acquisition is as expected: **Preparation!** Before we can run the data threw a pipeline we have to convert the dicoms into niftis and execute the recon-all process for each subject. Otherwise we can't use the benefits of FreeSurfer. Because this can be done in rather little code it is a very good example to get started.
 
@@ -301,45 +301,6 @@ To finally delete the workingdirectory of the prepare pipeline with all it's con
    The code to this section can be found here: `dicom2nifti.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/dicom2nifti.py>`_
 
 
-How to create and read graph.dot files
-======================================
-
-After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:
-
-.. code-block:: py
-   :linenos:
-
-   prepareflow.write_graph(graph2use='flat')
-
-There are different kinds of graphs you can create. But basically there is a simple overview graph called graph.dot that shows you the basic connections between nodes. In the more detailed version which creates a graph_detailed.dot file you can also see which outputs and inputs are connected together.
-
-
-graph2use='flat' - graph.dot
-****************************
-
-In the normal-dot file you can see how the nodes are connected generally. The name is composed in the format of ``nodename.algorithm.interface``
-
-.. image:: graph_normal_flat-colored.png
-   :width: 756
-
-
-graph2use='flat' - graph_detailed.dot
-*************************************
-
-The detailed version of the graph gives you better informations about which input is connected to which output.
-
-.. image:: graph_detailed_flat-colored.png
-
-
-graph2use='exec' - graph_detailed.dot
-*************************************
-
-If you set ``graph2use`` to ``'exec'`` you get the same level of detail as if you would run it with ``'flat'`` but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: `a0`, `a1` and `a2`
-
-.. image:: graph_detailed_exec-colored.png
-   :width: 1134
-
-
 Run Recon-All with Nipype
 =========================
 
@@ -427,10 +388,16 @@ Now we are ready to implement the pipeline and connection the ``infosource`` wit
    The code to this section can be found here: `recon-all.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/recon-all.py>`_
 
 
-Folder Structure
-================
+Resulting Folder Structure
+==========================
 
 After we've prepared our data by converting the DICOM-files into NIFTI-files and running the recon-all process our folder structure should look like this:
 
 .. image:: preparation.png
    :width: 810
+
+In your parentfolder ``~SOMEPATH/experiment`` we have three main subfolders:
+
+* **dicom** folder contains the raw DICOM-files of each subject in a subject named folder
+* **data** folder is the result from the ``prepareflow`` and contains the NIFTI-files
+* **freesurfer_data** folder is the result of the ``reconflow`` and contains the output from the recon-all process
