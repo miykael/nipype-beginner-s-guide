@@ -68,9 +68,10 @@ As always we first have to specify where the datagrabber node can find the data.
 
    #Node: DataGrabber - to collect all the con images for each contrast
    l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
-   l2volSource.inputs.template = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
+   pwd2normcons = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
+   l2volSource.inputs.template = pwd
    l2volSource.iterables = [('con',contrast_ids)] # iterate over all contrast images
-   
+
 
 You might be confused with the asterisk in ``l2volSource.inputs.template`` and that we didn't iterated over the subjects. This is because of the nature of a second level analysis. We take all estimated contrasts of each subject at once into the analysis, therefore the asterisk. We only have to iterate the conditions e.g. the number of the contrasts. 
 
@@ -82,7 +83,8 @@ Define nodes
    :linenos:
 
    #Node: OneSampleTTest - to perform an one sample t-test analysis
-   oneSampleTTestVolDes = pe.Node(interface=spm.OneSampleTTestDesign(), name="oneSampleTTestVolDes")
+   oneSampleTTestVolDes = pe.Node(interface=spm.OneSampleTTestDesign(),
+                                  name="oneSampleTTestVolDes")
 
    #Node: EstimateModel - to estimate the model
    l2estimate = pe.Node(interface=spm.EstimateModel(), name="l2estimate")
@@ -114,10 +116,12 @@ Define nodes
       :linenos:
 
       #Node: MultipleRegressionDesign - to perform a multiple regression analysis
-      multipleRegDes = pe.Node(interface=spm.MultipleRegressionDesign(), name="multipleRegDes")
-      multipleRegDes.inputs.covariates = [dict(vector=[-0.30,0.52,1.75], #regressor1 for 3 subjects
+      multipleRegDes = pe.Node(interface=spm.MultipleRegressionDesign(),
+                               name="multipleRegDes")
+      #regressor1 and regressor2 for 3 subjects
+      multipleRegDes.inputs.covariates = [dict(vector=[-0.30,0.52,1.75],
                                                name='nameOfRegressor1'),
-                                          dict(vector=[1.55,-1.80,0.77], #regressor2 for 3 subjects
+                                          dict(vector=[1.55,-1.80,0.77],
                                                name='nameOfRegressor2')] 
 
 
@@ -210,7 +214,8 @@ Now that we have defined where our data comes from, we can start with implementi
        return [tuple(x) for x in listoflist]
 
    #Node: OneSampleTTest - to perform a one sample t-test on the surface
-   oneSampleTTestSurfDes = pe.Node(interface=fs.OneSampleTTest(), name='oneSampleTTestSurfDes')
+   oneSampleTTestSurfDes = pe.Node(interface=fs.OneSampleTTest(),
+                                   name='oneSampleTTestSurfDes')
    
 
 Establish a second level surface pipeline
@@ -249,12 +254,13 @@ If you want to store the data from the second level volume and surface pipeline 
                                                  ('spmT_images','l2vol_contrasts.@T'),
                                                  ('con_images','l2vol_contrasts.@con'),
                                                  ]),
-                      (l2threshold,l2datasink,[('thresholded_map','vol_contrasts_thresh.@threshold'),
-                                               ]),
+                      (l2threshold,l2datasink,[('thresholded_map',
+                                                'vol_contrasts_thresh.@threshold')]),
                       ])
 
    #integration of the datasink into the surface analysis pipeline
-   l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','l2surf_contrasts.@sig_file')])])
+   l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file',
+                                                           'l2surf_contrasts.@sig_file')])])
 
 
 Run pipelines
@@ -274,9 +280,9 @@ Now that we have set up both pipelines we are able to run them. Note that those 
 
 Now that everything has been executed you are able to take a look at your results. I recommend to use the following tools to use:
 
-* **Matlab's SPM fmri** for the results from the contrast estimation on the volume stored in datasinkfolder xxxx 
-* **FreeSurfer's Freeview** for the results from the threshold node stored in datasinkfolder xxxx. Overlay the results on your normalization brain template
-* **FreeSurfer's Freeview** for the results from the contrast estimation on the surface stored in datasinkfolder xxxx. Overlay the results on FreeSurfer's normalization brain template (e.g. fsaverage)
+* **Matlab's SPM fmri** for the results from the contrast estimation on the volume stored in datasinkfolder ``l2vol_contrasts``
+* **FreeSurfer's Freeview** for the results from the threshold node stored in datasinkfolder ``l2vol_contrasts_thresh``. Overlay the results on your normalization brain template
+* **FreeSurfer's Freeview** for the results from the contrast estimation on the surface stored in datasinkfolder ``l2surf_contrasts``. Overlay the results on FreeSurfer's normalization brain template (e.g. fsaverage)
 
 .. hint::
 

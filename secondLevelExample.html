@@ -200,9 +200,11 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect all the con images for each contrast</span>
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect all the con images for each contrast</span>
 <span class="n">l2volSource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2volSource&quot;</span><span class="p">)</span>
-<span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/level1_output/normcons/subject*/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
+<span class="n">pwd2normcons</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/level1_output/normcons/subject*/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
+<span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">pwd</span>
 <span class="n">l2volSource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="n">contrast_ids</span><span class="p">)]</span> <span class="c"># iterate over all contrast images</span>
 </pre></div>
 </td></tr></table></div>
@@ -232,8 +234,10 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 20
 21
 22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: OneSampleTTest - to perform an one sample t-test analysis</span>
-<span class="n">oneSampleTTestVolDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">OneSampleTTestDesign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;oneSampleTTestVolDes&quot;</span><span class="p">)</span>
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: OneSampleTTest - to perform an one sample t-test analysis</span>
+<span class="n">oneSampleTTestVolDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">OneSampleTTestDesign</span><span class="p">(),</span>
+                               <span class="n">name</span><span class="o">=</span><span class="s">&quot;oneSampleTTestVolDes&quot;</span><span class="p">)</span>
 
 <span class="c">#Node: EstimateModel - to estimate the model</span>
 <span class="n">l2estimate</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">EstimateModel</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2estimate&quot;</span><span class="p">)</span>
@@ -265,11 +269,15 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: MultipleRegressionDesign - to perform a multiple regression analysis</span>
-<span class="n">multipleRegDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">MultipleRegressionDesign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;multipleRegDes&quot;</span><span class="p">)</span>
-<span class="n">multipleRegDes</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">covariates</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.30</span><span class="p">,</span><span class="mf">0.52</span><span class="p">,</span><span class="mf">1.75</span><span class="p">],</span> <span class="c">#regressor1 for 3 subjects</span>
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: MultipleRegressionDesign - to perform a multiple regression analysis</span>
+<span class="n">multipleRegDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">spm</span><span class="o">.</span><span class="n">MultipleRegressionDesign</span><span class="p">(),</span>
+                         <span class="n">name</span><span class="o">=</span><span class="s">&quot;multipleRegDes&quot;</span><span class="p">)</span>
+<span class="c">#regressor1 and regressor2 for 3 subjects</span>
+<span class="n">multipleRegDes</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">covariates</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.30</span><span class="p">,</span><span class="mf">0.52</span><span class="p">,</span><span class="mf">1.75</span><span class="p">],</span>
                                          <span class="n">name</span><span class="o">=</span><span class="s">&#39;nameOfRegressor1&#39;</span><span class="p">),</span>
-                                    <span class="nb">dict</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="p">[</span><span class="mf">1.55</span><span class="p">,</span><span class="o">-</span><span class="mf">1.80</span><span class="p">,</span><span class="mf">0.77</span><span class="p">],</span> <span class="c">#regressor2 for 3 subjects</span>
+                                    <span class="nb">dict</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="p">[</span><span class="mf">1.55</span><span class="p">,</span><span class="o">-</span><span class="mf">1.80</span><span class="p">,</span><span class="mf">0.77</span><span class="p">],</span>
                                          <span class="n">name</span><span class="o">=</span><span class="s">&#39;nameOfRegressor2&#39;</span><span class="p">)]</span>
 </pre></div>
 </td></tr></table></div>
@@ -370,7 +378,8 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Merge - to merge contrast images and registration files</span>
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Merge - to merge contrast images and registration files</span>
 <span class="n">merge</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">Merge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s">&#39;hstack&#39;</span><span class="p">),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;merge&#39;</span><span class="p">)</span>
 
 <span class="c">#function to create a list of all subjects and the location of their specific files</span>
@@ -393,7 +402,8 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
     <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">listoflist</span><span class="p">]</span>
 
 <span class="c">#Node: OneSampleTTest - to perform a one sample t-test on the surface</span>
-<span class="n">oneSampleTTestSurfDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">OneSampleTTest</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;oneSampleTTestSurfDes&#39;</span><span class="p">)</span>
+<span class="n">oneSampleTTestSurfDes</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">OneSampleTTest</span><span class="p">(),</span>
+                                <span class="n">name</span><span class="o">=</span><span class="s">&#39;oneSampleTTestSurfDes&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -440,7 +450,8 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
 <span class="n">l2datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2datasink&quot;</span><span class="p">)</span>
 <span class="n">l2datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results&#39;</span>
 <span class="n">l2datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">nameOfLevel2Out</span>
@@ -450,12 +461,13 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
                                               <span class="p">(</span><span class="s">&#39;spmT_images&#39;</span><span class="p">,</span><span class="s">&#39;l2vol_contrasts.@T&#39;</span><span class="p">),</span>
                                               <span class="p">(</span><span class="s">&#39;con_images&#39;</span><span class="p">,</span><span class="s">&#39;l2vol_contrasts.@con&#39;</span><span class="p">),</span>
                                               <span class="p">]),</span>
-                   <span class="p">(</span><span class="n">l2threshold</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;thresholded_map&#39;</span><span class="p">,</span><span class="s">&#39;vol_contrasts_thresh.@threshold&#39;</span><span class="p">),</span>
-                                            <span class="p">]),</span>
+                   <span class="p">(</span><span class="n">l2threshold</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;thresholded_map&#39;</span><span class="p">,</span>
+                                             <span class="s">&#39;vol_contrasts_thresh.@threshold&#39;</span><span class="p">)]),</span>
                    <span class="p">])</span>
 
 <span class="c">#integration of the datasink into the surface analysis pipeline</span>
-<span class="n">l2surfflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">oneSampleTTestSurfDes</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;sig_file&#39;</span><span class="p">,</span><span class="s">&#39;l2surf_contrasts.@sig_file&#39;</span><span class="p">)])])</span>
+<span class="n">l2surfflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">oneSampleTTestSurfDes</span><span class="p">,</span><span class="n">l2datasink</span><span class="p">,[(</span><span class="s">&#39;sig_file&#39;</span><span class="p">,</span>
+                                                        <span class="s">&#39;l2surf_contrasts.@sig_file&#39;</span><span class="p">)])])</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -475,9 +487,9 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 </td></tr></table></div>
 <p>Now that everything has been executed you are able to take a look at your results. I recommend to use the following tools to use:</p>
 <ul class="simple">
-<li><strong>Matlab&#8217;s SPM fmri</strong> for the results from the contrast estimation on the volume stored in datasinkfolder xxxx</li>
-<li><strong>FreeSurfer&#8217;s Freeview</strong> for the results from the threshold node stored in datasinkfolder xxxx. Overlay the results on your normalization brain template</li>
-<li><strong>FreeSurfer&#8217;s Freeview</strong> for the results from the contrast estimation on the surface stored in datasinkfolder xxxx. Overlay the results on FreeSurfer&#8217;s normalization brain template (e.g. fsaverage)</li>
+<li><strong>Matlab&#8217;s SPM fmri</strong> for the results from the contrast estimation on the volume stored in datasinkfolder <tt class="docutils literal"><span class="pre">l2vol_contrasts</span></tt></li>
+<li><strong>FreeSurfer&#8217;s Freeview</strong> for the results from the threshold node stored in datasinkfolder <tt class="docutils literal"><span class="pre">l2vol_contrasts_thresh</span></tt>. Overlay the results on your normalization brain template</li>
+<li><strong>FreeSurfer&#8217;s Freeview</strong> for the results from the contrast estimation on the surface stored in datasinkfolder <tt class="docutils literal"><span class="pre">l2surf_contrasts</span></tt>. Overlay the results on FreeSurfer&#8217;s normalization brain template (e.g. fsaverage)</li>
 </ul>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
