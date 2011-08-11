@@ -24,8 +24,7 @@ experiment_dir = '~SOMEPATH/experiment'
 #name of the subjects, functional files and output folders
 subjects = ['subject1','subject2','subject3']
 sessions = ['func1','func2']
-nameOflevel1Out = 'results/level1_output'
-nameOfWorkingdir = '/results/workingdir'
+nameOfLevel1Out = 'level1_output'
 
 # Tell freesurfer what subjects directory to use
 subjects_dir = experiment_dir + '/freesurfer_data'
@@ -207,7 +206,7 @@ datasink = pe.Node(interface=nio.DataSink(), name="datasink")
 datasink.inputs.base_directory = experiment_dir
 
 #Define where the datasink input should be stored at
-datasink.inputs.container = nameOflevel1Out
+datasink.inputs.container = 'results/' + nameOfLevel1Out
 
 
 """
@@ -281,7 +280,7 @@ Define the meta pipeline
 metaflow = pe.Workflow(name="metaflow")
 
 #Define where the workingdir of the metaflow should be stored at
-metaflow.base_dir = experiment_dir + nameOfWorkingdir
+metaflow.base_dir = experiment_dir + '/results/workingdir'
 
 #Connect up all components
 metaflow.connect([(infosource, datasource,[('subject_id', 'subject_id')]),

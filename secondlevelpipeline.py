@@ -14,7 +14,7 @@ Define experiment specific parameters
 """
 
 #to better access the parent folder of the experiment
-experiment_dir = '/mindhive/gablab/u/mnotter/Desktop/TEST'
+experiment_dir = '~SOMEPATH/experiment'
 
 #tell FreeSurfer where the recon-all output is at
 freesurfer_dir = experiment_dir + '/freesurfer_data'
@@ -24,14 +24,14 @@ fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
 subjects = ['subject1', 'subject2']
 
 #second level analysis pipeline specific components
-level2Dir = '/results/level2'
+nameOfLevel2Out = 'level2_output'
 numberOfContrasts = 5 #number of contrasts you specified in the first level analysis
 contrast_ids = range(1,numberOfContrasts+1) #to create a list with value [1,2,3,4,5]
 
 
 """
-Analysis on the Volume
-######################
+Do a second level analysis on the volume
+========================================
 """
 
 """
@@ -86,7 +86,7 @@ Establish a second level volume pipeline
    
 #Create 2-level vol pipeline and connect up all components
 l2volflow = pe.Workflow(name="l2volflow")
-l2volflow.base_dir = experiment_dir + level2Dir + '_vol'
+l2volflow.base_dir = experiment_dir + '/results/workingdir_l2vol'
 l2volflow.connect([(l2volSource,oneSampleTTestVolDes,[('outfiles','in_files')]),
                    (oneSampleTTestVolDes,l2estimate,[('spm_mat_file','spm_mat_file')]),
                    (l2estimate,l2conestimate,[('spm_mat_file','spm_mat_file'),
@@ -96,12 +96,13 @@ l2volflow.connect([(l2volSource,oneSampleTTestVolDes,[('outfiles','in_files')]),
                    (l2conestimate,l2threshold,[('spm_mat_file','spm_mat_file'),
                                                ('spmT_images','stat_image'),
                                                ]),
+
                    ])
 
 
 """   
-Analysis on the Surface
-#######################
+Do a second level analysis on the surface
+=========================================
 """
 
 """
@@ -161,36 +162,37 @@ Establish a second level surface pipeline
 
 #Create 2-level surf pipeline and connect up all components
 l2surfflow = pe.Workflow(name='l2surfflow')
-l2surfflow.base_dir = experiment_dir + level2Dir + '_surf'
+l2surfflow.base_dir = experiment_dir + '/results/workingdir_l2surf'
 l2surfflow.connect([(l2surfinputnode,l2surfSource,[('contrasts','con_id')]),
                     (l2surfinputnode,concat,[('hemi','hemi')]),
                     (l2surfSource,merge,[(('con', ordersubjects, subjects),'in1'),
                                          (('reg', ordersubjects, subjects),'in2')]),
                     (merge,concat,[(('out', list2tuple),'vol_measure_file')]),
-#                    (concat,oneSampleTTestSurfDes,[('out_file','in_file')]),
+                    (concat,oneSampleTTestSurfDes,[('out_file','in_file')]),
 	            ])
 
 
 """
-Datasink (optional)
+Store results in a common Datasink
+==================================
 """
 
 #Node: Datasink - Create a datasink node to store important outputs
 l2datasink = pe.Node(interface=nio.DataSink(), name="l2datasink")
-l2datasink.inputs.base_directory = experiment_dir
-l2datasink.inputs.container = level2Dir + '_datasink'
+l2datasink.inputs.base_directory = experiment_dir + '/results'
+l2datasink.inputs.container = nameOfLevel2Out
 
 #integration of the datasink into the volume analysis pipeline
-l2volflow.connect([(l2conestimate,l2datasink,[('spm_mat_file','vol_contrasts.@spm_mat'),
-                                              ('spmT_images','vol_contrasts.@T'),
-                                              ('con_images','vol_contrasts.@con'),
+l2volflow.connect([(l2conestimate,l2datasink,[('spm_mat_file','l2vol_contrasts.@spm_mat'),
+                                              ('spmT_images','l2vol_contrasts.@T'),
+                                              ('con_images','l2vol_contrasts.@con'),
                                               ]),
                    (l2threshold,l2datasink,[('thresholded_map','vol_contrasts_thresh.@threshold'),
                                             ]),
                    ])
 
 #integration of the datasink into the surface analysis pipeline
-l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','sig_file')])])
+l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','l2surf_contrasts.@sig_file')])])
 
 
 """
