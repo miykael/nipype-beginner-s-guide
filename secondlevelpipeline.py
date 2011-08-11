@@ -49,7 +49,8 @@ Define nodes
 """
 
 #Node: OneSampleTTest - to perform an one sample t-test analysis on the volume
-oneSampleTTestVolDes = pe.Node(interface=spm.OneSampleTTestDesign(), name="oneSampleTTestVolDes")
+oneSampleTTestVolDes = pe.Node(interface=spm.OneSampleTTestDesign(),
+                               name="oneSampleTTestVolDes")
 
 #Node: EstimateModel - to estimate the model
 l2estimate = pe.Node(interface=spm.EstimateModel(), name="l2estimate")
@@ -73,10 +74,12 @@ l2threshold.inputs.extent_fdr_p_threshold = 0.05
 l2threshold.inputs.height_threshold = 3
 
 ##Node: MultipleRegressionDesign - to perform a multiple regression analysis
-#multipleRegDes = pe.Node(interface=spm.MultipleRegressionDesign(), name="multipleRegDes")
-#multipleRegDes.inputs.covariates = [dict(vector=[-0.30,0.52,1.75], #regressor1 for 3 subjects
+#multipleRegDes = pe.Node(interface=spm.MultipleRegressionDesign(),
+#                          name="multipleRegDes")
+##regressor1 and regressor2 for 3 subjects
+#multipleRegDes.inputs.covariates = [dict(vector=[-0.30,0.52,1.75],
 #                                         name='nameOfRegressor1'),
-#                                    dict(vector=[1.55,-1.80,0.77], #regressor2 for 3 subjects
+#                                    dict(vector=[1.55,-1.80,0.77],
 #                                         name='nameOfRegressor2')] 
 
 
@@ -153,7 +156,8 @@ def list2tuple(listoflist):
     return [tuple(x) for x in listoflist]
 
 #Node: OneSampleTTest - to perform a one sample t-test on the surface
-oneSampleTTestSurfDes = pe.Node(interface=fs.OneSampleTTest(), name='oneSampleTTestSurfDes')
+oneSampleTTestSurfDes = pe.Node(interface=fs.OneSampleTTest(),
+                                name='oneSampleTTestSurfDes')
 
 
 """
@@ -187,12 +191,13 @@ l2volflow.connect([(l2conestimate,l2datasink,[('spm_mat_file','l2vol_contrasts.@
                                               ('spmT_images','l2vol_contrasts.@T'),
                                               ('con_images','l2vol_contrasts.@con'),
                                               ]),
-                   (l2threshold,l2datasink,[('thresholded_map','vol_contrasts_thresh.@threshold'),
-                                            ]),
+                   (l2threshold,l2datasink,[('thresholded_map',
+                                             'vol_contrasts_thresh.@threshold')]),
                    ])
 
 #integration of the datasink into the surface analysis pipeline
-l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','l2surf_contrasts.@sig_file')])])
+l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file',
+                                                        'l2surf_contrasts.@sig_file')])])
 
 
 """
