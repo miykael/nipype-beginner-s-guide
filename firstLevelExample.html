@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="Under construction" href="underConstruction.html" />
+    <link rel="next" title="How To Build A Second Level Pipeline" href="secondLevelExample.html" />
     <link rel="prev" title="How To Prepare Your Data for Nipype" href="preparedata.html" />
  
 <meta name="keywords" content="nipype, python, guide">
@@ -56,7 +56,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="underConstruction.html" title="Under construction"
+          <a href="secondLevelExample.html" title="How To Build A Second Level Pipeline"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
@@ -97,8 +97,8 @@
   <p class="topless"><a href="preparedata.html"
                         title="previous chapter">How To Prepare Your Data for Nipype</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="underConstruction.html"
-                        title="next chapter">Under construction</a></p>
+  <p class="topless"><a href="secondLevelExample.html"
+                        title="next chapter">How To Build A Second Level Pipeline</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/firstLevelExample.txt"
@@ -180,15 +180,13 @@
  8
  9
 10
-11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#To better access the parent folder of the experiment</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#To better access the parent folder of the experiment</span>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">#name of the subjects, functional files and output folders</span>
 <span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">]</span>
 <span class="n">sessions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;func1&#39;</span><span class="p">,</span><span class="s">&#39;func2&#39;</span><span class="p">]</span>
-<span class="n">nameOflevel1Out</span> <span class="o">=</span> <span class="s">&#39;results/level1_output&#39;</span>
-<span class="n">nameOfWorkingdir</span> <span class="o">=</span> <span class="s">&#39;/results/workingdir&#39;</span>
+<span class="n">nameOfLevel1Out</span> <span class="o">=</span> <span class="s">&#39;level1_output&#39;</span>
 
 <span class="c"># Tell freesurfer what subjects directory to use</span>
 <span class="n">subjects_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/freesurfer_data&#39;</span>
@@ -525,7 +523,7 @@
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
 
 <span class="c">#Define where the datasink input should be stored at</span>
-<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">nameOflevel1Out</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="s">&#39;results/&#39;</span> <span class="o">+</span> <span class="n">nameOfLevel1Out</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -679,7 +677,7 @@
 <span class="n">metaflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;metaflow&quot;</span><span class="p">)</span>
 
 <span class="c">#Define where the workingdir of the metaflow should be stored at</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">nameOfWorkingdir</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/workingdir&#39;</span>
 
 <span class="c">#Connect up all components</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
@@ -803,9 +801,9 @@
 <img alt="_images/firstlevel.png" src="_images/firstlevel.png" style="width: 810px;" />
 <p>Additionally to the original <tt class="docutils literal"><span class="pre">dicom</span></tt>, <tt class="docutils literal"><span class="pre">data</span></tt> and <tt class="docutils literal"><span class="pre">freesurfer_data</span></tt> folder we now have a new folder called <tt class="docutils literal"><span class="pre">results</span></tt> that contains:</p>
 <ul>
-<li><p class="first"><strong>workingdir</strong> folder that contains all the data that gets created from the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. Because this is the highest storage consumer and to save space it is <strong>highly recommended</strong> to delete this folder as soon as possible.</p>
+<li><p class="first"><strong>workingdir</strong> folder that contains all the data that gets created from the <tt class="docutils literal"><span class="pre">metaflow</span></tt> pipeline. Because this is the highest storage consumer and to save space it is <strong>highly recommended</strong> to delete this folder as soon as possible.</p>
 </li>
-<li><p class="first"><strong>level1_output</strong> folder which is the datasink of the metaflow. It contains:</p>
+<li><p class="first"><strong>level1_output</strong> folder which is the <strong>datasink</strong> of the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. It contains:</p>
 <blockquote>
 <ul class="simple">
 <li><strong>bbregister</strong> folder with the bbregister file for each subject</li>
@@ -831,7 +829,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="underConstruction.html" title="Under construction"
+          <a href="secondLevelExample.html" title="How To Build A Second Level Pipeline"
              >next</a> |</li>
         <li class="right" >
           <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
@@ -842,7 +840,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 10, 2011.
+      Last updated on August 11, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

@@ -10,8 +10,8 @@ In this part you will learn how to do a **second level analysis** on the volume 
    This normalization isn't required for a **second level analysis** on the surface. Because the second level surface analysis will be done with FreeSurfer, we can use the subject specific informations won from the recon-all process.
 
 
-Preparation
-===========
+Specify condition independent parameters
+========================================
 
 It doesn't matter if you are running you're analysis only on the volume, on the surface or both. As always we're beginning by importing the necessary modules and implementation of the experiment specific parameters.
 
@@ -39,14 +39,14 @@ Define experiment specific parameters
    experiment_dir = '~SOMEPATH/experiment'
 
    #tell FreeSurfer where the recon-all output is at
-   freesurfer_dir = '~SOMEPATH/freesurfer_data'
+   freesurfer_dir = experiment_dir + '/freesurfer_data'
    fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
 
    #list of subjectnames
    subjects = ['subject1', 'subject2', 'subject3']
    
    #second level analysis pipeline specific components
-   level2Dir = '/results/level2'
+   nameOfLevel2Out = 'level2_output'
    numberOfContrasts = 5 #number of contrasts you specified in the first level analysis
    contrast_ids = range(1,numberOfContrasts+1) #to create a list with value [1,2,3,4,5]
 
@@ -55,8 +55,8 @@ Define experiment specific parameters
    If you want to only analyze the 3rd and 4th contrasts, you could specify ``contrast_ids`` as ``range(3,5)`` which would create the list ``[3,4]``
 
 
-Analysis on the Volume
-======================
+Do a second level analysis on the volume
+========================================
 
 Grab the data
 ~~~~~~~~~~~~~
@@ -130,7 +130,7 @@ Establish a second level volume pipeline
 
    #Create 2-level vol pipeline and connect up all components
    l2volflow = pe.Workflow(name="l2volflow")
-   l2volflow.base_dir = experiment_dir + level2Dir + '_vol'
+   l2volflow.base_dir = experiment_dir + '/results/workingdir_l2vol'
    l2volflow.connect([(l2volSource,oneSampleTTestVolDes,[('outfiles','in_files')]),
                       (oneSampleTTestVolDes,l2estimate,[('spm_mat_file','spm_mat_file')]),
                       (l2estimate,l2conestimate,[('spm_mat_file','spm_mat_file'),
@@ -143,8 +143,8 @@ Establish a second level volume pipeline
                       ])
 
    
-Analysis on the Surface
-=======================
+Do a second level analysis on the surface
+=========================================
 
 An important difference between the format of the volume and the surface data is, that the surface data are img-files and are separated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left ('lh') and the right ('rh') hemisphere.
 
@@ -221,7 +221,7 @@ Establish a second level surface pipeline
 
    #Create 2-level surf pipeline and connect up all components
    l2surfflow = pe.Workflow(name='l2surfflow')
-   l2surfflow.base_dir = experiment_dir + level2Dir + '_surf'
+   l2surfflow.base_dir = experiment_dir + '/results/workingdir_l2surf'
    l2surfflow.connect([(l2surfinputnode,l2surfSource,[('contrasts','con_id')]),
                        (l2surfinputnode,concat,[('hemi','hemi')]),
                        (l2surfSource,merge,[(('con', ordersubjects, subjects),'in1'),
@@ -231,8 +231,8 @@ Establish a second level surface pipeline
                        ])
 
 
-Datasink (optional)
-===================
+Store results in a common Datasink
+==================================
 
 If you want to store the data from the second level volume and surface pipeline at a common location you should use a ``datasink`` node. You can use the same ``datasink`` node for both pipelines because you aren't running both pipelines in the same run.
 
@@ -241,24 +241,24 @@ If you want to store the data from the second level volume and surface pipeline 
 
    #Node: Datasink - Create a datasink node to store important outputs
    l2datasink = pe.Node(interface=nio.DataSink(), name="l2datasink")
-   l2datasink.inputs.base_directory = experiment_dir
-   l2datasink.inputs.container = level2Dir + '_datasink'
-   
+   l2datasink.inputs.base_directory = experiment_dir + '/results'
+   l2datasink.inputs.container = nameOfLevel2Out
+
    #integration of the datasink into the volume analysis pipeline
-   l2volflow.connect([(l2conestimate,l2datasink,[('spm_mat_file','vol_contrasts.@spm_mat'),
-                                                 ('spmT_images','vol_contrasts.@T'),
-                                                 ('con_images','vol_contrasts.@con'),
+   l2volflow.connect([(l2conestimate,l2datasink,[('spm_mat_file','l2vol_contrasts.@spm_mat'),
+                                                 ('spmT_images','l2vol_contrasts.@T'),
+                                                 ('con_images','l2vol_contrasts.@con'),
                                                  ]),
                       (l2threshold,l2datasink,[('thresholded_map','vol_contrasts_thresh.@threshold'),
                                                ]),
                       ])
-   
+
    #integration of the datasink into the surface analysis pipeline
-   l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','sig_file')])])
+   l2surfflow.connect([(oneSampleTTestSurfDes,l2datasink,[('sig_file','l2surf_contrasts.@sig_file')])])
 
 
-Run pipeline
-============
+Run pipelines
+=============
 
 Now that we have set up both pipelines we are able to run them. Note that those lines of codes mean that the **second level surface pipeline** won't be started before the **second level volume pipeline** has terminated.
 
@@ -275,34 +275,61 @@ Now that we have set up both pipelines we are able to run them. Note that those 
 Now that everything has been executed you are able to take a look at your results. I recommend to use the following tools to use:
 
 * **Matlab's SPM fmri** for the results from the contrast estimation on the volume stored in datasinkfolder xxxx 
-* **FreeSurfer's Freeview** for the results from the threshold node stored in datasinkfolder xxxx 
-* **FreeSurfer's Freeview** for the results from the contrast estimation on the surface stored in datasinkfolder xxxx 
-
-
-Visualization
-=============
-
-Second Level Volume Pipeline
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. image:: l2vol.jpg
-   :width: 200 px
-
-
-Second Level Surface Pipeline
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. image:: l2surf.jpg
-   :width: 200 px
-
+* **FreeSurfer's Freeview** for the results from the threshold node stored in datasinkfolder xxxx. Overlay the results on your normalization brain template
+* **FreeSurfer's Freeview** for the results from the contrast estimation on the surface stored in datasinkfolder xxxx. Overlay the results on FreeSurfer's normalization brain template (e.g. fsaverage)
 
 .. hint::
 
    The code for the second level pipeline on the volume and on the surface can be found here: `secondlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/secondlevelpipeline.py>`_
 
 
+Visualize pipelines
+===================
+
+Second Level Volume Pipeline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is the **simple** graph to the ``l2volflow`` pipeline:
+
+.. image:: l2vol.png
+   :width: 600 px
+
+This is the **detailed** graph to the ``l2volflow`` pipeline:
+
+.. image:: l2vol_detailed.png
+   :width: 1080 px
+
+
+Second Level Surface Pipeline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is the **simple** graph to the ``l2surfflow`` pipeline:
+
+.. image:: l2surf.png
+   :width: 600 px
+
+This is the **detailed** graph to the ``l2surfflow`` pipeline:
+
+.. image:: l2surf_detailed.png
+   :width: 1080 px
+
+
 Resulting Folder Structure
 ==========================
 
-**Picture Missing**
+After we've run the **second level analysis pipeline** on the volume and the surface our folder structure should look like this:
+
+.. image:: secondlevel.png
+   :width: 810
+
+
+Additionally to the ``level1_output`` folder in ``~SOMEPATH/experiment/results/`` we now have the new folders:
+
+* **workingdir_l2vol** folder that contains all the data that gets created from the ``l2volflow`` pipeline. As with all working directories, it  is **highly recommended** to delete this folder as soon as possible.
+* **workingdir_l2surf** folder that contains all the data that gets created from the ``l2surfflow`` pipeline. As with all working directories, it  is **highly recommended** to delete this folder as soon as possible.
+* **level2_output** folder which is the datasink of the **second level pipeline**. It contains:
+
+   - **l2vol_contrasts** folder with the estimated volume contrasts and the SPM.mat file for each contrast
+   - **l2vol_contrasts_thresh** folder with a thresholded estimated volume contrasts file for each contrast
+   - **l2surf_contrasts** folder with the estimated surface contrast file for each hemisphere for each contrast
 

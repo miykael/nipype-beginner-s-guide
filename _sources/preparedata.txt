@@ -396,7 +396,7 @@ After we've prepared our data by converting the DICOM-files into NIFTI-files and
 .. image:: preparation.png
    :width: 810
 
-In your parentfolder ``~SOMEPATH/experiment`` we have three main subfolders:
+In our parentfolder ``~SOMEPATH/experiment`` we have three main subfolders:
 
 * **dicom** folder contains the raw DICOM-files of each subject in a subject named folder
 * **data** folder is the result from the ``prepareflow`` and contains the NIFTI-files

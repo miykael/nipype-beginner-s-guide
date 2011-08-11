@@ -646,7 +646,7 @@ After the connection of all nodes is established we are able to create a graph.d
 
    metaflow.write_graph(graph2use='flat')
 
-With this command, two graph files get created with the difference in the level of detail they are showing. There is a **simple overview graph** called ``graph.dot`` that shows you the basic connections between nodes and a **more detailed overview graph** called ``graph_detailed.dot`` that shows you additionally the outputs and inputs of each node and the connections between them.
+With this command, two graph files get created with the difference in the level of detail they are showing. There is a **simple overview graph** called ``graph.dot`` that shows you the basic connections between nodes and a **more detailed overview graph** called ``graph_detailed.dot`` that shows you additionally the outputs and inputs of each node and the connections between them. This graphs can be found in the highest pipeline folder of your working direcotry.
 
 The following graphs are a visualization of the **dicom2nifti preparation pipeline** or ``prepareflow`` which you will encounter in the next chapter.
 

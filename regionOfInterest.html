@@ -127,9 +127,9 @@
 <p>The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by <strong>Nipype</strong> as default is the <strong>FreeSurfer Color Table</strong>, which can be found <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT">here</a>.</p>
 <p>This color table subdivides the brain in different anatomical regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the <strong>2005</strong> region specification) or a more detailed specification category that divides the brain into +200 regions (the <strong>2009</strong> region specification)</p>
 <p><strong>Visualization of 2005 Segmentation</strong></p>
-<img alt="_images/2005segmentation.png" src="_images/2005segmentation.png" style="width: 200px;" />
+<img alt="2005segmentation.png" src="2005segmentation.png" style="width: 200px;" />
 <p><strong>Visualization of 2009 Segmentation</strong></p>
-<img alt="_images/2009segmentation.png" src="_images/2009segmentation.png" style="width: 200px;" />
+<img alt="2009segmentation.png" src="2009segmentation.png" style="width: 200px;" />
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">If you want to explore those regions by ourself I recommend to open a <strong>FreeSurfer</strong> capable viewing tool and overlay the <tt class="docutils literal"><span class="pre">fsaverage</span></tt> file with an annotation-file. More information how this is done can be found here: <strong>MISSING_LINK</strong></p>
@@ -140,7 +140,7 @@
 <p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this script.</p>
 <p><strong>Visualization of a functional ROI</strong></p>
 <p>Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.</p>
-<img alt="_images/functionalROI.png" src="_images/functionalROI.png" style="width: 200px;" />
+<img alt="functionalROI.png" src="functionalROI.png" style="width: 200px;" />
 </div>
 </div>
 <div class="section" id="anatomical-roi-pipeline">
@@ -404,7 +404,7 @@ segmentation_file =  segmentation volume path</p>
 </pre></div>
 </td></tr></table></div>
 <p><strong>Visualization of anatomical ROI pipeline</strong></p>
-<img alt="_images/aROIgraph.png" src="_images/aROIgraph.png" style="width: 200px;" />
+<img alt="aROIgraph.png" src="aROIgraph.png" style="width: 200px;" />
 </div>
 <div class="section" id="summarizing-the-output-in-a-cvs-file">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#summarizing-the-output-in-a-cvs-file" title="Permalink to this headline">¶</a></h3>
@@ -590,11 +590,11 @@ b. Define a cubic area around your point of interest (this is done by defining a
 c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cube have values 1 and all outside this region have the value 0 and smooth this cube to a sphere</p>
 <p>A visualization of those steps would look like this:</p>
 <p><strong>Step A</strong></p>
-<img alt="_images/fROIsubstepA.png" src="_images/fROIsubstepA.png" style="width: 200px;" />
+<img alt="fROIsubstepA.png" src="fROIsubstepA.png" style="width: 200px;" />
 <p><strong>Step B</strong></p>
-<img alt="_images/fROIsubstepB.png" src="_images/fROIsubstepB.png" style="width: 200px;" />
+<img alt="fROIsubstepB.png" src="fROIsubstepB.png" style="width: 200px;" />
 <p><strong>Step C</strong></p>
-<img alt="_images/fROIsubstepC.png" src="_images/fROIsubstepC.png" style="width: 200px;" />
+<img alt="fROIsubstepC.png" src="fROIsubstepC.png" style="width: 200px;" />
 <p>Let&#8217;s now begin with the creation of a <strong>functional ROI pipeline</strong>.</p>
 <div class="section" id="id2">
 <h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
@@ -855,7 +855,7 @@ c. Take this cubic region in &#8220;brain&#8221;-space where all voxel in the cu
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 10, 2011.
+      Last updated on August 11, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">
