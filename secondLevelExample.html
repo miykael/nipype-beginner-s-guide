@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="Under construction" href="underConstruction.html" />
+    <link rel="next" title="Ideas For Future Chapters" href="futureChapters.html" />
     <link rel="prev" title="How To Build A First Level Pipeline" href="firstLevelExample.html" />
  
 <meta name="keywords" content="nipype, python, guide">
@@ -56,7 +56,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="underConstruction.html" title="Under construction"
+          <a href="futureChapters.html" title="Ideas For Future Chapters"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
@@ -74,13 +74,13 @@
 <li><a class="reference internal" href="#define-experiment-specific-parameters">Define experiment specific parameters</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#do-a-second-level-analysis-on-the-volume">Do a second level analysis on the volume</a><ul>
+<li><a class="reference internal" href="#second-level-analysis-on-the-volume">Second level analysis on the volume</a><ul>
 <li><a class="reference internal" href="#grab-the-data">Grab the data</a></li>
 <li><a class="reference internal" href="#define-nodes">Define nodes</a></li>
 <li><a class="reference internal" href="#establish-a-second-level-volume-pipeline">Establish a second level volume pipeline</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#do-a-second-level-analysis-on-the-surface">Do a second level analysis on the surface</a><ul>
+<li><a class="reference internal" href="#second-level-analysis-on-the-surface">Second level analysis on the surface</a><ul>
 <li><a class="reference internal" href="#id1">Grab the data</a></li>
 <li><a class="reference internal" href="#id2">Define nodes</a></li>
 <li><a class="reference internal" href="#establish-a-second-level-surface-pipeline">Establish a second level surface pipeline</a></li>
@@ -102,8 +102,8 @@
   <p class="topless"><a href="firstLevelExample.html"
                         title="previous chapter">How To Build A First Level Pipeline</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="underConstruction.html"
-                        title="next chapter">Under construction</a></p>
+  <p class="topless"><a href="futureChapters.html"
+                        title="next chapter">Ideas For Future Chapters</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/secondLevelExample.txt"
@@ -192,8 +192,8 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 </div>
 </div>
 </div>
-<div class="section" id="do-a-second-level-analysis-on-the-volume">
-<h2>Do a second level analysis on the volume<a class="headerlink" href="#do-a-second-level-analysis-on-the-volume" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="second-level-analysis-on-the-volume">
+<h2>Second level analysis on the volume<a class="headerlink" href="#second-level-analysis-on-the-volume" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="grab-the-data">
 <h3>Grab the data<a class="headerlink" href="#grab-the-data" title="Permalink to this headline">¶</a></h3>
 <p>As always we first have to specify where the datagrabber node can find the data. Le&#8217;s assume that we have stored our normalized estimated volume contrasts at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/normcons/subject_name/'</span></tt>. This means the third contrast of the second subject would be at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/normcons/subject2/con_0001.nii'</span></tt></p>
@@ -314,8 +314,8 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 </td></tr></table></div>
 </div>
 </div>
-<div class="section" id="do-a-second-level-analysis-on-the-surface">
-<h2>Do a second level analysis on the surface<a class="headerlink" href="#do-a-second-level-analysis-on-the-surface" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="second-level-analysis-on-the-surface">
+<h2>Second level analysis on the surface<a class="headerlink" href="#second-level-analysis-on-the-surface" title="Permalink to this headline">¶</a></h2>
 <p>An important difference between the format of the volume and the surface data is, that the surface data are img-files and are separated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left (&#8216;lh&#8217;) and the right (&#8216;rh&#8217;) hemisphere.</p>
 <div class="section" id="id1">
 <h3>Grab the data<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
@@ -500,17 +500,17 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <h2>Visualize pipelines<a class="headerlink" href="#visualize-pipelines" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="second-level-volume-pipeline">
 <h3>Second Level Volume Pipeline<a class="headerlink" href="#second-level-volume-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>This is the <strong>simple</strong> graph to the <tt class="docutils literal"><span class="pre">l2volflow</span></tt> pipeline:</p>
-<img alt="_images/l2vol.png" src="_images/l2vol.png" style="width: 600px;" />
-<p>This is the <strong>detailed</strong> graph to the <tt class="docutils literal"><span class="pre">l2volflow</span></tt> pipeline:</p>
-<img alt="_images/l2vol_detailed.png" src="_images/l2vol_detailed.png" style="width: 1080px;" />
+<p>This is the graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version of the  <tt class="docutils literal"><span class="pre">l2volflow</span></tt>:</p>
+<img alt="_images/l2vol_flat_hierarchical.png" src="_images/l2vol_flat_hierarchical.png" />
+<p>This is the detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version of the <tt class="docutils literal"><span class="pre">l2volflow</span></tt>:</p>
+<img alt="_images/l2vol_flat_detailed.png" src="_images/l2vol_flat_detailed.png" style="width: 1080px;" />
 </div>
 <div class="section" id="second-level-surface-pipeline">
 <h3>Second Level Surface Pipeline<a class="headerlink" href="#second-level-surface-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>This is the <strong>simple</strong> graph to the <tt class="docutils literal"><span class="pre">l2surfflow</span></tt> pipeline:</p>
-<img alt="_images/l2surf.png" src="_images/l2surf.png" style="width: 600px;" />
-<p>This is the <strong>detailed</strong> graph to the <tt class="docutils literal"><span class="pre">l2surfflow</span></tt> pipeline:</p>
-<img alt="_images/l2surf_detailed.png" src="_images/l2surf_detailed.png" style="width: 1080px;" />
+<p>This is the graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version of the  <tt class="docutils literal"><span class="pre">l2surfflow</span></tt>:</p>
+<img alt="_images/l2surf_flat_hierarchical.png" src="_images/l2surf_flat_hierarchical.png" />
+<p>This is the detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version of the <tt class="docutils literal"><span class="pre">l2surfflow</span></tt>:</p>
+<img alt="_images/l2surf_flat_detailed.png" src="_images/l2surf_flat_detailed.png" style="width: 1080px;" />
 </div>
 </div>
 <div class="section" id="resulting-folder-structure">
@@ -549,7 +549,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="underConstruction.html" title="Under construction"
+          <a href="futureChapters.html" title="Ideas For Future Chapters"
              >next</a> |</li>
         <li class="right" >
           <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
@@ -560,7 +560,7 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 11, 2011.
+      Last updated on August 14, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="How To Prepare Your Data for Nipype" href="preparedata.html" />
+    <link rel="next" title="How To Visualize A Pipeline" href="howToVisualizeAPipeline.html" />
     <link rel="prev" title="Introduction" href="introduction.html" />
  
 <meta name="keywords" content="nipype, python, guide">
@@ -56,7 +56,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
+          <a href="howToVisualizeAPipeline.html" title="How To Visualize A Pipeline"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
@@ -93,8 +93,8 @@
 <li><a class="reference internal" href="#modifying-inputs-to-nodes">Modifying inputs to nodes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#visualize-pipeline">Visualize pipeline</a></li>
 <li><a class="reference internal" href="#execute-pipeline">Execute pipeline</a></li>
+<li><a class="reference internal" href="#visualize-pipeline">Visualize pipeline</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-get-data-into-and-out-of-your-pipeline">How to get data into and out of your pipeline</a><ul>
@@ -110,12 +110,6 @@
 <li><a class="reference internal" href="#connect-new-nodes-to-your-pipeline">Connect new nodes to your pipeline</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#how-to-visualize-your-pipeline">How to visualize your pipeline</a><ul>
-<li><a class="reference internal" href="#graph2use-flat-graph-dot">graph2use=&#8217;flat&#8217; - graph.dot</a></li>
-<li><a class="reference internal" href="#graph2use-flat-graph-detailed-dot">graph2use=&#8217;flat&#8217; - graph_detailed.dot</a></li>
-<li><a class="reference internal" href="#graph2use-exec-graph-detailed-dot">graph2use=&#8217;exec&#8217; - graph_detailed.dot</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -124,8 +118,8 @@
   <p class="topless"><a href="introduction.html"
                         title="previous chapter">Introduction</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="preparedata.html"
-                        title="next chapter">How To Prepare Your Data for Nipype</a></p>
+  <p class="topless"><a href="howToVisualizeAPipeline.html"
+                        title="next chapter">How To Visualize A Pipeline</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/howToBuildAPipeline.txt"
@@ -164,12 +158,12 @@
 <p>There are many ways to construct a pipeline but in the end it comes down to the following steps:</p>
 <blockquote>
 <ol class="arabic simple">
-<li>Import appropriate modules</li>
-<li>Define nodes</li>
-<li>Define pipeline(s)</li>
-<li>Create connections</li>
-<li>Visualize pipeline</li>
-<li>Execute pipeline</li>
+<li><strong>Import appropriate modules</strong></li>
+<li><strong>Define nodes</strong></li>
+<li><strong>Define pipeline(s)</strong></li>
+<li><strong>Create connections</strong></li>
+<li><strong>Execute pipeline</strong></li>
+<li><strong>Visualize pipeline</strong></li>
 </ol>
 </blockquote>
 <div class="section" id="import-appropriate-modules">
@@ -446,27 +440,6 @@
 </td></tr></table></div>
 </div>
 </div>
-<div class="section" id="visualize-pipeline">
-<h3>Visualize pipeline<a class="headerlink" href="#visualize-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>To visualize the flow of a pipeline you can use the method <tt class="docutils literal"><span class="pre">write_graph()</span></tt>.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Example of using write_graph</span>
-<span class="n">workflowname</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-<p>This method will create two files:</p>
-<ul class="simple">
-<li><strong>graph.dot:</strong> which contains the general connections between nodes</li>
-<li><strong>graph_detailed.dot:</strong> which contains the detailed connections between nodes with the individual output and input fields.</li>
-</ul>
-<p>If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere.</p>
-<p>You can also specify the deepness you want the graph to show by changing the argument <tt class="docutils literal"><span class="pre">graph2use</span></tt>:</p>
-<ul class="simple">
-<li><strong>&#8216;orig&#8217;:</strong> only the highest level of the workflow will be visualized (e.g. this would show you only the frameflow and leave the contained pipelines out)</li>
-<li><strong>&#8216;flat&#8217;:</strong> all levels of the workflow are visualized once</li>
-<li><strong>&#8216;exec&#8217;:</strong> all levels of the workflow are visualized and an iteration of a field will lead to a splitting of the graph (this is a very good way to see what the benefit of executing the pipeline in parallel mode is)</li>
-</ul>
-</div>
 <div class="section" id="execute-pipeline">
 <h3>Execute pipeline<a class="headerlink" href="#execute-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>After setting everything up, the pipeline can be executed with <tt class="docutils literal"><span class="pre">run()</span></tt>. You can run a pipeline either in serial or in parallel mode.</p>
@@ -485,6 +458,16 @@
 <p class="first admonition-title">Hint</p>
 <p class="last">A good tutorial how to set up the parallel mode can be found under <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/parallel_processing.html#distributed-processing-with-nipype">Distributed processing with nipype</a>.</p>
 </div>
+</div>
+<div class="section" id="visualize-pipeline">
+<h3>Visualize pipeline<a class="headerlink" href="#visualize-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>To visualize the workflow of a pipeline you can use the method <tt class="docutils literal"><span class="pre">write_graph()</span></tt>.</p>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Example of using write_graph</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere. More about how to visualize your pipeline can be found in the chapter: <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/howToVisualizeAPipeline.html">How To Visualize A Pipeline</a>.</p>
 </div>
 </div>
 <div class="section" id="how-to-get-data-into-and-out-of-your-pipeline">
@@ -839,30 +822,6 @@
 </div>
 </div>
 </div>
-<div class="section" id="how-to-visualize-your-pipeline">
-<h2>How to visualize your pipeline<a class="headerlink" href="#how-to-visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-<p>With this command, two graph files get created with the difference in the level of detail they are showing. There is a <strong>simple overview graph</strong> called <tt class="docutils literal"><span class="pre">graph.dot</span></tt> that shows you the basic connections between nodes and a <strong>more detailed overview graph</strong> called <tt class="docutils literal"><span class="pre">graph_detailed.dot</span></tt> that shows you additionally the outputs and inputs of each node and the connections between them. This graphs can be found in the highest pipeline folder of your working direcotry.</p>
-<p>The following graphs are a visualization of the <strong>dicom2nifti preparation pipeline</strong> or <tt class="docutils literal"><span class="pre">prepareflow</span></tt> which you will encounter in the next chapter.</p>
-<div class="section" id="graph2use-flat-graph-dot">
-<h3>graph2use=&#8217;flat&#8217; - graph.dot<a class="headerlink" href="#graph2use-flat-graph-dot" title="Permalink to this headline">¶</a></h3>
-<p>In the simple version of a graph you can see how the nodes are connected together generally. The name of the nodes is composed in the format of <tt class="docutils literal"><span class="pre">nodename.algorithm.interface</span></tt></p>
-<img alt="_images/graph_normal_flat-colored.png" src="_images/graph_normal_flat-colored.png" style="width: 756px;" />
-</div>
-<div class="section" id="graph2use-flat-graph-detailed-dot">
-<h3>graph2use=&#8217;flat&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-flat-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
-<p>The detailed version of the graph gives you more detailed informations about which input is connected to which output.</p>
-<img alt="_images/graph_detailed_flat-colored.png" src="_images/graph_detailed_flat-colored.png" />
-</div>
-<div class="section" id="graph2use-exec-graph-detailed-dot">
-<h3>graph2use=&#8217;exec&#8217; - graph_detailed.dot<a class="headerlink" href="#graph2use-exec-graph-detailed-dot" title="Permalink to this headline">¶</a></h3>
-<p>If you set <tt class="docutils literal"><span class="pre">graph2use</span></tt> to <tt class="docutils literal"><span class="pre">'exec'</span></tt> you get the same level of detail as if you would run it with <tt class="docutils literal"><span class="pre">'flat'</span></tt> but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: <cite>a0</cite>, <cite>a1</cite> and <cite>a2</cite></p>
-<img alt="_images/graph_detailed_exec-colored.png" src="_images/graph_detailed_exec-colored.png" style="width: 810px;" />
-</div>
-</div>
 </div>
 
 
@@ -878,7 +837,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="preparedata.html" title="How To Prepare Your Data for Nipype"
+          <a href="howToVisualizeAPipeline.html" title="How To Visualize A Pipeline"
              >next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
@@ -889,7 +848,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 11, 2011.
+      Last updated on August 14, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

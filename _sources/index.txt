@@ -7,10 +7,11 @@ Beginner's Guide to Nipype
 
    introduction
    howToBuildAPipeline
+   howToVisualizeAPipeline
    preparedata
    firstLevelExample
    secondLevelExample
-   underConstruction
+   futureChapters
 
 
 .. hint::

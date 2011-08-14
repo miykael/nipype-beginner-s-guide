@@ -79,15 +79,13 @@
 <li><a class="reference internal" href="#define-infosource-datagrabber-and-datasink">Define infosource, datagrabber and datasink</a></li>
 <li><a class="reference internal" href="#define-contrasts-and-model-specification">Define contrasts and model specification</a></li>
 <li><a class="reference internal" href="#define-the-meta-pipeline">Define the meta pipeline</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-a-surface-analysis-to-your-pipeline">Adding a surface analysis to your pipeline</a><ul>
 <li><a class="reference internal" href="#run-the-pipeline-and-generate-the-graph">Run the pipeline and generate the graph</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#visualize-your-pipeline">Visualize your pipeline</a><ul>
-<li><a class="reference internal" href="#simple-graph">Simple graph</a></li>
-<li><a class="reference internal" href="#detailed-graph">Detailed graph</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#adding-a-surface-analysis-to-your-pipeline">Adding a surface analysis to your pipeline</a></li>
+<li><a class="reference internal" href="#visualize-your-pipeline">Visualize your pipeline</a></li>
 <li><a class="reference internal" href="#resulting-folder-structure">Resulting Folder Structure</a></li>
 </ul>
 </li>
@@ -136,7 +134,7 @@
 <h2>Define the structure of your pipeline<a class="headerlink" href="#define-the-structure-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>The best way to build your own pipeline is first to think about the workflow the data should go through. In this example we want to first run some preprocessing like <cite>SliceTiming</cite>, <cite>Realignment</cite>, <cite>ArtifactDetection</cite>, <cite>BBRegister</cite> and <cite>Smoothing</cite>. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing. All this will be accommodate in a <strong>preprocess pipeline</strong>. After that we want to estimate a concrete model by running first <cite>SpecifyModel</cite>, create a <cite>Level1Design</cite>, <cite>EstimateModel</cite> and finally <cite>EstimateContrast</cite>. This will be done in a <strong>volume analysis pipeline</strong>.</p>
 <p>The preprocess and the volume analysis pipeline together with the inputnode, will create the basic <strong>framework workflow</strong>. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I&#8217;d like to call <strong>meta workflow</strong>. Visualized this pipeline would look like this:</p>
-<img alt="_images/metaflow.png" src="_images/metaflow.png" style="width: 756px;" />
+<img alt="_images/metaflow.png" src="_images/metaflow.png" style="width: 810px;" />
 <p>The connections between the nodes will make more sense once we look at the inputs the given nodes need. Some may also ask why we haven&#8217;t included the infosource, datagrabber and datasink nodes into the frameflow? The reason is that those nodes  highly dependent on the paradigm specific parameters and will change for every model/experiment. That&#8217;s why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.</p>
 </div>
 <div class="section" id="write-your-pipeline-script">
@@ -703,31 +701,6 @@
 <p class="last">Some may wonder what the <tt class="docutils literal"><span class="pre">&#64;spm_mat</span></tt>, <tt class="docutils literal"><span class="pre">&#64;T</span></tt> and <tt class="docutils literal"><span class="pre">&#64;con</span></tt> cause in the connection between the <strong>frameflow</strong> and the <strong>datasink</strong>. This specification means that all the <tt class="docutils literal"><span class="pre">spm_mat_file</span></tt>, <tt class="docutils literal"><span class="pre">spmT_images</span></tt> and <tt class="docutils literal"><span class="pre">con_images</span></tt> files all get saved into the same <strong>datasink</strong> folder with the name <tt class="docutils literal"><span class="pre">vol_contrasts</span></tt>. The <tt class="docutils literal"><span class="pre">.&#64;id</span></tt> just specifies an identifier for the saving process.</p>
 </div>
 </div>
-<div class="section" id="run-the-pipeline-and-generate-the-graph">
-<h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
-<p>Finally, after everything is set up correctly we can run the pipeline and let it draw the two graphs.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Run the analysis pipeline and create the two graphs that visually represents the workflow.</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-</div>
-<div class="section" id="visualize-your-pipeline">
-<h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>Here are now the simple and the detailed graph of this example of our meta pipeline. Both graphs were created with the graph2use parameter set to &#8216;flat&#8217;. The coloring was done additionally to underline the structure of the whole workflow.</p>
-<div class="section" id="simple-graph">
-<h3>Simple graph<a class="headerlink" href="#simple-graph" title="Permalink to this headline">¶</a></h3>
-<p>The simple graph shows how the nodes are connected to each other.</p>
-<img alt="_images/graph_first_simple.png" class="align-center" src="_images/graph_first_simple.png" style="width: 810px;" />
-</div>
-<div class="section" id="detailed-graph">
-<h3>Detailed graph<a class="headerlink" href="#detailed-graph" title="Permalink to this headline">¶</a></h3>
-<p>The detailed graph shows how the different inputs and outputs of each individual nodes are connected to each other.</p>
-<img alt="_images/graph_first_detailed.png" class="align-center" src="_images/graph_first_detailed.png" style="width: 1080px;" />
-</div>
 </div>
 <div class="section" id="adding-a-surface-analysis-to-your-pipeline">
 <h2>Adding a surface analysis to your pipeline<a class="headerlink" href="#adding-a-surface-analysis-to-your-pipeline" title="Permalink to this headline">¶</a></h2>
@@ -786,14 +759,27 @@
                   <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
-<p>Now that the <strong>surface analysis pipeline</strong> is integrated into the metaflow we can run the metaflow again:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<div class="section" id="run-the-pipeline-and-generate-the-graph">
+<h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
+<p>Finally, after everything is set up correctly we can run the pipeline and additionally let it draw the two graphs.</p>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Run the analysis pipeline and create the two graphs that visually represents the workflow.</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">The code for a first level analysis on the volume and the surface can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py">firstlevelpipeline.py</a></p>
 </div>
+</div>
+</div>
+<div class="section" id="visualize-your-pipeline">
+<h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>The visualization of this graph can be seen in all versions in chapter <strong>How To Visualize A Pipeline</strong> under <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/howToVisualizeAPipeline.html#how-to-visualize-a-pipeline">example graphs</a>.</p>
+<p>But still, here&#8217;s the <strong>hierarchical graph</strong> for the <tt class="docutils literal"><span class="pre">metaflow</span></tt>:</p>
+<img alt="_images/firstlevel_hierarchical.png" class="align-center" src="_images/firstlevel_hierarchical.png" style="width: 1080px;" />
 </div>
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
@@ -840,7 +826,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 11, 2011.
+      Last updated on August 14, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

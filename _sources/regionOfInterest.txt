@@ -1,10 +1,10 @@
-=======================================
-How to extract region of interest (ROI)
-=======================================
+=========================================
+How To Extract Regions Of Interest (ROIs)
+=========================================
 
 In this part we will learn how to extract statistical data from a strictly specified region or in other words our **region of interest (ROI)**.
 
-Anatomical vs. Functional ROI
+Anatomical and Functional ROI
 =============================
 
 We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the definition of the ROI-region.
@@ -12,27 +12,29 @@ We will learn how to extract anatomical and functional ROIs, two ways of extract
 Anatomical ROI
 ~~~~~~~~~~~~~~
 
-The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by **Nipype** as default is the **FreeSurfer Color Table**, which can be found `here <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_.
-
-
+The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by **Nipype** as default is the `FreeSurfer Color Table <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_.
 
 This color table subdivides the brain in different anatomical regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the **2005** region specification) or a more detailed specification category that divides the brain into +200 regions (the **2009** region specification)
 
-**Visualization of 2005 Segmentation**
 
-.. image:: 2005segmentation.png
-   :width: 200 px
+Es häd +290 vo de alte, +300 nume 2009 und +490 vo 2005
+
+
+**Visualization of original Segmentation**
+
+.. image:: segorig.png
+   :width: 810 px
 
 
 **Visualization of 2009 Segmentation**
 
-.. image:: 2009segmentation.png
-   :width: 200 px
+.. image:: seg2009.png
+   :width: 810 px
 
 
 .. hint::
 
-   If you want to explore those regions by ourself I recommend to open a **FreeSurfer** capable viewing tool and overlay the ``fsaverage`` file with an annotation-file. More information how this is done can be found here: **MISSING_LINK**
+   If you want to explore those regions by ourself I recommend to open a **FreeSurfer** capable viewing tool and overlay the ``fsaverage`` file with an annotation-file. 
 
 
 Functional ROI
@@ -42,7 +44,16 @@ The region of functional ROIs is solely defined by what point in "brain"-space y
 
 **Visualization of a functional ROI**
 
-Here you can see a spherical region with radius 3 voxel around the point [a,b,c] in xxxxx-space.
+Here you can see a spherical region with radius 5 voxel around the point [110, 128, 142] in MNI-space.
+
+
+Out[58]: 'fslmaths /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normcons/con_0010_ants.nii -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -odt float'
+
+Out[59]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -kernel sphere 10 -fmean -thr 0.5 -bin /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -odt float'
+
+Out[60]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -mas /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normtmaps/spmT_0002_ants.nii /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float'
+
+
 
 .. image:: functionalROI.png
    :width: 200 px
@@ -376,20 +387,25 @@ c. Take this cubic region in "brain"-space where all voxel in the cube have valu
 
 A visualization of those steps would look like this:
 
-**Step A**
+**Step 0**
 
-.. image:: fROIsubstepA.png
-   :width: 200 px
+.. image:: fROI1.png
+   :width: 810 px
 
-**Step B**
-   
-.. image:: fROIsubstepB.png
-   :width: 200 px
-   
-**Step C**
-   
-.. image:: fROIsubstepC.png
-   :width: 200 px
+**Step 1**
+
+.. image:: fROI2.png
+   :width: 810 px
+
+**Step 2**
+
+.. image:: fROI3.png
+   :width: 810 px
+
+**Step 3**
+
+.. image:: fROI4.png
+   :width: 810 px
 
 
 Let's now begin with the creation of a **functional ROI pipeline**.
@@ -438,13 +454,13 @@ Define fROI specific parameters
    #define the coordination of point of interest
    centerOfROI = [183,134,136]
    
-   #define the diameter of the sphere of interest
-   diameter = 3
+   #define the radius of the sphere of interest
+   radius = 3
 
    #calculates the beginning corner of the cubic ROI
-   corner = [centerOfROI[0]-diameter/2.0,
-             centerOfROI[1]-diameter/2.0,
-             centerOfROI[2]-diameter/2.0]
+   corner = [centerOfROI[0]-radius,
+             centerOfROI[1]-radius,
+             centerOfROI[2]-radius]
 
 
 Definition of Nodes
@@ -465,19 +481,25 @@ Definition of Nodes
                                                   outfields=['contrast']),
                         name = 'datasource')
    datasource.inputs.base_directory = experiment_dir + 'result/' + l1contrastDir
-   datasource.inputs.template = '/%s/normcons/con_%04d_ants.nii'
-   datasource.inputs.template_args = dict(contrast = [['subject_id','contrast_id']])
+   datasource.inputs.template = '/%s/norm%s/%s_%04d_ants.nii'
+   datasource.inputs.template_args = dict(contrast = [['subject_id','cons','con','contrast_id']],
+                                          tmaps = [['subject_id','tmaps','spmT','contrast_id']])
+
    
    #Node: ImageMaths - to create the cubic ROI with value 1
    cubemask = pe.Node(interface=fsl.ImageMaths(),name="cubemask")
-   cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%(corner[0],diameter,corner[1],diameter,corner[2],diameter)
+   cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%(corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
    cubemask.inputs.out_data_type = 'float'
    cubemask.inputs.in_file = '/mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/%s/normcons/con_%04d_ants.nii'%(subjects[0],contrasts[0])
    
    #Node: ImageMaths - to smooth the cubic ROI to a sphere
    spheremask = pe.Node(interface=fsl.ImageMaths(),name="spheremask")
-   spheremask.inputs.op_string = '-kernel sphere %d -fmean -thr 0.0000010000 -bin'%diameter
+   spheremask.inputs.op_string = '-kernel sphere %d -fmean -thr 0.5 -bin'%radius
    spheremask.inputs.out_data_type = 'float'
+
+   #Node: ImageMaths - to mask the spherical ROI with a subject specific tmap
+   tmapmask = pe.Node(interface=fsl.ImageMaths(),name="tmapmask")
+   tmapmask.inputs.out_data_type = 'float'
    
    #Node: SegStats - to extract the statistic from a given segmentation
    segstat = pe.Node(interface=fs.SegStats(),name='segstat')
@@ -491,6 +513,7 @@ Definition of Nodes
 .. note::
 
    If you are interested in what command actually will be executed by the ``cubemask`` node you just simply can execute ``cubemask.cmdline``. In this example this will give you the following output: ``blablabla``
+   But important that the interace isn't defined as a node. Has to be without pe.Node....
 
 
 Definition of functional ROI workflow
@@ -505,13 +528,14 @@ Definition of functional ROI workflow
    
    #Connect up all components
    fROIflow.connect([(cubemask, spheremask,[('out_file', 'in_file')]),
+                     (spheremask, tmapmask,[('out_file', 'in_file')]),
+                     (datasource, tmapmask,[(('tmaps',path2tmap), 'op_string')]),
                      (infosource1, datasource,[('subject_id', 'subject_id')]),
                      (infosource2, datasource,[('contrast_id', 'contrast_id')]),
-                     (spheremask, segstat,[('out_file', 'segmentation_file')]),
+                     (tmapmask, segstat,[('out_file', 'segmentation_file')]),
                      (datasource, segstat,[('contrast', 'in_file')]),
                      (segstat, datasink,[('summary_file', '@statistic')]),
                      ])
-   
    
 
 Run the pipeline and generate the graph
@@ -531,7 +555,7 @@ Summarizing the output in a cvs-file
    :linenos:
 
    output = []
-   output.append(['coordinations:',centerOfROI,'diameter:',diameter])
+   output.append(['coordinations:',centerOfROI,'radius:',radius])
    
    for contrast in contrasts:
        contrast = str(contrast)
@@ -546,12 +570,12 @@ Summarizing the output in a cvs-file
            data = dataFile.readlines()
            dataFile.close()
    
-           output.append([subject,data[49].split()[5]])
+           output.append([subject,data[-1].split()[5]])
    
        output.append([])
    
    import csv
-   f = open(fROIOutput+'/fROI_spherical'+str(centerOfROI)+'_%s_result.csv'%diameter,'wb')
+   f = open(fROIOutput+'/fROI_spherical'+str(centerOfROI)+'_%s_result.csv'%radius,'wb')
    outputFile = csv.writer(f)
    for line in output:
        outputFile.writerow(line)

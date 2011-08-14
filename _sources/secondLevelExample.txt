@@ -55,8 +55,8 @@ Define experiment specific parameters
    If you want to only analyze the 3rd and 4th contrasts, you could specify ``contrast_ids`` as ``range(3,5)`` which would create the list ``[3,4]``
 
 
-Do a second level analysis on the volume
-========================================
+Second level analysis on the volume
+===================================
 
 Grab the data
 ~~~~~~~~~~~~~
@@ -147,8 +147,8 @@ Establish a second level volume pipeline
                       ])
 
    
-Do a second level analysis on the surface
-=========================================
+Second level analysis on the surface
+====================================
 
 An important difference between the format of the volume and the surface data is, that the surface data are img-files and are separated for both hemispheres. In contrast the volume data is in nifti-files which contain both hemispheres. This separation means that we have to iterate over the left ('lh') and the right ('rh') hemisphere.
 
@@ -295,28 +295,28 @@ Visualize pipelines
 Second Level Volume Pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the **simple** graph to the ``l2volflow`` pipeline:
+This is the graph of the ``hierarchical`` version of the  ``l2volflow``:
 
-.. image:: l2vol.png
-   :width: 600 px
+.. image:: l2vol_flat_hierarchical.png
 
-This is the **detailed** graph to the ``l2volflow`` pipeline:
 
-.. image:: l2vol_detailed.png
+This is the detailed graph of the ``flat`` version of the ``l2volflow``:
+
+.. image:: l2vol_flat_detailed.png
    :width: 1080 px
 
 
 Second Level Surface Pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the **simple** graph to the ``l2surfflow`` pipeline:
+This is the graph of the ``hierarchical`` version of the  ``l2surfflow``:
 
-.. image:: l2surf.png
-   :width: 600 px
+.. image:: l2surf_flat_hierarchical.png
 
-This is the **detailed** graph to the ``l2surfflow`` pipeline:
 
-.. image:: l2surf_detailed.png
+This is the detailed graph of the ``flat`` version of the ``l2surfflow``:
+
+.. image:: l2surf_flat_detailed.png
    :width: 1080 px
 
 

@@ -16,12 +16,12 @@ How to build your own pipeline
 
 There are many ways to construct a pipeline but in the end it comes down to the following steps:
 
-  1. Import appropriate modules
-  2. Define nodes
-  3. Define pipeline(s)
-  4. Create connections
-  5. Visualize pipeline
-  6. Execute pipeline
+  1. **Import appropriate modules**
+  2. **Define nodes**
+  3. **Define pipeline(s)**
+  4. **Create connections**
+  5. **Execute pipeline**
+  6. **Visualize pipeline**
 
 
 Import appropriate modules
@@ -325,31 +325,6 @@ If you want to insert more than one parameter into the function do as follows:
                          ])
 
 
-Visualize pipeline
-------------------
-
-To visualize the flow of a pipeline you can use the method ``write_graph()``.
-
-.. code-block:: py
-   :linenos:
-
-   #Example of using write_graph
-   workflowname.write_graph(graph2use='flat')
-
-This method will create two files:
-
-* **graph.dot:** which contains the general connections between nodes
-* **graph_detailed.dot:** which contains the detailed connections between nodes with the individual output and input fields.
-
-If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere.
-
-You can also specify the deepness you want the graph to show by changing the argument ``graph2use``:
-
-* **'orig':** only the highest level of the workflow will be visualized (e.g. this would show you only the frameflow and leave the contained pipelines out)
-* **'flat':** all levels of the workflow are visualized once
-* **'exec':** all levels of the workflow are visualized and an iteration of a field will lead to a splitting of the graph (this is a very good way to see what the benefit of executing the pipeline in parallel mode is)
-
-
 Execute pipeline
 ----------------
 
@@ -364,10 +339,23 @@ After setting everything up, the pipeline can be executed with ``run()``. You ca
    #To run the pipeline paralle using 2 processes
    workflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
-
 .. hint::
 
    A good tutorial how to set up the parallel mode can be found under `Distributed processing with nipype <http://www.mit.edu/~satra/nipype-nightly/users/parallel_processing.html#distributed-processing-with-nipype>`_.
+
+
+Visualize pipeline
+------------------
+
+To visualize the workflow of a pipeline you can use the method ``write_graph()``.
+
+.. code-block:: py
+   :linenos:
+
+   #Example of using write_graph
+   workflowname.write_graph(graph2use='flat')
+
+If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere. More about how to visualize your pipeline can be found in the chapter: `How To Visualize A Pipeline <http://miykael.github.com/nipype-beginner-s-guide/howToVisualizeAPipeline.html>`_.
 
 
 How to get data into and out of your pipeline
@@ -506,7 +494,6 @@ The datasink node is really useful to keep control over your storage capacity. I
 
 
 
-
 Model Specification
 -------------------
 
@@ -635,42 +622,3 @@ Now you're done and can run your pipeline.
 
    metaflow.run(plugin='Linear')
 
-
-How to visualize your pipeline
-==============================
-
-After the connection of all nodes is established we are able to create a graph.dot file which gives us a very good overview over our pipeline. For the example above, the command would simply be:
-
-.. code-block:: py
-   :linenos:
-
-   metaflow.write_graph(graph2use='flat')
-
-With this command, two graph files get created with the difference in the level of detail they are showing. There is a **simple overview graph** called ``graph.dot`` that shows you the basic connections between nodes and a **more detailed overview graph** called ``graph_detailed.dot`` that shows you additionally the outputs and inputs of each node and the connections between them. This graphs can be found in the highest pipeline folder of your working direcotry.
-
-The following graphs are a visualization of the **dicom2nifti preparation pipeline** or ``prepareflow`` which you will encounter in the next chapter.
-
-graph2use='flat' - graph.dot
-----------------------------
-
-In the simple version of a graph you can see how the nodes are connected together generally. The name of the nodes is composed in the format of ``nodename.algorithm.interface``
-
-.. image:: graph_normal_flat-colored.png
-   :width: 756
-
-
-graph2use='flat' - graph_detailed.dot
--------------------------------------
-
-The detailed version of the graph gives you more detailed informations about which input is connected to which output.
-
-.. image:: graph_detailed_flat-colored.png
-
-
-graph2use='exec' - graph_detailed.dot
--------------------------------------
-
-If you set ``graph2use`` to ``'exec'`` you get the same level of detail as if you would run it with ``'flat'`` but all the runs that would be running in parallel are shown at once. In this case there would be three runs in parallel: `a0`, `a1` and `a2`
-
-.. image:: graph_detailed_exec-colored.png
-   :width: 810

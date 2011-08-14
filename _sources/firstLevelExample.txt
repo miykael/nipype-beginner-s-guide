@@ -16,7 +16,7 @@ The best way to build your own pipeline is first to think about the workflow the
 The preprocess and the volume analysis pipeline together with the inputnode, will create the basic **framework workflow**. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I'd like to call **meta workflow**. Visualized this pipeline would look like this:
 
 .. image:: metaflow.png
-   :width: 756
+   :width: 810
 
 The connections between the nodes will make more sense once we look at the inputs the given nodes need. Some may also ask why we haven't included the infosource, datagrabber and datasink nodes into the frameflow? The reason is that those nodes  highly dependent on the paradigm specific parameters and will change for every model/experiment. That's why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.
 
@@ -374,44 +374,6 @@ After setting up all nodes, parameters and subpipelines, we now want to create t
    Some may wonder what the ``@spm_mat``, ``@T`` and ``@con`` cause in the connection between the **frameflow** and the **datasink**. This specification means that all the ``spm_mat_file``, ``spmT_images`` and ``con_images`` files all get saved into the same **datasink** folder with the name ``vol_contrasts``. The ``.@id`` just specifies an identifier for the saving process.
 
 
-
-Run the pipeline and generate the graph
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Finally, after everything is set up correctly we can run the pipeline and let it draw the two graphs.
-
-.. code-block:: py
-   :linenos:
-
-   #Run the analysis pipeline and create the two graphs that visually represents the workflow.
-   metaflow.write_graph(graph2use='flat')
-   metaflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
-
-
-Visualize your pipeline
-=======================
-
-Here are now the simple and the detailed graph of this example of our meta pipeline. Both graphs were created with the graph2use parameter set to 'flat'. The coloring was done additionally to underline the structure of the whole workflow.
-
-Simple graph
-~~~~~~~~~~~~
-
-The simple graph shows how the nodes are connected to each other.
-
-.. image:: graph_first_simple.png
-   :align: center
-   :width: 810
-
-Detailed graph
-~~~~~~~~~~~~~~
-
-The detailed graph shows how the different inputs and outputs of each individual nodes are connected to each other.
-
-.. image:: graph_first_detailed.png
-   :align: center
-   :width: 1080
-
-
 Adding a surface analysis to your pipeline
 ==========================================
 
@@ -454,17 +416,35 @@ This means instead of taking the smoothed files from the preprocess pipeline and
                                           ])
                      ])
 
-Now that the **surface analysis pipeline** is integrated into the metaflow we can run the metaflow again:
+
+Run the pipeline and generate the graph
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Finally, after everything is set up correctly we can run the pipeline and additionally let it draw the two graphs.
 
 .. code-block:: py
    :linenos:
 
+   #Run the analysis pipeline and create the two graphs that visually represents the workflow.
+   metaflow.write_graph(graph2use='flat')
    metaflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
 
 .. hint::
 
    The code for a first level analysis on the volume and the surface can be found here: `firstlevelpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/firstlevelpipeline.py>`_
+
+
+Visualize your pipeline
+=======================
+
+The visualization of this graph can be seen in all versions in chapter **How To Visualize A Pipeline** under `example graphs <http://miykael.github.com/nipype-beginner-s-guide/howToVisualizeAPipeline.html#how-to-visualize-a-pipeline>`_. 
+
+But still, here's the **hierarchical graph** for the ``metaflow``:
+
+.. image:: firstlevel_hierarchical.png
+   :align: center
+   :width: 1080
 
 
 Resulting Folder Structure
