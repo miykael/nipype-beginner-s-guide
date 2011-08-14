@@ -21,7 +21,7 @@ subjects_dir = experiment_dir + '/freesurfer_data'
 fs.FSCommand.set_default_subjects_dir(subjects_dir)
 
 #dirnames for anatomical ROI pipeline
-aROIOutput = 'aROI_Output'         #location and name of aROI datasink
+aROIOutput = 'aROI_output'         #location and name of aROI datasink
 l1contrastDir = 'level1_output'    #name of first level datasink
 
 #list of subjectnames
@@ -38,13 +38,14 @@ nameOfFirstSession = 'func1'
 Define aROI specific parameters
 """
 
-#Specification of the regions from the original and 2009 part of the FreeSurfer Color Table
-ROIregionsorig = ['1001','2001','1030','2030']
-ROIregions2009 = ['11','50','12','51','11104','12104']
+#Specification of the regions from the original and 
+#the 2009 segmentation version of the FreeSurfer Color Table
+ROIregionsorig = ['11','50','12','51','1007','2007','1022','2022']
+ROIregions2009 = ['11134','12134']
       
 
 """
-Define of Nodes
+Define nodes
 """
 
 #Node: IdentityInterface - to iterate over subjects and contrasts
@@ -113,17 +114,21 @@ aROIflow = pe.Workflow(name='aROIflow')
 aROIflow.base_dir = experiment_dir + '/results/workingdir_aROI'
 
 #Connect up all components
-aROIflow.connect([(inputnode, datasource,[('subject_id', 'subject_id'),
-                                          ('contrast_id', 'contrast_id'),
+aROIflow.connect([(inputnode, datasource,[('subject_id','subject_id'),
+                                          ('contrast_id','contrast_id'),
                                           ]),
-                  (inputnode, fssource,[('subject_id', 'subject_id')]),
-                  (fssource, segmentationorig,[(('aparc_aseg',getVersion,0), 'segmentation_file')]),
-                  (fssource, segmentation2009,[(('aparc_aseg',getVersion,1), 'segmentation_file')]),
-                  (datasource, MRIconversion,[('contrast', 'in_file')]),
-                  (MRIconversion, transformation,[('out_file', 'source_file')]),
-                  (datasource, transformation,[('bb_id', 'reg_file')]),
-                  (transformation, segmentationorig,[('transformed_file', 'in_file')]),
-                  (transformation, segmentation2009,[('transformed_file', 'in_file')]),
+                  (inputnode, fssource,[('subject_id','subject_id')]),
+                  (fssource, segmentationorig,[(('aparc_aseg',getVersion,0),
+                                                 'segmentation_file')]),
+                  (fssource, segmentation2009,[(('aparc_aseg',getVersion,1),
+                                                 'segmentation_file')]),
+                  (datasource, MRIconversion,[('contrast','in_file')]),
+                  (MRIconversion, transformation,[('out_file','source_file')]),
+                  (datasource, transformation,[('bb_id','reg_file')]),
+                  (transformation, segmentationorig,[('transformed_file',
+                                                      'in_file')]),
+                  (transformation, segmentation2009,[('transformed_file',
+                                                      'in_file')]),
                   (segmentationorig, datasink,[('summary_file', 'segstatorig')]),
                   (segmentation2009, datasink,[('summary_file', 'segstat2009')]),
                   ])
@@ -141,41 +146,49 @@ aROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 Summarizing the output in a cvs-file
 """
   
+#iterate over contrasts and create a cvs-file for each
 for contrast in contrasts:
-   
+
+    #creates a list with an empty entry for each segmentation id
     output = []
     for i in range(15000):
-        output.append([i,'LABEL'])
-   
+        output.append([i,None])
+
+    #to keep track of added subjects
     subjectNumber = 1
-   
+
+    path2aROIOut = experiment_dir+'/results/'+aROIOutput
+
+    #iterate over subjects and entering values into output
     for subject in subjects:
    
-        #Find the location of the two output files
-        statsFileorig = experiment_dir+'/results/'+aROIOutput +'/segstatorig/_contrast_id_'+contrast+'_subject_id_'+subject+'/summary.stats'
-        statsFile2009 = experiment_dir+'/results/'+aROIOutput +'/segstat2009/_contrast_id_'+contrast+'_subject_id_'+subject+'/summary.stats'
+        #specify path to aROI datasink for each variaton of segmentation
+        path2Sumfile = '_contrast_id_'+contrast+'_subject_id_'+subject+'/summary.stats'
+        statsFileorig = path2aROIOut+'/segstatorig/'+path2Sumfile
+        statsFile2009 = path2aROIOut+'/segstat2009/'+path2Sumfile
    
-        #Get the data from the two output files
+        #extract the data from the output summary files
         dataFile = open(statsFileorig, 'r')
-        data = dataFile.readlines()
+        dataorig = dataFile.readlines()
         dataFile.close()
         dataFile = open(statsFile2009, 'r')
         data2009 = dataFile.readlines()
         dataFile.close()
        
-        #to check where the data starts
+        #function to check where the data starts
         def findStartOfData(datafile):
             for line in range(100):
                 if datafile[line][0] != '#':
                    return line
        
+        #get data and store it in tempresult
         tempresult = []
    
-        for line in range(len(data)):
-            if line < findStartOfData(data):
+        for line in range(len(dataorig)):
+            if line < findStartOfData(dataorig):
                 pass
             else:
-                temp = data[line].strip('\n').split()
+                temp = dataorig[line].strip('\n').split()
                 tempresult.append([int(temp[1]),temp[4],float(temp[5])])
 
         for line in range(len(data2009)):
@@ -188,36 +201,43 @@ for contrast in contrasts:
         tempresult.sort()
    
         result = []
-   
+
         for line in range(len(tempresult)):
+            #pass if region has already been added
             if line > 0 and tempresult[line] == tempresult[line-1]:
                 pass
             else:
                 result.append(tempresult[line])
    
         for ROI in result:
-            if output[ROI[0]][1] == 'LABEL':
+            #if id wasn't extracted before, adds name of id to row
+            if output[ROI[0]][1] == None:
                output[ROI[0]][1] = ROI[1]
+            #adds value of id into row
             output[ROI[0]].append(ROI[2])
    
+        #if no value for an id was entered for a subject
+        #   the value 0.0 gets added
         for ROI in output:
             if len(ROI) < subjectNumber+2:
                ROI.append(0.0)
    
         subjectNumber += 1
    
-       
+    #adds labels to the first row of the output
     output.insert(0,['SegId','StructName'])
     output[0].extend(subjects)
-   
-    output = [ROI for ROI in output if ROI[1] != 'LABEL']
-   
 
+    #adds segment if it was extracted
+    output = [ROI for ROI in output if ROI[1] != None]
+   
+    #define name of the output csv-file
+    summaryFileName = 'aROI_'+contrast+'.csv'
+
+    #store output into a cvs-file
+    f = open(path2aROIOut+'/'+summaryFileName,'wb')
     import csv
-    f = open(experiment_dir + '/results/' + aROIOutput +'/ROI_'+contrast+'.csv','wb')
     outputFile = csv.writer(f)
-  
     for line in output:
         outputFile.writerow(line)
-   
     f.close()
