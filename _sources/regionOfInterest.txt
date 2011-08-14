@@ -2,31 +2,65 @@
 How To Extract Regions Of Interest (ROIs)
 =========================================
 
-In this part we will learn how to extract statistical data from a strictly specified region or in other words our **region of interest (ROI)**.
+In this part we will learn how to extract statistical data from a strictly specified region or in other words a **region of interest (ROI)**.
 
 Anatomical and Functional ROI
 =============================
 
-We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the definition of the ROI-region.
+We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the way how they define a region of interest.
 
 Anatomical ROI
 ~~~~~~~~~~~~~~
 
-The region of anatomical ROIs is as the name implies defined by the anatomical structure of the brain. Such definition of anatomical regions and there segmentation is often stored in so called atlas. A well know atlas which is used by **Nipype** as default is the `FreeSurfer Color Table <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_.
+The region of an anatomical ROI is as the name implies defined by the anatomical structure of the brain (e.g. Thalamus, Putamen, Ventricle, Amygdala etc.). Such definitions of anatomical regions and there segmentations is stored in so called **atlas**. A well known atlas which is used by **Nipype** by default is the `FreeSurfer Color Table <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_.
 
-This color table subdivides the brain in different anatomical regions. With the FreeSurfer Color Table you can differentiate between gray matter and white matter areas, between a general specification that divides the brain into +30 regions (the **2005** region specification) or a more detailed specification category that divides the brain into +200 regions (the **2009** region specification)
+This color table subdivides the brain in over 1000 different anatomical regions. The **FreeSurfer Color Table** enables to differentiate between gray and white matter areas. The table is divided into different sections. For the extraction of anatomical ROIs we are interested in the **original Segmentation** and in the **2009 Segmentation**.
+
+.. note::
+
+   Note that this separation between original and 2009 version of segmentation is defined by me and how I would subdivide the color table and by no means represent the structure that FreeSurfer intended.
+
+The following list shows a part of the **FreeSurfer Color Table**. Import for us is the segmentation **id** and segmentation **name**, shown in the first two columns.
+
+.. code-block:: none
+
+   #No. Label Name:                            R   G   B   A
+   [...]
+   9   Left-Thalamus                           0   118 14  0
+   10  Left-Thalamus-Proper                    0   118 14  0
+   11  Left-Caudate                            122 186 220 0
+   12  Left-Putamen                            236 13  176 0
+   13  Left-Pallidum                           12  48  255 0
+   14  3rd-Ventricle                           204 182 142 0
+   15  4th-Ventricle                           42  204 164 0
+   16  Brain-Stem                              119 159 176 0
+   17  Left-Hippocampus                        220 216 20  0
+   18  Left-Amygdala                           103 255 255 0
+   19  Left-Insula                             80  196 98  0
+   20  Left-Operculum                          60  58  210 0
+   [...]
+   48  Right-Thalamus                          0   118 14  0
+   49  Right-Thalamus-Proper                   0   118 14  0
+   50  Right-Caudate                           122 186 220 0
+   51  Right-Putamen                           236 13  176 0
+   52  Right-Pallidum                          13  48  255 0
+   53  Right-Hippocampus                       220 216 20  0
+   54  Right-Amygdala                          103 255 255 0
+   55  Right-Insula                            80  196 98  0
+   56  Right-Operculum                         60  58  210 0
+   [...]
 
 
-Es häd +290 vo de alte, +300 nume 2009 und +490 vo 2005
+The ids from *1 to 999* can be found in the original as well as in the 2009 version of segmentation. The ids *1000 to 8014* can only be found in the **original version** and the ids *11100 to 14175* can only be found in the **2009 version** of segmentation.
 
 
-**Visualization of original Segmentation**
+**Visualization of original Segmentation**: The following picture shows you the labels of the original segmentation. The annotation of which color belongs to which region is stored in ``~SOMEPATH/experiment/freesurfer_data/fsaverage/label/lh.aparc.annot`` (if you're interested in the left hemisphere)
 
 .. image:: segorig.png
    :width: 810 px
 
 
-**Visualization of 2009 Segmentation**
+**Visualization of 2009 Segmentation**: The following picture shows you the labels of the 2009 segmentation. The annotation of which color belongs to which region is stored in ``~SOMEPATH/experiment/freesurfer_data/fsaverage/label/rh.aparc.a2009s.annot`` (if you're interested in the right hemisphere)
 
 .. image:: seg2009.png
    :width: 810 px
@@ -34,29 +68,18 @@ Es häd +290 vo de alte, +300 nume 2009 und +490 vo 2005
 
 .. hint::
 
-   If you want to explore those regions by ourself I recommend to open a **FreeSurfer** capable viewing tool and overlay the ``fsaverage`` file with an annotation-file. 
+   If you want to explore those regions by ourself I recommend to open a **FreeSurfer** capable viewing tool and overlay the annotation file from the ``fsaverage/label`` folder. 
 
 
 Functional ROI
 ~~~~~~~~~~~~~~
 
-The region of functional ROIs is solely defined by what point in "brain"-space you are interested in. You're region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this script.
+The region of functional ROIs is solely defined by what point in "brain"-space you are interested in. You're region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this chapter.
 
-**Visualization of a functional ROI**
+**Visualization of a functional ROI**: The following picture shows a spherical region with radius 10 voxel around the point of interest [110, 128, 142] in MNI-space.
 
-Here you can see a spherical region with radius 5 voxel around the point [110, 128, 142] in MNI-space.
-
-
-Out[58]: 'fslmaths /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normcons/con_0010_ants.nii -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -odt float'
-
-Out[59]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -kernel sphere 10 -fmean -thr 0.5 -bin /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -odt float'
-
-Out[60]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -mas /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normtmaps/spmT_0002_ants.nii /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float'
-
-
-
-.. image:: functionalROI.png
-   :width: 200 px
+.. image:: fROI3.png
+   :width: 810 px
 
 
 Anatomical ROI Pipeline
@@ -87,14 +110,13 @@ Define experiment specific parameters
    #to better access the parent folder of the experiment
    experiment_dir = '~SOMEPATH/experiment'
 
-   ###   # Tell freesurfer what subjects directory to use
-   ###   subjects_dir = experiment_dir + '/freesurfer_data'
-   ###   fs.FSCommand.set_default_subjects_dir(subjects_dir)
+   # Tell freesurfer what subjects directory to use
+   subjects_dir = experiment_dir + '/freesurfer_data'
+   fs.FSCommand.set_default_subjects_dir(subjects_dir)
 
    #dirnames for anatomical ROI pipeline
-   aROIWorkingdir = '/result/aROI_workingdir' #location and name of workingdir
-   aROIOutput = 'result/aROI_Output'         #location and name of aROI datasink
-   l1contrastDir = 'level1_output'            #name of first level datasink
+   aROIOutput = 'aROI_output'      #location and name of aROI datasink
+   l1contrastDir = 'level1_output' #name of first level datasink
    
    #list of subjectnames
    subjects = ['subject1', 'subject2', 'subject3']
@@ -102,39 +124,45 @@ Define experiment specific parameters
    #list of contrastnumbers the pipeline should consider
    contrasts = ['01','02','03','04','05']
 
-   ###   #name of the first session from the first level pipeline
-   ###   nameOfFirstSession = 'func1'
+   #name of the first session from the first level pipeline
+   nameOfFirstSession = 'func1'
    
 .. note::
 
-   The name of the first session is necessary, because the bbregister file from the first level pipeline contains the name of the first session in its name. E.g. if the first condition is named ``func1``, than the name of the bbregister file for the first subject would be: ``meanafunc1_bbreg_subject1.dat')``
+   The **name of the first session** is necessary, because the bbregister file from the first level pipeline contains the name of the first session in its name. E.g. if the first condition is ``func1``, than the name of the bbregister file for the second subject is ``meanafunc1_bbreg_subject2.dat``.
 
 Define aROI specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As mentioned above we are using the FreeSurfer Color Table to define the anatomical regions. This table can be found `here <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_. Let's assume that we want to extract the following regions:
+As mentioned above we are using the `FreeSurfer Color Table <http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT>`_ to define the anatomical regions. Let's assume that we want to extract the following regions:
 
-* id: 1001 ; region xxxxxx ; from coding part 2005
-* id: 2001 ; region xxxxxx ; from coding part 2005
-* id: 1030 ; region xxxxxx ; from coding part 2005
-* id: 2030 ; region xxxxxx ; from coding part 2005
-* id: 11 ; region xxxxxx ; from coding part 2009
-* id: 50 ; region xxxxxx ; from coding part 2009
-* id: 12 ; region xxxxxx ; from coding part 2009
-* id: 51 ; region xxxxxx ; from coding part 2009
-* id: 11104 ; region xxxxxx ; from coding part 2009
-* id: 12104 ; region xxxxxx ; from coding part 2009
+* id ``11`` ; ``Left-Caudate`` ; from **both** segmentations
+* id ``50`` ; ``Right-Caudate`` ; from **both** segmentations
+* id ``12`` ; ``Left-Putamen`` ; from **both** segmentations
+* id ``51`` ; ``Right-Putamen`` ; from **both** segmentations
+* id ``1007`` ; ``ctx-lh-fusiform`` ; from the **original** segmentation
+* id ``2007`` ; ``ctx-rh-fusiform`` ; from the **original** segmentation
+* id ``1022`` ; ``ctx-lh-postcentral`` ; from the **original** segmentation
+* id ``2022`` ; ``ctx-rh-postcentral`` ; from the **original** segmentation
+* id ``11134`` ; ``ctx_lh_G_temp_sup-Lateral`` ; from the **2009** segmentation
+* id ``12134`` ; ``ctx_rh_G_temp_sup-Lateral`` ; from the **2009** segmentation
 
 .. code-block:: py
    :linenos:
 
-   #Specification of the regions from the 2005 and 2009 part of the FreeSurfer Color Table
-   ROIregions2005 = ['1001','2001','1030','2030']
-   ROIregions2009 = ['11','50','12','51','11104','12104']
+   #Specification of the regions from the original and 
+   #the 2009 segmentation version of the FreeSurfer Color Table
+   ROIregionsorig = ['11','50','12','51','1007','2007','1022','2022']
+   ROIregions2009 = ['11134','12134']
+
+
+.. note::
+
+   There is no harm by defining a segmentation id in the wrong segmentation version, but if you specify an id between 1000 to 9999 in the ``ROIregions2009`` list, you just won't extract any other value than 0 from your data.
       
 
-Define of Nodes
-~~~~~~~~~~~~~~~
+Define nodes
+~~~~~~~~~~~~
 
 .. code-block:: py
    :linenos:
@@ -145,8 +173,11 @@ Define of Nodes
    inputnode.iterables = [('subject_id', subjects),
                           ('contrast_id', contrasts)]
 
-As always, it is important to be aware about the structure and the names of the data we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline. For example the second contrast for the third subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/vol_contrast/_subject_id_subject3/con0002.img'`` and the bbregister file for the first subject can be found at: ``'~SOMEPATH/experiment/result/level1_output/bbregister/_subject_id_subject1/meanafunc1_bbreg_subject1.dat'``
-Knowing this, we can build our ``datagrabber`` node as follows:
+As always when we define the ``DataGrabber`` node, it is important to be aware of the structure and the files that we want to grab. In this case we want to grab the subject specific contrasts and bbregister file from the first level pipeline.
+
+In our version the **second contrast** for the **third subject** can be found at: ``~SOMEPATH/experiment/results/level1_output/vol_contrast/_subject_id_subject3/
+con0002.img`` and the **bbregister file** for the **first subject** can be found at: ``~SOMEPATH/experiment/results/level1_output/bbregister/_subject_id_subject1/
+meanafunc1_bbreg_subject1.dat``. Knowing this, we can build our ``datagrabber`` node as follows:
 
 .. code-block:: py
    :linenos:
@@ -155,16 +186,16 @@ Knowing this, we can build our ``datagrabber`` node as follows:
    datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id','contrast_id'],
                                                   outfields=['contrast','bb_id']),
                         name = 'datasource')
-   datasource.inputs.base_directory = experiment_dir + 'result/' + l1contrastDir
-   datasource.inputs.template = '/%s/_subject_id_%s/%s%s%s'
+   datasource.inputs.base_directory = experiment_dir + '/results/' + l1contrastDir
+   datasource.inputs.template = '%s/_subject_id_%s/%s%s%s'
    
    info = dict(contrast = [['vol_contrasts','subject_id','con_00','contrast_id','.img']],
                bb_id = [['bbregister','subject_id','meana'+nameOfFirstSession+'_bbreg_',
-                         'subject_id','.dat']])
-   
+                         'subject_id','.dat']])   
    datasource.inputs.template_args = info
    
-Let's now continue with the implementation of the other nodes we need for our **anatomical ROI pipeline**.
+
+Let's now continue with the implementation of the other nodes that we need for our **anatomical ROI pipeline**.
    
 .. code-block:: py
    :linenos:
@@ -183,54 +214,25 @@ Let's now continue with the implementation of the other nodes we need for our **
    transformation.inputs.fs_target = True
    transformation.inputs.interp = 'nearest'
    
+   #Node: SegStatsorig - to extract specified regions of the original segmentation
+   segmentationorig = pe.Node(interface=fs.SegStats(),name='segmentationorig')
+   segmentationorig.inputs.segment_id = ROIregionsorig
 
-As you know we want to extract some regions from the 2005 and some from the 2009 segmentation classification. But if you 
-look at the mandatory inputs of the ``SegStats`` node you will see that we have to specify a value for ``segment_id``
-and one for ``segmentation_file``. Because we specified the list of segmentation ids separately for the 2005 and 2009 part, we have to specify
-two
-
-###möglich wäre es natürlich auch iteration zu machen
-wieso mach ich überhauüt separation???
-chönt mer ned alles grad i 1 liste inetue?
-
-segment_id   
-aparc_aseg
-segmentation_file =  segmentation volume path
-
-
-
-.. code-block:: py
-   :linenos:
-
-   #Node: SegStats2005 - to extract specified regions from the 2005 part of the color table
-   segmentation2005 = pe.Node(interface=fs.SegStats(),name='segmentation2005')
-   segmentation2005.inputs.color_table_file = '/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt'
-   segmentation2005.inputs.segment_id = ROIregions2005 #2005 segmentation ids
-   
-   #Node: SegStats2009 - to extract specified regions from the 2009 part of the color table
+   #Node: SegStats2009 - to extract specified regions of the 2009 segmentation
    segmentation2009 = pe.Node(interface=fs.SegStats(),name='segmentation2009')
-   segmentation2009.inputs.color_table_file = '/software/Freesurfer/5.1.0/FreeSurferColorLUT.txt'
-   segmentation2009.inputs.segment_id = ROIregions2009 #2009 segmentation ids
+   segmentation2009.inputs.segment_id = ROIregions2009
 
-   def getVersion(in_file, version):
-       if version == 0:
-          return in_file[0]
-       else:
-          return in_file[1]
+   #Node: Datasink - Creates a datasink node to store important outputs
+   datasink = pe.Node(interface=nio.DataSink(), name="datasink")
+   datasink.inputs.base_directory = experiment_dir + '/results'
+   datasink.inputs.container = aROIOutput 
 
 
 .. note::
 
-   If you don't define a list of segmentation ids (input: ``segment_id``) the pipeline would just extract all possible regions. This is not bad but would just take a while.
+   We implement two ``SegStats`` nodes because we have two lists of segmentation, the ``original`` and the ``2009`` one. It might be possible two feed those values into one node with an iterable, but I prefere this way.
 
-
-.. code-block:: py
-   :linenos:
-
-   #Node: Datasink - Creates a datasink node to store important outputs
-   datasink = pe.Node(interface=nio.DataSink(), name="datasink")
-   datasink.inputs.base_directory = experiment_dir
-   datasink.inputs.container = aROIOutput 
+   If you don't specify a value for ``segment_id`` the pipeline will extract all regions of your atlas. This is not bad but can take a long time.
 
 
 
@@ -242,21 +244,61 @@ Definition of anatomical ROI workflow
 
    #Initiation of the ROI extraction workflow
    aROIflow = pe.Workflow(name='aROIflow')
-   aROIflow.base_dir = experiment_dir + aROIWorkingdir
+   aROIflow.base_dir = experiment_dir + '/results/workingdir_aROI'
+
+
+Before we can start with the integration of the nodes into ``aROIflow`` we have to be aware about something. If we would try to simply connect ``fssource`` with ``segmentationorig`` like this...
+
+.. code-block:: py
+
+   ...(fssource, segmentationorig,[('aparc_aseg','segmentation_file')]),
+
+... we would get the following error:
+
+.. code-block:: py
+
+   Node: segmentationorig
+   input: segmentation_file
+   TraitError: The 'segmentation_file' trait of a SegStatsInputSpec instance must be an
+   existing file name, but a value of ['~SOMEPATH/experimentfreesurfer_data/
+   subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
+   /aparc.a2009s+aseg.mgz'] <type 'list'> was specified.
+
+This means that the output of the ``fssource`` node has the value: ``['~SOMEPATH/experiment/freesurfer_data/subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri/aparc.a2009s+aseg.mgz']``. That means we have to guide the output of this node so that ``segmentationorig`` receives the path to ``aparc+aseg.mgz`` and that ``segmentation2009`` receives the path to ``aparc.a2009s+aseg.mgz``.
+
+This can be achieved with a simple function:
+
+.. code-block:: py
+   :linenos:
+
+   def getVersion(in_file, version):
+       if version == 0:
+          return in_file[0]
+       else:
+          return in_file[1]
+
+Now we are ready to build our **anatomical ROI pipeline**.
+
+.. code-block:: py
+   :linenos:
 
    #Connect up all components
-   aROIflow.connect([(inputnode, datasource,[('subject_id', 'subject_id'),
-                                             ('contrast_id', 'contrast_id'),
+   aROIflow.connect([(inputnode, datasource,[('subject_id','subject_id'),
+                                             ('contrast_id','contrast_id'),
                                              ]),
-                     (inputnode, fssource,[('subject_id', 'subject_id')]),
-                     (fssource, segmentation2005,[(('aparc_aseg',getVersion,0), 'segmentation_file')]),
-                     (fssource, segmentation2009,[(('aparc_aseg',getVersion,1), 'segmentation_file')]),
-                     (datasource, MRIconversion,[('contrast', 'in_file')]),
-                     (MRIconversion, transformation,[('out_file', 'source_file')]),
-                     (datasource, transformation,[('bb_id', 'reg_file')]),
-                     (transformation, segmentation2005,[('transformed_file', 'in_file')]),
-                     (transformation, segmentation2009,[('transformed_file', 'in_file')]),
-                     (segmentation2005, datasink,[('summary_file', 'segstat')]),
+                     (inputnode, fssource,[('subject_id','subject_id')]),
+                     (fssource, segmentationorig,[(('aparc_aseg',getVersion,0),
+                                                    'segmentation_file')]),
+                     (fssource, segmentation2009,[(('aparc_aseg',getVersion,1),
+                                                    'segmentation_file')]),
+                     (datasource, MRIconversion,[('contrast','in_file')]),
+                     (MRIconversion, transformation,[('out_file','source_file')]),
+                     (datasource, transformation,[('bb_id','reg_file')]),
+                     (transformation, segmentationorig,[('transformed_file',
+                                                         'in_file')]),
+                     (transformation, segmentation2009,[('transformed_file',
+                                                         'in_file')]),
+                     (segmentationorig, datasink,[('summary_file', 'segstatorig')]),
                      (segmentation2009, datasink,[('summary_file', 'segstat2009')]),
                      ])
    
@@ -271,97 +313,127 @@ Run pipeline and generate graph
    aROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
 
-**Visualization of anatomical ROI pipeline**
+Visualization of anatomical ROI pipeline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: aROIgraph.png
-   :width: 200 px
+This graph of the ``hierarchical`` version shows the ``aROIflow``:
+
+.. image:: aROI_hierachical.png
+   :width: 810 px
+
+This detailed graph of the ``flat`` version shows the ``aROIflow``:
+
+.. image:: aROI_detailed.png
+   :width: 1080 px
 
 
 Summarizing the output in a cvs-file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This part is optional and shows only one of many ways how you can summarize the output of ``aROIflow`` into a common cvs-file. In essence it does the following steps for each contrast:
+
+* grab contrast and subject specific ``summary.stats`` file
+* extract values from this file and store it into a list
+* add the list of each subject into a bigger list
+* store this big list into a csv-file
+
 .. code-block:: py
    :linenos:
    
+   #iterate over contrasts and create a cvs-file for each
    for contrast in contrasts:
-   
+
+       #creates a list with an empty entry for each segmentation id
        output = []
        for i in range(15000):
-           output.append([i,'LABEL'])
+           output.append([i,None])
    
+       #to keep track of added subjects
        subjectNumber = 1
    
+       path2aROIOut = experiment_dir+'/results/'+aROIOutput
+   
+       #iterate over subjects and entering values into output
        for subject in subjects:
-   
-           #Find the location of the two output files
-           statsFile = experiment_dir+'/'+aROIOutput +'/segstat/_contrast_id_'+contrast+'/_subject_id_'+subject+'/summary.stats'
-           statsFile2009 = experiment_dir+'/'+aROIOutput +'/segstat2009/_contrast_id_'+contrast+'/_subject_id_'+subject+'/summary.stats'
-   
-           #Get the data from the two output files
-           dataFile = open(statsFile, 'r')
-           data = dataFile.readlines()
+      
+           #specify path to aROI datasink for each variaton of segmentation
+           path2Sumfile = '_contrast_id_'+contrast+'_subject_id_'+subject+'/summary.stats'
+           statsFileorig = path2aROIOut+'/segstatorig/'+path2Sumfile
+           statsFile2009 = path2aROIOut+'/segstat2009/'+path2Sumfile
+      
+           #extract the data from the output summary files
+           dataFile = open(statsFileorig, 'r')
+           dataorig = dataFile.readlines()
            dataFile.close()
            dataFile = open(statsFile2009, 'r')
            data2009 = dataFile.readlines()
            dataFile.close()
-       
-           #to check where the data starts
+          
+           #function to check where the data starts
            def findStartOfData(datafile):
                for line in range(100):
                    if datafile[line][0] != '#':
-                       return line
-       
+                      return line
+          
+           #get data and store it in tempresult
            tempresult = []
-   
-           for line in range(len(data)):
-               if line < findStartOfData(data):
+      
+           for line in range(len(dataorig)):
+               if line < findStartOfData(dataorig):
                    pass
                else:
-                   temp = data[line].strip('\n').split()
+                   temp = dataorig[line].strip('\n').split()
                    tempresult.append([int(temp[1]),temp[4],float(temp[5])])
-
+   
            for line in range(len(data2009)):
                if line < findStartOfData(data2009):
                    pass
                else:
                    temp = data2009[line].strip('\n').split()
                    tempresult.append([int(temp[1]),temp[4],float(temp[5])])
-   
+      
            tempresult.sort()
-   
+      
            result = []
    
            for line in range(len(tempresult)):
+               #pass if region has already been added
                if line > 0 and tempresult[line] == tempresult[line-1]:
                    pass
                else:
                    result.append(tempresult[line])
-   
+      
            for ROI in result:
-               if output[ROI[0]][1] == 'LABEL':
+               #if id wasn't extracted before, adds name of id to row
+               if output[ROI[0]][1] == None:
                   output[ROI[0]][1] = ROI[1]
+               #adds value of id into row
                output[ROI[0]].append(ROI[2])
-   
+      
+           #if no value for an id was entered for a subject
+           #   the value 0.0 gets added
            for ROI in output:
                if len(ROI) < subjectNumber+2:
                   ROI.append(0.0)
-   
+      
            subjectNumber += 1
-   
-       
+      
+       #adds labels to the first row of the output
        output.insert(0,['SegId','StructName'])
        output[0].extend(subjects)
    
-       output = [ROI for ROI in output if ROI[1] != 'LABEL']
+       #adds segment if it was extracted
+       output = [ROI for ROI in output if ROI[1] != None]
+      
+       #define name of the output csv-file
+       summaryFileName = 'aROI_'+contrast+'.csv'
    
-
+       #store output into a cvs-file
+       f = open(path2aROIOut+'/'+summaryFileName,'wb')
        import csv
-       f = open(aROIOutput +'/ROI_'+contrast+'_result.csv','wb')
        outputFile = csv.writer(f)
-   
        for line in output:
            outputFile.writerow(line)
-   
        f.close()
 
 
@@ -373,42 +445,61 @@ Summarizing the output in a cvs-file
 Functional ROI Pipeline
 =======================
 
-As said before, the most important difference to the extraction of an antomical ROI is that the region of interest isn't predifined by some atlas.
-We define the region we are interested in solely by a point in "brain"-space and by a the radius of a sphere around this point. The procedure to this is quite simple:
+As said before, the most important difference to the extraction of an antomical ROI is that the region of interest isn't predifined by some atlas. In this example we define the region we are interested in solely by a point in "brain"-space and by a the radius of a sphere around this point. The procedure to this is quite simple:
 
 1. define a point of interest and create a sphere around it
-2. overlay this sphere on to a subject
-3. extract the data from this sphere
+2. overlay this sphere on the functional data of a subject
+3. extract only the data from this region
 
-Our **functional ROI pipeline** does almost exactly this. The only difference is that we have to divide the first step into some smaller substeps:
-a. Take a subject specific contrast, multiply all voxels by 0 and add the value 1 to each. This leads  to a contrast file where all voxels have the value 1
-b. Define a cubic area around your point of interest (this is done by defining a corner of the cube and the length of its sides)
-c. Take this cubic region in "brain"-space where all voxel in the cube have values 1 and all outside this region have the value 0 and smooth this cube to a sphere
+Our **functional ROI pipeline** does almost exactly this. The only difference is that we have to divide the first step into smaller substeps:
 
-A visualization of those steps would look like this:
+a. find the coordination of a point you are interested in
+b. create a cube around this point of interest so that the region you want to cover is covered
+c. transform the cube into a sphere by smoothing it
+d. mask the sphere with the subject specific T-maps so that only the voxels are taken into acount which were actually active
 
-**Step 0**
+Let's take a closer look at those steps:
+
+**Step A: Define a point of interest**
 
 .. image:: fROI1.png
    :width: 810 px
 
-**Step 1**
+In this image that shows a thresholded contrast from our second level volume pipeline we know that the point with coordinations [110,128,142] seems to be very active and therefore interesting.
+
+**Step B: Create a cube**
 
 .. image:: fROI2.png
    :width: 810 px
 
-**Step 2**
+To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.
+
+**Step C: Smooth cube to a sphere**
 
 .. image:: fROI3.png
    :width: 810 px
 
-**Step 3**
+To achive this you have to take the cube and smooth it to a sphere. If you're using ``fsl.ImageMaths()`` you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.
+
+**Step D**
 
 .. image:: fROI4.png
    :width: 810 px
 
 
-Let's now begin with the creation of a **functional ROI pipeline**.
+
+Out[58]: 'fslmaths /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normcons/con_0010_ants.nii -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -odt float'
+
+Out[59]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -kernel sphere 10 -fmean -thr 0.5 -bin /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -odt float'
+
+Out[60]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -mas /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normtmaps/spmT_0002_ants.nii /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float'
+
+
+
+
+
+
+Let's now begin with the creation of our **functional ROI pipeline**.
 
 
 Import modules
@@ -436,7 +527,7 @@ Define experiment specific parameters
 
    #dirnames for functional ROI pipeline
    fROIWorkingdir = '/result/fROI_workingdir' #location and name of workingdir
-   fROIOutput = 'result/fROI_Output'          #location and name of fROI datasink
+   fROIOutput = 'result/fROI_output'          #location and name of fROI datasink
    
    #list of subjectnames
    subjects = ['subject1', 'subject2', 'subject3']
@@ -452,10 +543,10 @@ Define fROI specific parameters
    :linenos:
 
    #define the coordination of point of interest
-   centerOfROI = [183,134,136]
+   centerOfROI = [110,128,142]
    
    #define the radius of the sphere of interest
-   radius = 3
+   radius = 10
 
    #calculates the beginning corner of the cubic ROI
    corner = [centerOfROI[0]-radius,
@@ -490,7 +581,7 @@ Definition of Nodes
    cubemask = pe.Node(interface=fsl.ImageMaths(),name="cubemask")
    cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%(corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
    cubemask.inputs.out_data_type = 'float'
-   cubemask.inputs.in_file = '/mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/%s/normcons/con_%04d_ants.nii'%(subjects[0],contrasts[0])
+   cubemask.inputs.in_file = '~SOMEPATH/experiment/normcons/%s/con_%04d_ants.nii'%(subjects[0],contrasts[0])
    
    #Node: ImageMaths - to smooth the cubic ROI to a sphere
    spheremask = pe.Node(interface=fsl.ImageMaths(),name="spheremask")
@@ -513,7 +604,7 @@ Definition of Nodes
 .. note::
 
    If you are interested in what command actually will be executed by the ``cubemask`` node you just simply can execute ``cubemask.cmdline``. In this example this will give you the following output: ``blablabla``
-   But important that the interace isn't defined as a node. Has to be without pe.Node....
+   But it's important that the interface isn't defined as a node. Has to be without pe.Node....
 
 
 Definition of functional ROI workflow

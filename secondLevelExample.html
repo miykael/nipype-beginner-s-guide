@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</title>
+    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.3',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,8 +22,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
-    <link rel="next" title="Ideas For Future Chapters" href="futureChapters.html" />
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation" href="index.html" />
+    <link rel="next" title="How To Extract Regions Of Interest (ROIs)" href="regionOfInterest.html" />
     <link rel="prev" title="How To Build A First Level Pipeline" href="firstLevelExample.html" />
  
 <meta name="keywords" content="nipype, python, guide">
@@ -56,12 +56,12 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="futureChapters.html" title="Ideas For Future Chapters"
+          <a href="regionOfInterest.html" title="How To Extract Regions Of Interest (ROIs)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -102,8 +102,8 @@
   <p class="topless"><a href="firstLevelExample.html"
                         title="previous chapter">How To Build A First Level Pipeline</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="futureChapters.html"
-                        title="next chapter">Ideas For Future Chapters</a></p>
+  <p class="topless"><a href="regionOfInterest.html"
+                        title="next chapter">How To Extract Regions Of Interest (ROIs)</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/secondLevelExample.txt"
@@ -203,8 +203,8 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 4
 5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect all the con images for each contrast</span>
 <span class="n">l2volSource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2volSource&quot;</span><span class="p">)</span>
-<span class="n">pwd2normcons</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/level1_output/normcons/subject*/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
-<span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">pwd</span>
+<span class="n">path2normcons</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/level1_output/normcons/subject*/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
+<span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">path2normcons</span>
 <span class="n">l2volSource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="n">contrast_ids</span><span class="p">)]</span> <span class="c"># iterate over all contrast images</span>
 </pre></div>
 </td></tr></table></div>
@@ -500,16 +500,16 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <h2>Visualize pipelines<a class="headerlink" href="#visualize-pipelines" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="second-level-volume-pipeline">
 <h3>Second Level Volume Pipeline<a class="headerlink" href="#second-level-volume-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>This is the graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version of the  <tt class="docutils literal"><span class="pre">l2volflow</span></tt>:</p>
+<p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">l2volflow</span></tt>:</p>
 <img alt="_images/l2vol_flat_hierarchical.png" src="_images/l2vol_flat_hierarchical.png" />
-<p>This is the detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version of the <tt class="docutils literal"><span class="pre">l2volflow</span></tt>:</p>
+<p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">l2volflow</span></tt>:</p>
 <img alt="_images/l2vol_flat_detailed.png" src="_images/l2vol_flat_detailed.png" style="width: 1080px;" />
 </div>
 <div class="section" id="second-level-surface-pipeline">
 <h3>Second Level Surface Pipeline<a class="headerlink" href="#second-level-surface-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>This is the graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version of the  <tt class="docutils literal"><span class="pre">l2surfflow</span></tt>:</p>
+<p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">l2surfflow</span></tt>:</p>
 <img alt="_images/l2surf_flat_hierarchical.png" src="_images/l2surf_flat_hierarchical.png" />
-<p>This is the detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version of the <tt class="docutils literal"><span class="pre">l2surfflow</span></tt>:</p>
+<p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">l2surfflow</span></tt>:</p>
 <img alt="_images/l2surf_flat_detailed.png" src="_images/l2surf_flat_detailed.png" style="width: 1080px;" />
 </div>
 </div>
@@ -549,12 +549,12 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="futureChapters.html" title="Ideas For Future Chapters"
+          <a href="regionOfInterest.html" title="How To Extract Regions Of Interest (ROIs)"
              >next</a> |</li>
         <li class="right" >
           <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
              >previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
 

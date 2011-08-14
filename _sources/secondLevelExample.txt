@@ -68,8 +68,8 @@ As always we first have to specify where the datagrabber node can find the data.
 
    #Node: DataGrabber - to collect all the con images for each contrast
    l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
-   pwd2normcons = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
-   l2volSource.inputs.template = pwd
+   path2normcons = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
+   l2volSource.inputs.template = path2normcons
    l2volSource.iterables = [('con',contrast_ids)] # iterate over all contrast images
 
 
@@ -295,12 +295,12 @@ Visualize pipelines
 Second Level Volume Pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the graph of the ``hierarchical`` version of the  ``l2volflow``:
+This graph of the ``hierarchical`` version shows the ``l2volflow``:
 
 .. image:: l2vol_flat_hierarchical.png
 
 
-This is the detailed graph of the ``flat`` version of the ``l2volflow``:
+This detailed graph of the ``flat`` version shows the ``l2volflow``:
 
 .. image:: l2vol_flat_detailed.png
    :width: 1080 px
@@ -309,12 +309,12 @@ This is the detailed graph of the ``flat`` version of the ``l2volflow``:
 Second Level Surface Pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the graph of the ``hierarchical`` version of the  ``l2surfflow``:
+This graph of the ``hierarchical`` version shows the ``l2surfflow``:
 
 .. image:: l2surf_flat_hierarchical.png
 
 
-This is the detailed graph of the ``flat`` version of the ``l2surfflow``:
+This detailed graph of the ``flat`` version shows the ``l2surfflow``:
 
 .. image:: l2surf_flat_detailed.png
    :width: 1080 px

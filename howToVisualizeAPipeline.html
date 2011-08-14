@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</title>
+    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.3',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation" href="index.html" />
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation" href="index.html" />
     <link rel="next" title="How To Prepare Your Data for Nipype" href="preparedata.html" />
     <link rel="prev" title="How To Build A Pipeline In General" href="howToBuildAPipeline.html" />
  
@@ -61,7 +61,7 @@
         <li class="right" >
           <a href="howToBuildAPipeline.html" title="How To Build A Pipeline In General"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -147,18 +147,18 @@
 </div>
 <div class="section" id="orig-detailed-graph">
 <h3><tt class="docutils literal"><span class="pre">orig</span></tt> - detailed graph<a class="headerlink" href="#orig-detailed-graph" title="Permalink to this headline">¶</a></h3>
-<p>This is the detailed graph of the <tt class="docutils literal"><span class="pre">orig</span></tt> version of the <tt class="docutils literal"><span class="pre">metaflow</span></tt> form the simple graph above but with a bit more informations. Now you can see which input of which node is connected to another. Because the subworkflow of the <tt class="docutils literal"><span class="pre">frameflow</span></tt> are hidden you only see what inputs and outputs go into this <tt class="docutils literal"><span class="pre">frameflow</span></tt> but not more.</p>
+<p>This detailed graph of the <tt class="docutils literal"><span class="pre">orig</span></tt> version shows the <tt class="docutils literal"><span class="pre">metaflow</span></tt> from the simple graph above but with a bit more informations. Now you can see which input of which node is connected to another. Because the subworkflow of the <tt class="docutils literal"><span class="pre">frameflow</span></tt> are hidden you only see what inputs and outputs go into this <tt class="docutils literal"><span class="pre">frameflow</span></tt> but not more.</p>
 <img alt="_images/firstlevel_orig_detailed.png" src="_images/firstlevel_orig_detailed.png" style="width: 810px;" />
 </div>
 <div class="section" id="flat-simple-graph">
 <h3><tt class="docutils literal"><span class="pre">flat</span></tt> - simple graph<a class="headerlink" href="#flat-simple-graph" title="Permalink to this headline">¶</a></h3>
-<p>This is the simple graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version of the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. You can see now that the <tt class="docutils literal"><span class="pre">frameflow</span></tt> was expanded by its subnodes.</p>
+<p>This simple graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. You can see now that the <tt class="docutils literal"><span class="pre">frameflow</span></tt> was expanded by its subnodes.</p>
 <img alt="_images/firstlevel_flat_simple.png" src="_images/firstlevel_flat_simple.png" style="width: 810px;" />
 <p>But this version still doesn&#8217;t show you if there are different kinds of subworkflows.</p>
 </div>
 <div class="section" id="flat-detailed-graph">
 <h3><tt class="docutils literal"><span class="pre">flat</span></tt> - detailed graph<a class="headerlink" href="#flat-detailed-graph" title="Permalink to this headline">¶</a></h3>
-<p>This is the detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version of the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. You can see now all nodes, their inputs and outputs and how they are connected to each other.</p>
+<p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. You can see now all nodes, their inputs and outputs and how they are connected to each other.</p>
 <img alt="_images/firstlevel_flat_detailed.png" src="_images/firstlevel_flat_detailed.png" style="width: 1080px;" />
 <p>In this version you also see that the that the <tt class="docutils literal"><span class="pre">frameflow</span></tt> has actually three subworkflows called <tt class="docutils literal"><span class="pre">preproc</span></tt>, <tt class="docutils literal"><span class="pre">surfanalysis</span></tt> and <tt class="docutils literal"><span class="pre">volanalysis</span></tt>.</p>
 </div>
@@ -168,7 +168,7 @@
 </div>
 <div class="section" id="exec-detailed-graph">
 <h3><tt class="docutils literal"><span class="pre">exec</span></tt> - detailed graph<a class="headerlink" href="#exec-detailed-graph" title="Permalink to this headline">¶</a></h3>
-<p>This is the detailed graph of the <tt class="docutils literal"><span class="pre">exec</span></tt> version of the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. You can see that you get the same level of detail as if you would run it with <tt class="docutils literal"><span class="pre">flat</span></tt> but all iterables are expandend so that you can see all the nodes that would be processed in parallel are shown at once.</p>
+<p>This detailed graph of the <tt class="docutils literal"><span class="pre">exec</span></tt> version shows the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. You can see that you get the same level of detail as if you would run it with <tt class="docutils literal"><span class="pre">flat</span></tt> but all iterables are expandend so that you can see all the nodes that would be processed in parallel are shown at once.</p>
 <img alt="_images/firstlevel_exec_detailed.png" src="_images/firstlevel_exec_detailed.png" style="width: 1080px;" />
 <p>In this case the infosource node iterates over <tt class="docutils literal"><span class="pre">subject1</span></tt> and <tt class="docutils literal"><span class="pre">subject2</span></tt>.</p>
 <div class="admonition note">
@@ -178,7 +178,7 @@
 </div>
 <div class="section" id="hierarchical-simple-graph">
 <h3><tt class="docutils literal"><span class="pre">hierarchical</span></tt> - simple graph<a class="headerlink" href="#hierarchical-simple-graph" title="Permalink to this headline">¶</a></h3>
-<p>This is the graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version of the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. This graph doesn&#8217;t show you the inputs and outputs of each node, but it shows you how many connections exist between nodes and it surrounds each workflow with its own box to support a clear separation of the subworkflows.</p>
+<p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. This graph doesn&#8217;t show you the inputs and outputs of each node, but it shows you how many connections exist between nodes and it surrounds each workflow with its own box to support a clear separation of the subworkflows.</p>
 <img alt="_images/firstlevel_hierarchical.png" src="_images/firstlevel_hierarchical.png" style="width: 810px;" />
 <p>In this example you clearly see that the <tt class="docutils literal"><span class="pre">metaflow</span></tt> contains a <tt class="docutils literal"><span class="pre">frameflow</span></tt> which itself contains three subworkflows <tt class="docutils literal"><span class="pre">preproc</span></tt>, <tt class="docutils literal"><span class="pre">volanalysis</span></tt> and <tt class="docutils literal"><span class="pre">surfanalysis</span></tt>.</p>
 <div class="admonition note">
@@ -207,7 +207,7 @@
         <li class="right" >
           <a href="howToBuildAPipeline.html" title="How To Build A Pipeline In General"
              >previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
 

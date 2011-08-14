@@ -4,10 +4,9 @@ Ideas For Future Chapters
 
 As Nipype itself, this user guide isn't finished yet and there's a lot more to come. So far my plans for topics for future chapters are the following:
 
-* How to extract anatomical and functional ROIs
-* How to use slicer to create nice functional pictures
-* How to use ANTS to normalize your subject specific data from subject space into a common template space
-* How to use ANTS to create your own normbrain template
-* How to trace a running workflow with report
+* How to use **slicer** to create nice **functional pictures**
+* How to use **ANTS** to **normalize your subject specific data** from subject space into a common template space
+* How to use **ANTS** to **create your own normbrain template**
+* How to **trace a running workflow** with report
 
 As I try to improve this user guide to make the learning curve for Nipype beginners as steep as possible, feedback, criticism, comments, ideas, recommendation etc. are highly appreciated: `mnotter@mit.edu <mnotter@mit.edu>`_
