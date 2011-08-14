@@ -81,8 +81,9 @@
 <li><a class="reference internal" href="#define-nodes">Define nodes</a></li>
 <li><a class="reference internal" href="#definition-of-anatomical-roi-workflow">Definition of anatomical ROI workflow</a></li>
 <li><a class="reference internal" href="#run-pipeline-and-generate-graph">Run pipeline and generate graph</a></li>
-<li><a class="reference internal" href="#visualization-of-anatomical-roi-pipeline">Visualization of anatomical ROI pipeline</a></li>
+<li><a class="reference internal" href="#visualization-of-the-anatomical-roi-pipeline">Visualization of the anatomical ROI pipeline</a></li>
 <li><a class="reference internal" href="#summarizing-the-output-in-a-cvs-file">Summarizing the output in a cvs-file</a></li>
+<li><a class="reference internal" href="#folder-structure-after-aroiflow">Folder structure after <tt class="docutils literal"><span class="pre">aROIflow</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#functional-roi-pipeline">Functional ROI Pipeline</a><ul>
@@ -92,7 +93,9 @@
 <li><a class="reference internal" href="#definition-of-nodes">Definition of Nodes</a></li>
 <li><a class="reference internal" href="#definition-of-functional-roi-workflow">Definition of functional ROI workflow</a></li>
 <li><a class="reference internal" href="#run-the-pipeline-and-generate-the-graph">Run the pipeline and generate the graph</a></li>
+<li><a class="reference internal" href="#visualization-of-the-functional-roi-pipeline">Visualization of the functional ROI pipeline</a></li>
 <li><a class="reference internal" href="#id4">Summarizing the output in a cvs-file</a></li>
+<li><a class="reference internal" href="#folder-structure-after-froiflow">Folder structure after <tt class="docutils literal"><span class="pre">fROIflow</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -465,8 +468,8 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="visualization-of-anatomical-roi-pipeline">
-<h3>Visualization of anatomical ROI pipeline<a class="headerlink" href="#visualization-of-anatomical-roi-pipeline" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="visualization-of-the-anatomical-roi-pipeline">
+<h3>Visualization of the anatomical ROI pipeline<a class="headerlink" href="#visualization-of-the-anatomical-roi-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">aROIflow</span></tt>:</p>
 <img alt="_images/aROI_hierachical.png" src="_images/aROI_hierachical.png" style="width: 810px;" />
 <p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">aROIflow</span></tt>:</p>
@@ -677,6 +680,28 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 <p class="last">The code for this anatomical ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py">aROIpipeline.py</a></p>
 </div>
 </div>
+<div class="section" id="folder-structure-after-aroiflow">
+<h3>Folder structure after <tt class="docutils literal"><span class="pre">aROIflow</span></tt><a class="headerlink" href="#folder-structure-after-aroiflow" title="Permalink to this headline">¶</a></h3>
+<p>After we&#8217;ve run the <strong>anatomical ROI pipeline</strong> our folder structure should look like this:</p>
+<img alt="_images/aROI.png" src="_images/aROI.png" style="width: 810px;" />
+<p>Additionally to the <tt class="docutils literal"><span class="pre">level2_output</span></tt> folder in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/</span></tt> we now have the new folders:</p>
+<ul>
+<li><p class="first"><strong>workingdir_aROI</strong> folder that contains all the data that gets created from the <tt class="docutils literal"><span class="pre">aROIflow</span></tt> pipeline. As with all working directories, it  is <strong>highly recommended</strong> to delete this folder as soon as possible.</p>
+</li>
+<li><p class="first"><strong>aROI_output</strong> folder which is the datasink of the <strong>anatomical ROI pipeline</strong>. It contains:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>segstatorig</strong> folder with the <tt class="docutils literal"><span class="pre">summary.stats</span></tt> file from the original segmentation for each contrast and subject</li>
+<li><strong>segstat2009</strong> folder with the <tt class="docutils literal"><span class="pre">summary.stats</span></tt> file from the 2009 segmentation for each contrast and subject</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you run the additonal python code that is at the end of the script, the summarization files that get created will be stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/aROI_output</span></tt>.</p>
+</div>
+</div>
 </div>
 <div class="section" id="functional-roi-pipeline">
 <h2>Functional ROI Pipeline<a class="headerlink" href="#functional-roi-pipeline" title="Permalink to this headline">¶</a></h2>
@@ -699,15 +724,30 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 <p>In this image that shows a thresholded contrast from our second level volume pipeline we know that the point with coordinations [110,128,142] seems to be very active and therefore interesting.</p>
 <p><strong>Step B: Create a cube</strong></p>
 <img alt="_images/fROI2.png" src="_images/fROI2.png" style="width: 810px;" />
-<p>To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.</p>
+<p>To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides, which in this example is 10. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() would create for this step</span>
+fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject1/con_0004_ants.nii
+-mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 ~SOMEPATH/experiment/blabla/
+con_0004_ants_maths.nii.gz -odt float
+</pre></div>
+</div>
 <p><strong>Step C: Smooth cube to a sphere</strong></p>
 <img alt="_images/fROI3.png" src="_images/fROI3.png" style="width: 810px;" />
 <p>To achive this you have to take the cube and smooth it to a sphere. If you&#8217;re using <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.</p>
-<p><strong>Step D</strong></p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() would create for this step</span>
+fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
+-thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float
+</pre></div>
+</div>
+<p><strong>Step D: Mask ROI with subject specific T-map</strong></p>
 <img alt="_images/fROI4.png" src="_images/fROI4.png" style="width: 810px;" />
-<p>Out[58]: &#8216;fslmaths /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normcons/con_0010_ants.nii -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -odt float&#8217;</p>
-<p>Out[59]: &#8216;fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -kernel sphere 10 -fmean -thr 0.5 -bin /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -odt float&#8217;</p>
-<p>Out[60]: &#8216;fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -mas /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normtmaps/spmT_0002_ants.nii /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float&#8217;</p>
+<p>The final step of creating a functional is to mask your functional ROI for each subject and each contrast with the corresponding T-map. This leads to the picture above. With this way we take into account that only the values from the T-map in the specified region get counted.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() would create for this step</span>
+fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
+-mas ~SOMEPATH/experiment/results/level1_output/normtmaps/subject1/spmT_0004_ants.nii
+~SOMEPATH/experiment/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float
+</pre></div>
+</div>
 <p>Let&#8217;s now begin with the creation of our <strong>functional ROI pipeline</strong>.</p>
 <div class="section" id="id2">
 <h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
@@ -904,6 +944,13 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 </pre></div>
 </td></tr></table></div>
 </div>
+<div class="section" id="visualization-of-the-functional-roi-pipeline">
+<h3>Visualization of the functional ROI pipeline<a class="headerlink" href="#visualization-of-the-functional-roi-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">fROIflow</span></tt>:</p>
+<img alt="_images/fROI_hierachical.png" src="_images/fROI_hierachical.png" style="width: 810px;" />
+<p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">fROIflow</span></tt>:</p>
+<img alt="_images/fROI_detailed.png" src="_images/fROI_detailed.png" style="width: 1080px;" />
+</div>
 <div class="section" id="id4">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -931,7 +978,13 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 23
 24
 25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;coordinations:&#39;</span><span class="p">,</span><span class="n">centerOfROI</span><span class="p">,</span><span class="s">&#39;radius:&#39;</span><span class="p">,</span><span class="n">radius</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
@@ -940,7 +993,9 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 
     <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
 
-        <span class="n">statFile</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">fROIOutput</span> <span class="o">+</span> <span class="s">&#39;/_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;/_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span><span class="o">+</span><span class="s">&#39;/summary.stats&#39;</span>
+        <span class="n">path2Sumfile</span> <span class="o">=</span> <span class="s">&#39;_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span>
+
+        <span class="n">statFile</span> <span class="o">=</span> <span class="n">path2aROIOut</span> <span class="o">+</span> <span class="n">path2Sumfile</span> <span class="o">+</span> <span class="s">&#39;/summary.stats&#39;</span>
 
         <span class="c">#Get the data from the output file</span>
         <span class="n">dataFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">statFile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
@@ -952,7 +1007,7 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
     <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fROIOutput</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">centerOfROI</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">radius</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path2aROIOut</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">centerOfROI</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">radius</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
 <span class="n">outputFile</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
     <span class="n">outputFile</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
@@ -962,6 +1017,20 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">The code for this functional ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py.py">fROIpipeline.py</a></p>
+</div>
+</div>
+<div class="section" id="folder-structure-after-froiflow">
+<h3>Folder structure after <tt class="docutils literal"><span class="pre">fROIflow</span></tt><a class="headerlink" href="#folder-structure-after-froiflow" title="Permalink to this headline">¶</a></h3>
+<p>After we&#8217;ve run the <strong>functional ROI pipeline</strong> our folder structure should look like this:</p>
+<img alt="_images/fROI.png" src="_images/fROI.png" style="width: 810px;" />
+<p>Additionally to the <tt class="docutils literal"><span class="pre">level2_output</span></tt> folder in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/</span></tt> we now have the new folders:</p>
+<ul class="simple">
+<li><strong>workingdir_fROI</strong> folder that contains all the data that gets created from the <tt class="docutils literal"><span class="pre">fROIflow</span></tt> pipeline. As with all working directories, it  is <strong>highly recommended</strong> to delete this folder as soon as possible.</li>
+<li><strong>fROI_output</strong> folder which is the datasink of the <strong>functional ROI pipeline</strong>. In this folder you&#8217;ll find the <tt class="docutils literal"><span class="pre">summary.stats</span></tt> file for the defined functional region for each contrast and subject</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you run the additonal python code that is at the end of the script, the summarization files that get created will be stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/fROI_output</span></tt>.</p>
 </div>
 </div>
 </div>
@@ -991,7 +1060,7 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 14, 2011.
+      Last updated on August 15, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

@@ -313,8 +313,8 @@ Run pipeline and generate graph
    aROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 
 
-Visualization of anatomical ROI pipeline
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Visualization of the anatomical ROI pipeline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This graph of the ``hierarchical`` version shows the ``aROIflow``:
 
@@ -442,6 +442,28 @@ This part is optional and shows only one of many ways how you can summarize the 
    The code for this anatomical ROI pipeline can be found here: `aROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py>`_
 
 
+Folder structure after ``aROIflow``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After we've run the **anatomical ROI pipeline** our folder structure should look like this:
+
+.. image:: aROI.png
+   :width: 810
+
+Additionally to the ``level2_output`` folder in ``~SOMEPATH/experiment/results/`` we now have the new folders:
+
+* **workingdir_aROI** folder that contains all the data that gets created from the ``aROIflow`` pipeline. As with all working directories, it  is **highly recommended** to delete this folder as soon as possible.
+* **aROI_output** folder which is the datasink of the **anatomical ROI pipeline**. It contains:
+
+   - **segstatorig** folder with the ``summary.stats`` file from the original segmentation for each contrast and subject
+   - **segstat2009** folder with the ``summary.stats`` file from the 2009 segmentation for each contrast and subject
+
+.. note::
+
+   If you run the additonal python code that is at the end of the script, the summarization files that get created will be stored in ``~SOMEPATH/experiment/results/aROI_output``.
+
+
+
 Functional ROI Pipeline
 =======================
 
@@ -472,7 +494,14 @@ In this image that shows a thresholded contrast from our second level volume pip
 .. image:: fROI2.png
    :width: 810 px
 
-To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.
+To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides, which in this example is 10. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.
+
+.. code-block:: sh
+
+   #this is the command line that fsl.ImageMaths() would create for this step
+   fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject1/con_0004_ants.nii
+   -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 ~SOMEPATH/experiment/blabla/
+   con_0004_ants_maths.nii.gz -odt float
 
 **Step C: Smooth cube to a sphere**
 
@@ -481,22 +510,25 @@ To create this cube around the point of interesting some not so obvious steps ha
 
 To achive this you have to take the cube and smooth it to a sphere. If you're using ``fsl.ImageMaths()`` you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.
 
-**Step D**
+.. code-block:: sh
+
+   #this is the command line that fsl.ImageMaths() would create for this step
+   fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
+   -thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float
+
+**Step D: Mask ROI with subject specific T-map**
 
 .. image:: fROI4.png
    :width: 810 px
 
+The final step of creating a functional is to mask your functional ROI for each subject and each contrast with the corresponding T-map. This leads to the picture above. With this way we take into account that only the values from the T-map in the specified region get counted.
 
+.. code-block:: sh
 
-Out[58]: 'fslmaths /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normcons/con_0010_ants.nii -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -odt float'
-
-Out[59]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths.nii.gz -kernel sphere 10 -fmean -thr 0.5 -bin /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -odt float'
-
-Out[60]: 'fslmaths /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths.nii.gz -mas /mindhive/gablab/u/mnotter/att_sens/asens_normbrains_diff/asens_4/normtmaps/spmT_0002_ants.nii /mindhive/gablab/users/mnotter/Desktop/TEST/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float'
-
-
-
-
+   #this is the command line that fsl.ImageMaths() would create for this step
+   fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
+   -mas ~SOMEPATH/experiment/results/level1_output/normtmaps/subject1/spmT_0004_ants.nii
+   ~SOMEPATH/experiment/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float
 
 
 Let's now begin with the creation of our **functional ROI pipeline**.
@@ -637,6 +669,20 @@ Run the pipeline and generate the graph
 
    fROIflow.write_graph(graph2use='flat')
    fROIflow.run(plugin='MultiProc', plugin_args={'n_procs' : 4})
+
+
+Visualization of the functional ROI pipeline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This graph of the ``hierarchical`` version shows the ``fROIflow``:
+
+.. image:: fROI_hierachical.png
+   :width: 810 px
+
+This detailed graph of the ``flat`` version shows the ``fROIflow``:
+
+.. image:: fROI_detailed.png
+   :width: 1080 px
    
 
 Summarizing the output in a cvs-file
@@ -645,16 +691,20 @@ Summarizing the output in a cvs-file
 .. code-block:: py
    :linenos:
 
+   path2aROIOut = experiment_dir+'/results/'+aROIOutput
+
    output = []
    output.append(['coordinations:',centerOfROI,'radius:',radius])
-   
+
    for contrast in contrasts:
        contrast = str(contrast)
        output.append(['contrast:',contrast])
    
        for subject in subjects:
+
+           path2Sumfile = '_contrast_id_'+contrast+'_subject_id_'+subject
    
-           statFile = experiment_dir + '/' + fROIOutput + '/_contrast_id_'+contrast+'/_subject_id_'+subject+'/summary.stats'
+           statFile = path2aROIOut + path2Sumfile + '/summary.stats'
    
            #Get the data from the output file
            dataFile = open(statFile, 'r')
@@ -666,7 +716,7 @@ Summarizing the output in a cvs-file
        output.append([])
    
    import csv
-   f = open(fROIOutput+'/fROI_spherical'+str(centerOfROI)+'_%s_result.csv'%radius,'wb')
+   f = open(path2aROIOut+'/fROI_spherical'+str(centerOfROI)+'_%s_result.csv'%radius,'wb')
    outputFile = csv.writer(f)
    for line in output:
        outputFile.writerow(line)
@@ -677,3 +727,20 @@ Summarizing the output in a cvs-file
 
    The code for this functional ROI pipeline can be found here: `fROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py.py>`_
 
+
+Folder structure after ``fROIflow``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After we've run the **functional ROI pipeline** our folder structure should look like this:
+
+.. image:: fROI.png
+   :width: 810
+
+Additionally to the ``level2_output`` folder in ``~SOMEPATH/experiment/results/`` we now have the new folders:
+
+* **workingdir_fROI** folder that contains all the data that gets created from the ``fROIflow`` pipeline. As with all working directories, it  is **highly recommended** to delete this folder as soon as possible.
+* **fROI_output** folder which is the datasink of the **functional ROI pipeline**. In this folder you'll find the ``summary.stats`` file for the defined functional region for each contrast and subject
+
+.. note::
+
+   If you run the additonal python code that is at the end of the script, the summarization files that get created will be stored in ``~SOMEPATH/experiment/results/fROI_output``.
