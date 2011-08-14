@@ -30,8 +30,8 @@ contrast_ids = range(1,numberOfContrasts+1) #to create a list with value [1,2,3,
 
 
 """
-Do a second level analysis on the volume
-========================================
+Second level analysis on the volume
+===================================
 """
 
 """
@@ -104,8 +104,8 @@ l2volflow.connect([(l2volSource,oneSampleTTestVolDes,[('outfiles','in_files')]),
 
 
 """   
-Do a second level analysis on the surface
-=========================================
+Second level analysis on the surface
+====================================
 """
 
 """
