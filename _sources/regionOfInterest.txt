@@ -115,7 +115,7 @@ Define experiment specific parameters
    fs.FSCommand.set_default_subjects_dir(subjects_dir)
 
    #dirnames for anatomical ROI pipeline
-   aROIOutput = 'aROI_output'      #location and name of aROI datasink
+   aROIOutput = 'aROI_output'      #name of aROI datasink
    l1contrastDir = 'level1_output' #name of first level datasink
    
    #list of subjectnames
@@ -351,12 +351,11 @@ This part is optional and shows only one of many ways how you can summarize the 
        #to keep track of added subjects
        subjectNumber = 1
    
-       path2aROIOut = experiment_dir+'/results/'+aROIOutput
-   
        #iterate over subjects and entering values into output
        for subject in subjects:
       
            #specify path to aROI datasink for each variaton of segmentation
+           path2aROIOut = experiment_dir+'/results/'+aROIOutput
            path2Sumfile = '_contrast_id_'+contrast+'_subject_id_'+subject+'/summary.stats'
            statsFileorig = path2aROIOut+'/segstatorig/'+path2Sumfile
            statsFile2009 = path2aROIOut+'/segstat2009/'+path2Sumfile
@@ -439,7 +438,7 @@ This part is optional and shows only one of many ways how you can summarize the 
 
 .. hint::
 
-   The code for this anatomical ROI pipeline can be found here: `aROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py>`_
+   The code for this anatomical ROI pipeline can be found here: `aROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py>`_
 
 
 Folder structure after ``aROIflow``
@@ -498,10 +497,11 @@ To create this cube around the point of interesting some not so obvious steps ha
 
 .. code-block:: sh
 
-   #this is the command line that fsl.ImageMaths() would create for this step
+   #this is the command line that fsl.ImageMaths() for such a cubemask node
    fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject1/con_0004_ants.nii
    -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 ~SOMEPATH/experiment/blabla/
    con_0004_ants_maths.nii.gz -odt float
+
 
 **Step C: Smooth cube to a sphere**
 
@@ -512,7 +512,7 @@ To achive this you have to take the cube and smooth it to a sphere. If you're us
 
 .. code-block:: sh
 
-   #this is the command line that fsl.ImageMaths() would create for this step
+   #this is the command line that fsl.ImageMaths() for such a spheremask node
    fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
    -thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float
 
@@ -525,7 +525,7 @@ The final step of creating a functional is to mask your functional ROI for each 
 
 .. code-block:: sh
 
-   #this is the command line that fsl.ImageMaths() would create for this step
+   #this is the command line that fsl.ImageMaths() for such a tmapmask node
    fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
    -mas ~SOMEPATH/experiment/results/level1_output/normtmaps/subject1/spmT_0004_ants.nii
    ~SOMEPATH/experiment/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float
@@ -557,15 +557,15 @@ Define experiment specific parameters
    #to better access the parent folder of the experiment
    experiment_dir = '~SOMEPATH/experiment'
 
-   #dirnames for functional ROI pipeline
-   fROIWorkingdir = '/result/fROI_workingdir' #location and name of workingdir
-   fROIOutput = 'result/fROI_output'          #location and name of fROI datasink
-   
+   #dirnames for functional ROI and of level1 datasink
+   fROIOutput = 'fROI_output'      #name of fROI datasink
+   l1contrastDir = 'level1_output' #name of first level datasink
+
    #list of subjectnames
-   subjects = ['subject1', 'subject2', 'subject3']
-   
+   subjects = ['subject1','subject2','subject3']
+
    #list of contrastnumbers the pipeline should consider
-   contrasts = ['01','02','03','04','05']
+   contrasts = [1,2,3,4,5]
 
 
 Define fROI specific parameters
@@ -574,7 +574,7 @@ Define fROI specific parameters
 .. code-block:: py
    :linenos:
 
-   #define the coordination of point of interest
+   #define the coordination of the point of interest
    centerOfROI = [110,128,142]
    
    #define the radius of the sphere of interest
@@ -597,14 +597,13 @@ Definition of Nodes
                        name='inputnode')
    inputnode.iterables = [('subject_id', subjects),
                           ('contrast_id', contrasts)]
-   
-   
+      
    #Node: DataGrabber - To grab the input data
    datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id','contrast_id'],
-                                                  outfields=['contrast']),
+                                                  outfields=['contrast','tmaps']),
                         name = 'datasource')
-   datasource.inputs.base_directory = experiment_dir + 'result/' + l1contrastDir
-   datasource.inputs.template = '/%s/norm%s/%s_%04d_ants.nii'
+   datasource.inputs.base_directory = experiment_dir + '/results/' + l1contrastDir
+   datasource.inputs.template = 'norm%s/%s/%s_%04d_ants.nii'
    info = dict(contrast = [['subject_id','cons','con','contrast_id']],
                tmaps = [['subject_id','tmaps','spmT','contrast_id']])
    datasource.inputs.template_args = info
@@ -617,28 +616,44 @@ Definition of Nodes
    pathValues = (subjects[0],contrasts[0])
    cubemask.inputs.in_file = '~SOMEPATH/experiment/normcons/%s/con_%04d_ants.nii'%pathValues
    
-   #Node: ImageMaths - to smooth the cubic ROI to a sphere
+   #Node: ImageMaths - to transform the cubic ROI to a spherical ROI
    spheremask = pe.Node(interface=fsl.ImageMaths(),name="spheremask")
    spheremask.inputs.op_string = '-kernel sphere %d -fmean -thr 0.5 -bin'%radius
    spheremask.inputs.out_data_type = 'float'
-
-   #Node: ImageMaths - to mask the spherical ROI with a subject specific tmap
+   
+   #Node: ImageMaths - to mask the spherical ROI with a subject specific T-map
    tmapmask = pe.Node(interface=fsl.ImageMaths(),name="tmapmask")
    tmapmask.inputs.out_data_type = 'float'
+
+   #function to find the path to the subject specific T-map   
+   def path2tmap(tmappath):
+       return '-mas %s'%tmappath
    
    #Node: SegStats - to extract the statistic from a given segmentation
    segstat = pe.Node(interface=fs.SegStats(),name='segstat')
    
    #Node: Datasink - Create a datasink node to store important outputs
    datasink = pe.Node(interface=nio.DataSink(), name="datasink")
-   datasink.inputs.base_directory = experiment_dir
+   datasink.inputs.base_directory = experiment_dir + '/results'
    datasink.inputs.container = fROIOutput
 
 
 .. note::
 
-   If you are interested in what command actually will be executed by the ``cubemask`` node you just simply can execute ``cubemask.cmdline``. In this example this will give you the following output: ``blablabla``
-   But it's important that the interface isn't defined as a node. Has to be without pe.Node....
+   If you are interested in what command fsl.ImageMaths() actually will be executing in ``cubemask`` use the command ``cubemask.cmdline``. But for this to work ``cubemask`` mustn't be defined as a node. To use the ``cmdline`` command you have to define the instance like this:
+
+   .. code-block:: py
+
+      cubemask = fsl.ImageMaths()
+
+   In this example this would create the following cmdline command:
+
+   .. code-block:: py
+
+      fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
+      -thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float
+
+
 
 
 Definition of functional ROI workflow
@@ -649,17 +664,18 @@ Definition of functional ROI workflow
 
    #Initiation of the fROI extraction workflow
    fROIflow = pe.Workflow(name='fROIflow')
-   fROIflow.base_dir = experiment_dir + fROIWorkingdir
+   fROIflow.base_dir = experiment_dir + '/results/workingdir_fROI'
    
    #Connect up all components
-   fROIflow.connect([(cubemask, spheremask,[('out_file', 'in_file')]),
-                     (spheremask, tmapmask,[('out_file', 'in_file')]),
-                     (datasource, tmapmask,[(('tmaps',path2tmap), 'op_string')]),
-                     (infosource1, datasource,[('subject_id', 'subject_id')]),
-                     (infosource2, datasource,[('contrast_id', 'contrast_id')]),
-                     (tmapmask, segstat,[('out_file', 'segmentation_file')]),
-                     (datasource, segstat,[('contrast', 'in_file')]),
-                     (segstat, datasink,[('summary_file', '@statistic')]),
+   fROIflow.connect([(cubemask, spheremask,[('out_file','in_file')]),
+                     (spheremask, tmapmask,[('out_file','in_file')]),
+                     (datasource, tmapmask,[(('tmaps',path2tmap),'op_string')]),
+                     (inputnode, datasource,[('subject_id','subject_id'),
+                                             ('contrast_id','contrast_id')
+                                             ]),
+                     (tmapmask, segstat,[('out_file','segmentation_file')]),
+                     (datasource, segstat,[('contrast','in_file')]),
+                     (segstat, datasink,[('summary_file','@statistic')]),
                      ])
    
 
@@ -690,35 +706,50 @@ This detailed graph of the ``flat`` version shows the ``fROIflow``:
 Summarizing the output in a cvs-file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This part is optional and shows only one of many ways how you can summarize the output of ``fROIflow`` into a common cvs-file. In essence it does the following steps:
+
+* grab contrast and subject specific summary.stats file
+* extract values from this file and store it into a list
+* add the list of each subject into a bigger list
+* store this big list into a csv-file
+
+
 .. code-block:: py
    :linenos:
 
-   path2aROIOut = experiment_dir+'/results/'+aROIOutput
-
+   #creates the big list and its header
    output = []
    output.append(['coordinations:',centerOfROI,'radius:',radius])
 
+   #iterate over contrasts
    for contrast in contrasts:
+
+       #creates header for each contrast
        contrast = str(contrast)
        output.append(['contrast:',contrast])
    
+       #iterate over subjects
        for subject in subjects:
 
+           #specify path to fROI datasink for each variaton of segmentation
+           path2aROIOut = experiment_dir+'/results/'+aROIOutput
            path2Sumfile = '_contrast_id_'+contrast+'_subject_id_'+subject
-   
            statFile = path2aROIOut + path2Sumfile + '/summary.stats'
    
-           #Get the data from the output file
+           #extract the data from the output summary files
            dataFile = open(statFile, 'r')
            data = dataFile.readlines()
            dataFile.close()
-   
+
+           #add value of functional region   
            output.append([subject,data[-1].split()[5]])
    
+       #add an empty line at the end of a contrast summary
        output.append([])
    
-   import csv
+   #store output into a cvs-file
    f = open(path2aROIOut+'/fROI_spherical'+str(centerOfROI)+'_%s_result.csv'%radius,'wb')
+   import csv
    outputFile = csv.writer(f)
    for line in output:
        outputFile.writerow(line)
@@ -727,7 +758,7 @@ Summarizing the output in a cvs-file
 
 .. hint::
 
-   The code for this functional ROI pipeline can be found here: `fROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py.py>`_
+   The code for this functional ROI pipeline can be found here: `fROIpipeline.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py>`_
 
 
 Folder structure after ``fROIflow``

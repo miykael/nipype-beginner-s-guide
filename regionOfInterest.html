@@ -238,7 +238,7 @@
 <span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">subjects_dir</span><span class="p">)</span>
 
 <span class="c">#dirnames for anatomical ROI pipeline</span>
-<span class="n">aROIOutput</span> <span class="o">=</span> <span class="s">&#39;aROI_output&#39;</span>      <span class="c">#location and name of aROI datasink</span>
+<span class="n">aROIOutput</span> <span class="o">=</span> <span class="s">&#39;aROI_output&#39;</span>      <span class="c">#name of aROI datasink</span>
 <span class="n">l1contrastDir</span> <span class="o">=</span> <span class="s">&#39;level1_output&#39;</span> <span class="c">#name of first level datasink</span>
 
 <span class="c">#list of subjectnames</span>
@@ -577,8 +577,7 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 91
 92
 93
-94
-95</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#iterate over contrasts and create a cvs-file for each</span>
+94</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#iterate over contrasts and create a cvs-file for each</span>
 <span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
 
     <span class="c">#creates a list with an empty entry for each segmentation id</span>
@@ -589,12 +588,11 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
     <span class="c">#to keep track of added subjects</span>
     <span class="n">subjectNumber</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
-
     <span class="c">#iterate over subjects and entering values into output</span>
     <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
 
         <span class="c">#specify path to aROI datasink for each variaton of segmentation</span>
+        <span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
         <span class="n">path2Sumfile</span> <span class="o">=</span> <span class="s">&#39;_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span><span class="o">+</span><span class="s">&#39;/summary.stats&#39;</span>
         <span class="n">statsFileorig</span> <span class="o">=</span> <span class="n">path2aROIOut</span><span class="o">+</span><span class="s">&#39;/segstatorig/&#39;</span><span class="o">+</span><span class="n">path2Sumfile</span>
         <span class="n">statsFile2009</span> <span class="o">=</span> <span class="n">path2aROIOut</span><span class="o">+</span><span class="s">&#39;/segstat2009/&#39;</span><span class="o">+</span><span class="n">path2Sumfile</span>
@@ -677,7 +675,7 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The code for this anatomical ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py.py">aROIpipeline.py</a></p>
+<p class="last">The code for this anatomical ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/aROIpipeline.py">aROIpipeline.py</a></p>
 </div>
 </div>
 <div class="section" id="folder-structure-after-aroiflow">
@@ -725,7 +723,7 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 <p><strong>Step B: Create a cube</strong></p>
 <img alt="_images/fROI2.png" src="_images/fROI2.png" style="width: 810px;" />
 <p>To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides, which in this example is 10. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() would create for this step</span>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() for such a cubemask node</span>
 fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject1/con_0004_ants.nii
 -mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 ~SOMEPATH/experiment/blabla/
 con_0004_ants_maths.nii.gz -odt float
@@ -734,7 +732,7 @@ con_0004_ants_maths.nii.gz -odt float
 <p><strong>Step C: Smooth cube to a sphere</strong></p>
 <img alt="_images/fROI3.png" src="_images/fROI3.png" style="width: 810px;" />
 <p>To achive this you have to take the cube and smooth it to a sphere. If you&#8217;re using <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() would create for this step</span>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() for such a spheremask node</span>
 fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
 -thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float
 </pre></div>
@@ -742,7 +740,7 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 1
 <p><strong>Step D: Mask ROI with subject specific T-map</strong></p>
 <img alt="_images/fROI4.png" src="_images/fROI4.png" style="width: 810px;" />
 <p>The final step of creating a functional is to mask your functional ROI for each subject and each contrast with the corresponding T-map. This leads to the picture above. With this way we take into account that only the values from the T-map in the specified region get counted.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() would create for this step</span>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() for such a tmapmask node</span>
 fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 -mas ~SOMEPATH/experiment/results/level1_output/normtmaps/subject1/spmT_0004_ants.nii
 ~SOMEPATH/experiment/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float
@@ -781,15 +779,15 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#to better access the parent folder of the experiment</span>
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
-<span class="c">#dirnames for functional ROI pipeline</span>
-<span class="n">fROIWorkingdir</span> <span class="o">=</span> <span class="s">&#39;/result/fROI_workingdir&#39;</span> <span class="c">#location and name of workingdir</span>
-<span class="n">fROIOutput</span> <span class="o">=</span> <span class="s">&#39;result/fROI_output&#39;</span>          <span class="c">#location and name of fROI datasink</span>
+<span class="c">#dirnames for functional ROI and of level1 datasink</span>
+<span class="n">fROIOutput</span> <span class="o">=</span> <span class="s">&#39;fROI_output&#39;</span>      <span class="c">#name of fROI datasink</span>
+<span class="n">l1contrastDir</span> <span class="o">=</span> <span class="s">&#39;level1_output&#39;</span> <span class="c">#name of first level datasink</span>
 
 <span class="c">#list of subjectnames</span>
-<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span> <span class="s">&#39;subject2&#39;</span><span class="p">,</span> <span class="s">&#39;subject3&#39;</span><span class="p">]</span>
+<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">]</span>
 
 <span class="c">#list of contrastnumbers the pipeline should consider</span>
-<span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span><span class="s">&#39;02&#39;</span><span class="p">,</span><span class="s">&#39;03&#39;</span><span class="p">,</span><span class="s">&#39;04&#39;</span><span class="p">,</span><span class="s">&#39;05&#39;</span><span class="p">]</span>
+<span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -804,7 +802,7 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#define the coordination of point of interest</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#define the coordination of the point of interest</span>
 <span class="n">centerOfROI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">110</span><span class="p">,</span><span class="mi">128</span><span class="p">,</span><span class="mi">142</span><span class="p">]</span>
 
 <span class="c">#define the radius of the sphere of interest</span>
@@ -859,19 +857,21 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 38
 39
 40
-41</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
+41
+42
+43
+44</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
 <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
 <span class="n">inputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span>
                        <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrasts</span><span class="p">)]</span>
 
-
 <span class="c">#Node: DataGrabber - To grab the input data</span>
 <span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span>
-                                               <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">]),</span>
+                                               <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span><span class="s">&#39;tmaps&#39;</span><span class="p">]),</span>
                      <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
-<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;result/&#39;</span> <span class="o">+</span> <span class="n">l1contrastDir</span>
-<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;/</span><span class="si">%s</span><span class="s">/norm</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/&#39;</span> <span class="o">+</span> <span class="n">l1contrastDir</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;norm</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
 <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;cons&#39;</span><span class="p">,</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]],</span>
             <span class="n">tmaps</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;tmaps&#39;</span><span class="p">,</span><span class="s">&#39;spmT&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]])</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="n">info</span>
@@ -884,28 +884,38 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 <span class="n">pathValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment/normcons/</span><span class="si">%s</span><span class="s">/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="n">pathValues</span>
 
-<span class="c">#Node: ImageMaths - to smooth the cubic ROI to a sphere</span>
+<span class="c">#Node: ImageMaths - to transform the cubic ROI to a spherical ROI</span>
 <span class="n">spheremask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;spheremask&quot;</span><span class="p">)</span>
 <span class="n">spheremask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-kernel sphere </span><span class="si">%d</span><span class="s"> -fmean -thr 0.5 -bin&#39;</span><span class="o">%</span><span class="n">radius</span>
 <span class="n">spheremask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
 
-<span class="c">#Node: ImageMaths - to mask the spherical ROI with a subject specific tmap</span>
+<span class="c">#Node: ImageMaths - to mask the spherical ROI with a subject specific T-map</span>
 <span class="n">tmapmask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;tmapmask&quot;</span><span class="p">)</span>
 <span class="n">tmapmask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
+
+<span class="c">#function to find the path to the subject specific T-map</span>
+<span class="k">def</span> <span class="nf">path2tmap</span><span class="p">(</span><span class="n">tmappath</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&#39;-mas </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">tmappath</span>
 
 <span class="c">#Node: SegStats - to extract the statistic from a given segmentation</span>
 <span class="n">segstat</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segstat&#39;</span><span class="p">)</span>
 
 <span class="c">#Node: Datasink - Create a datasink node to store important outputs</span>
 <span class="n">datasink</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
-<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results&#39;</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">fROIOutput</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you are interested in what command actually will be executed by the <tt class="docutils literal"><span class="pre">cubemask</span></tt> node you just simply can execute <tt class="docutils literal"><span class="pre">cubemask.cmdline</span></tt>. In this example this will give you the following output: <tt class="docutils literal"><span class="pre">blablabla</span></tt>
-But it&#8217;s important that the interface isn&#8217;t defined as a node. Has to be without pe.Node....</p>
+<p>If you are interested in what command fsl.ImageMaths() actually will be executing in <tt class="docutils literal"><span class="pre">cubemask</span></tt> use the command <tt class="docutils literal"><span class="pre">cubemask.cmdline</span></tt>. But for this to work <tt class="docutils literal"><span class="pre">cubemask</span></tt> mustn&#8217;t be defined as a node. To use the <tt class="docutils literal"><span class="pre">cmdline</span></tt> command you have to define the instance like this:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">cubemask</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this example this would create the following cmdline command:</p>
+<div class="last highlight-py"><pre>fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
+-thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float</pre>
+</div>
 </div>
 </div>
 <div class="section" id="definition-of-functional-roi-workflow">
@@ -923,19 +933,21 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
 <span class="n">fROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fROIflow&#39;</span><span class="p">)</span>
-<span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="n">fROIWorkingdir</span>
+<span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/workingdir_fROI&#39;</span>
 
 <span class="c">#Connect up all components</span>
-<span class="n">fROIflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">cubemask</span><span class="p">,</span> <span class="n">spheremask</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">spheremask</span><span class="p">,</span> <span class="n">tmapmask</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">tmapmask</span><span class="p">,[((</span><span class="s">&#39;tmaps&#39;</span><span class="p">,</span><span class="n">path2tmap</span><span class="p">),</span> <span class="s">&#39;op_string&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource1</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource2</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="s">&#39;contrast_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">tmapmask</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">segstat</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span> <span class="s">&#39;@statistic&#39;</span><span class="p">)]),</span>
+<span class="n">fROIflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">cubemask</span><span class="p">,</span> <span class="n">spheremask</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">spheremask</span><span class="p">,</span> <span class="n">tmapmask</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">tmapmask</span><span class="p">,[((</span><span class="s">&#39;tmaps&#39;</span><span class="p">,</span><span class="n">path2tmap</span><span class="p">),</span><span class="s">&#39;op_string&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">),</span>
+                                          <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">)</span>
+                                          <span class="p">]),</span>
+                  <span class="p">(</span><span class="n">tmapmask</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">segstat</span><span class="p">,[(</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">segstat</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,[(</span><span class="s">&#39;summary_file&#39;</span><span class="p">,</span><span class="s">&#39;@statistic&#39;</span><span class="p">)]),</span>
                   <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
@@ -957,6 +969,13 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 </div>
 <div class="section" id="id4">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>This part is optional and shows only one of many ways how you can summarize the output of <tt class="docutils literal"><span class="pre">fROIflow</span></tt> into a common cvs-file. In essence it does the following steps:</p>
+<ul class="simple">
+<li>grab contrast and subject specific summary.stats file</li>
+<li>extract values from this file and store it into a list</li>
+<li>add the list of each subject into a bigger list</li>
+<li>store this big list into a csv-file</li>
+</ul>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -986,32 +1005,46 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 27
 28
 29
-30</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
-
+30
+31
+32
+33
+34
+35
+36
+37</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#creates the big list and its header</span>
 <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;coordinations:&#39;</span><span class="p">,</span><span class="n">centerOfROI</span><span class="p">,</span><span class="s">&#39;radius:&#39;</span><span class="p">,</span><span class="n">radius</span><span class="p">])</span>
 
+<span class="c">#iterate over contrasts</span>
 <span class="k">for</span> <span class="n">contrast</span> <span class="ow">in</span> <span class="n">contrasts</span><span class="p">:</span>
+
+    <span class="c">#creates header for each contrast</span>
     <span class="n">contrast</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">contrast</span><span class="p">)</span>
     <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;contrast:&#39;</span><span class="p">,</span><span class="n">contrast</span><span class="p">])</span>
 
+    <span class="c">#iterate over subjects</span>
     <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
 
+        <span class="c">#specify path to fROI datasink for each variaton of segmentation</span>
+        <span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
         <span class="n">path2Sumfile</span> <span class="o">=</span> <span class="s">&#39;_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span>
-
         <span class="n">statFile</span> <span class="o">=</span> <span class="n">path2aROIOut</span> <span class="o">+</span> <span class="n">path2Sumfile</span> <span class="o">+</span> <span class="s">&#39;/summary.stats&#39;</span>
 
-        <span class="c">#Get the data from the output file</span>
+        <span class="c">#extract the data from the output summary files</span>
         <span class="n">dataFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">statFile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">dataFile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
         <span class="n">dataFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
+        <span class="c">#add value of functional region</span>
         <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">subject</span><span class="p">,</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">5</span><span class="p">]])</span>
 
+    <span class="c">#add an empty line at the end of a contrast summary</span>
     <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
 
-<span class="kn">import</span> <span class="nn">csv</span>
+<span class="c">#store output into a cvs-file</span>
 <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path2aROIOut</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">centerOfROI</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">radius</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">csv</span>
 <span class="n">outputFile</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
     <span class="n">outputFile</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
@@ -1020,7 +1053,7 @@ But it&#8217;s important that the interface isn&#8217;t defined as a node. Has t
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The code for this functional ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py.py">fROIpipeline.py</a></p>
+<p class="last">The code for this functional ROI pipeline can be found here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fROIpipeline.py">fROIpipeline.py</a></p>
 </div>
 </div>
 <div class="section" id="folder-structure-after-froiflow">
