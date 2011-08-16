@@ -151,7 +151,7 @@
 <div class="section" id="what-is-a-pipeline">
 <h2>What is a pipeline?<a class="headerlink" href="#what-is-a-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline is also called a workflow and is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. In order for interfaces to be used in a workflow they need to be encapsulated into a node. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The great thing about Nipype is that those workflows themselves than can act as a node inside another workflow leading to a complex data analysis workflow.</p>
-<img alt="example_workflow.png" src="example_workflow.png" />
+<img alt="_images/example_workflow.png" src="_images/example_workflow.png" style="width: 512px;" />
 <p>Nipype explicitly implements a pipeline as a graph. This makes it easy to follow what steps are being executed and in what order. It also makes it easier to go back and change things by simply reconnecting different outputs and inputs or by inserting new nodes.</p>
 </div>
 <div class="section" id="how-to-build-your-own-pipeline">
@@ -329,7 +329,7 @@
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>This cloneing has to be done, because if you would use the volanalysis again, the data of the volanalysis would be overwritten. Because of that and because of the ambiguity of the connections in the workflow, the pipeline would not run. To solve this problem, every node and pipeline has to have its unique name.</p>
+<p>This cloning has to be done, because if you would use the volanalysis again, the data of the volanalysis would be overwritten. Because of that and because of the ambiguity of the connections in the workflow, the pipeline would not run. To solve this problem, every node and pipeline has to have its unique name.</p>
 <p>If you want to change some parameters of the pipeline after cloning you just have to specify the exact pipeline, node and parameter you want to change:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">surfanalysis</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">level1design</span><span class="o">.</span><span class="n">timing_units</span> <span class="o">=</span> <span class="s">&#39;secs&#39;</span>
 </pre></div>
@@ -370,8 +370,8 @@
 </div>
 <div class="section" id="connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines">
 <h4>Connect pipelines to each other (necessary if you have multiple pipelines)<a class="headerlink" href="#connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines" title="Permalink to this headline">¶</a></h4>
-<p>If you have multiple pipelines, like one for preprocessing, one for modelestimation and one for volume analysis, you can&#8217;t just connect the nodes to each other. You have to connect the pipelines to each other instead.</p>
-<p>Assumed that we have a node &#8220;realign&#8221; which is part of a pipeline called &#8220;preprocess&#8221; and that we have a node called &#8220;modelspec&#8221; which is part of a pipeline called &#8220;modelestimation&#8221;. If we now want to connect does two pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:</p>
+<p>If you have multiple pipelines, like one for preprocessing, one for model estimation and one for volume analysis, you can&#8217;t just connect the nodes to each other. You have to connect the pipelines to each other instead.</p>
+<p>Assumed that we have a node <tt class="docutils literal"><span class="pre">realign</span></tt> which is part of a pipeline called <tt class="docutils literal"><span class="pre">preprocess</span></tt> and that we have a node called <tt class="docutils literal"><span class="pre">modelspec</span></tt> which is part of a pipeline called <tt class="docutils literal"><span class="pre">modelestimation</span></tt>. If we now want to connect does two pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -505,7 +505,7 @@
                      <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>To use the datagrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:</p>
+<p>To use the DataGrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:</p>
 <img alt="_images/datastructure.png" src="_images/datastructure.png" style="width: 640px;" />
 <p>As you can see all the necessary data is stored in the experiment folder. The data of each subject is stored in its individual subject_folder. The name of this folder changes with each subject. There are two ways how you can define the structure of data you want to grab.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -609,9 +609,9 @@
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The name that you give the input-filed of the datasink node (here &#8216;bbregister&#8217; and &#8216;spm_mat_file&#8217;) will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.</p>
+<p class="last">The name that you give the input-filed of the DataSink node (here &#8216;bbregister&#8217; and &#8216;spm_mat_file&#8217;) will be taken as a name giver for the subfolder where those specific files will be stored in the DataSink folder.</p>
 </div>
-<p>The datasink node is really useful to keep control over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/config_file.html">Configuration File</a>.</p>
+<p>The DataSink node is really useful to keep control over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a working directory at all. For more information go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/config_file.html">Configuration File</a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">For a more detailed explanation to datasource and datasink go to: <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html">DataGrabber and DataSink explained</a>.</p>

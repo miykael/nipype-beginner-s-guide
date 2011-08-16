@@ -11,6 +11,7 @@ What is a pipeline?
 A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline is also called a workflow and is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. In order for interfaces to be used in a workflow they need to be encapsulated into a node. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The great thing about Nipype is that those workflows themselves than can act as a node inside another workflow leading to a complex data analysis workflow.
 
 .. image:: example_workflow.png
+   :width: 512
 
 Nipype explicitly implements a pipeline as a graph. This makes it easy to follow what steps are being executed and in what order. It also makes it easier to go back and change things by simply reconnecting different outputs and inputs or by inserting new nodes.
 
@@ -211,7 +212,7 @@ For example, if you've already created an analysis pipeline for the workflow aft
 
    surfanalysis = volanalysis.clone(name='surfanalysis')
 
-This cloneing has to be done, because if you would use the volanalysis again, the data of the volanalysis would be overwritten. Because of that and because of the ambiguity of the connections in the workflow, the pipeline would not run. To solve this problem, every node and pipeline has to have its unique name.
+This cloning has to be done, because if you would use the volanalysis again, the data of the volanalysis would be overwritten. Because of that and because of the ambiguity of the connections in the workflow, the pipeline would not run. To solve this problem, every node and pipeline has to have its unique name.
 
 If you want to change some parameters of the pipeline after cloning you just have to specify the exact pipeline, node and parameter you want to change:
 
@@ -259,9 +260,9 @@ It is important to point out that you don't just have to connect the nodes, but 
 Connect pipelines to each other (necessary if you have multiple pipelines)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you have multiple pipelines, like one for preprocessing, one for modelestimation and one for volume analysis, you can't just connect the nodes to each other. You have to connect the pipelines to each other instead.
+If you have multiple pipelines, like one for preprocessing, one for model estimation and one for volume analysis, you can't just connect the nodes to each other. You have to connect the pipelines to each other instead.
 
-Assumed that we have a node "realign" which is part of a pipeline called "preprocess" and that we have a node called "modelspec" which is part of a pipeline called "modelestimation". If we now want to connect does two pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:
+Assumed that we have a node ``realign`` which is part of a pipeline called ``preprocess`` and that we have a node called ``modelspec`` which is part of a pipeline called ``modelestimation``. If we now want to connect does two pipelines at those particular points we first have to create a kind of meta-pipeline which contains those to pipelines. This initiation and the following connections would look like that:
 
 .. code-block:: py
    :linenos:
@@ -382,7 +383,7 @@ Nipype has its own DataGrabber interface that allows us to define flexible searc
                                                   outfields=['func', 'struct']),
                         name = 'datasource')
 
-To use the datagrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:
+To use the DataGrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:
 
 .. image:: datastructure.png
    :width: 640
@@ -461,9 +462,9 @@ Sometimes you want to store selected output at a specified and easy accessible p
                      ])
 
 .. note::
-   The name that you give the input-filed of the datasink node (here 'bbregister' and 'spm_mat_file') will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.
+   The name that you give the input-filed of the DataSink node (here 'bbregister' and 'spm_mat_file') will be taken as a name giver for the subfolder where those specific files will be stored in the DataSink folder.
 
-The datasink node is really useful to keep control over your storage capacity. If you store all important files that you'll need for further analysis in this folder you can delete the ``workingdir`` of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to `Configuration File <http://nipy.sourceforge.net/nipype/users/config_file.html>`_.
+The DataSink node is really useful to keep control over your storage capacity. If you store all important files that you'll need for further analysis in this folder you can delete the ``workingdir`` of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a working directory at all. For more information go to `Configuration File <http://nipy.sourceforge.net/nipype/users/config_file.html>`_.
 
 
 .. hint::
@@ -516,7 +517,7 @@ Here we create a function that returns session specific information about the ex
 
    def subjectinfo(subject_id):
 
-       #import Bunch from interface base      
+       #import Bunch from interface base
        from nipype.interfaces.base import Bunch
 
        #restate the names of 

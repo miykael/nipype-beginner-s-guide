@@ -61,7 +61,7 @@ Second level analysis on the volume
 Grab the data
 ~~~~~~~~~~~~~
 
-As always we first have to specify where the datagrabber node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject_name/'``. This means the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject2/con_0001.nii'``
+As always we first have to specify where the ``DataGrabber`` node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject_name/'``. This means the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject2/con_0001.nii'``
 
 .. code-block:: py
    :linenos:

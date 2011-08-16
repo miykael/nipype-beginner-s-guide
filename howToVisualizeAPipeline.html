@@ -124,14 +124,14 @@
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>Nipype can creat four different kinds of graphs by setting the variable <tt class="docutils literal"><span class="pre">graph2use</span></tt> to the following parameters:</p>
+<p>Nipype can create four different kinds of graphs by setting the variable <tt class="docutils literal"><span class="pre">graph2use</span></tt> to the following parameters:</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">orig</span></tt> shows only the highest workflow</li>
 <li><tt class="docutils literal"><span class="pre">flat</span></tt> shows all workflows with subworkflows</li>
 <li><tt class="docutils literal"><span class="pre">exec</span></tt> shows all workflows with subworkflows and expands iterables into subgraphs</li>
 <li><tt class="docutils literal"><span class="pre">hierarchical</span></tt> shows all workflows with subworkflows but maintains their hierarchy</li>
 </ul>
-<p>All versions create two graph files except the hierarchical one. The difference of those two files is in the level of detail they are showing. There is a <strong>simple overview graph</strong> called <tt class="docutils literal"><span class="pre">graph.dot</span></tt> that shows you the basic connections between nodes and a <strong>more detailed overview graph</strong> called <tt class="docutils literal"><span class="pre">graph_detailed.dot</span></tt> that shows you additionally the outputs and inputs of each node and the connections between them. The <strong>hierarchical graph</strong> on the other side creates only a simple overview graph. But its iterable nodes are marked in a different grey tone and subgraphs are surrounded by a square to show their range.</p>
+<p>All versions create two graph files except the hierarchical one. The difference of those two files is in the level of detail they are showing. There is a <strong>simple overview graph</strong> called <tt class="docutils literal"><span class="pre">graph.dot</span></tt> that shows you the basic connections between nodes and a <strong>more detailed overview graph</strong> called <tt class="docutils literal"><span class="pre">graph_detailed.dot</span></tt> that shows you additionally the outputs and inputs of each node and the connections between them. The <strong>hierarchical graph</strong> on the other side creates only a simple overview graph. But its iterable nodes are marked in a different gray tone and subgraphs are surrounded by a square to show their range.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The graph files can be found in the highest pipeline folder of your working directory.</p>
@@ -184,7 +184,7 @@
 <p>In this example you clearly see that the <tt class="docutils literal"><span class="pre">metaflow</span></tt> contains a <tt class="docutils literal"><span class="pre">frameflow</span></tt> which itself contains three subworkflows <tt class="docutils literal"><span class="pre">preproc</span></tt>, <tt class="docutils literal"><span class="pre">volanalysis</span></tt> and <tt class="docutils literal"><span class="pre">surfanalysis</span></tt>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The coloration of this graphs were done manually and don&#8217;t get created by nipype itself.</p>
+<p class="last">The coloration of this graphs was done manually and don&#8217;t get created by nipype itself.</p>
 </div>
 </div>
 </div>

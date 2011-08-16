@@ -132,11 +132,11 @@
 </div>
 <div class="section" id="define-the-structure-of-your-pipeline">
 <h2>Define the structure of your pipeline<a class="headerlink" href="#define-the-structure-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>A typical fMRI Workflow can be divided into two sections: <strong>preprocessing</strong> and <strong>modeling</strong>. The first one deals with cleaning data from confounds and noise and the second one fits a model to the cleaned data based on the experimental design. Now the best way to build your own pipeline is to think about the workflow the data should go through.</p>
+<p>A typical fMRI workflow can be divided into two sections: <strong>preprocessing</strong> and <strong>modeling</strong>. The first one deals with cleaning data from confounds and noise and the second one fits a model to the cleaned data based on the experimental design. Now the best way to build your own pipeline is to think about the workflow the data should go through.</p>
 <p>In this example we want to first run some preprocessing like <cite>SliceTiming</cite>, <cite>Realignment</cite>, <cite>ArtifactDetection</cite>, <cite>BBRegister</cite> and <cite>Smoothing</cite>. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing of the modeling part of the workflow. All this will be accommodate in a <strong>preprocess pipeline</strong>. After that we want to create a modeling part that estimates a concrete model by running first <cite>SpecifyModel</cite>, creating a <cite>Level1Design</cite>, <cite>EstimateModel</cite> and <cite>EstimateContrast</cite>. This will be done in a <strong>volume analysis pipeline</strong>.</p>
-<p>The preprocess and the volume analysis pipeline together with the inputnode, will create the basic <strong>framework workflow</strong>. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I&#8217;d like to call <strong>meta workflow</strong>. Visualized this pipeline would look like this:</p>
+<p>The preprocess and the volume analysis pipeline together with the inputnode, will create the basic <strong>framework workflow</strong>. And this framework workflow will be connected to the infosource, the <tt class="docutils literal"><span class="pre">DataGrabber</span></tt> and the <tt class="docutils literal"><span class="pre">DataSink</span></tt> by a higher workflow, I&#8217;d like to call <strong>meta workflow</strong>. Visualized this pipeline would look like this:</p>
 <img alt="_images/metaflow.png" src="_images/metaflow.png" style="width: 810px;" />
-<p>The connections between the nodes will make more sense once we look at the inputs the given nodes need. Some may also ask why we haven&#8217;t included the infosource, datagrabber and datasink nodes into the frameflow? The reason is that those nodes  highly dependent on the paradigm specific parameters and will change for every model/experiment. That&#8217;s why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.</p>
+<p>The connections between the nodes will make more sense once we look at the inputs the given nodes need. Some may also ask why we haven&#8217;t included the <tt class="docutils literal"><span class="pre">Infosource</span></tt>, <tt class="docutils literal"><span class="pre">DataGrabber</span></tt> and <tt class="docutils literal"><span class="pre">DataSink</span></tt> nodes into the <tt class="docutils literal"><span class="pre">frameflow</span></tt>? The reason is that those nodes  highly dependent on the paradigm specific parameters and will change for every model/experiment. That&#8217;s why we want to separate them from the framework workflow which will stay more or less the same for similar experiments. This does also give us the opportunity to just import this framework workflow into a new pipeline script.</p>
 </div>
 <div class="section" id="write-your-pipeline-script">
 <h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">¶</a></h2>
@@ -192,7 +192,7 @@
 <span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">subjects_dir</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>Those specification mean that the name of the subjectfolders are &#8220;subject1&#8221;, &#8220;subject2&#8221; and &#8220;subject3&#8221; and that each of those folders contain a &#8220;func1.nii&#8221; and &#8220;func2.nii&#8221; file which represents the nifti files for the first and the second functional run. But the exact structure of the folder will be later defined by the implementation of the datagrabber node.</p>
+<p>Those specification mean that the name of the subjectfolders are &#8220;subject1&#8221;, &#8220;subject2&#8221; and &#8220;subject3&#8221; and that each of those folders contain a &#8220;func1.nii&#8221; and &#8220;func2.nii&#8221; file which represents the nifti files for the first and the second functional run. But the exact structure of the folder will be later defined by the implementation of the <tt class="docutils literal"><span class="pre">DataGrabber</span></tt> node.</p>
 </div>
 <div class="section" id="define-a-pipeline-for-the-preprocess">
 <h3>Define a pipeline for the preprocess<a class="headerlink" href="#define-a-pipeline-for-the-preprocess" title="Permalink to this headline">¶</a></h3>
@@ -471,7 +471,7 @@
 </div>
 <div class="section" id="define-infosource-datagrabber-and-datasink">
 <h3>Define infosource, datagrabber and datasink<a class="headerlink" href="#define-infosource-datagrabber-and-datasink" title="Permalink to this headline">¶</a></h3>
-<p>We now have to create the infosource that defines the subjectlist, the datagrabber that grabs the inputs and the datasink which defines where we want to store the important outputs at.</p>
+<p>We now have to create the <tt class="docutils literal"><span class="pre">Infosource</span></tt> that defines the subjectlist, the <tt class="docutils literal"><span class="pre">DataGrabber</span></tt> that grabs the inputs and the <tt class="docutils literal"><span class="pre">DataSink</span></tt> which defines where we want to store the important outputs at.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -711,7 +711,7 @@
 <span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>Now we have to integrate this surfanalysis into the frameflow and into the metaflow. The connections are almost the same as they are for the <strong>volume analysis pipeline</strong>. In this example the only difference is that we don&#8217;t want to use smoothed data for the analysis on the surface because we will be smoothing the data latter on the second level surface analysis.</p>
+<p>Now we have to integrate this surfanalysis into the <tt class="docutils literal"><span class="pre">frameflow</span></tt> and into the <tt class="docutils literal"><span class="pre">metaflow</span></tt>. The connections are almost the same as they are for the <strong>volume analysis pipeline</strong>. In this example the only difference is that we don&#8217;t want to use smoothed data for the analysis on the surface because we will be smoothing the data latter on the second level surface analysis.</p>
 <p>This means instead of taking the smoothed files from the preprocess pipeline and feeding them to the <tt class="docutils literal"><span class="pre">modelspec</span></tt> node we will take the files directly from the <tt class="docutils literal"><span class="pre">realign</span></tt> node.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2

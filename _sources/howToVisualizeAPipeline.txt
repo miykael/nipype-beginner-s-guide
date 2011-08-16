@@ -12,14 +12,14 @@ After the connection of all nodes of a pipeline is established we are able to us
 
    metaflow.write_graph(graph2use='flat')
 
-Nipype can creat four different kinds of graphs by setting the variable ``graph2use`` to the following parameters:
+Nipype can create four different kinds of graphs by setting the variable ``graph2use`` to the following parameters:
 
 * ``orig`` shows only the highest workflow
 * ``flat`` shows all workflows with subworkflows
 * ``exec`` shows all workflows with subworkflows and expands iterables into subgraphs
 * ``hierarchical`` shows all workflows with subworkflows but maintains their hierarchy
 
-All versions create two graph files except the hierarchical one. The difference of those two files is in the level of detail they are showing. There is a **simple overview graph** called ``graph.dot`` that shows you the basic connections between nodes and a **more detailed overview graph** called ``graph_detailed.dot`` that shows you additionally the outputs and inputs of each node and the connections between them. The **hierarchical graph** on the other side creates only a simple overview graph. But its iterable nodes are marked in a different grey tone and subgraphs are surrounded by a square to show their range.
+All versions create two graph files except the hierarchical one. The difference of those two files is in the level of detail they are showing. There is a **simple overview graph** called ``graph.dot`` that shows you the basic connections between nodes and a **more detailed overview graph** called ``graph_detailed.dot`` that shows you additionally the outputs and inputs of each node and the connections between them. The **hierarchical graph** on the other side creates only a simple overview graph. But its iterable nodes are marked in a different gray tone and subgraphs are surrounded by a square to show their range.
 
 .. note::
    The graph files can be found in the highest pipeline folder of your working directory.
@@ -106,4 +106,4 @@ In this example you clearly see that the ``metaflow`` contains a ``frameflow`` w
 
 
 .. note::
-   The coloration of this graphs were done manually and don't get created by nipype itself.
+   The coloration of this graphs was done manually and don't get created by nipype itself.

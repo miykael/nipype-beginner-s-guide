@@ -178,9 +178,9 @@
 </div>
 <p>The ids from <em>1 to 999</em> can be found in the original as well as in the 2009 version of segmentation. The ids <em>1000 to 8014</em> can only be found in the <strong>original version</strong> and the ids <em>11100 to 14175</em> can only be found in the <strong>2009 version</strong> of segmentation.</p>
 <p><strong>Visualization of original Segmentation</strong>: The following picture shows you the labels of the original segmentation. The annotation of which color belongs to which region is stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/freesurfer_data/fsaverage/label/lh.aparc.annot</span></tt> (if you&#8217;re interested in the left hemisphere)</p>
-<img alt="_images/segorig.png" src="_images/segorig.png" style="width: 810px;" />
+<img alt="_images/segorig.png" src="_images/segorig.png" style="width: 512px;" />
 <p><strong>Visualization of 2009 Segmentation</strong>: The following picture shows you the labels of the 2009 segmentation. The annotation of which color belongs to which region is stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/freesurfer_data/fsaverage/label/rh.aparc.a2009s.annot</span></tt> (if you&#8217;re interested in the right hemisphere)</p>
-<img alt="_images/seg2009.png" src="_images/seg2009.png" style="width: 810px;" />
+<img alt="_images/seg2009.png" src="_images/seg2009.png" style="width: 512px;" />
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">If you want to explore those regions by ourself I recommend to open a <strong>FreeSurfer</strong> capable viewing tool and overlay the annotation file from the <tt class="docutils literal"><span class="pre">fsaverage/label</span></tt> folder.</p>
@@ -189,7 +189,7 @@
 <div class="section" id="functional-roi">
 <h3>Functional ROI<a class="headerlink" href="#functional-roi" title="Permalink to this headline">¶</a></h3>
 <p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this chapter.</p>
-<p><strong>Visualization of a functional ROI</strong>: The following picture shows a spherical region with radius 10 voxel around the point of interest [110, 128, 142] in MNI-space.</p>
+<p><strong>Visualization of a functional ROI</strong>: The following picture shows a spherical region with radius 20 voxel around the point of interest [179, 129, 107] in MNI-space.</p>
 <img alt="_images/fROI3.png" src="_images/fROI3.png" style="width: 810px;" />
 </div>
 </div>
@@ -381,7 +381,7 @@
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>We implement two <tt class="docutils literal"><span class="pre">SegStats</span></tt> nodes because we have two lists of segmentation, the <tt class="docutils literal"><span class="pre">original</span></tt> and the <tt class="docutils literal"><span class="pre">2009</span></tt> one. It might be possible two feed those values into one node with an iterable, but I prefere this way.</p>
+<p>We implement two <tt class="docutils literal"><span class="pre">SegStats</span></tt> nodes because we have two lists of segmentation, the <tt class="docutils literal"><span class="pre">original</span></tt> and the <tt class="docutils literal"><span class="pre">2009</span></tt> one. It might be possible two feed those values into one node with using iterables, but I prefer this way.</p>
 <p class="last">If you don&#8217;t specify a value for <tt class="docutils literal"><span class="pre">segment_id</span></tt> the pipeline will extract all regions of your atlas. This is not bad but can take a long time.</p>
 </div>
 </div>
@@ -591,7 +591,7 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
     <span class="c">#iterate over subjects and entering values into output</span>
     <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
 
-        <span class="c">#specify path to aROI datasink for each variaton of segmentation</span>
+        <span class="c">#specify path to aROI datasink for each variation of segmentation</span>
         <span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
         <span class="n">path2Sumfile</span> <span class="o">=</span> <span class="s">&#39;_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span><span class="o">+</span><span class="s">&#39;/summary.stats&#39;</span>
         <span class="n">statsFileorig</span> <span class="o">=</span> <span class="n">path2aROIOut</span><span class="o">+</span><span class="s">&#39;/segstatorig/&#39;</span><span class="o">+</span><span class="n">path2Sumfile</span>
@@ -697,13 +697,13 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you run the additonal python code that is at the end of the script, the summarization files that get created will be stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/aROI_output</span></tt>.</p>
+<p class="last">If you run the additional python code that is at the end of the script, the summarization files that get created will be stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/aROI_output</span></tt>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="functional-roi-pipeline">
 <h2>Functional ROI Pipeline<a class="headerlink" href="#functional-roi-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>As said before, the most important difference to the extraction of an antomical ROI is that the region of interest isn&#8217;t predifined by some atlas. In this example we define the region we are interested in solely by a point in &#8220;brain&#8221;-space and by a the radius of a sphere around this point. The procedure to this is quite simple:</p>
+<p>As said before, the most important difference to the extraction of an anatomical ROI is that the region of interest isn&#8217;t predefined by some atlas. In this example we define the region we are interested in solely by a point in &#8220;brain&#8221;-space and by a the radius of a sphere around this point. The procedure to this is quite simple:</p>
 <ol class="arabic simple">
 <li>define a point of interest and create a sphere around it</li>
 <li>overlay this sphere on the functional data of a subject</li>
@@ -714,41 +714,44 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 <li>find the coordination of a point you are interested in</li>
 <li>create a cube around this point of interest so that the region you want to cover is covered</li>
 <li>transform the cube into a sphere by smoothing it</li>
-<li>mask the sphere with the subject specific T-maps so that only the voxels are taken into acount which were actually active</li>
+<li>mask the sphere with the subject specific T-maps so that only the voxels are taken into account which were actually active</li>
 </ol>
 <p>Let&#8217;s take a closer look at those steps:</p>
 <p><strong>Step A: Define a point of interest</strong></p>
 <img alt="_images/fROI1.png" src="_images/fROI1.png" style="width: 810px;" />
-<p>In this image that shows a thresholded contrast from our second level volume pipeline we know that the point with coordinations [110,128,142] seems to be very active and therefore interesting.</p>
+<p>In this image that shows a thresholded contrast from our second level volume pipeline we know that the point with coordinations [179, 129, 107] seems to be very active and therefore interesting.</p>
 <p><strong>Step B: Create a cube</strong></p>
 <img alt="_images/fROI2.png" src="_images/fROI2.png" style="width: 810px;" />
-<p>To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides, which in this example is 10. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() for such a cubemask node</span>
-fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject1/con_0004_ants.nii
--mul 0 -add 1 -roi 100 20 118 20 132 20 0 1 ~SOMEPATH/experiment/blabla/
-con_0004_ants_maths.nii.gz -odt float
+<p>To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides, which in this example is 20. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line for fsl.ImageMaths() of such a cubemask node</span>
+fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject2/
+con_0001_ants.nii -mul 0 -add 1 -roi 159 40 109 40 87 40 0 1 ~SOMEPATH/experiment/
+results/workingdir_fROI/fROIflow/cubemask/con_0001_ants_maths.nii.gz -odt float
 </pre></div>
 </div>
 <p><strong>Step C: Smooth cube to a sphere</strong></p>
 <img alt="_images/fROI3.png" src="_images/fROI3.png" style="width: 810px;" />
-<p>To achive this you have to take the cube and smooth it to a sphere. If you&#8217;re using <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() for such a spheremask node</span>
-fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
--thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float
+<p>To achieve this you have to take the cube and smooth it to a sphere. If you&#8217;re using <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line for fsl.ImageMaths() of such a spheremask node</span>
+fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/cubemask/
+con_0001_ants_maths.nii.gz -kernel sphere 20 -fmean -thr 0.5 -bin ~SOMEPATH/experiment/
+results/workingdir_fROI/fROIflow/spheremask/con_0001_ants_maths_maths.nii.gz -odt float
 </pre></div>
 </div>
 <p><strong>Step D: Mask ROI with subject specific T-map</strong></p>
 <img alt="_images/fROI4.png" src="_images/fROI4.png" style="width: 810px;" />
 <p>The final step of creating a functional is to mask your functional ROI for each subject and each contrast with the corresponding T-map. This leads to the picture above. With this way we take into account that only the values from the T-map in the specified region get counted.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line that fsl.ImageMaths() for such a tmapmask node</span>
-fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
--mas ~SOMEPATH/experiment/results/level1_output/normtmaps/subject1/spmT_0004_ants.nii
-~SOMEPATH/experiment/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line for fsl.ImageMaths() of such a tmapmask node</span>
+fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/spheremask/
+con_0001_ants_maths_maths.nii.gz -mul ~SOMEPATH/experiment/results/level2_output/
+l2vol_contrasts_thresh/_con_4/spmT_0001_thr.hdr -bin ~SOMEPATH/experiment/
+results/workingdir_fROI/fROIflow/_contrast_id_4_subject_id_subject2/tmapmask/
+con_0001_ants_maths_maths_maths.nii.gz -odt float
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>More informations to the differente arguments of <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> aka <tt class="docutils literal"><span class="pre">fslmaths</span></tt> can be found <a class="reference external" href="http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc">here</a>. To be on the safe side, I additionally copied it&#8217;s content into <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt">fslmaths.txt</a>.</p>
+<p>More informations about the different arguments of <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> aka <tt class="docutils literal"><span class="pre">fslmaths</span></tt> can be found <a class="reference external" href="http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc">here</a>. To be on the safe side, I additionally copied it&#8217;s content into <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt">fslmaths.txt</a>.</p>
 <p class="last"><strong>Important:</strong> This document wasn&#8217;t created by me, I just stumbled upon it. But it is the best and most detailed one I&#8217;ve found.</p>
 </div>
 <p>Let&#8217;s now begin with the creation of our <strong>functional ROI pipeline</strong>.</p>
@@ -1031,7 +1034,7 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
     <span class="c">#iterate over subjects</span>
     <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
 
-        <span class="c">#specify path to fROI datasink for each variaton of segmentation</span>
+        <span class="c">#specify path to fROI datasink for each variation of segmentation</span>
         <span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
         <span class="n">path2Sumfile</span> <span class="o">=</span> <span class="s">&#39;_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span>
         <span class="n">statFile</span> <span class="o">=</span> <span class="n">path2aROIOut</span> <span class="o">+</span> <span class="n">path2Sumfile</span> <span class="o">+</span> <span class="s">&#39;/summary.stats&#39;</span>
@@ -1072,7 +1075,7 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you run the additonal python code that is at the end of the script, the summarization files that get created will be stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/fROI_output</span></tt>.</p>
+<p class="last">If you run the additional python code that is at the end of the script, the summarization files that get created will be stored in <tt class="docutils literal"><span class="pre">~SOMEPATH/experiment/results/fROI_output</span></tt>.</p>
 </div>
 </div>
 </div>
