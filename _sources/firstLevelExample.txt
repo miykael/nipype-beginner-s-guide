@@ -11,7 +11,9 @@ In this part you will learn how to do create a simple **first level analysis pip
 Define the structure of your pipeline
 =====================================
 
-The best way to build your own pipeline is first to think about the workflow the data should go through. In this example we want to first run some preprocessing like `SliceTiming`, `Realignment`, `ArtifactDetection`, `BBRegister` and `Smoothing`. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing. All this will be accommodate in a **preprocess pipeline**. After that we want to estimate a concrete model by running first `SpecifyModel`, create a `Level1Design`, `EstimateModel` and finally `EstimateContrast`. This will be done in a **volume analysis pipeline**.
+A typical fMRI Workflow can be divided into two sections: **preprocessing** and **modeling**. The first one deals with cleaning data from confounds and noise and the second one fits a model to the cleaned data based on the experimental design. Now the best way to build your own pipeline is to think about the workflow the data should go through.
+
+In this example we want to first run some preprocessing like `SliceTiming`, `Realignment`, `ArtifactDetection`, `BBRegister` and `Smoothing`. Additionally we also want to take the subject specific aseg file from the freesurfer folder, binarize it and dilate it to create a mask for the level1desing of the modeling part of the workflow. All this will be accommodate in a **preprocess pipeline**. After that we want to create a modeling part that estimates a concrete model by running first `SpecifyModel`, creating a `Level1Design`, `EstimateModel` and `EstimateContrast`. This will be done in a **volume analysis pipeline**.
 
 The preprocess and the volume analysis pipeline together with the inputnode, will create the basic **framework workflow**. And this framework workflow will be connected to the infosource, the datagrabber and the datasink by a higher workflow, I'd like to call **meta workflow**. Visualized this pipeline would look like this:
 
@@ -145,7 +147,7 @@ We first define the preprocess pipeline with a node for slicetiming, realignment
 
 .. note::
 
-   If you are wondering how we knew which parameters to specify and which connections to establish. It is simple: Define or connect all mandatory inputs for each node. All the other optional inputs can be set as you please and more importantly as your model demands. For more informations about what is mandatory and what not, go to `Interfaces and Algorithms <http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html>`_.
+   If you are wondering how we knew which parameters to specify and which connections to establish. It is simple: Define or connect all mandatory inputs for each node. All the other optional inputs can be set as you please and more importantly as your model demands. For more informations about what is mandatory and what not, go to `Interfaces and Algorithms <http://nipy.sourceforge.net/nipype/interfaces/index.html>`_.
 
 
 Define a pipeline for the volume analysis
@@ -444,7 +446,7 @@ But still, here's the **hierarchical graph** for the ``metaflow``:
 
 .. image:: firstlevel_hierarchical.png
    :align: center
-   :width: 1080
+   :width: 810
 
 
 Resulting Folder Structure

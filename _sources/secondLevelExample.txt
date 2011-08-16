@@ -298,12 +298,12 @@ Second Level Volume Pipeline
 This graph of the ``hierarchical`` version shows the ``l2volflow``:
 
 .. image:: l2vol_flat_hierarchical.png
-
+   :width: 640 px
 
 This detailed graph of the ``flat`` version shows the ``l2volflow``:
 
 .. image:: l2vol_flat_detailed.png
-   :width: 1080 px
+   :width: 810 px
 
 
 Second Level Surface Pipeline
@@ -312,12 +312,12 @@ Second Level Surface Pipeline
 This graph of the ``hierarchical`` version shows the ``l2surfflow``:
 
 .. image:: l2surf_flat_hierarchical.png
-
+   :width: 640 px
 
 This detailed graph of the ``flat`` version shows the ``l2surfflow``:
 
 .. image:: l2surf_flat_detailed.png
-   :width: 1080 px
+   :width: 810 px
 
 
 Resulting Folder Structure

@@ -1,6 +1,6 @@
-==================================
-How To Build A Pipeline In General
-==================================
+=======================
+How To Build A Pipeline
+=======================
 
 This section is meant as a step by step introduction to building your own pipeline. At the end you should know what the important characteristics of a pipeline is, how it is constructed, how its parts are connected, so that you are ready to implement your own pipeline.
 
@@ -8,7 +8,11 @@ This section is meant as a step by step introduction to building your own pipeli
 What is a pipeline?
 ===================
 
-A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline or also called workflow is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The main advantage of the pipeline is that it can use different modules from different packages (e.g. SPM, FSL, FreeSurfer, Camino, AFNI, Slicer) and is able to exchange the data between them.
+A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline is also called a workflow and is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. In order for interfaces to be used in a workflow they need to be encapsulated into a node. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The great thing about Nipype is that those workflows themselves than can act as a node inside another workflow leading to a complex data analysis workflow.
+
+.. image:: example_workflow.png
+
+Nipype explicitly implements a pipeline as a graph. This makes it easy to follow what steps are being executed and in what order. It also makes it easier to go back and change things by simply reconnecting different outputs and inputs or by inserting new nodes.
 
 
 How to build your own pipeline
@@ -20,8 +24,6 @@ There are many ways to construct a pipeline but in the end it comes down to the 
   2. **Define nodes**
   3. **Define pipeline(s)**
   4. **Create connections**
-  5. **Execute pipeline**
-  6. **Visualize pipeline**
 
 
 Import appropriate modules
@@ -41,7 +43,7 @@ The first thing you'll have to do is to import the interfaces you want to use. T
 
 .. important::
 
-   If you use the freesurfer interface, please make sure to tell freesurfer where the subjects directory is by using the following command:
+   If you want to use the output of FreeSurfer's recon process, please make sure to tell FreeSurfer where the subjects directory is by using the following command:
 
    .. code-block:: py
       :linenos:
@@ -49,9 +51,6 @@ The first thing you'll have to do is to import the interfaces you want to use. T
       import nipype.interfaces.freesurfer as fs
       freesurfer_dir = '~SOMEPATH/freesurfer_data'
       fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
-
-
-   This specification has to be done before you want to use any output from FreeSurfer's recon-all process. If you don't do that, some nasty errors may occure.
 
 
 Define nodes
@@ -83,7 +82,7 @@ Before the parameters of a node can be specified they first have to be initiated
 
 .. hint::
 
-   The difference between a Node and a MapNode is explained in more detailed `here <http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html>`_
+   The difference between a Node and a MapNode is explained in more detailed `here <http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield>`_. But briefly explained is a MapNode a sub-class of Node that allows interfaces that normally operate on a single input to execute the interface on multiple inputs.
 
 
 Node Parameters
@@ -95,12 +94,15 @@ Depending on the purpose of a node and its underlying algorithm, different param
 2. **optional inputs**: inputs to get the node to behave in a specific way
 3. **outputs**: the possible outputs that a node creates
 
-
 But how can you find out what the possible inputs and outputs of a node are?
 
-* check the section `Interfaces and Algorithms <http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html>`_ on the nipype homepage by clicking on the node you're interested in
-* use the help method of a module in iPython (e.g. ``fsl.Smooth.help()``)
+* check the section `Interfaces and Algorithms <http://nipy.sourceforge.net/nipype/interfaces/index.html>`_ on the nipype homepage by clicking on the node you're interested in
+* use the ``help()`` method of a module in iPython (e.g. ``fsl.Smooth.help()``)
 * view the docstring of a module in iPython (e.g. ``fsl.MCFLIRT?``) which shows you the documentation and an example of an implementation in the command window.
+
+.. note::
+
+   Be aware that some algorithms' input options should not be set together (mutual exclusion) while other inputs need to be set as a group (mutual inclusion).
 
 
 Node Specification
@@ -110,6 +112,8 @@ The specification of a node can be done in three ways.
 
 .. code-block:: py
    :linenos:
+
+   import nipype.interfaces.fsl
 
    #1. specify parameters in the during initiation   
    mybet = fsl.BET(in_file='foo.nii', out_file='bar.nii')
@@ -124,10 +128,10 @@ The specification of a node can be done in three ways.
    mybet.run(in_file='foo.nii', out_file='bar.nii')   
 
 
-Iterables (optional)
-~~~~~~~~~~~~~~~~~~~~
+Iterables
+~~~~~~~~~
 
-If you want a node to be executed over different sets of data (e.g. different subjects, different conditions, different smoothing kernels,...) you have to use iterables. 
+If you want a node to be executed over different sets of data (e.g. different subjects, different conditions, different smoothing kernels,...) you have to use iterables. Iterables are a very easy way to explore the impact of variations of your data analysis workflow.
 
 .. code-block:: py
    :linenos:
@@ -142,14 +146,17 @@ E.g. If you want to execute a pipeline for subject1 and subject2 and you want to
    startnode.iterables = ('subject_id', ['subject1','subject2'])
    smoothnode.iterables = ('fwhm', [4, 8])
 
+.. note::
+
+   Iterables splits the following workflow into subworkflows and creates an indexed copy not only of the node but also of all the nodes dependent on it.
 
 Iterfields
 ~~~~~~~~~~
 
-If you'll use MapNodes you'll also have to use an iterfield. This enables running the underlying interface over a set of inputs and is particularly useful when the interface can only operate on a single input. A good tutorial to iterables and iterfields can be found at `MapNode, iterfield, and iterables explained <http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html>`_
+If you'll use MapNodes you'll also have to use an iterfield. This enables running the underlying interface over a set of inputs and is particularly useful when the interface can only operate on a single input. A good tutorial to iterables and iterfields can be found at `MapNode, iterfield, and iterables explained <http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html>`_
 
 
-stand-alone node
+Stand-alone node
 ~~~~~~~~~~~~~~~~
 
 If you want to run an algorithm without being a node or being a part of a pipeline you only have to define the nodename, interface and algorithm.
@@ -244,7 +251,7 @@ There is a basic and an advanced way to create connections between two nodes. Th
 The advanced connection example would as a detailed graph look like this:
 
 .. image:: example_node_connection.png
-   :width: 810
+   :width: 640
 
 It is important to point out that you don't just have to connect the nodes, but rather to connect the output and input fields of each node.
 
@@ -320,42 +327,10 @@ If you want to insert more than one parameter into the function do as follows:
 
 
    #connection of two nodes with a function in between which takes two arguments
-   workflowname.connect([(nodename1, nodename2,[(('out_file_node1', myfunction, additional_input),
-                                                  'in_file_node2')]),
+   workflowname.connect([(nodename1,nodename2,[(('out_file_node1',myfunction,additional_input),
+                                                 'in_file_node2')]),
                          ])
 
-
-Execute pipeline
-----------------
-
-After setting everything up, the pipeline can be executed with ``run()``. You can run a pipeline either in serial or in parallel mode. 
-
-.. code-block:: py
-   :linenos:
-
-   #To run the pipeline serial
-   workflow.run(plugin='Linear')
-
-   #To run the pipeline paralle using 2 processes
-   workflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
-
-.. hint::
-
-   A good tutorial how to set up the parallel mode can be found under `Distributed processing with nipype <http://www.mit.edu/~satra/nipype-nightly/users/parallel_processing.html#distributed-processing-with-nipype>`_.
-
-
-Visualize pipeline
-------------------
-
-To visualize the workflow of a pipeline you can use the method ``write_graph()``.
-
-.. code-block:: py
-   :linenos:
-
-   #Example of using write_graph
-   workflowname.write_graph(graph2use='flat')
-
-If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere. More about how to visualize your pipeline can be found in the chapter: `How To Visualize A Pipeline <http://miykael.github.com/nipype-beginner-s-guide/howToVisualizeAPipeline.html>`_.
 
 
 How to get data into and out of your pipeline
@@ -393,10 +368,13 @@ The best way to tell a pipeline on which subjects it should be executed on is to
 Datasource
 ----------
 
-To get the subject specific data into the pipeline we need the datasource node. As the name of the algorithm implies the DataGrabber grabs the data from a specified folder and stores it in the specified output fields.
+Nipype has its own DataGrabber interface that allows us to define flexible search patterns to get the subject specific data into the pipeline. As the name implies DataGrabber grabs the data from a specified folder and stores its location in a specified output field.
 
 .. code-block:: py
    :linenos:
+
+   #import nipype i/o routines
+   import nipype.interfaces.io as nio
 
    #initiate the DataGrabber node with the infield: 'subject_id'
    #and the outfield: 'func' and 'struct'
@@ -407,7 +385,7 @@ To get the subject specific data into the pipeline we need the datasource node. 
 To use the datagrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:
 
 .. image:: datastructure.png
-   :width: 810
+   :width: 640
 
 As you can see all the necessary data is stored in the experiment folder. The data of each subject is stored in its individual subject_folder. The name of this folder changes with each subject. There are two ways how you can define the structure of data you want to grab.
 
@@ -437,8 +415,8 @@ As you can see all the necessary data is stored in the experiment folder. The da
    The values defined in ``template_args`` will be filled into the placeholders of ``template``. Because 'subject_id' is defined as ['subject1','subject2','subject3'] (see definition of infosource node), the outfield 'func' of the datagrabber node will store 'subject1/func1.nii', 'subject1/func2.nii' and 'subject1/struct.nii' in the 'struct' outfield for subject1.
     
 
-Inputnode (optional)
---------------------
+Inputnode
+---------
 
 If you want to keep a clearly arranged distribution of the input data it is suggested to create an inputnode that serves that purpose. This inputnode specifies and collects all the inputs that are needed for the workflow and distributes them to specific places in the pipeline.
 
@@ -456,15 +434,15 @@ If you want to keep a clearly arranged distribution of the input data it is sugg
                     name='inputnode')
 
 
-Datasink (optional)
--------------------
+Datasink
+--------
 
-Sometimes you have some output you want to store at an easy accessible place so that you don't have to search in the depth of your workingdir where all in- and outputs of every node is stored. For this purpose the datasink node was created:
+Sometimes you want to store selected output at a specified and easy accessible place so that you don't have to search for it in the depth of your working directory, where all in- and outputs of each and every node are stored at. For this purpose the DataSink interface was created:
 
 .. code-block:: py
    :linenos:
 
-   #import i/o routines
+   #import nipype i/o routines
    import nipype.interfaces.io as nio
 
    #initiate node
@@ -485,12 +463,11 @@ Sometimes you have some output you want to store at an easy accessible place so 
 .. note::
    The name that you give the input-filed of the datasink node (here 'bbregister' and 'spm_mat_file') will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.
 
-
-The datasink node is really useful to keep control over your storage capacity. If you store all important files that you'll need for further analysis in this folder you can delete the ``workingdir`` of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to `Configuration File <http://www.mit.edu/~satra/nipype-nightly/users/config_file.html>`_.
+The datasink node is really useful to keep control over your storage capacity. If you store all important files that you'll need for further analysis in this folder you can delete the ``workingdir`` of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to `Configuration File <http://nipy.sourceforge.net/nipype/users/config_file.html>`_.
 
 
 .. hint::
-   For a more detailed explanation to Datainformation go to Datasource and Datasink, go to: `DataGrabber and DataSink explained <http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html>`_.
+   For a more detailed explanation to datasource and datasink go to: `DataGrabber and DataSink explained <http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html>`_.
 
 
 
@@ -584,7 +561,7 @@ Here we create a function that returns session specific information about the ex
 
 .. note::
 
-   A detailed instruction on how to set the model specific parameters can be found in the in the `Model Specification <http://www.mit.edu/~satra/nipype-nightly/users/model_specification.html>`_ section.
+   A detailed instruction on how to set the model specific parameters can be found in the in the `Model Specification <http://nipy.sourceforge.net/nipype/users/model_specification.html>`_ section.
 
 
 Connect new nodes to your pipeline
@@ -616,9 +593,25 @@ Before you can run your pipeline you will have to connect infosource, datasource
                      ])
 
 
-Now you're done and can run your pipeline.
+How to run your pipeline
+========================
+
+After all nodes were implemented, all parameters were specified and all connections were established, you are able to run your pipeline. This can be done by calling the ``run()`` method of the ``metaflow``.
 
 .. testcode::
 
+   #If you want to run your pipeline in serial
    metaflow.run(plugin='Linear')
+
+   #If you want to run your pipeline in parallel using two cores
+   metaflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
+
+
+If the ``run()`` method is called twice, the workflow input hashing mechanism ensures that none of the nodes are executed during the second run if the inputs remain the same. If, however, some parameters change, some of the nodes would have to rerun. Nipype automatically determines which Nodes require rerunning and keeps the computation time to its minimum.
+
+.. hint::
+
+   More informations about how to run your pipeline in a distributed system can be found here: `Distributed processing with nipype <http://nipy.sourceforge.net/nipype/users/parallel_processing.html#distributed-processing-with-nipype>`_.
+
+   More informations about how to change the configuration of the ``run()`` method can be found `here <http://nipy.sourceforge.net/nipype/users/config_file.html>`_. There you can learn how to change the configuration so that every node gets fully executed everytime, how to specify that only the necessary output gets stored into the working directory, etc.
 

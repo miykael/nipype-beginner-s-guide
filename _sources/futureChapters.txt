@@ -7,6 +7,7 @@ As Nipype itself, this user guide isn't finished yet and there's a lot more to c
 * How to use **slicer** to create nice **functional pictures**
 * How to use **ANTS** to **normalize your subject specific data** from subject space into a common template space
 * How to use **ANTS** to **create your own normbrain template**
-* How to **trace a running workflow** with report
+* How to **track a running workflow** with report
+* How to use **nipype predefined workflows** like ``nipype.workflows.freesurfer.utils``
 
 As I try to improve this user guide to make the learning curve for Nipype beginners as steep as possible, feedback, criticism, comments, ideas, recommendation etc. are highly appreciated: `mnotter@mit.edu <mnotter@mit.edu>`_

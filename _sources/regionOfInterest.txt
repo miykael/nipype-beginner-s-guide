@@ -4,8 +4,8 @@ How To Extract Regions Of Interest (ROIs)
 
 In this part we will learn how to extract statistical data from a strictly specified region or in other words a **region of interest (ROI)**.
 
-Anatomical and Functional ROI
-=============================
+Anatomical and Functional ROIs
+==============================
 
 We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the way how they define a region of interest.
 
@@ -324,7 +324,7 @@ This graph of the ``hierarchical`` version shows the ``aROIflow``:
 This detailed graph of the ``flat`` version shows the ``aROIflow``:
 
 .. image:: aROI_detailed.png
-   :width: 1080 px
+   :width: 810 px
 
 
 Summarizing the output in a cvs-file
@@ -531,6 +531,14 @@ The final step of creating a functional is to mask your functional ROI for each 
    ~SOMEPATH/experiment/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float
 
 
+.. note::
+
+   More informations to the differente arguments of ``fsl.ImageMaths()`` aka ``fslmaths`` can be found `here <http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc>`_. To be on the safe side, I additionally copied it's content into `fslmaths.txt <http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt>`_.
+
+   **Important:** This document wasn't created by me, I just stumbled upon it. But it is the best and most detailed one I've found.
+
+
+
 Let's now begin with the creation of our **functional ROI pipeline**.
 
 
@@ -695,12 +703,12 @@ Visualization of the functional ROI pipeline
 This graph of the ``hierarchical`` version shows the ``fROIflow``:
 
 .. image:: fROI_hierachical.png
-   :width: 810 px
+   :width: 640 px
 
 This detailed graph of the ``flat`` version shows the ``fROIflow``:
 
 .. image:: fROI_detailed.png
-   :width: 1080 px
+   :width: 810 px
    
 
 Summarizing the output in a cvs-file

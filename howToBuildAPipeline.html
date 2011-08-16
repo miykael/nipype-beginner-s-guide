@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation" href="index.html" />
     <link rel="next" title="How To Visualize A Pipeline" href="howToVisualizeAPipeline.html" />
-    <link rel="prev" title="Introduction" href="introduction.html" />
+    <link rel="prev" title="Welcome To Nipype!" href="introduction.html" />
  
 <meta name="keywords" content="nipype, python, guide">
 <script type="text/javascript">
@@ -59,7 +59,7 @@
           <a href="howToVisualizeAPipeline.html" title="How To Visualize A Pipeline"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="introduction.html" title="Introduction"
+          <a href="introduction.html" title="Welcome To Nipype!"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
       </ul>
@@ -68,7 +68,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">How To Build A Pipeline In General</a><ul>
+<li><a class="reference internal" href="#">How To Build A Pipeline</a><ul>
 <li><a class="reference internal" href="#what-is-a-pipeline">What is a pipeline?</a></li>
 <li><a class="reference internal" href="#how-to-build-your-own-pipeline">How to build your own pipeline</a><ul>
 <li><a class="reference internal" href="#import-appropriate-modules">Import appropriate modules</a></li>
@@ -76,9 +76,9 @@
 <li><a class="reference internal" href="#node-initiation">Node Initiation</a></li>
 <li><a class="reference internal" href="#node-parameters">Node Parameters</a></li>
 <li><a class="reference internal" href="#node-specification">Node Specification</a></li>
-<li><a class="reference internal" href="#iterables-optional">Iterables (optional)</a></li>
+<li><a class="reference internal" href="#iterables">Iterables</a></li>
 <li><a class="reference internal" href="#iterfields">Iterfields</a></li>
-<li><a class="reference internal" href="#stand-alone-node">stand-alone node</a></li>
+<li><a class="reference internal" href="#stand-alone-node">Stand-alone node</a></li>
 <li><a class="reference internal" href="#individual-nodes">Individual nodes</a></li>
 </ul>
 </li>
@@ -93,15 +93,13 @@
 <li><a class="reference internal" href="#modifying-inputs-to-nodes">Modifying inputs to nodes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#execute-pipeline">Execute pipeline</a></li>
-<li><a class="reference internal" href="#visualize-pipeline">Visualize pipeline</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-get-data-into-and-out-of-your-pipeline">How to get data into and out of your pipeline</a><ul>
 <li><a class="reference internal" href="#infosource">Infosource</a></li>
 <li><a class="reference internal" href="#datasource">Datasource</a></li>
-<li><a class="reference internal" href="#inputnode-optional">Inputnode (optional)</a></li>
-<li><a class="reference internal" href="#datasink-optional">Datasink (optional)</a></li>
+<li><a class="reference internal" href="#inputnode">Inputnode</a></li>
+<li><a class="reference internal" href="#datasink">Datasink</a></li>
 <li><a class="reference internal" href="#model-specification">Model Specification</a><ul>
 <li><a class="reference internal" href="#contrasts">Contrasts</a></li>
 <li><a class="reference internal" href="#session-info">Session info</a></li>
@@ -110,13 +108,14 @@
 <li><a class="reference internal" href="#connect-new-nodes-to-your-pipeline">Connect new nodes to your pipeline</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#how-to-run-your-pipeline">How to run your pipeline</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="introduction.html"
-                        title="previous chapter">Introduction</a></p>
+                        title="previous chapter">Welcome To Nipype!</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="howToVisualizeAPipeline.html"
                         title="next chapter">How To Visualize A Pipeline</a></p>
@@ -146,12 +145,14 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="how-to-build-a-pipeline-in-general">
-<h1>How To Build A Pipeline In General<a class="headerlink" href="#how-to-build-a-pipeline-in-general" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-build-a-pipeline">
+<h1>How To Build A Pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">¶</a></h1>
 <p>This section is meant as a step by step introduction to building your own pipeline. At the end you should know what the important characteristics of a pipeline is, how it is constructed, how its parts are connected, so that you are ready to implement your own pipeline.</p>
 <div class="section" id="what-is-a-pipeline">
 <h2>What is a pipeline?<a class="headerlink" href="#what-is-a-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline or also called workflow is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The main advantage of the pipeline is that it can use different modules from different packages (e.g. SPM, FSL, FreeSurfer, Camino, AFNI, Slicer) and is able to exchange the data between them.</p>
+<p>A pipeline in the Nipype sense is a sequence of procedures to automate the analysis of fMRI-data. A pipeline is also called a workflow and is built by connecting specific nodes to each other. In the context of nipype, nodes contain specific functions or algorithms of interfaces such as SPM, FSL, FreeSurfer etc. In order for interfaces to be used in a workflow they need to be encapsulated into a node. All those nodes have defined inputs and outputs. Creating a workflow then is a matter of connecting appropriate outputs to inputs. The great thing about Nipype is that those workflows themselves than can act as a node inside another workflow leading to a complex data analysis workflow.</p>
+<img alt="example_workflow.png" src="example_workflow.png" />
+<p>Nipype explicitly implements a pipeline as a graph. This makes it easy to follow what steps are being executed and in what order. It also makes it easier to go back and change things by simply reconnecting different outputs and inputs or by inserting new nodes.</p>
 </div>
 <div class="section" id="how-to-build-your-own-pipeline">
 <h2>How to build your own pipeline<a class="headerlink" href="#how-to-build-your-own-pipeline" title="Permalink to this headline">¶</a></h2>
@@ -162,8 +163,6 @@
 <li><strong>Define nodes</strong></li>
 <li><strong>Define pipeline(s)</strong></li>
 <li><strong>Create connections</strong></li>
-<li><strong>Execute pipeline</strong></li>
-<li><strong>Visualize pipeline</strong></li>
 </ol>
 </blockquote>
 <div class="section" id="import-appropriate-modules">
@@ -182,15 +181,14 @@
 </td></tr></table></div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p>If you use the freesurfer interface, please make sure to tell freesurfer where the subjects directory is by using the following command:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<p>If you want to use the output of FreeSurfer&#8217;s recon process, please make sure to tell FreeSurfer where the subjects directory is by using the following command:</p>
+<div class="last highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>
 <span class="n">freesurfer_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/freesurfer_data&#39;</span>
 <span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">freesurfer_dir</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p class="last">This specification has to be done before you want to use any output from FreeSurfer&#8217;s recon-all process. If you don&#8217;t do that, some nasty errors may occure.</p>
 </div>
 </div>
 <div class="section" id="define-nodes">
@@ -217,7 +215,7 @@
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The difference between a Node and a MapNode is explained in more detailed <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html">here</a></p>
+<p class="last">The difference between a Node and a MapNode is explained in more detailed <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield">here</a>. But briefly explained is a MapNode a sub-class of Node that allows interfaces that normally operate on a single input to execute the interface on multiple inputs.</p>
 </div>
 </div>
 <div class="section" id="node-parameters">
@@ -230,10 +228,14 @@
 </ol>
 <p>But how can you find out what the possible inputs and outputs of a node are?</p>
 <ul class="simple">
-<li>check the section <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/interfaces/index.html">Interfaces and Algorithms</a> on the nipype homepage by clicking on the node you&#8217;re interested in</li>
-<li>use the help method of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.Smooth.help()</span></tt>)</li>
+<li>check the section <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/index.html">Interfaces and Algorithms</a> on the nipype homepage by clicking on the node you&#8217;re interested in</li>
+<li>use the <tt class="docutils literal"><span class="pre">help()</span></tt> method of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.Smooth.help()</span></tt>)</li>
 <li>view the docstring of a module in iPython (e.g. <tt class="docutils literal"><span class="pre">fsl.MCFLIRT?</span></tt>) which shows you the documentation and an example of an implementation in the command window.</li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be aware that some algorithms&#8217; input options should not be set together (mutual exclusion) while other inputs need to be set as a group (mutual inclusion).</p>
+</div>
 </div>
 <div class="section" id="node-specification">
 <h4>Node Specification<a class="headerlink" href="#node-specification" title="Permalink to this headline">¶</a></h4>
@@ -248,7 +250,11 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#1. specify parameters in the during initiation</span>
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nipype.interfaces.fsl</span>
+
+<span class="c">#1. specify parameters in the during initiation</span>
 <span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;foo.nii&#39;</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="s">&#39;bar.nii&#39;</span><span class="p">)</span>
 
 <span class="c">#2. specify parameters after initiation</span>
@@ -262,9 +268,9 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="iterables-optional">
-<h4>Iterables (optional)<a class="headerlink" href="#iterables-optional" title="Permalink to this headline">¶</a></h4>
-<p>If you want a node to be executed over different sets of data (e.g. different subjects, different conditions, different smoothing kernels,...) you have to use iterables.</p>
+<div class="section" id="iterables">
+<h4>Iterables<a class="headerlink" href="#iterables" title="Permalink to this headline">¶</a></h4>
+<p>If you want a node to be executed over different sets of data (e.g. different subjects, different conditions, different smoothing kernels,...) you have to use iterables. Iterables are a very easy way to explore the impact of variations of your data analysis workflow.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">nodename</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;input_to_iterate_over&#39;</span><span class="p">,[</span><span class="n">conditions_to_iterate_over</span><span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
@@ -274,13 +280,17 @@
 <span class="n">smoothnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;fwhm&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Iterables splits the following workflow into subworkflows and creates an indexed copy not only of the node but also of all the nodes dependent on it.</p>
+</div>
 </div>
 <div class="section" id="iterfields">
 <h4>Iterfields<a class="headerlink" href="#iterfields" title="Permalink to this headline">¶</a></h4>
-<p>If you&#8217;ll use MapNodes you&#8217;ll also have to use an iterfield. This enables running the underlying interface over a set of inputs and is particularly useful when the interface can only operate on a single input. A good tutorial to iterables and iterfields can be found at <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/mapnode_and_iterables.html">MapNode, iterfield, and iterables explained</a></p>
+<p>If you&#8217;ll use MapNodes you&#8217;ll also have to use an iterfield. This enables running the underlying interface over a set of inputs and is particularly useful when the interface can only operate on a single input. A good tutorial to iterables and iterfields can be found at <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html">MapNode, iterfield, and iterables explained</a></p>
 </div>
 <div class="section" id="stand-alone-node">
-<h4>stand-alone node<a class="headerlink" href="#stand-alone-node" title="Permalink to this headline">¶</a></h4>
+<h4>Stand-alone node<a class="headerlink" href="#stand-alone-node" title="Permalink to this headline">¶</a></h4>
 <p>If you want to run an algorithm without being a node or being a part of a pipeline you only have to define the nodename, interface and algorithm.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">smooth</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Smooth</span><span class="p">()</span>
 </pre></div>
@@ -355,7 +365,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>The advanced connection example would as a detailed graph look like this:</p>
-<img alt="_images/example_node_connection.png" src="_images/example_node_connection.png" style="width: 810px;" />
+<img alt="_images/example_node_connection.png" src="_images/example_node_connection.png" style="width: 640px;" />
 <p>It is important to point out that you don&#8217;t just have to connect the nodes, but rather to connect the output and input fields of each node.</p>
 </div>
 <div class="section" id="connect-pipelines-to-each-other-necessary-if-you-have-multiple-pipelines">
@@ -433,41 +443,12 @@
 
 
 <span class="c">#connection of two nodes with a function in between which takes two arguments</span>
-<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,[((</span><span class="s">&#39;out_file_node1&#39;</span><span class="p">,</span> <span class="n">myfunction</span><span class="p">,</span> <span class="n">additional_input</span><span class="p">),</span>
-                                               <span class="s">&#39;in_file_node2&#39;</span><span class="p">)]),</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span><span class="n">nodename2</span><span class="p">,[((</span><span class="s">&#39;out_file_node1&#39;</span><span class="p">,</span><span class="n">myfunction</span><span class="p">,</span><span class="n">additional_input</span><span class="p">),</span>
+                                              <span class="s">&#39;in_file_node2&#39;</span><span class="p">)]),</span>
                       <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 </div>
-</div>
-<div class="section" id="execute-pipeline">
-<h3>Execute pipeline<a class="headerlink" href="#execute-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>After setting everything up, the pipeline can be executed with <tt class="docutils literal"><span class="pre">run()</span></tt>. You can run a pipeline either in serial or in parallel mode.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#To run the pipeline serial</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;Linear&#39;</span><span class="p">)</span>
-
-<span class="c">#To run the pipeline paralle using 2 processes</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
-</pre></div>
-</td></tr></table></div>
-<div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">A good tutorial how to set up the parallel mode can be found under <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/parallel_processing.html#distributed-processing-with-nipype">Distributed processing with nipype</a>.</p>
-</div>
-</div>
-<div class="section" id="visualize-pipeline">
-<h3>Visualize pipeline<a class="headerlink" href="#visualize-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>To visualize the workflow of a pipeline you can use the method <tt class="docutils literal"><span class="pre">write_graph()</span></tt>.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Example of using write_graph</span>
-<span class="n">workflowname</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-<p>If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere. More about how to visualize your pipeline can be found in the chapter: <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/howToVisualizeAPipeline.html">How To Visualize A Pipeline</a>.</p>
 </div>
 </div>
 <div class="section" id="how-to-get-data-into-and-out-of-your-pipeline">
@@ -506,12 +487,18 @@
 </div>
 <div class="section" id="datasource">
 <h3>Datasource<a class="headerlink" href="#datasource" title="Permalink to this headline">¶</a></h3>
-<p>To get the subject specific data into the pipeline we need the datasource node. As the name of the algorithm implies the DataGrabber grabs the data from a specified folder and stores it in the specified output fields.</p>
+<p>Nipype has its own DataGrabber interface that allows us to define flexible search patterns to get the subject specific data into the pipeline. As the name implies DataGrabber grabs the data from a specified folder and stores its location in a specified output field.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#initiate the DataGrabber node with the infield: &#39;subject_id&#39;</span>
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#import nipype i/o routines</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>
+
+<span class="c">#initiate the DataGrabber node with the infield: &#39;subject_id&#39;</span>
 <span class="c">#and the outfield: &#39;func&#39; and &#39;struct&#39;</span>
 <span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">],</span>
                                                <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;func&#39;</span><span class="p">,</span> <span class="s">&#39;struct&#39;</span><span class="p">]),</span>
@@ -519,7 +506,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>To use the datagrabber it is important to know what the exact structure of your folders is and where the data is stored at. In this example we assume that the layout of our data is as following:</p>
-<img alt="_images/datastructure.png" src="_images/datastructure.png" style="width: 810px;" />
+<img alt="_images/datastructure.png" src="_images/datastructure.png" style="width: 640px;" />
 <p>As you can see all the necessary data is stored in the experiment folder. The data of each subject is stored in its individual subject_folder. The name of this folder changes with each subject. There are two ways how you can define the structure of data you want to grab.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -559,8 +546,8 @@
 <p class="last">The values defined in <tt class="docutils literal"><span class="pre">template_args</span></tt> will be filled into the placeholders of <tt class="docutils literal"><span class="pre">template</span></tt>. Because &#8216;subject_id&#8217; is defined as [&#8216;subject1&#8217;,&#8217;subject2&#8217;,&#8217;subject3&#8217;] (see definition of infosource node), the outfield &#8216;func&#8217; of the datagrabber node will store &#8216;subject1/func1.nii&#8217;, &#8216;subject1/func2.nii&#8217; and &#8216;subject1/struct.nii&#8217; in the &#8216;struct&#8217; outfield for subject1.</p>
 </div>
 </div>
-<div class="section" id="inputnode-optional">
-<h3>Inputnode (optional)<a class="headerlink" href="#inputnode-optional" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="inputnode">
+<h3>Inputnode<a class="headerlink" href="#inputnode" title="Permalink to this headline">¶</a></h3>
 <p>If you want to keep a clearly arranged distribution of the input data it is suggested to create an inputnode that serves that purpose. This inputnode specifies and collects all the inputs that are needed for the workflow and distributes them to specific places in the pipeline.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -582,9 +569,9 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="datasink-optional">
-<h3>Datasink (optional)<a class="headerlink" href="#datasink-optional" title="Permalink to this headline">¶</a></h3>
-<p>Sometimes you have some output you want to store at an easy accessible place so that you don&#8217;t have to search in the depth of your workingdir where all in- and outputs of every node is stored. For this purpose the datasink node was created:</p>
+<div class="section" id="datasink">
+<h3>Datasink<a class="headerlink" href="#datasink" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes you want to store selected output at a specified and easy accessible place so that you don&#8217;t have to search for it in the depth of your working directory, where all in- and outputs of each and every node are stored at. For this purpose the DataSink interface was created:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -601,7 +588,7 @@
 14
 15
 16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#import i/o routines</span>
+17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#import nipype i/o routines</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">as</span> <span class="nn">nio</span>
 
 <span class="c">#initiate node</span>
@@ -624,10 +611,10 @@
 <p class="first admonition-title">Note</p>
 <p class="last">The name that you give the input-filed of the datasink node (here &#8216;bbregister&#8217; and &#8216;spm_mat_file&#8217;) will be taken as a name giver for the subfolder where those specific files will be stored in the datasink folder.</p>
 </div>
-<p>The datasink node is really useful to keep control over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/config_file.html">Configuration File</a>.</p>
+<p>The datasink node is really useful to keep control over your storage capacity. If you store all important files that you&#8217;ll need for further analysis in this folder you can delete the <tt class="docutils literal"><span class="pre">workingdir</span></tt> of the pipeline after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a workingdir at all. For more information go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/config_file.html">Configuration File</a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">For a more detailed explanation to Datainformation go to Datasource and Datasink, go to: <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html">DataGrabber and DataSink explained</a>.</p>
+<p class="last">For a more detailed explanation to datasource and datasink go to: <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html">DataGrabber and DataSink explained</a>.</p>
 </div>
 </div>
 <div class="section" id="model-specification">
@@ -770,7 +757,7 @@
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A detailed instruction on how to set the model specific parameters can be found in the in the <a class="reference external" href="http://www.mit.edu/~satra/nipype-nightly/users/model_specification.html">Model Specification</a> section.</p>
+<p class="last">A detailed instruction on how to set the model specific parameters can be found in the in the <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/model_specification.html">Model Specification</a> section.</p>
 </div>
 </div>
 </div>
@@ -816,10 +803,23 @@
                   <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
-<p>Now you&#8217;re done and can run your pipeline.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;Linear&#39;</span><span class="p">)</span>
+</div>
+</div>
+<div class="section" id="how-to-run-your-pipeline">
+<h2>How to run your pipeline<a class="headerlink" href="#how-to-run-your-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>After all nodes were implemented, all parameters were specified and all connections were established, you are able to run your pipeline. This can be done by calling the <tt class="docutils literal"><span class="pre">run()</span></tt> method of the <tt class="docutils literal"><span class="pre">metaflow</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#If you want to run your pipeline in serial</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;Linear&#39;</span><span class="p">)</span>
+
+<span class="c">#If you want to run your pipeline in parallel using two cores</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
 </div>
+<p>If the <tt class="docutils literal"><span class="pre">run()</span></tt> method is called twice, the workflow input hashing mechanism ensures that none of the nodes are executed during the second run if the inputs remain the same. If, however, some parameters change, some of the nodes would have to rerun. Nipype automatically determines which Nodes require rerunning and keeps the computation time to its minimum.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p>More informations about how to run your pipeline in a distributed system can be found here: <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/parallel_processing.html#distributed-processing-with-nipype">Distributed processing with nipype</a>.</p>
+<p class="last">More informations about how to change the configuration of the <tt class="docutils literal"><span class="pre">run()</span></tt> method can be found <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/config_file.html">here</a>. There you can learn how to change the configuration so that every node gets fully executed everytime, how to specify that only the necessary output gets stored into the working directory, etc.</p>
 </div>
 </div>
 </div>
@@ -840,7 +840,7 @@
           <a href="howToVisualizeAPipeline.html" title="How To Visualize A Pipeline"
              >next</a> |</li>
         <li class="right" >
-          <a href="introduction.html" title="Introduction"
+          <a href="introduction.html" title="Welcome To Nipype!"
              >previous</a> |</li>
         <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
       </ul>
@@ -848,7 +848,7 @@
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 15, 2011.
+      Last updated on August 17, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

@@ -69,7 +69,7 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How To Extract Regions Of Interest (ROIs)</a><ul>
-<li><a class="reference internal" href="#anatomical-and-functional-roi">Anatomical and Functional ROI</a><ul>
+<li><a class="reference internal" href="#anatomical-and-functional-rois">Anatomical and Functional ROIs</a><ul>
 <li><a class="reference internal" href="#anatomical-roi">Anatomical ROI</a></li>
 <li><a class="reference internal" href="#functional-roi">Functional ROI</a></li>
 </ul>
@@ -137,8 +137,8 @@
   <div class="section" id="how-to-extract-regions-of-interest-rois">
 <h1>How To Extract Regions Of Interest (ROIs)<a class="headerlink" href="#how-to-extract-regions-of-interest-rois" title="Permalink to this headline">¶</a></h1>
 <p>In this part we will learn how to extract statistical data from a strictly specified region or in other words a <strong>region of interest (ROI)</strong>.</p>
-<div class="section" id="anatomical-and-functional-roi">
-<h2>Anatomical and Functional ROI<a class="headerlink" href="#anatomical-and-functional-roi" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="anatomical-and-functional-rois">
+<h2>Anatomical and Functional ROIs<a class="headerlink" href="#anatomical-and-functional-rois" title="Permalink to this headline">¶</a></h2>
 <p>We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the way how they define a region of interest.</p>
 <div class="section" id="anatomical-roi">
 <h3>Anatomical ROI<a class="headerlink" href="#anatomical-roi" title="Permalink to this headline">¶</a></h3>
@@ -473,7 +473,7 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 <p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">aROIflow</span></tt>:</p>
 <img alt="_images/aROI_hierachical.png" src="_images/aROI_hierachical.png" style="width: 810px;" />
 <p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">aROIflow</span></tt>:</p>
-<img alt="_images/aROI_detailed.png" src="_images/aROI_detailed.png" style="width: 1080px;" />
+<img alt="_images/aROI_detailed.png" src="_images/aROI_detailed.png" style="width: 810px;" />
 </div>
 <div class="section" id="summarizing-the-output-in-a-cvs-file">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#summarizing-the-output-in-a-cvs-file" title="Permalink to this headline">¶</a></h3>
@@ -746,6 +746,11 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 ~SOMEPATH/experiment/blabla/con_0010_ants_maths_maths_maths.nii.gz -odt float
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>More informations to the differente arguments of <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> aka <tt class="docutils literal"><span class="pre">fslmaths</span></tt> can be found <a class="reference external" href="http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc">here</a>. To be on the safe side, I additionally copied it&#8217;s content into <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt">fslmaths.txt</a>.</p>
+<p class="last"><strong>Important:</strong> This document wasn&#8217;t created by me, I just stumbled upon it. But it is the best and most detailed one I&#8217;ve found.</p>
+</div>
 <p>Let&#8217;s now begin with the creation of our <strong>functional ROI pipeline</strong>.</p>
 <div class="section" id="id2">
 <h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
@@ -963,9 +968,9 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 <div class="section" id="visualization-of-the-functional-roi-pipeline">
 <h3>Visualization of the functional ROI pipeline<a class="headerlink" href="#visualization-of-the-functional-roi-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">fROIflow</span></tt>:</p>
-<img alt="_images/fROI_hierachical.png" src="_images/fROI_hierachical.png" style="width: 810px;" />
+<img alt="_images/fROI_hierachical.png" src="_images/fROI_hierachical.png" style="width: 640px;" />
 <p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">fROIflow</span></tt>:</p>
-<img alt="_images/fROI_detailed.png" src="_images/fROI_detailed.png" style="width: 1080px;" />
+<img alt="_images/fROI_detailed.png" src="_images/fROI_detailed.png" style="width: 810px;" />
 </div>
 <div class="section" id="id4">
 <h3>Summarizing the output in a cvs-file<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
@@ -1097,7 +1102,7 @@ fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 15, 2011.
+      Last updated on August 17, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

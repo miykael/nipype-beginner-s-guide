@@ -5,14 +5,14 @@ How To Visualize A Pipeline
 What kind of graph do you need?
 ===============================
 
-After the connection of all nodes of a pipeline is established we are able to create a graph which gives us a very good overview of our pipeline. For the example in the previous chapter, the command would simply be:
+After the connection of all nodes of a pipeline is established we are able to use the ``write_graph()`` method of the workflow and create a graph. Such a graph gives us a very good overview of our pipeline. For the example in the previous chapter, the command would be:
 
 .. code-block:: py
    :linenos:
 
    metaflow.write_graph(graph2use='flat')
 
-The variable ``graph2use`` can have the following four parameters:
+Nipype can creat four different kinds of graphs by setting the variable ``graph2use`` to the following parameters:
 
 * ``orig`` shows only the highest workflow
 * ``flat`` shows all workflows with subworkflows
@@ -23,6 +23,8 @@ All versions create two graph files except the hierarchical one. The difference 
 
 .. note::
    The graph files can be found in the highest pipeline folder of your working directory.
+
+   If graphviz is installed the dot files will automatically be converted into png-files. Otherwise you can take the dot files and load them in a graphviz visualizer elsewhere. 
 
 
 Example graphs
@@ -37,6 +39,7 @@ The following graphs are a visualization of the **first level analysis pipeline*
 This is the simple graph of the ``orig`` version and shows as an example the ``metaflow`` which you will encounter in a latter chapter. The name of the nodes is composed in the format of ``nodename.algorithm.interface``. Because this version of graphs only shows the highest workflow all the subgraphs contained in the ``frameflow`` are hidden.
 
 .. image:: firstlevel_orig_simple.png
+   :width: 448
 
 
 ``orig`` - detailed graph
@@ -65,7 +68,7 @@ But this version still doesn't show you if there are different kinds of subworkf
 This detailed graph of the ``flat`` version shows the ``metaflow``. You can see now all nodes, their inputs and outputs and how they are connected to each other.
 
 .. image:: firstlevel_flat_detailed.png
-   :width: 1080
+   :width: 810
 
 In this version you also see that the that the ``frameflow`` has actually three subworkflows called ``preproc``, ``surfanalysis`` and ``volanalysis``.
 
@@ -82,7 +85,7 @@ This graph doesn't show you anything different than the simple graph of the ``fl
 This detailed graph of the ``exec`` version shows the ``metaflow``. You can see that you get the same level of detail as if you would run it with ``flat`` but all iterables are expandend so that you can see all the nodes that would be processed in parallel are shown at once.
 
 .. image:: firstlevel_exec_detailed.png
-   :width: 1080
+   :width: 810
 
 In this case the infosource node iterates over ``subject1`` and ``subject2``.
 
@@ -103,4 +106,4 @@ In this example you clearly see that the ``metaflow`` contains a ``frameflow`` w
 
 
 .. note::
-   The coloration of this graphs was done manually and doesn't get created by nipype itself.
+   The coloration of this graphs were done manually and don't get created by nipype itself.

@@ -67,7 +67,7 @@ Now we define the main node for the data conversion, DICOMConvert.
    dicom2nifti = pe.Node(interface=fs.DICOMConvert(), name="dicom2nifti")
 
 
-If we now look at the section nipype.interfaces.freesurfer.preprocess about the `DICOMConvert <http://www.mit.edu/~satra/nipype-nightly/interfaces/generated/nipype.interfaces.freesurfer.preprocess.html#dicomconvert>`_ node we see the following:
+If we now look at the section nipype.interfaces.freesurfer.preprocess about the `DICOMConvert http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.freesurfer.preprocess.html#dicomconvert>`_ node we see the following:
 
 **[Mandatory]**
 ::
