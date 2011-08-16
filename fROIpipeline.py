@@ -60,14 +60,17 @@ datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id','contrast_
                      name = 'datasource')
 datasource.inputs.base_directory = experiment_dir + '/results/' + l1contrastDir
 datasource.inputs.template = 'norm%s/%s/%s_%04d_ants.nii'
-datasource.inputs.template_args = dict(contrast = [['cons','subject_id','con','contrast_id']],
-                                       tmaps = [['tmaps','subject_id','spmT','contrast_id']])
+info = dict(contrast = [['subject_id','cons','con','contrast_id']],
+            tmaps = [['subject_id','tmaps','spmT','contrast_id']])
+datasource.inputs.template_args = info
 
 #Node: ImageMaths - to create the cubic ROI with value 1
 cubemask = pe.Node(interface=fsl.ImageMaths(),name="cubemask")
-cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%(corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
+roiValues = (corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
+cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%roiValues
 cubemask.inputs.out_data_type = 'float'
-cubemask.inputs.in_file = '/mindhive/gablab/u/mnotter/Desktop/TEST/results/' + l1contrastDir + '/normcons/%s/con_%04d_ants.nii'%(subjects[0],contrasts[0])
+pathValues = (subjects[0],contrasts[0])
+cubemask.inputs.in_file = '~SOMEPATH/experiment/normcons/%s/con_%04d_ants.nii'%pathValues
 
 #Node: ImageMaths - to smooth the cubic ROI to a sphere
 spheremask = pe.Node(interface=fsl.ImageMaths(),name="spheremask")
