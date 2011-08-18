@@ -133,4 +133,4 @@ e.g. fslmaths input_volume -add input_volume2 output_volume
      fslmaths input_volume -add 2.5 -mul input_volume2 output_volume
 
      fslmaths 4D_input_volume -Tmean -mul -1 -add 4D_input_volume demeaned_4D_input_volume
-
+  
