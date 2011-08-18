@@ -466,3 +466,4 @@ Additionally to the original ``dicom``, ``data`` and ``freesurfer_data`` folder 
    - **bbregister** folder with the bbregister file for each subject
    - **surf_contrasts** folder with the estimated surface contrasts and the SPM.mat file for each subject
    - **vol_contrasts** folder with the estimated volume contrasts and the SPM.mat file for each subject
+   
