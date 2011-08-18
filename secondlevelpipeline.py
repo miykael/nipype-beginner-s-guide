@@ -21,7 +21,7 @@ freesurfer_dir = experiment_dir + '/freesurfer_data'
 fs.FSCommand.set_default_subjects_dir(freesurfer_dir)
 
 #list of subjectnames
-subjects = ['subject1', 'subject2']
+subjects = ['subject1', 'subject2', 'subject3']
 
 #second level analysis pipeline specific components
 nameOfLevel2Out = 'level2_output'
@@ -40,7 +40,8 @@ Grab the data
 
 #Node: DataGrabber - to collect all the con images for each contrast
 l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
-l2volSource.inputs.template = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d_ants.nii'
+path2normcons = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
+l2volSource.inputs.template = path2normcons
 l2volSource.iterables = [('con',contrast_ids)] # iterate over all contrast images
   
 

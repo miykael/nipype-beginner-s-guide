@@ -16,7 +16,7 @@ Define experiment specific parameters
 experiment_dir = '~SOMEPATH/experiment'
 
 #Specification of a list containing the identifier of each subject
-subjects_list = ['subject1','subject2','subject3','subject4']
+subjects_list = ['subject1','subject2','subject3']
   
 #Specification of the name of the dicom and output folder 
 dicom_dir_name = 'dicom' #if the path to the dicoms is: '~SOMEPATH/experiment/dicom'

@@ -11,7 +11,7 @@ import nipype.pipeline.engine as pe          # pypeline engine
 experiment_dir = '~SOMEPATH/experiment'
   
 #Specification of a list containing the identifier of each subject
-subjects_list = ['subject1','subject2','subject3','subject4']
+subjects_list = ['subject1','subject2','subject3']
 
 #Specification of the output folder - where the T1 file can be found
 data_dir_name = 'data'
