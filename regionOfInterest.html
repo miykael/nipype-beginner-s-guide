@@ -867,8 +867,11 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 42
 43
 44
-45</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
-<span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
+45
+46
+47</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
+<span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
+                                                             <span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
 <span class="n">inputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span>
                        <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrasts</span><span class="p">)]</span>
@@ -888,7 +891,7 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 <span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul 0 -add 1 -roi </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> 0 1&#39;</span><span class="o">%</span><span class="n">cubeValues</span>
 <span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
 <span class="n">pathValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment/normcons/</span><span class="si">%s</span><span class="s">/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="n">pathValues</span>
+<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;~SOMEPATH/experiment/normcons/</span><span class="si">%s</span><span class="s">/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="n">pathValues</span>
 
 <span class="c">#Node: ImageMaths - to transform the cubic ROI to a spherical ROI</span>
 <span class="n">spheremask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;spheremask&quot;</span><span class="p">)</span>
@@ -902,8 +905,9 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 <span class="c">#function to add the thresholded group T-map to op_string</span>
 <span class="k">def</span> <span class="nf">groupTMapPath</span><span class="p">(</span><span class="n">contrast_id</span><span class="p">):</span>
     <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
-    <span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul </span><span class="si">%s</span><span class="s">/results/level2_output/l2vol_contrasts_thresh/_con_</span><span class="si">%d</span><span class="s">/spmT_0001_thr.hdr -bin&#39;</span>
-    <span class="k">return</span> <span class="n">op_string</span><span class="o">%</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span><span class="n">contrast_id</span><span class="p">)</span>
+    <span class="n">path2con</span> <span class="o">=</span> <span class="s">&#39;results/level2_output/l2vol_contrasts_thresh&#39;</span>
+    <span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul </span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/_con_</span><span class="si">%d</span><span class="s">/spmT_0001_thr.hdr -bin&#39;</span>
+    <span class="k">return</span> <span class="n">op_string</span><span class="o">%</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span><span class="n">path2con</span><span class="p">,</span><span class="n">contrast_id</span><span class="p">)</span>
 
 <span class="c">#Node: SegStats - to extract the statistic from a given segmentation</span>
 <span class="n">segstat</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segstat&#39;</span><span class="p">)</span>
