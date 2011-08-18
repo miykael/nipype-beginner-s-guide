@@ -49,7 +49,8 @@ Definition of Nodes
 """
 
 #Node: IdentityInterface - to iterate over subjects and contrasts
-inputnode = pe.Node(interface=util.IdentityInterface(fields=['subject_id','contrast_id']),
+inputnode = pe.Node(interface=util.IdentityInterface(fields=['subject_id',
+                                                             'contrast_id']),
                     name='inputnode')
 inputnode.iterables = [('subject_id', subjects),
                        ('contrast_id', contrasts)]
@@ -69,7 +70,7 @@ cubeValues = (corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
 cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%cubeValues
 cubemask.inputs.out_data_type = 'float'
 pathValues = (subjects[0],contrasts[0])
-cubemask.inputs.in_file = '~SOMEPATH/experiment/normcons/%s/con_%04d_ants.nii'%pathValues
+cubemask.inputs.in_file='~SOMEPATH/experiment/normcons/%s/con_%04d_ants.nii'%pathValues
 
 #Node: ImageMaths - to transform the cubic ROI to a spherical ROI
 spheremask = pe.Node(interface=fsl.ImageMaths(),name="spheremask")
@@ -83,8 +84,9 @@ tmapmask.inputs.out_data_type = 'float'
 #function to add the thresholded group T-map to op_string
 def groupTMapPath(contrast_id):
     experiment_dir = '~SOMEPATH/experiment'
-    op_string = '-mul %s/results/level2_output/l2vol_contrasts_thresh/_con_%d/spmT_0001_thr.hdr -bin'
-    return op_string%(experiment_dir,contrast_id)
+    path2con = 'results/level2_output/l2vol_contrasts_thresh'
+    op_string = '-mul %s/%s/_con_%d/spmT_0001_thr.hdr -bin'
+    return op_string%(experiment_dir,path2con,contrast_id)
 
 #Node: SegStats - to extract the statistic from a given segmentation
 segstat = pe.Node(interface=fs.SegStats(),name='segstat')
