@@ -2,12 +2,12 @@
 How To Extract Regions Of Interest (ROIs)
 =========================================
 
-In this part we will learn how to extract statistical data from a strictly specified region or in other words a **region of interest (ROI)**.
+In this part we will learn how to extract statistical data from a specified region or also called a **region of interest (ROI)**.
 
 Anatomical and Functional ROIs
 ==============================
 
-We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the way how they define a region of interest.
+Anatomical and functional ROIs differ mostly by the way how they define the region of interest.
 
 Anatomical ROI
 ~~~~~~~~~~~~~~
@@ -65,7 +65,6 @@ The ids from *1 to 999* can be found in the original as well as in the 2009 vers
 .. image:: seg2009.png
    :width: 512 px
 
-
 .. hint::
 
    If you want to explore those regions by ourself I recommend to open a **FreeSurfer** capable viewing tool and overlay the annotation file from the ``fsaverage/label`` folder. 
@@ -74,12 +73,52 @@ The ids from *1 to 999* can be found in the original as well as in the 2009 vers
 Functional ROI
 ~~~~~~~~~~~~~~
 
-The region of functional ROIs is solely defined by what point in "brain"-space you are interested in. You're region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this chapter.
+The most important difference to the extraction of an anatomical ROI is that the functional region of interest isn't predefined by some atlas but is solely defined by a point in "brain"-space that you are interested in. You're region of interest is most likely a point of strong or interesting activation in your functional data, hence its name. The following is a visualization of a thresholded contrast from our previous second level analysis. The contrast has a cluster threshold of 0.001 and a fdr-p-voxel threshold of 0.05.
 
-**Visualization of a functional ROI**: The following picture shows a spherical region with radius 20 voxel around the point of interest [179, 129, 107] in MNI-space.
+.. image:: fROI1.png
+   :width: 810 px
+
+The specification of our region of interest can now be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. It would also be possible to extract exact exactly all the voxel you can see in the picture above.
+
+In this example we will extract the data around a spherical ROI with the point [179, 129, 107] in MNI-space as its center and a radius of 20 voxel from the thresholded contrast above. The procedure to do this is quite simple:
+
+1. We define a point of interest and create a sphere around it. This step has to be divided into the following substeps to be achieved:
+
+   a. Create a cube around your point of interest so that the region you want to be cover is covered
+   b. Transform the cube into a sphere by smoothing it
+
+2. We create a ROI which is the intersection of this spherical ROI and the thresholded activation from the second level analysis
+3. We extract the data from this intersection.
+
+Let's take a closer look at those steps.
+
+**Step 1a: Create a cube around your point of interest**
+
+To create this cube around the point of interest some not so obvious steps have to be done. **First**, take a contrast with the dimensions of your normbrain, multiply all voxel by 0 and add the value 1 to each. **Second**, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides. In this example this is 20. This will left you with a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.
+
+.. image:: fROI2.png
+   :width: 810 px
+
+
+**Step 1b: Smooth the cube to a sphere**
+
+To do this, take the cube and smooth it to a sphere with radius 20. If you're using ``fsl.ImageMaths()`` you have to first threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.
 
 .. image:: fROI3.png
    :width: 810 px
+
+   
+**Step 2: Create the intersection between the thresholded contrast and the sphere**
+
+To create the ROI that is the intersection of the active voxels from the thresholded contrast and the sphere we have have to multiply the sphere with the thresholded contrast.
+
+.. image:: fROI4.png
+   :width: 810 px
+
+
+**Step 3: Extract the data from this intersection**
+
+By feeding this self defined ROI into ``fs.SegStats()`` we can extract the values of this region.
 
 
 Anatomical ROI Pipeline
@@ -318,7 +357,7 @@ Visualization of the anatomical ROI pipeline
 
 This graph of the ``hierarchical`` version shows the ``aROIflow``:
 
-.. image:: aROI_hierachical.png
+.. image:: aROI_hierarchical.png
    :width: 810 px
 
 This detailed graph of the ``flat`` version shows the ``aROIflow``:
@@ -462,72 +501,31 @@ Additionally to the ``level2_output`` folder in ``~SOMEPATH/experiment/results/`
    If you run the additional python code that is at the end of the script, the summarization files that get created will be stored in ``~SOMEPATH/experiment/results/aROI_output``.
 
 
-
 Functional ROI Pipeline
 =======================
 
-As said before, the most important difference to the extraction of an anatomical ROI is that the region of interest isn't predefined by some atlas. In this example we define the region we are interested in solely by a point in "brain"-space and by a the radius of a sphere around this point. The procedure to this is quite simple:
+Before we start with the creation of our **functional ROI pipeline**, let's have a closer look at step 1a, 1b and 2 from the introduction part above. To do those steps we use ``fslmaths`` from the FSL interface which we will be implementing in Nipype with the ``fsl.ImageMaths()`` interface. Sometimes it is helpfull or necessary to know what the final command will be before creating the nodes.
 
-1. define a point of interest and create a sphere around it
-2. overlay this sphere on the functional data of a subject
-3. extract only the data from this region
-
-Our **functional ROI pipeline** does almost exactly this. The only difference is that we have to divide the first step into smaller substeps:
-
-a. find the coordination of a point you are interested in
-b. create a cube around this point of interest so that the region you want to cover is covered
-c. transform the cube into a sphere by smoothing it
-d. mask the sphere with the subject specific T-maps so that only the voxels are taken into account which were actually active
-
-Let's take a closer look at those steps:
-
-**Step A: Define a point of interest**
-
-.. image:: fROI1.png
-   :width: 810 px
-
-In this image that shows a thresholded contrast from our second level volume pipeline we know that the point with coordinations [179, 129, 107] seems to be very active and therefore interesting.
-
-**Step B: Create a cube**
-
-.. image:: fROI2.png
-   :width: 810 px
-
-To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides, which in this example is 20. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.
+**Step 1a** will be implemented by a node called ``cubemask``. This node will create the following FSL command:
 
 .. code-block:: sh
 
-   #this is the command line for fsl.ImageMaths() of such a cubemask node
    fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject2/
    con_0001_ants.nii -mul 0 -add 1 -roi 159 40 109 40 87 40 0 1 ~SOMEPATH/experiment/
    results/workingdir_fROI/fROIflow/cubemask/con_0001_ants_maths.nii.gz -odt float
 
-   
-**Step C: Smooth cube to a sphere**
-
-.. image:: fROI3.png
-   :width: 810 px
-
-To achieve this you have to take the cube and smooth it to a sphere. If you're using ``fsl.ImageMaths()`` you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.
+**Step 1b** will be implemented by a node called ``spheremask``. This node will create the following FSL command:
 
 .. code-block:: sh
 
-   #this is the command line for fsl.ImageMaths() of such a spheremask node
    fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/cubemask/
    con_0001_ants_maths.nii.gz -kernel sphere 20 -fmean -thr 0.5 -bin ~SOMEPATH/experiment/
    results/workingdir_fROI/fROIflow/spheremask/con_0001_ants_maths_maths.nii.gz -odt float
 
-   
-**Step D: Mask ROI with subject specific T-map**
-
-.. image:: fROI4.png
-   :width: 810 px
-
-The final step of creating a functional is to mask your functional ROI for each subject and each contrast with the corresponding T-map. This leads to the picture above. With this way we take into account that only the values from the T-map in the specified region get counted.
+**Step 2** will be implemented by a node called ``tmapmask``. This node will create the following FSL command:
 
 .. code-block:: sh
 
-   #this is the command line for fsl.ImageMaths() of such a tmapmask node
    fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/spheremask/
    con_0001_ants_maths_maths.nii.gz -mul ~SOMEPATH/experiment/results/level2_output/
    l2vol_contrasts_thresh/_con_4/spmT_0001_thr.hdr -bin ~SOMEPATH/experiment/
@@ -537,13 +535,14 @@ The final step of creating a functional is to mask your functional ROI for each 
 
 .. note::
 
-   More informations about the different arguments of ``fsl.ImageMaths()`` aka ``fslmaths`` can be found `here <http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc>`_. To be on the safe side, I additionally copied it's content into `fslmaths.txt <http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt>`_.
+   If you are interested in what commandline an interface like ``fsl.ImageMaths()`` actually will be executing use the command ``nodename.cmdline`` (e.g. ``cubemask.cmdline`` if ``cubemask = fsl.ImageMaths()``). But for this to work ``cubemask`` mustn't be defined as a node like ``pe.Node(interface=fsl.ImageMaths(),name="cubemask")``.
+
+   More informations about the different arguments of ``fslmaths`` can be found `here <http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc>`_. To be on the safe side, I additionally copied it's content into `fslmaths.txt <http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt>`_.
 
    **Important:** This document wasn't created by me, I just stumbled upon it. But it is the best and most detailed one I've found.
 
 
-
-Let's now begin with the creation of our **functional ROI pipeline**.
+How those FSL commands can be achieved by using Nipype can be found in the code later on. Let's now start building our **functional ROI pipeline**.
 
 
 Import modules
@@ -650,24 +649,6 @@ Definition of Nodes
    datasink.inputs.container = fROIOutput
 
 
-.. note::
-
-   If you are interested in what command fsl.ImageMaths() actually will be executing in ``cubemask`` use the command ``cubemask.cmdline``. But for this to work ``cubemask`` mustn't be defined as a node. To use the ``cmdline`` command you have to define the instance like this:
-
-   .. code-block:: py
-
-      cubemask = fsl.ImageMaths()
-
-   In this example this would create the following cmdline command:
-
-   .. code-block:: py
-
-      fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
-      -thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float
-
-
-
-
 Definition of functional ROI workflow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -706,7 +687,7 @@ Visualization of the functional ROI pipeline
 
 This graph of the ``hierarchical`` version shows the ``fROIflow``:
 
-.. image:: fROI_hierachical.png
+.. image:: fROI_hierarchical.png
    :width: 640 px
 
 This detailed graph of the ``flat`` version shows the ``fROIflow``:

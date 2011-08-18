@@ -16,7 +16,14 @@ But what is Nipype?
 What can you expect from this user guide?
 =========================================
 
-This user guide will teach you all you need to know to get started. It will explain the basics of Nipype, how a pipeline is structured and how you can create your own pipeline. It will show you in what ways you can visualize your pipelines and teach you in a step by step example how to set up a first and a second level analysis on the volume or the surface. It will also introduce you to some additional knowledge about how to use Nipype to extract anatomical or functional regions of interests (ROIs) and how to create some nice brain pictures of your functional data. Not yet included but soon be added will be a part about ANTS that teaches you how to create your own norm brain template and how to normalize your data from subject space into a common template space.
+The goal of this beginner's guide is simple. With its help you should be able to take the raw data from your scanner and execute all steps necessary to get something like this:
+
+.. image:: functional_activation.png
+   :width: 810
+
+This means that you are able to prepare your data (e.g. recon-all, dicom2nifti conversion), run a full first and second level analysis (on the volume and surface), create your own normbrain template (have a nice normbrain, that is closer to your actual data), create pictures of brain activity like this and extract the statistical relevant values (extraction of anatomical and functional regions of interests (ROIs)). All that by using Nipype. But that's not all...
+
+This user guide will also teach you all the basics of Nipype that you need to know. How a pipeline is structured and how to build one by yourself. It will show you different ways to visualize your pipelines. Not yet included is the chapter about ANTS which will teach you how to create your own normbrain template and how to normalize your data from subject space into a common template space.
 
 Note that this guide is meant as a general introduction. The implementation of Nipype is nearly unlimited and there is a lot of advanced knowledge that won't be covered by this guide but can be looked up at various places on the `nipype homepage <http://nipy.sourceforge.net/nipype/>`_.
 

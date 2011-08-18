@@ -136,10 +136,10 @@
             
   <div class="section" id="how-to-extract-regions-of-interest-rois">
 <h1>How To Extract Regions Of Interest (ROIs)<a class="headerlink" href="#how-to-extract-regions-of-interest-rois" title="Permalink to this headline">¶</a></h1>
-<p>In this part we will learn how to extract statistical data from a strictly specified region or in other words a <strong>region of interest (ROI)</strong>.</p>
+<p>In this part we will learn how to extract statistical data from a specified region or also called a <strong>region of interest (ROI)</strong>.</p>
 <div class="section" id="anatomical-and-functional-rois">
 <h2>Anatomical and Functional ROIs<a class="headerlink" href="#anatomical-and-functional-rois" title="Permalink to this headline">¶</a></h2>
-<p>We will learn how to extract anatomical and functional ROIs, two ways of extraction which differ mostly by the way how they define a region of interest.</p>
+<p>Anatomical and functional ROIs differ mostly by the way how they define the region of interest.</p>
 <div class="section" id="anatomical-roi">
 <h3>Anatomical ROI<a class="headerlink" href="#anatomical-roi" title="Permalink to this headline">¶</a></h3>
 <p>The region of an anatomical ROI is as the name implies defined by the anatomical structure of the brain (e.g. Thalamus, Putamen, Ventricle, Amygdala etc.). Such definitions of anatomical regions and there segmentations is stored in so called <strong>atlas</strong>. A well known atlas which is used by <strong>Nipype</strong> by default is the <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT">FreeSurfer Color Table</a>.</p>
@@ -188,9 +188,31 @@
 </div>
 <div class="section" id="functional-roi">
 <h3>Functional ROI<a class="headerlink" href="#functional-roi" title="Permalink to this headline">¶</a></h3>
-<p>The region of functional ROIs is solely defined by what point in &#8220;brain&#8221;-space you are interested in. You&#8217;re region of interest is most likely where there is a peak or interesting activation in your functional data, hence its name. The specification of the region can be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. And this is exactly what we will be doing in this chapter.</p>
-<p><strong>Visualization of a functional ROI</strong>: The following picture shows a spherical region with radius 20 voxel around the point of interest [179, 129, 107] in MNI-space.</p>
+<p>The most important difference to the extraction of an anatomical ROI is that the functional region of interest isn&#8217;t predefined by some atlas but is solely defined by a point in &#8220;brain&#8221;-space that you are interested in. You&#8217;re region of interest is most likely a point of strong or interesting activation in your functional data, hence its name. The following is a visualization of a thresholded contrast from our previous second level analysis. The contrast has a cluster threshold of 0.001 and a fdr-p-voxel threshold of 0.05.</p>
+<img alt="_images/fROI1.png" src="_images/fROI1.png" style="width: 810px;" />
+<p>The specification of our region of interest can now be done in different ways. Some may want to look at a cubic region with the point of interest as its center. Others want to extract a spherical region around a point of interest. It would also be possible to extract exact exactly all the voxel you can see in the picture above.</p>
+<p>In this example we will extract the data around a spherical ROI with the point [179, 129, 107] in MNI-space as its center and a radius of 20 voxel from the thresholded contrast above. The procedure to do this is quite simple:</p>
+<ol class="arabic simple">
+<li>We define a point of interest and create a sphere around it. This step has to be divided into the following substeps to be achieved:<ol class="loweralpha">
+<li>Create a cube around your point of interest so that the region you want to be cover is covered</li>
+<li>Transform the cube into a sphere by smoothing it</li>
+</ol>
+</li>
+<li>We create a ROI which is the intersection of this spherical ROI and the thresholded activation from the second level analysis</li>
+<li>We extract the data from this intersection.</li>
+</ol>
+<p>Let&#8217;s take a closer look at those steps.</p>
+<p><strong>Step 1a: Create a cube around your point of interest</strong></p>
+<p>To create this cube around the point of interest some not so obvious steps have to be done. <strong>First</strong>, take a contrast with the dimensions of your normbrain, multiply all voxel by 0 and add the value 1 to each. <strong>Second</strong>, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides. In this example this is 20. This will left you with a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.</p>
+<img alt="_images/fROI2.png" src="_images/fROI2.png" style="width: 810px;" />
+<p><strong>Step 1b: Smooth the cube to a sphere</strong></p>
+<p>To do this, take the cube and smooth it to a sphere with radius 20. If you&#8217;re using <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> you have to first threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.</p>
 <img alt="_images/fROI3.png" src="_images/fROI3.png" style="width: 810px;" />
+<p><strong>Step 2: Create the intersection between the thresholded contrast and the sphere</strong></p>
+<p>To create the ROI that is the intersection of the active voxels from the thresholded contrast and the sphere we have have to multiply the sphere with the thresholded contrast.</p>
+<img alt="_images/fROI4.png" src="_images/fROI4.png" style="width: 810px;" />
+<p><strong>Step 3: Extract the data from this intersection</strong></p>
+<p>By feeding this self defined ROI into <tt class="docutils literal"><span class="pre">fs.SegStats()</span></tt> we can extract the values of this region.</p>
 </div>
 </div>
 <div class="section" id="anatomical-roi-pipeline">
@@ -471,7 +493,7 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 <div class="section" id="visualization-of-the-anatomical-roi-pipeline">
 <h3>Visualization of the anatomical ROI pipeline<a class="headerlink" href="#visualization-of-the-anatomical-roi-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">aROIflow</span></tt>:</p>
-<img alt="_images/aROI_hierachical.png" src="_images/aROI_hierachical.png" style="width: 810px;" />
+<img alt="_images/aROI_hierarchical.png" src="_images/aROI_hierarchical.png" style="width: 810px;" />
 <p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">aROIflow</span></tt>:</p>
 <img alt="_images/aROI_detailed.png" src="_images/aROI_detailed.png" style="width: 810px;" />
 </div>
@@ -703,46 +725,21 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 </div>
 <div class="section" id="functional-roi-pipeline">
 <h2>Functional ROI Pipeline<a class="headerlink" href="#functional-roi-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>As said before, the most important difference to the extraction of an anatomical ROI is that the region of interest isn&#8217;t predefined by some atlas. In this example we define the region we are interested in solely by a point in &#8220;brain&#8221;-space and by a the radius of a sphere around this point. The procedure to this is quite simple:</p>
-<ol class="arabic simple">
-<li>define a point of interest and create a sphere around it</li>
-<li>overlay this sphere on the functional data of a subject</li>
-<li>extract only the data from this region</li>
-</ol>
-<p>Our <strong>functional ROI pipeline</strong> does almost exactly this. The only difference is that we have to divide the first step into smaller substeps:</p>
-<ol class="loweralpha simple">
-<li>find the coordination of a point you are interested in</li>
-<li>create a cube around this point of interest so that the region you want to cover is covered</li>
-<li>transform the cube into a sphere by smoothing it</li>
-<li>mask the sphere with the subject specific T-maps so that only the voxels are taken into account which were actually active</li>
-</ol>
-<p>Let&#8217;s take a closer look at those steps:</p>
-<p><strong>Step A: Define a point of interest</strong></p>
-<img alt="_images/fROI1.png" src="_images/fROI1.png" style="width: 810px;" />
-<p>In this image that shows a thresholded contrast from our second level volume pipeline we know that the point with coordinations [179, 129, 107] seems to be very active and therefore interesting.</p>
-<p><strong>Step B: Create a cube</strong></p>
-<img alt="_images/fROI2.png" src="_images/fROI2.png" style="width: 810px;" />
-<p>To create this cube around the point of interesting some not so obvious steps have to be done. First, take a subject specific contrast multiply all voxel by 0 and add the value 1 to each. Second, define a cubic area around your point of interest by specifying the lowest corners of the cube and the length of its sides, which in this example is 20. Now you have a cubic region where all voxel inside the cube have value 1 and all voxel outside the cube have value 0.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line for fsl.ImageMaths() of such a cubemask node</span>
-fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject2/
+<p>Before we start with the creation of our <strong>functional ROI pipeline</strong>, let&#8217;s have a closer look at step 1a, 1b and 2 from the introduction part above. To do those steps we use <tt class="docutils literal"><span class="pre">fslmaths</span></tt> from the FSL interface which we will be implementing in Nipype with the <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> interface. Sometimes it is helpfull or necessary to know what the final command will be before creating the nodes.</p>
+<p><strong>Step 1a</strong> will be implemented by a node called <tt class="docutils literal"><span class="pre">cubemask</span></tt>. This node will create the following FSL command:</p>
+<div class="highlight-sh"><div class="highlight"><pre>fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject2/
 con_0001_ants.nii -mul 0 -add 1 -roi 159 40 109 40 87 40 0 1 ~SOMEPATH/experiment/
 results/workingdir_fROI/fROIflow/cubemask/con_0001_ants_maths.nii.gz -odt float
 </pre></div>
 </div>
-<p><strong>Step C: Smooth cube to a sphere</strong></p>
-<img alt="_images/fROI3.png" src="_images/fROI3.png" style="width: 810px;" />
-<p>To achieve this you have to take the cube and smooth it to a sphere. If you&#8217;re using <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> you have to threshold the sphere with 0.5 and binarize it afterwards. Now you have sphere with the same diameter as the side of the cube was.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line for fsl.ImageMaths() of such a spheremask node</span>
-fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/cubemask/
+<p><strong>Step 1b</strong> will be implemented by a node called <tt class="docutils literal"><span class="pre">spheremask</span></tt>. This node will create the following FSL command:</p>
+<div class="highlight-sh"><div class="highlight"><pre>fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/cubemask/
 con_0001_ants_maths.nii.gz -kernel sphere 20 -fmean -thr 0.5 -bin ~SOMEPATH/experiment/
 results/workingdir_fROI/fROIflow/spheremask/con_0001_ants_maths_maths.nii.gz -odt float
 </pre></div>
 </div>
-<p><strong>Step D: Mask ROI with subject specific T-map</strong></p>
-<img alt="_images/fROI4.png" src="_images/fROI4.png" style="width: 810px;" />
-<p>The final step of creating a functional is to mask your functional ROI for each subject and each contrast with the corresponding T-map. This leads to the picture above. With this way we take into account that only the values from the T-map in the specified region get counted.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#this is the command line for fsl.ImageMaths() of such a tmapmask node</span>
-fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/spheremask/
+<p><strong>Step 2</strong> will be implemented by a node called <tt class="docutils literal"><span class="pre">tmapmask</span></tt>. This node will create the following FSL command:</p>
+<div class="highlight-sh"><div class="highlight"><pre>fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/spheremask/
 con_0001_ants_maths_maths.nii.gz -mul ~SOMEPATH/experiment/results/level2_output/
 l2vol_contrasts_thresh/_con_4/spmT_0001_thr.hdr -bin ~SOMEPATH/experiment/
 results/workingdir_fROI/fROIflow/_contrast_id_4_subject_id_subject2/tmapmask/
@@ -751,10 +748,11 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>More informations about the different arguments of <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> aka <tt class="docutils literal"><span class="pre">fslmaths</span></tt> can be found <a class="reference external" href="http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc">here</a>. To be on the safe side, I additionally copied it&#8217;s content into <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt">fslmaths.txt</a>.</p>
+<p>If you are interested in what commandline an interface like <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> actually will be executing use the command <tt class="docutils literal"><span class="pre">nodename.cmdline</span></tt> (e.g. <tt class="docutils literal"><span class="pre">cubemask.cmdline</span></tt> if <tt class="docutils literal"><span class="pre">cubemask</span> <span class="pre">=</span> <span class="pre">fsl.ImageMaths()</span></tt>). But for this to work <tt class="docutils literal"><span class="pre">cubemask</span></tt> mustn&#8217;t be defined as a node like <tt class="docutils literal"><span class="pre">pe.Node(interface=fsl.ImageMaths(),name=&quot;cubemask&quot;)</span></tt>.</p>
+<p>More informations about the different arguments of <tt class="docutils literal"><span class="pre">fslmaths</span></tt> can be found <a class="reference external" href="http://ric.uthscsa.edu/personalpages/lancaster/SPM_Class/Lecture_18/fslmaths.doc">here</a>. To be on the safe side, I additionally copied it&#8217;s content into <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/fslmaths.txt">fslmaths.txt</a>.</p>
 <p class="last"><strong>Important:</strong> This document wasn&#8217;t created by me, I just stumbled upon it. But it is the best and most detailed one I&#8217;ve found.</p>
 </div>
-<p>Let&#8217;s now begin with the creation of our <strong>functional ROI pipeline</strong>.</p>
+<p>How those FSL commands can be achieved by using Nipype can be found in the code later on. Let&#8217;s now start building our <strong>functional ROI pipeline</strong>.</p>
 <div class="section" id="id2">
 <h3>Import modules<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -914,17 +912,6 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">fROIOutput</span>
 </pre></div>
 </td></tr></table></div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>If you are interested in what command fsl.ImageMaths() actually will be executing in <tt class="docutils literal"><span class="pre">cubemask</span></tt> use the command <tt class="docutils literal"><span class="pre">cubemask.cmdline</span></tt>. But for this to work <tt class="docutils literal"><span class="pre">cubemask</span></tt> mustn&#8217;t be defined as a node. To use the <tt class="docutils literal"><span class="pre">cmdline</span></tt> command you have to define the instance like this:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">cubemask</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>In this example this would create the following cmdline command:</p>
-<div class="last highlight-py"><pre>fslmaths ~SOMEPATH/experiment/blabla/con_0004_ants_maths.nii.gz -kernel sphere 10 -fmean
--thr 0.5 -bin ~SOMEPATH/experiment/blabla/con_0004_ants_maths_maths.nii.gz -odt float</pre>
-</div>
-</div>
 </div>
 <div class="section" id="definition-of-functional-roi-workflow">
 <h3>Definition of functional ROI workflow<a class="headerlink" href="#definition-of-functional-roi-workflow" title="Permalink to this headline">¶</a></h3>
@@ -971,7 +958,7 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 <div class="section" id="visualization-of-the-functional-roi-pipeline">
 <h3>Visualization of the functional ROI pipeline<a class="headerlink" href="#visualization-of-the-functional-roi-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>This graph of the <tt class="docutils literal"><span class="pre">hierarchical</span></tt> version shows the <tt class="docutils literal"><span class="pre">fROIflow</span></tt>:</p>
-<img alt="_images/fROI_hierachical.png" src="_images/fROI_hierachical.png" style="width: 640px;" />
+<img alt="_images/fROI_hierarchical.png" src="_images/fROI_hierarchical.png" style="width: 640px;" />
 <p>This detailed graph of the <tt class="docutils literal"><span class="pre">flat</span></tt> version shows the <tt class="docutils literal"><span class="pre">fROIflow</span></tt>:</p>
 <img alt="_images/fROI_detailed.png" src="_images/fROI_detailed.png" style="width: 810px;" />
 </div>
@@ -1105,7 +1092,7 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 17, 2011.
+      Last updated on August 18, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

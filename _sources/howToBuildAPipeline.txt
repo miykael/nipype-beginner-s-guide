@@ -523,7 +523,7 @@ Here we create a function that returns session specific information about the ex
        #restate the names of 
        namesOfConditions = ['basic','condition1','condition2','condition3']
 
-       #Onset Times in seconds for condition ['basic','condition1','condition2','condition3'
+       #Onset Times in seconds for condition ['basic','condition1','condition2','condition3']
        onsetTimes = [[1,10,42,49.6,66.1,74.1,97.6,113.6,122.2,130.2,137.2,153.7,169.2,
                       185.7,201.8,290.4,313.4,321.4,377.5,401.5,410,418.6,442.1,473.6],
                      [17.5,82.1,89.6,145.2,225.3,242.3,281.4,426.6],
