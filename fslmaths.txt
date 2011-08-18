@@ -17,10 +17,12 @@ Binary operations (image-image or image-number):
  -rem   : modulus remainder - divide current image by following input and take remainder
  -mas   : use (following image>0) to mask current image
  -thr   : use following number to threshold current image (zero anything below the number)
- -thrp  : use following percentage (0-100) of ROBUST RANGE to threshold current image (zero anything below the number)
+ -thrp  : use following percentage (0-100) of ROBUST RANGE to threshold current image (zero
+          anything below the number)
  -thrP  : use following percentage (0-100) of ROBUST RANGE of non-zero voxels and threshold below
  -uthr  : use following number to upper-threshold current image (zero anything above the number)
- -uthrp : use following percentage (0-100) of ROBUST RANGE to upper-threshold current image (zero anything above the number)
+ -uthrp : use following percentage (0-100) of ROBUST RANGE to upper-threshold current image (zero
+          anything above the number)
  -uthrP : use following percentage (0-100) of ROBUST RANGE of non-zero voxels and threshold above
  -max   : take maximum of following input and current image
  -min   : take minimum of following input and current image
@@ -38,7 +40,8 @@ Basic unary operations (algebraic operation on an image):
  -index : replace each nonzero voxel with a unique (subject to wrapping) index number
  -grid <value> <spacing> : add a 3D grid of intensity <value> with grid spacing <spacing>
  -edge  : edge strength
- -tfce <H> <E> <connectivity>: enhance with TFCE, e.g. -tfce 2 0.5 6 (maybe change 6 to 26 for skeletons)
+ -tfce <H> <E> <connectivity>: enhance with TFCE, e.g. -tfce 2 0.5 6 (maybe change 6 to 26 for
+          skeletons)
  -tfceS <H> <E> <connectivity> <X> <Y> <Z> <tfce_thresh>: show support area for voxel (X,Y,Z)
  -nan   : replace NaNs (improper numbers) with 0
  -nanm  : make NaN (improper number) mask with 1 for NaN voxels, 0 otherwise
@@ -49,19 +52,22 @@ Basic unary operations (algebraic operation on an image):
 
 Matrix operations:
 
- -tensor_decomp : convert a 4D (6-timepoint )tensor image into L1,2,3,FA,MD,MO,V1,2,3 (remaining image in pipeline is FA)
+ -tensor_decomp : convert a 4D (6-timepoint )tensor image into L1,2,3,FA,MD,MO,V1,2,3 (remaining
+                  image in pipeline is FA)
 
 Kernel operations (set BEFORE filtering operation):
 
  -kernel 3D : 3x3x3 box centered on target voxel (set as default kernel)
  -kernel 2D : 3x3x1 box centered on target voxel
  -kernel box    <size>     : all voxels in a box of width <size> centered on target voxel
- -kernel boxv   <size>     : <size>x<size>x<size> box centered on target voxel, CAUTION: size should be an odd number
+ -kernel boxv   <size>     : <size>x<size>x<size> box centered on target voxel, CAUTION: size
+                             should be an odd number
  -kernel gauss  <sigma>    : gaussian kernel (sigma in mm, not voxels)
  -kernel sphere <size>     : all voxels in a sphere of radius <size> mm centered on target voxel
  -kernel file   <filename> : use external file as kernel
 
-Spatial Filtering operations: N.B. all options apart from -s use the kernel _previously_ specified by –kernel
+Spatial Filtering operations: N.B. all options apart from -s use the kernel _previously_ specified
+                              by –kernel
 
  -dilM    : Mean Dilation of zero voxels  (using non-zero voxels in kernel)
  -dilD    : Modal Dilation of zero voxels (using non-zero voxels in kernel)
@@ -90,7 +96,8 @@ Dimensionality reduction operations:
 
 Basic statistical operations:
 
- -pval    : Nonparametric uncorrected P-value, assuming timepoints are the permutations; first timepoint is actual (unpermuted) stats image
+ -pval    : Nonparametric uncorrected P-value, assuming timepoints are the permutations; first
+            timepoint is actual (unpermuted) stats image
  -pval0   : Same as -pval, but treat zeros as missing data
  -cpval   : Same as -pval, but gives FWE corrected P-values
  -ztop    : Convert Z-stat to (uncorrected) P
@@ -98,13 +105,27 @@ Basic statistical operations:
 
 Multi-argument operations:
 
- -roi <xmin> <xsize> <ymin> <ysize> <zmin> <zsize> <tmin> <tsize> : zero outside roi (using voxel coordinates)
- -bptf  <hp_sigma> <lp_sigma> : (-t in ip.c) Bandpass temporal filtering; nonlinear highpass and Gaussian linear lowpass (with sigmas in volumes, not seconds); set either sigma<0 to skip that filter
- -roc <AROC-thresh> <outfile> [4Dnoiseonly] <truth> : take (normally binary) truth and test current image in ROC analysis against truth. <AROC-thresh> is usually 0.05 and is limit of Area-under-ROC measure FP axis. <outfile> is a text file of the ROC curve (triplets of values: FP TP threshold). If the truth image contains negative voxels these get excluded from all calculations. If <AROC-thresh> is positive then the [4Dnoiseonly] option needs to be set, and the FP rate is determined from this noise-only data, and is set to be the fraction of timepoints where any FP (anywhere) is seen, as found in the noise-only 4d-dataset. This is then controlling the FWE rate. If <AROC-thresh> is negative the FP rate is calculated from the zero-value parts of the <truth> image, this time averaging voxelwise FP rate over all timepoints. In both cases the TP rate is the average fraction of truth=positive voxels correctly found.
+ -roi <xmin> <xsize> <ymin> <ysize> <zmin> <zsize> <tmin> <tsize> : zero outside roi (using voxel
+      coordinates)
+ -bptf <hp_sigma> <lp_sigma> : (-t in ip.c) Bandpass temporal filtering; nonlinear highpass and
+       Gaussian linear lowpass (with sigmas in volumes, not seconds); set either sigma<0 to skip
+       that filter
+ -roc <AROC-thresh> <outfile> [4Dnoiseonly] <truth> : take (normally binary) truth and test current
+      image in ROC analysis against truth. <AROC-thresh> is usually 0.05 and is limit of Area-under
+      ROC measure FP axis. <outfile> is a text file of the ROC curve (triplets of values: FP TP
+      threshold). If the truth image contains negative voxels these get excluded from all
+      calculations. If <AROC-thresh> is positive then the [4Dnoiseonly] option needs to be set, and
+      the FP rate is determined from this noise-only data, and is set to be the fraction of
+      timepoints where any FP (anywhere) is seen, as found in the noise-only 4d-dataset. This is
+      then controlling the FWE rate. If <AROC-thresh> is negative the FP rate is calculated from
+      the zero-value parts of the <truth> image, this time averaging voxelwise FP rate over all
+      timepoints. In both cases the TP rate is the average fraction of truth=positive voxels
+      correctly found.
 
 Combining 4D and 3D images:
 
- If you apply a Binary operation (one that takes the current image and a new image together), when one is 3D and the other is 4D,
+ If you apply a Binary operation (one that takes the current image and a new image together), when
+ one is 3D and the other is 4D,
  the 3D image is cloned temporally to match the temporal dimensions of the 4D image.
 
 e.g. fslmaths input_volume -add input_volume2 output_volume
