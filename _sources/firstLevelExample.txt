@@ -427,7 +427,7 @@ Finally, after everything is set up correctly we can run the pipeline and additi
 .. code-block:: py
    :linenos:
 
-   #Run the analysis pipeline and create the two graphs that visually represents the workflow.
+   #Run the analysis pipeline and create the two graphs that visually represent the workflow.
    metaflow.write_graph(graph2use='flat')
    metaflow.run(plugin='MultiProc', plugin_args={'n_procs' : 2})
 

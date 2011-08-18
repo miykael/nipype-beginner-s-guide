@@ -434,7 +434,7 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">getVersion</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">getSegVersion</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
        <span class="k">return</span> <span class="n">in_file</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -465,9 +465,9 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
                                           <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">),</span>
                                           <span class="p">]),</span>
                   <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">fssource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">segmentationorig</span><span class="p">,[((</span><span class="s">&#39;aparc_aseg&#39;</span><span class="p">,</span><span class="n">getVersion</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                  <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">segmentationorig</span><span class="p">,[((</span><span class="s">&#39;aparc_aseg&#39;</span><span class="p">,</span><span class="n">getSegVersion</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
                                                  <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">segmentation2009</span><span class="p">,[((</span><span class="s">&#39;aparc_aseg&#39;</span><span class="p">,</span><span class="n">getVersion</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                  <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">segmentation2009</span><span class="p">,[((</span><span class="s">&#39;aparc_aseg&#39;</span><span class="p">,</span><span class="n">getSegVersion</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
                                                  <span class="s">&#39;segmentation_file&#39;</span><span class="p">)]),</span>
                   <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">MRIconversion</span><span class="p">,[(</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
                   <span class="p">(</span><span class="n">MRIconversion</span><span class="p">,</span> <span class="n">transformation</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
@@ -809,10 +809,10 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
  8
  9
 10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#define the coordination of the point of interest</span>
-<span class="n">centerOfROI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">110</span><span class="p">,</span><span class="mi">128</span><span class="p">,</span><span class="mi">142</span><span class="p">]</span>
+<span class="n">centerOfROI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">179</span><span class="p">,</span><span class="mi">129</span><span class="p">,</span><span class="mi">107</span><span class="p">]</span>
 
 <span class="c">#define the radius of the sphere of interest</span>
-<span class="n">radius</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="mi">20</span>
 
 <span class="c">#calculates the beginning corner of the cubic ROI</span>
 <span class="n">corner</span> <span class="o">=</span> <span class="p">[</span><span class="n">centerOfROI</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">radius</span><span class="p">,</span>
@@ -866,7 +866,8 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 41
 42
 43
-44</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
+44
+45</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: IdentityInterface - to iterate over subjects and contrasts</span>
 <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]),</span>
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;inputnode&#39;</span><span class="p">)</span>
 <span class="n">inputnode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="p">),</span>
@@ -874,18 +875,17 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 
 <span class="c">#Node: DataGrabber - To grab the input data</span>
 <span class="n">datasource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">],</span>
-                                               <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">,</span><span class="s">&#39;tmaps&#39;</span><span class="p">]),</span>
+                                               <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">]),</span>
                      <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/&#39;</span> <span class="o">+</span> <span class="n">l1contrastDir</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;norm</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
-<span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;cons&#39;</span><span class="p">,</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]],</span>
-            <span class="n">tmaps</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;tmaps&#39;</span><span class="p">,</span><span class="s">&#39;spmT&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]])</span>
+<span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;cons&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]])</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="n">info</span>
 
 <span class="c">#Node: ImageMaths - to create the cubic ROI with value 1</span>
 <span class="n">cubemask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;cubemask&quot;</span><span class="p">)</span>
-<span class="n">roiValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">corner</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul 0 -add 1 -roi </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> 0 1&#39;</span><span class="o">%</span><span class="n">roiValues</span>
+<span class="n">cubeValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">corner</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul 0 -add 1 -roi </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> 0 1&#39;</span><span class="o">%</span><span class="n">cubeValues</span>
 <span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
 <span class="n">pathValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment/normcons/</span><span class="si">%s</span><span class="s">/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="n">pathValues</span>
@@ -899,9 +899,11 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 <span class="n">tmapmask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;tmapmask&quot;</span><span class="p">)</span>
 <span class="n">tmapmask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
 
-<span class="c">#function to find the path to the subject specific T-map</span>
-<span class="k">def</span> <span class="nf">path2tmap</span><span class="p">(</span><span class="n">tmappath</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s">&#39;-mas </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">tmappath</span>
+<span class="c">#function to add the thresholded group T-map to op_string</span>
+<span class="k">def</span> <span class="nf">groupTMapPath</span><span class="p">(</span><span class="n">contrast_id</span><span class="p">):</span>
+    <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
+    <span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul </span><span class="si">%s</span><span class="s">/results/level2_output/l2vol_contrasts_thresh/_con_</span><span class="si">%d</span><span class="s">/spmT_0001_thr.hdr -bin&#39;</span>
+    <span class="k">return</span> <span class="n">op_string</span><span class="o">%</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span><span class="n">contrast_id</span><span class="p">)</span>
 
 <span class="c">#Node: SegStats - to extract the statistic from a given segmentation</span>
 <span class="n">segstat</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fs</span><span class="o">.</span><span class="n">SegStats</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;segstat&#39;</span><span class="p">)</span>
@@ -929,14 +931,18 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Initiation of the fROI extraction workflow</span>
 <span class="n">fROIflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;fROIflow&#39;</span><span class="p">)</span>
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/workingdir_fROI&#39;</span>
 
 <span class="c">#Connect up all components</span>
 <span class="n">fROIflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">cubemask</span><span class="p">,</span> <span class="n">spheremask</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
                   <span class="p">(</span><span class="n">spheremask</span><span class="p">,</span> <span class="n">tmapmask</span><span class="p">,[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span><span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">datasource</span><span class="p">,</span> <span class="n">tmapmask</span><span class="p">,[((</span><span class="s">&#39;tmaps&#39;</span><span class="p">,</span><span class="n">path2tmap</span><span class="p">),</span><span class="s">&#39;op_string&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">tmapmask</span><span class="p">,[((</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span><span class="n">groupTMapPath</span><span class="p">),</span>
+                                         <span class="s">&#39;op_string&#39;</span><span class="p">)</span>
+                                        <span class="p">]),</span>
                   <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">),</span>
                                           <span class="p">(</span><span class="s">&#39;contrast_id&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">)</span>
                                           <span class="p">]),</span>
@@ -1022,9 +1028,9 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
     <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
 
         <span class="c">#specify path to fROI datasink for each variation of segmentation</span>
-        <span class="n">path2aROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">aROIOutput</span>
+        <span class="n">path2fROIOut</span> <span class="o">=</span> <span class="n">experiment_dir</span><span class="o">+</span><span class="s">&#39;/results/&#39;</span><span class="o">+</span><span class="n">fROIOutput</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span>
         <span class="n">path2Sumfile</span> <span class="o">=</span> <span class="s">&#39;_contrast_id_&#39;</span><span class="o">+</span><span class="n">contrast</span><span class="o">+</span><span class="s">&#39;_subject_id_&#39;</span><span class="o">+</span><span class="n">subject</span>
-        <span class="n">statFile</span> <span class="o">=</span> <span class="n">path2aROIOut</span> <span class="o">+</span> <span class="n">path2Sumfile</span> <span class="o">+</span> <span class="s">&#39;/summary.stats&#39;</span>
+        <span class="n">statFile</span> <span class="o">=</span> <span class="n">path2fROIOut</span> <span class="o">+</span> <span class="n">path2Sumfile</span> <span class="o">+</span> <span class="s">&#39;/summary.stats&#39;</span>
 
         <span class="c">#extract the data from the output summary files</span>
         <span class="n">dataFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">statFile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
@@ -1038,7 +1044,7 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
     <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
 
 <span class="c">#store output into a cvs-file</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path2aROIOut</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">centerOfROI</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">radius</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path2fROIOut</span><span class="o">+</span><span class="s">&#39;/fROI_spherical&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">centerOfROI</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;_</span><span class="si">%s</span><span class="s">_result.csv&#39;</span><span class="o">%</span><span class="n">radius</span><span class="p">,</span><span class="s">&#39;wb&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="n">outputFile</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>

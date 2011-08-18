@@ -155,7 +155,7 @@
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">#Specification of a list containing the identifier of each subject</span>
-<span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">,</span><span class="s">&#39;subject4&#39;</span><span class="p">]</span>
+<span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">]</span>
 
 <span class="c">#Specification of the name of the dicom and output folder</span>
 <span class="n">dicom_dir_name</span> <span class="o">=</span> <span class="s">&#39;dicom&#39;</span> <span class="c">#if the path to the dicoms is: &#39;~SOMEPATH/experiment/dicom&#39;</span>
@@ -273,22 +273,19 @@ StudyTime 083819.578000
 <div class="line">This node provides an output called <tt class="docutils literal"><span class="pre">subject_id</span></tt> that is either</div>
 <div class="line"><tt class="docutils literal"><span class="pre">'subject1'</span></tt>,</div>
 <div class="line"><tt class="docutils literal"><span class="pre">'subject2'</span></tt>,</div>
-<div class="line"><tt class="docutils literal"><span class="pre">'subject3'</span></tt>,</div>
-<div class="line"><tt class="docutils literal"><span class="pre">'subject4'</span></tt>.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">'subject3'</span></tt>.</div>
 <div class="line"><br /></div>
 <div class="line"><strong>dicom2nifti</strong>:</div>
 <div class="line">This node needs <tt class="docutils literal"><span class="pre">dicom_dir</span></tt> as an input that is either:</div>
 <div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/dicom/subject1/'</span></tt>,</div>
 <div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/dicom/subject2/'</span></tt>,</div>
-<div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/dicom/subject3/'</span></tt>,</div>
-<div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/dicom/subject4/'</span></tt>.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/dicom/subject3/'</span></tt>.</div>
 <div class="line"><br /></div>
 <div class="line"><strong>dcminfo</strong>:</div>
 <div class="line">This node needs <tt class="docutils literal"><span class="pre">dicom_dir</span></tt> as an input that is either:</div>
 <div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/data/subject1/'</span></tt>,</div>
 <div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/data/subject2/'</span></tt>,</div>
-<div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/data/subject3/'</span></tt>,</div>
-<div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/data/subject4/'</span></tt>.</div>
+<div class="line"><tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/data/subject3/'</span></tt>.</div>
 </div>
 <p>As you can see, for both nodes <tt class="docutils literal"><span class="pre">dicom2nifti</span></tt> and <tt class="docutils literal"><span class="pre">dcminfo</span></tt> the input from dicom_dir does change for each subject. But so also do the outputs of <tt class="docutils literal"><span class="pre">infosource</span></tt>. The only thing we have to do is to take the output <tt class="docutils literal"><span class="pre">'subject1'</span></tt> from <tt class="docutils literal"><span class="pre">infosource</span></tt> and change it into <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/dicom/subject1/'</span></tt> for <tt class="docutils literal"><span class="pre">dicom2nifti</span></tt> and into <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/data/subject1/'</span></tt> for <tt class="docutils literal"><span class="pre">dcminfo</span></tt>. This can be accomplished by inserting a function into the connection process.</p>
 <p>Let&#8217;s call this function <tt class="docutils literal"><span class="pre">pathfinder</span></tt>, which takes as arguments the subjectname and the foldername (either <tt class="docutils literal"><span class="pre">dicom</span></tt> or <tt class="docutils literal"><span class="pre">data</span></tt>) and returns <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/foldername/subjec_name/'</span></tt>.</p>
@@ -445,7 +442,7 @@ StudyTime 083819.578000
 <span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~SOMEPATH/experiment&#39;</span>
 
 <span class="c">#Specification of a list containing the identifier of each subject</span>
-<span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">,</span><span class="s">&#39;subject4&#39;</span><span class="p">]</span>
+<span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">]</span>
 
 <span class="c">#Specification of the output folder - where the T1 file can be found</span>
 <span class="n">data_dir_name</span> <span class="o">=</span> <span class="s">&#39;data&#39;</span>

@@ -765,7 +765,7 @@
 <p>Finally, after everything is set up correctly we can run the pipeline and additionally let it draw the two graphs.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Run the analysis pipeline and create the two graphs that visually represents the workflow.</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Run the analysis pipeline and create the two graphs that visually represent the workflow.</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>

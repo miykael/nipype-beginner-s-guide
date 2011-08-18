@@ -310,7 +310,7 @@ This can be achieved with a simple function:
 .. code-block:: py
    :linenos:
 
-   def getVersion(in_file, version):
+   def getSegVersion(in_file, version):
        if version == 0:
           return in_file[0]
        else:
@@ -326,9 +326,9 @@ Now we are ready to build our **anatomical ROI pipeline**.
                                              ('contrast_id','contrast_id'),
                                              ]),
                      (inputnode, fssource,[('subject_id','subject_id')]),
-                     (fssource, segmentationorig,[(('aparc_aseg',getVersion,0),
+                     (fssource, segmentationorig,[(('aparc_aseg',getSegVersion,0),
                                                     'segmentation_file')]),
-                     (fssource, segmentation2009,[(('aparc_aseg',getVersion,1),
+                     (fssource, segmentation2009,[(('aparc_aseg',getSegVersion,1),
                                                     'segmentation_file')]),
                      (datasource, MRIconversion,[('contrast','in_file')]),
                      (MRIconversion, transformation,[('out_file','source_file')]),
@@ -586,10 +586,10 @@ Define fROI specific parameters
    :linenos:
 
    #define the coordination of the point of interest
-   centerOfROI = [110,128,142]
+   centerOfROI = [179,129,107]
    
    #define the radius of the sphere of interest
-   radius = 10
+   radius = 20
 
    #calculates the beginning corner of the cubic ROI
    corner = [centerOfROI[0]-radius,
@@ -608,21 +608,20 @@ Definition of Nodes
                        name='inputnode')
    inputnode.iterables = [('subject_id', subjects),
                           ('contrast_id', contrasts)]
-      
+
    #Node: DataGrabber - To grab the input data
    datasource = pe.Node(interface=nio.DataGrabber(infields=['subject_id','contrast_id'],
-                                                  outfields=['contrast','tmaps']),
+                                                  outfields=['contrast']),
                         name = 'datasource')
    datasource.inputs.base_directory = experiment_dir + '/results/' + l1contrastDir
    datasource.inputs.template = 'norm%s/%s/%s_%04d_ants.nii'
-   info = dict(contrast = [['subject_id','cons','con','contrast_id']],
-               tmaps = [['subject_id','tmaps','spmT','contrast_id']])
+   info = dict(contrast = [['cons','subject_id','con','contrast_id']])
    datasource.inputs.template_args = info
    
    #Node: ImageMaths - to create the cubic ROI with value 1
    cubemask = pe.Node(interface=fsl.ImageMaths(),name="cubemask")
-   roiValues = (corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
-   cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%roiValues
+   cubeValues = (corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
+   cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%cubeValues
    cubemask.inputs.out_data_type = 'float'
    pathValues = (subjects[0],contrasts[0])
    cubemask.inputs.in_file = '~SOMEPATH/experiment/normcons/%s/con_%04d_ants.nii'%pathValues
@@ -636,10 +635,12 @@ Definition of Nodes
    tmapmask = pe.Node(interface=fsl.ImageMaths(),name="tmapmask")
    tmapmask.inputs.out_data_type = 'float'
 
-   #function to find the path to the subject specific T-map   
-   def path2tmap(tmappath):
-       return '-mas %s'%tmappath
-   
+   #function to add the thresholded group T-map to op_string
+   def groupTMapPath(contrast_id):
+       experiment_dir = '~SOMEPATH/experiment'
+       op_string = '-mul %s/results/level2_output/l2vol_contrasts_thresh/_con_%d/spmT_0001_thr.hdr -bin'
+       return op_string%(experiment_dir,contrast_id)
+
    #Node: SegStats - to extract the statistic from a given segmentation
    segstat = pe.Node(interface=fs.SegStats(),name='segstat')
    
@@ -662,7 +663,9 @@ Definition of functional ROI workflow
    #Connect up all components
    fROIflow.connect([(cubemask, spheremask,[('out_file','in_file')]),
                      (spheremask, tmapmask,[('out_file','in_file')]),
-                     (datasource, tmapmask,[(('tmaps',path2tmap),'op_string')]),
+                     (inputnode, tmapmask,[(('contrast_id',groupTMapPath),
+                                            'op_string')
+                                           ]),
                      (inputnode, datasource,[('subject_id','subject_id'),
                                              ('contrast_id','contrast_id')
                                              ]),
@@ -725,9 +728,9 @@ This part is optional and shows only one of many ways how you can summarize the 
        for subject in subjects:
 
            #specify path to fROI datasink for each variation of segmentation
-           path2aROIOut = experiment_dir+'/results/'+aROIOutput
+           path2fROIOut = experiment_dir+'/results/'+fROIOutput + '/'
            path2Sumfile = '_contrast_id_'+contrast+'_subject_id_'+subject
-           statFile = path2aROIOut + path2Sumfile + '/summary.stats'
+           statFile = path2fROIOut + path2Sumfile + '/summary.stats'
    
            #extract the data from the output summary files
            dataFile = open(statFile, 'r')
@@ -741,7 +744,7 @@ This part is optional and shows only one of many ways how you can summarize the 
        output.append([])
    
    #store output into a cvs-file
-   f = open(path2aROIOut+'/fROI_spherical'+str(centerOfROI)+'_%s_result.csv'%radius,'wb')
+   f = open(path2fROIOut+'/fROI_spherical'+str(centerOfROI)+'_%s_result.csv'%radius,'wb')
    import csv
    outputFile = csv.writer(f)
    for line in output:

@@ -36,7 +36,7 @@ After importing the modules, it is recommended to specify all the necessary vari
    experiment_dir = '~SOMEPATH/experiment'
    
    #Specification of a list containing the identifier of each subject
-   subjects_list = ['subject1','subject2','subject3','subject4']
+   subjects_list = ['subject1','subject2','subject3']
    
    #Specification of the name of the dicom and output folder 
    dicom_dir_name = 'dicom' #if the path to the dicoms is: '~SOMEPATH/experiment/dicom'
@@ -169,22 +169,19 @@ Now we've defined all the nodes and implemented the preparation pipeline. The on
 | This node provides an output called ``subject_id`` that is either
 | ``'subject1'``,
 | ``'subject2'``,
-| ``'subject3'``,
-| ``'subject4'``.
+| ``'subject3'``.
 | 
 | **dicom2nifti**:
 | This node needs ``dicom_dir`` as an input that is either:
 | ``'~SOMEPATH/experiment/dicom/subject1/'``,
 | ``'~SOMEPATH/experiment/dicom/subject2/'``,
-| ``'~SOMEPATH/experiment/dicom/subject3/'``,
-| ``'~SOMEPATH/experiment/dicom/subject4/'``.
+| ``'~SOMEPATH/experiment/dicom/subject3/'``.
 | 
 | **dcminfo**:
 | This node needs ``dicom_dir`` as an input that is either:
 | ``'~SOMEPATH/experiment/data/subject1/'``,
 | ``'~SOMEPATH/experiment/data/subject2/'``,
-| ``'~SOMEPATH/experiment/data/subject3/'``,
-| ``'~SOMEPATH/experiment/data/subject4/'``.
+| ``'~SOMEPATH/experiment/data/subject3/'``.
 
 
 As you can see, for both nodes ``dicom2nifti`` and ``dcminfo`` the input from dicom_dir does change for each subject. But so also do the outputs of ``infosource``. The only thing we have to do is to take the output ``'subject1'`` from ``infosource`` and change it into ``'~SOMEPATH/experiment/dicom/subject1/'`` for ``dicom2nifti`` and into ``'~SOMEPATH/experiment/data/subject1/'`` for ``dcminfo``. This can be accomplished by inserting a function into the connection process.
@@ -323,7 +320,7 @@ First let us again import all necessary modules and specify the experiment speci
    experiment_dir = '~SOMEPATH/experiment'
    
    #Specification of a list containing the identifier of each subject
-   subjects_list = ['subject1','subject2','subject3','subject4']
+   subjects_list = ['subject1','subject2','subject3']
 
    #Specification of the output folder - where the T1 file can be found
    data_dir_name = 'data'
