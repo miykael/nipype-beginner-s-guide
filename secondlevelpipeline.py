@@ -40,7 +40,7 @@ Grab the data
 
 #Node: DataGrabber - to collect all the con images for each contrast
 l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
-path2normcons = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
+path2normcons = experiment_dir + '/results/level1_output/subject*/normcons/ants_con_%04d.nii'
 l2volSource.inputs.template = path2normcons
 l2volSource.iterables = [('con',contrast_ids)] # iterate over all contrast images
   
