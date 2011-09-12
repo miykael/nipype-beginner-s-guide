@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</title>
+    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.5',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation" href="index.html" />
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation" href="index.html" />
     <link rel="next" title="Ideas For Future Chapters" href="futureChapters.html" />
-    <link rel="prev" title="How To Build A Second Level Pipeline" href="secondLevelExample.html" />
+    <link rel="prev" title="How To Use ANTS To Normalize Your Data" href="ANTS.html" />
  
 <meta name="keywords" content="nipype, python, guide">
 <script type="text/javascript">
@@ -59,9 +59,9 @@
           <a href="futureChapters.html" title="Ideas For Future Chapters"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="secondLevelExample.html" title="How To Build A Second Level Pipeline"
+          <a href="ANTS.html" title="How To Use ANTS To Normalize Your Data"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -103,8 +103,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="secondLevelExample.html"
-                        title="previous chapter">How To Build A Second Level Pipeline</a></p>
+  <p class="topless"><a href="ANTS.html"
+                        title="previous chapter">How To Use ANTS To Normalize Your Data</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="futureChapters.html"
                         title="next chapter">Ideas For Future Chapters</a></p>
@@ -727,23 +727,23 @@ subject1/mri/aparc+aseg.mgz', '~SOMEPATH/experiment/freesurfer_data/subject1/mri
 <h2>Functional ROI Pipeline<a class="headerlink" href="#functional-roi-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>Before we start with the creation of our <strong>functional ROI pipeline</strong>, let&#8217;s have a closer look at step 1a, 1b and 2 from the introduction part above. To do those steps we use <tt class="docutils literal"><span class="pre">fslmaths</span></tt> from the FSL interface which we will be implementing in Nipype with the <tt class="docutils literal"><span class="pre">fsl.ImageMaths()</span></tt> interface. Sometimes it is helpfull or necessary to know what the final command will be before creating the nodes.</p>
 <p><strong>Step 1a</strong> will be implemented by a node called <tt class="docutils literal"><span class="pre">cubemask</span></tt>. This node will create the following FSL command:</p>
-<div class="highlight-sh"><div class="highlight"><pre>fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject2/
-con_0001_ants.nii -mul 0 -add 1 -roi 159 40 109 40 87 40 0 1 ~SOMEPATH/experiment/
-results/workingdir_fROI/fROIflow/cubemask/con_0001_ants_maths.nii.gz -odt float
+<div class="highlight-sh"><div class="highlight"><pre>fslmaths ~SOMEPATH/experiment/results/level1_output/subject2/normcons/
+ants_con_0001.nii -mul 0 -add 1 -roi 159 40 109 40 87 40 0 1 ~SOMEPATH/experiment/
+results/workingdir_fROI/fROIflow/cubemask/ants_con_0001_maths.nii.gz -odt float
 </pre></div>
 </div>
 <p><strong>Step 1b</strong> will be implemented by a node called <tt class="docutils literal"><span class="pre">spheremask</span></tt>. This node will create the following FSL command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/cubemask/
-con_0001_ants_maths.nii.gz -kernel sphere 20 -fmean -thr 0.5 -bin ~SOMEPATH/experiment/
-results/workingdir_fROI/fROIflow/spheremask/con_0001_ants_maths_maths.nii.gz -odt float
+ants_con_0001_maths.nii.gz -kernel sphere 20 -fmean -thr 0.5 -bin ~SOMEPATH/experiment/
+results/workingdir_fROI/fROIflow/spheremask/ants_con_0001_maths_maths.nii.gz -odt float
 </pre></div>
 </div>
 <p><strong>Step 2</strong> will be implemented by a node called <tt class="docutils literal"><span class="pre">tmapmask</span></tt>. This node will create the following FSL command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/spheremask/
-con_0001_ants_maths_maths.nii.gz -mul ~SOMEPATH/experiment/results/level2_output/
+ants_con_0001_maths_maths.nii.gz -mul ~SOMEPATH/experiment/results/level2_output/
 l2vol_contrasts_thresh/_con_4/spmT_0001_thr.hdr -bin ~SOMEPATH/experiment/
 results/workingdir_fROI/fROIflow/_contrast_id_4_subject_id_subject2/tmapmask/
-con_0001_ants_maths_maths_maths.nii.gz -odt float
+ants_con_0001_maths_maths_maths.nii.gz -odt float
 </pre></div>
 </div>
 <div class="admonition note">
@@ -881,8 +881,8 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
                                                <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;contrast&#39;</span><span class="p">]),</span>
                      <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/&#39;</span> <span class="o">+</span> <span class="n">l1contrastDir</span>
-<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;norm</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span>
-<span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;cons&#39;</span><span class="p">,</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]])</span>
+<span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">/norm</span><span class="si">%s</span><span class="s">/ants_</span><span class="si">%s</span><span class="s">_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
+<span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">contrast</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span><span class="s">&#39;cons&#39;</span><span class="p">,</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="s">&#39;contrast_id&#39;</span><span class="p">]])</span>
 <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="n">info</span>
 
 <span class="c">#Node: ImageMaths - to create the cubic ROI with value 1</span>
@@ -890,8 +890,8 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
 <span class="n">cubeValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">corner</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="n">corner</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">op_string</span> <span class="o">=</span> <span class="s">&#39;-mul 0 -add 1 -roi </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s"> 0 1&#39;</span><span class="o">%</span><span class="n">cubeValues</span>
 <span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_data_type</span> <span class="o">=</span> <span class="s">&#39;float&#39;</span>
-<span class="n">pathValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;~SOMEPATH/experiment/normcons/</span><span class="si">%s</span><span class="s">/con_</span><span class="si">%04d</span><span class="s">_ants.nii&#39;</span><span class="o">%</span><span class="n">pathValues</span>
+<span class="n">pathValues</span> <span class="o">=</span> <span class="p">(</span><span class="n">l1contrastDir</span><span class="p">,</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">contrasts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">cubemask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;~SOMEPATH/experiment/results/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/normcons/ants_con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span><span class="o">%</span><span class="n">pathValues</span>
 
 <span class="c">#Node: ImageMaths - to transform the cubic ROI to a spherical ROI</span>
 <span class="n">spheremask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">interface</span><span class="o">=</span><span class="n">fsl</span><span class="o">.</span><span class="n">ImageMaths</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;spheremask&quot;</span><span class="p">)</span>
@@ -1094,15 +1094,15 @@ con_0001_ants_maths_maths_maths.nii.gz -odt float
           <a href="futureChapters.html" title="Ideas For Future Chapters"
              >next</a> |</li>
         <li class="right" >
-          <a href="secondLevelExample.html" title="How To Build A Second Level Pipeline"
+          <a href="ANTS.html" title="How To Use ANTS To Normalize Your Data"
              >previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 18, 2011.
+      Last updated on September 12, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

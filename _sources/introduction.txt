@@ -23,7 +23,7 @@ The goal of this beginner's guide is simple. With its help you should be able to
 
 This means that you are able to prepare your data (e.g. recon-all, dicom2nifti conversion), run a full first and second level analysis (on the volume and surface), create your own normbrain template (have a nice normbrain, that is closer to your actual data), create pictures of brain activity like this and extract the statistical relevant values (extraction of anatomical and functional regions of interests (ROIs)). All that by using Nipype. But that's not all...
 
-This user guide will also teach you all the basics of Nipype that you need to know. How a pipeline is structured and how to build one by yourself. It will show you different ways to visualize your pipelines. Not yet included is the chapter about ANTS which will teach you how to create your own normbrain template and how to normalize your data from subject space into a common template space.
+This user guide will also teach you all the basics of Nipype that you need to know. How a pipeline is structured and how to build one by yourself. It will show you different ways to visualize your pipelines. There is also an additional chapter about ANTS, a tool to normalize your data. In the ANTS chapter you will learn how to create your own normbrain template and how to normalize your data from subject space into a common template space.
 
 Note that this guide is meant as a general introduction. The implementation of Nipype is nearly unlimited and there is a lot of advanced knowledge that won't be covered by this guide but can be looked up at various places on the `nipype homepage <http://nipy.sourceforge.net/nipype/>`_.
 
@@ -52,7 +52,7 @@ Before you can run a nipype python script make also sure to set up the necessary
 .. code-block:: sh
    :linenos:
 
-    source /software/python/setup-nipype-0.4.sh 
+    source /software/python/EPD/virtualenvs/7.1/nipype0.4/bin/activate
     source /software/Freesurfer/5.1.0/SetUpFreeSurfer.sh
     
     export MATLABCMD=$pathtomatlabdir/bin/$platform/MATLAB

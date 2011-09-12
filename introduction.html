@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</title>
+    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.5',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation" href="index.html" />
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation" href="index.html" />
     <link rel="next" title="How To Build A Pipeline" href="howToBuildAPipeline.html" />
     <link rel="prev" title="Beginner’s Guide to Nipype" href="index.html" />
  
@@ -61,7 +61,7 @@
         <li class="right" >
           <a href="index.html" title="Beginner’s Guide to Nipype"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -122,7 +122,7 @@
 <p>The goal of this beginner&#8217;s guide is simple. With its help you should be able to take the raw data from your scanner and execute all steps necessary to get something like this:</p>
 <img alt="_images/functional_activation.png" src="_images/functional_activation.png" style="width: 810px;" />
 <p>This means that you are able to prepare your data (e.g. recon-all, dicom2nifti conversion), run a full first and second level analysis (on the volume and surface), create your own normbrain template (have a nice normbrain, that is closer to your actual data), create pictures of brain activity like this and extract the statistical relevant values (extraction of anatomical and functional regions of interests (ROIs)). All that by using Nipype. But that&#8217;s not all...</p>
-<p>This user guide will also teach you all the basics of Nipype that you need to know. How a pipeline is structured and how to build one by yourself. It will show you different ways to visualize your pipelines. Not yet included is the chapter about ANTS which will teach you how to create your own normbrain template and how to normalize your data from subject space into a common template space.</p>
+<p>This user guide will also teach you all the basics of Nipype that you need to know. How a pipeline is structured and how to build one by yourself. It will show you different ways to visualize your pipelines. There is also an additional chapter about ANTS, a tool to normalize your data. In the ANTS chapter you will learn how to create your own normbrain template and how to normalize your data from subject space into a common template space.</p>
 <p>Note that this guide is meant as a general introduction. The implementation of Nipype is nearly unlimited and there is a lot of advanced knowledge that won&#8217;t be covered by this guide but can be looked up at various places on the <a class="reference external" href="http://nipy.sourceforge.net/nipype/">nipype homepage</a>.</p>
 <p>There are also a lot of very good tutorials specific for different usages of Nipype like using FreeSurfer for smoothing, using FSL for DTI analysis, for fMRI analysis with FEEDS data, for fMRI analysis or using SPM for analysis on auditory dataset etc. They all can be found in the <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/pipeline_tutorial.html">tutorial section</a> of the Nipype homepage.</p>
 <div class="admonition important">
@@ -147,7 +147,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="nb">source</span> /software/python/setup-nipype-0.4.sh
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="nb">source</span> /software/python/EPD/virtualenvs/7.1/nipype0.4/bin/activate
  <span class="nb">source</span> /software/Freesurfer/5.1.0/SetUpFreeSurfer.sh
 
  <span class="nb">export </span><span class="nv">MATLABCMD</span><span class="o">=</span><span class="nv">$pathtomatlabdir</span>/bin/<span class="nv">$platform</span>/MATLAB
@@ -184,13 +184,13 @@
         <li class="right" >
           <a href="index.html" title="Beginner’s Guide to Nipype"
              >previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 18, 2011.
+      Last updated on September 12, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

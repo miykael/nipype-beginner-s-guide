@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</title>
+    <title>Nipype Beginner&#39;s Guide &mdash; Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.5',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,8 +22,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation" href="index.html" />
-    <link rel="next" title="How To Extract Regions Of Interest (ROIs)" href="regionOfInterest.html" />
+    <link rel="top" title="Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation" href="index.html" />
+    <link rel="next" title="How To Use ANTS To Normalize Your Data" href="ANTS.html" />
     <link rel="prev" title="How To Build A First Level Pipeline" href="firstLevelExample.html" />
  
 <meta name="keywords" content="nipype, python, guide">
@@ -56,12 +56,12 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="regionOfInterest.html" title="How To Extract Regions Of Interest (ROIs)"
+          <a href="ANTS.html" title="How To Use ANTS To Normalize Your Data"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -102,8 +102,8 @@
   <p class="topless"><a href="firstLevelExample.html"
                         title="previous chapter">How To Build A First Level Pipeline</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="regionOfInterest.html"
-                        title="next chapter">How To Extract Regions Of Interest (ROIs)</a></p>
+  <p class="topless"><a href="ANTS.html"
+                        title="next chapter">How To Use ANTS To Normalize Your Data</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/secondLevelExample.txt"
@@ -135,8 +135,7 @@
 <p>In this part you will learn how to do a <strong>second level analysis</strong> on the volume and the surface. We want combine both pipelines in a common parent workflow. Of course this would be possible, but it is also a advantage to be able to run the pipelines separately.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Before we can run the <strong>second level analysis</strong> on the volume we have to normalize the estimated volume contrasts from the first level pipeline into a common subject space. One method how you can achieve this will be covered in the chapter about ANTS.
-This normalization isn&#8217;t required for a <strong>second level analysis</strong> on the surface. Because the second level surface analysis will be done with FreeSurfer, we can use the subject specific informations won from the recon-all process.</p>
+<p class="last">Before we can run the <strong>second level analysis</strong> on the volume we have to normalize the estimated volume contrasts from the first level pipeline into a common template space. A method on how to do this will be covered in the <strong>ANTS</strong> chapter later on in this guide. The normalization isn&#8217;t required for a <strong>second level analysis</strong> on the surface. On the surface we can use the subject specific information won from FreeSurfer&#8217;s recon-all process.</p>
 </div>
 <div class="section" id="specify-condition-independent-parameters">
 <h2>Specify condition independent parameters<a class="headerlink" href="#specify-condition-independent-parameters" title="Permalink to this headline">¶</a></h2>
@@ -196,14 +195,14 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
 <h2>Second level analysis on the volume<a class="headerlink" href="#second-level-analysis-on-the-volume" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="grab-the-data">
 <h3>Grab the data<a class="headerlink" href="#grab-the-data" title="Permalink to this headline">¶</a></h3>
-<p>As always we first have to specify where the <tt class="docutils literal"><span class="pre">DataGrabber</span></tt> node can find the data. Le&#8217;s assume that we have stored our normalized estimated volume contrasts at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/normcons/subject_name/'</span></tt>. This means the third contrast of the second subject would be at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/normcons/subject2/con_0001.nii'</span></tt></p>
+<p>As always we first have to specify where the <tt class="docutils literal"><span class="pre">DataGrabber</span></tt> node can find the data. Let&#8217;s assume that we have stored our normalized estimated first level volume contrasts at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/subject_name/normcons/'</span></tt>. This means if we assume we&#8217;ve normalized with ANTS, the third contrast of the second subject would be at: <tt class="docutils literal"><span class="pre">'~SOMEPATH/experiment/results/level1_output/subject2/normcons/ants_con_0003.nii'</span></tt></p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Node: DataGrabber - to collect all the con images for each contrast</span>
 <span class="n">l2volSource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;con&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;l2volSource&quot;</span><span class="p">)</span>
-<span class="n">path2normcons</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/level1_output/normcons/subject*/con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
+<span class="n">path2normcons</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/results/level1_output/subject*/normcons/ants_con_</span><span class="si">%04d</span><span class="s">.nii&#39;</span>
 <span class="n">l2volSource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">path2normcons</span>
 <span class="n">l2volSource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;con&#39;</span><span class="p">,</span><span class="n">contrast_ids</span><span class="p">)]</span> <span class="c"># iterate over all contrast images</span>
 </pre></div>
@@ -549,18 +548,18 @@ This normalization isn&#8217;t required for a <strong>second level analysis</str
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="regionOfInterest.html" title="How To Extract Regions Of Interest (ROIs)"
+          <a href="ANTS.html" title="How To Use ANTS To Normalize Your Data"
              >next</a> |</li>
         <li class="right" >
           <a href="firstLevelExample.html" title="How To Build A First Level Pipeline"
              >previous</a> |</li>
-        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Beginner&#39;s Guide to Nipype v0.4 v0.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
 
     <div class="footer">
         &copy; Copyright 2011, Michael Notter.
-      Last updated on August 18, 2011.
+      Last updated on September 12, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
 <div class="footer">This page uses <a href="http://analytics.google.com/">

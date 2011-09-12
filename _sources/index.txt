@@ -11,6 +11,7 @@ Beginner's Guide to Nipype
    preparedata
    firstLevelExample
    secondLevelExample
+   ANTS
    regionOfInterest
    futureChapters
 

@@ -6,8 +6,7 @@ In this part you will learn how to do a **second level analysis** on the volume 
 
 .. note::
 
-   Before we can run the **second level analysis** on the volume we have to normalize the estimated volume contrasts from the first level pipeline into a common subject space. One method how you can achieve this will be covered in the chapter about ANTS.
-   This normalization isn't required for a **second level analysis** on the surface. Because the second level surface analysis will be done with FreeSurfer, we can use the subject specific informations won from the recon-all process.
+   Before we can run the **second level analysis** on the volume we have to normalize the estimated volume contrasts from the first level pipeline into a common template space. A method on how to do this will be covered in the **ANTS** chapter later on in this guide. The normalization isn't required for a **second level analysis** on the surface. On the surface we can use the subject specific information won from FreeSurfer's recon-all process.
 
 
 Specify condition independent parameters
@@ -61,14 +60,14 @@ Second level analysis on the volume
 Grab the data
 ~~~~~~~~~~~~~
 
-As always we first have to specify where the ``DataGrabber`` node can find the data. Le's assume that we have stored our normalized estimated volume contrasts at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject_name/'``. This means the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/results/level1_output/normcons/subject2/con_0001.nii'``
+As always we first have to specify where the ``DataGrabber`` node can find the data. Let's assume that we have stored our normalized estimated first level volume contrasts at: ``'~SOMEPATH/experiment/results/level1_output/subject_name/normcons/'``. This means if we assume we've normalized with ANTS, the third contrast of the second subject would be at: ``'~SOMEPATH/experiment/results/level1_output/subject2/normcons/ants_con_0003.nii'``
 
 .. code-block:: py
    :linenos:
 
    #Node: DataGrabber - to collect all the con images for each contrast
    l2volSource = pe.Node(nio.DataGrabber(infields=['con']), name="l2volSource")
-   path2normcons = experiment_dir + '/results/level1_output/normcons/subject*/con_%04d.nii'
+   path2normcons = experiment_dir + '/results/level1_output/subject*/normcons/ants_con_%04d.nii'
    l2volSource.inputs.template = path2normcons
    l2volSource.iterables = [('con',contrast_ids)] # iterate over all contrast images
 

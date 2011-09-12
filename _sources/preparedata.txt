@@ -364,7 +364,7 @@ Now we are ready to implement the pipeline and connection the ``infosource`` wit
    #defenition of the pathfinder function
    def pathfinder(subject, foldername, filename):
        import os
-       experiment_dir = '~SOMEPATH/experiment/experiment'
+       experiment_dir = '~SOMEPATH/experiment/'
        return os.path.join(experiment_dir, foldername, subject, filename)
 
    #connection of the nodes

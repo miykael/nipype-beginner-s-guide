@@ -510,27 +510,27 @@ Before we start with the creation of our **functional ROI pipeline**, let's have
 
 .. code-block:: sh
 
-   fslmaths ~SOMEPATH/experiment/results/level1_output/normcons/subject2/
-   con_0001_ants.nii -mul 0 -add 1 -roi 159 40 109 40 87 40 0 1 ~SOMEPATH/experiment/
-   results/workingdir_fROI/fROIflow/cubemask/con_0001_ants_maths.nii.gz -odt float
+   fslmaths ~SOMEPATH/experiment/results/level1_output/subject2/normcons/
+   ants_con_0001.nii -mul 0 -add 1 -roi 159 40 109 40 87 40 0 1 ~SOMEPATH/experiment/
+   results/workingdir_fROI/fROIflow/cubemask/ants_con_0001_maths.nii.gz -odt float
 
 **Step 1b** will be implemented by a node called ``spheremask``. This node will create the following FSL command:
 
 .. code-block:: sh
 
    fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/cubemask/
-   con_0001_ants_maths.nii.gz -kernel sphere 20 -fmean -thr 0.5 -bin ~SOMEPATH/experiment/
-   results/workingdir_fROI/fROIflow/spheremask/con_0001_ants_maths_maths.nii.gz -odt float
+   ants_con_0001_maths.nii.gz -kernel sphere 20 -fmean -thr 0.5 -bin ~SOMEPATH/experiment/
+   results/workingdir_fROI/fROIflow/spheremask/ants_con_0001_maths_maths.nii.gz -odt float
 
 **Step 2** will be implemented by a node called ``tmapmask``. This node will create the following FSL command:
 
 .. code-block:: sh
 
    fslmaths ~SOMEPATH/experiment/results/workingdir_fROI/fROIflow/spheremask/
-   con_0001_ants_maths_maths.nii.gz -mul ~SOMEPATH/experiment/results/level2_output/
+   ants_con_0001_maths_maths.nii.gz -mul ~SOMEPATH/experiment/results/level2_output/
    l2vol_contrasts_thresh/_con_4/spmT_0001_thr.hdr -bin ~SOMEPATH/experiment/
    results/workingdir_fROI/fROIflow/_contrast_id_4_subject_id_subject2/tmapmask/
-   con_0001_ants_maths_maths_maths.nii.gz -odt float
+   ants_con_0001_maths_maths_maths.nii.gz -odt float
 
 
 .. note::
@@ -615,8 +615,8 @@ Definition of Nodes
                                                   outfields=['contrast']),
                         name = 'datasource')
    datasource.inputs.base_directory = experiment_dir + '/results/' + l1contrastDir
-   datasource.inputs.template = 'norm%s/%s/%s_%04d_ants.nii'
-   info = dict(contrast = [['cons','subject_id','con','contrast_id']])
+   datasource.inputs.template = '%s/norm%s/ants_%s_%04d.nii'
+   info = dict(contrast = [['subject_id','cons','con','contrast_id']])
    datasource.inputs.template_args = info
    
    #Node: ImageMaths - to create the cubic ROI with value 1
@@ -624,8 +624,8 @@ Definition of Nodes
    cubeValues = (corner[0],radius*2,corner[1],radius*2,corner[2],radius*2)
    cubemask.inputs.op_string = '-mul 0 -add 1 -roi %d %d %d %d %d %d 0 1'%cubeValues
    cubemask.inputs.out_data_type = 'float'
-   pathValues = (subjects[0],contrasts[0])
-   cubemask.inputs.in_file='~SOMEPATH/experiment/normcons/%s/con_%04d_ants.nii'%pathValues
+   pathValues = (l1contrastDir,subjects[0],contrasts[0])
+   cubemask.inputs.in_file='~SOMEPATH/experiment/results/%s/%s/normcons/ants_con_%04d.nii'%pathValues
    
    #Node: ImageMaths - to transform the cubic ROI to a spherical ROI
    spheremask = pe.Node(interface=fsl.ImageMaths(),name="spheremask")
