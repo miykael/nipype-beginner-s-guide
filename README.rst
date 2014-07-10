@@ -32,7 +32,7 @@ http://github.com/miykael/nipype-beginner-s-guide
 Contact
 -------
 
-You can contact me on: michaelnotter@hotmail.com
+You can contact me on: miykaelnotter@gmail.com
 
 
 License
