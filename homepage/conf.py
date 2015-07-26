@@ -140,7 +140,7 @@ html_last_updated_fmt = '%B %d, %Y'
 
 #Sphinx will add “permalinks” for each heading and description environment as paragraph signs that become visible when the mouse hovers over them.
 #This value determines the text for the permalink; it defaults to "¶". Set it to None or the empty string to disable permalinks.
-html_add_permalinks = u'⥀'
+html_add_permalinks = u'¶'
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
