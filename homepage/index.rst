@@ -115,7 +115,7 @@
     |          |   * The dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset                         |
     |          |     for this beginner's guide can be directly downloaded `here <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.                         |
     |          |   * This Beginner's Guide can be downloaded as a PDF                                                                                                |
-    |          |     `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.                                      | 
+    |          |     `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.                                      |
     +----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
