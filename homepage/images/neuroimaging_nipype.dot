@@ -1,0 +1,101 @@
+digraph {
+  brain[label="Human Brain",style=filled, color=red];
+  structuralData[label="anatomical data", shape=box3d,style=filled, color=black, colorscheme=greys7 fillcolor=2];
+  functionalData[label="functional data", shape=box3d,style=filled, color=black, colorscheme=greys7 fillcolor=2];
+  subgraph cluster_structuralflow {
+      style=filled;
+      fillcolor="#B4B4FF";
+      label="sMRI";
+    T1_image[label="NIfTi conversion (FreeSurfer)", style=filled, fillcolor="#E6E6FF"];
+    subgraph cluster_anatomy_preproc {
+            edge [color="#FF0000"];
+            style=filled;
+            fillcolor="#FFB4B4";
+            label="Preprocessing";
+        segmentation[label="Segmentation (FreeSurfer)", style=filled, fillcolor="#FFE6E6"];
+    }
+    subgraph cluster_anatomy_analysis {
+        edge [color="#00A300"];
+        style=filled;
+        fillcolor="#B4FFB4";
+        label="2nd level analysis";
+      subgraph cluster_anatomy_1st {
+              edge [color="#FF9721"];
+              style=filled;
+              fillcolor="#FFFF8F";
+              label="ROI analysis";
+          roi[label="ROI extraction (FreeSurfer)", style=filled, fillcolor="#FFFFD8"];
+          anatomy_estimation[label="ROI analyse output (R)", style=filled, fillcolor="#FFFFD8"];
+          roi -> anatomy_estimation;
+      }
+    }
+  }
+  subgraph cluster_functionalflow {
+      style=filled;
+      fillcolor="#B4B4FF";
+      label="fMRI";
+    T2_image[label="NIfTi conversion (FreeSurfer)", style=filled, fillcolor="#E6E6FF"];
+    subgraph cluster_functional_preproc {
+            edge [color="#FF0000"];
+            style=filled;
+            fillcolor="#FFB4B4";
+            label="Preprocessing";
+        slicetiming[label="Slice Timing (SPM)", style=filled, fillcolor="#FFE6E6"];
+        realignment[label="Realignment (SPM)", style=filled, fillcolor="#FFE6E6"];
+        artifactdetect[label="Artifact Detection (ART)", style=filled, fillcolor="#FFE6E6"];
+        smoothing[label="Smoothing (FSL)", style=filled, fillcolor="#FFE6E6"];
+        slicetiming -> realignment;
+        realignment -> artifactdetect;
+        artifactdetect -> smoothing;
+    }
+    subgraph cluster_functional_analysis {
+        edge [color="#00A300"];
+        style=filled;
+        fillcolor="#B4FFB4";
+        label="functioanl analysis";
+      subgraph cluster_functional_1st {
+              edge [color="#FF9721"];
+              style=filled;
+              fillcolor="#FFFF8F";
+              label="1st level analysis";
+          modelspec1[label="Specify Design (Nipype)", style=filled, fillcolor="#FFFFD8"];
+          modelest1[label="Model Estimation (SPM)", style=filled, fillcolor="#FFFFD8"];
+          contrastspec1[label="Specify Contrasts (Nipype)", style=filled, fillcolor="#FFFFD8"];
+          contrast1[label="Contrast Estimation (SPM)", style=filled, fillcolor="#FFFFD8"];
+          thresh1[label="Threshold (FSL)", style=filled, fillcolor="#FFFFD8"];
+
+          modelspec1 -> modelest1 -> contrastspec1 -> contrast1 -> thresh1;
+
+      }
+      subgraph cluster_functional_2nd {
+              edge [color="#FF9721"];
+              style=filled;
+              fillcolor="#FFFF8F";
+              label="2nd level analysis";
+          modelspec2[label="Specify Design (Nipype)", style=filled, fillcolor="#FFFFD8"];
+          modelest2[label="Model Estimation (SPM)", style=filled, fillcolor="#FFFFD8"];
+          contrastspec2[label="Specify Contrasts (Nipype)", style=filled, fillcolor="#FFFFD8"];
+          contrast2[label="Contrast Estimation (SPM)", style=filled, fillcolor="#FFFFD8"];
+          thresh2[label="Threshold (FSL)", style=filled, fillcolor="#FFFFD8"];
+
+          modelspec2 -> modelest2 -> contrastspec2 -> contrast2 -> thresh2;
+      }
+    coregistration[label="Coregistration (FreeSurfer)", style=filled, fillcolor="#E6FFE6"];
+    normalization[label="Normalization (ANTs)", style=filled, fillcolor="#E6FFE6"];
+    template[label="Template (ANTs)", style=filled, fillcolor="#E6FFE6"];
+    template -> coregistration;
+    }
+  }
+  
+  brain -> structuralData -> T1_image;
+  brain -> functionalData -> T2_image;
+  T1_image -> segmentation;
+  T1_image -> coregistration;
+  T2_image -> slicetiming;
+  contrast1 -> coregistration;
+  smoothing -> modelspec1;
+  coregistration -> roi;
+  coregistration -> normalization;
+  normalization -> modelspec2;
+  segmentation -> roi;
+}
