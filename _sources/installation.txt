@@ -217,7 +217,9 @@ Download and Installation
 
 `FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/>`_ is a comprehensive library of analysis tools for fMRI, MRI and DTI data. An overview of FSL's tools can be found `here <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview>`_.
 
-The installation of `FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSL>`_ is simple if you've already installed the NeuroDebian repository. Just run the following command:
+The installation of `FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSL>`_ is simple if you've already installed the NeuroDebian repository.
+
+Just run the following command:
 
 .. code-block:: sh
 
@@ -269,7 +271,7 @@ Download and Installation
 
 3. The usage of FreeSurfer requires a license file. Therefore, before you can use FreeSurfer, make sure to register `here <https://surfer.nmr.mgh.harvard.edu/registration.html>`_. The content of the license file looks something like this:
 
-    .. code-block:: none
+    .. code-block:: sh
 
         username@gmail.com
         12345

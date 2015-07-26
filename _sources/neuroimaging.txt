@@ -410,13 +410,13 @@ Let us assume we have an experiment where we present subjects faces of humans an
        :width: 200pt
        :align: left
 
+Now, we combine all that we know about our model into one single Design Matrix. This Matrix contains multiple columns, which contain information about the stimuli (onset, duration and curve function of the BOLD-signal i.e. the shape of the HRF). In our example column *Sn(1) humans* and *Sn(1) animals* code for the stimuli of humans and animals during the first session of our fictive experiment. Accordingly, Sn(2) codes for all the regressors in the second session. *Sn(1 resting* codes for the timepoints where subjects weren't presented any stimuli.
+
 .. only:: html
 
     .. image:: images/designmatrix.png
        :width: 350pt
-       :align: right
-
-Now, we combine all that we know about our model into one single Design Matrix. This Matrix contains multiple columns, which contain information about the stimuli (onset, duration and curve function of the BOLD-signal i.e. the shape of the HRF). In our example column *Sn(1) humans* and *Sn(1) animals* code for the stimuli of humans and animals during the first session of our fictive experiment. Accordingly, Sn(2) codes for all the regressors in the second session. *Sn(1 resting* codes for the timepoints where subjects weren't presented any stimuli.
+       :align: center
 
 .. only:: latex
 
