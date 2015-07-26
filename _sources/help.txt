@@ -29,7 +29,7 @@ The list of interfaces Nipype supports grows everyday more and more and the best
 
 So, if you found any mistakes, want to point out some alternative ways to do something or have any scripts or tutorials to share, your input is highly appreciated!
 
-The best way to help me is to fork my repo on github (`https://github.com/miykael/nipype-beginner-s-guide/tree/gh-pages <https://github.com/miykael/nipype-beginner-s-guide/tree/gh-pages>`_) and send me a pull request. Alternatively you can also contact me with your ideas or feedback under `miykaelnotter@gmail.com <miykaelnotter@gmail.com>`_.
+The best way to help me is to fork my repo on github (`http://github.com/miykael/nipype-beginner-s-guide/blob/master/homepage <http://github.com/miykael/nipype-beginner-s-guide/blob/master/homepage>`_) and send me a pull request. Alternatively you can also contact me with your ideas or feedback under `miykaelnotter@gmail.com <miykaelnotter@gmail.com>`_.
 
 
 How to Read Crash Files

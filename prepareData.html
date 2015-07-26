@@ -93,7 +93,11 @@
 </li>
 <li><a class="reference internal" href="#make-the-dataset-ready-for-nipype">Make the dataset ready for Nipype</a><ul>
 <li><a class="reference internal" href="#convert-your-data-into-nifti-format">Convert your data into NIfTI format</a></li>
-<li><a class="reference internal" href="#run-freesurfer-s-recon-all">Run FreeSurfer&#8217;s recon-all</a></li>
+<li><a class="reference internal" href="#run-freesurfer-s-recon-all">Run FreeSurfer&#8217;s recon-all</a><ul>
+<li><a class="reference internal" href="#run-recon-all-on-the-tutorial-dataset-terminal-version">Run recon-all on the tutorial dataset (terminal version)</a></li>
+<li><a class="reference internal" href="#run-recon-all-on-the-tutorial-dataset-nipype-version">Run recon-all on the tutorial dataset (Nipype version)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#resulting-folder-structure">Resulting Folder Structure</a></li>
@@ -269,7 +273,7 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/tutorial_1_create_dataset.sh">tutorial_1_create_dataset.sh</a></p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh">tutorial_1_create_dataset.sh</a></p>
 </div>
 </div>
 <div class="section" id="acquire-scan-and-experiment-parameters">
@@ -457,6 +461,8 @@ file_type      NIFTI-1+
 <h3>Run FreeSurfer&#8217;s recon-all<a class="headerlink" href="#run-freesurfer-s-recon-all" title="Permalink to this headline">⥀</a></h3>
 <p>Not mandatory but highly recommended is to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process on the anatomical scans of your subject. <code class="docutils literal"><span class="pre">recon-all</span></code> is FreeSurfer&#8217;s cortical reconstruction process that automatically creates a <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">parcellation of cortical</a> and a <a class="reference external" href="http://freesurfer.net/fswiki/SubcorticalSegmentation">segmentation of subcortical</a> regions. A more detailed description about the <code class="docutils literal"><span class="pre">recon-all</span></code> process can be found on the <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">official homepage</a>.</p>
 <p>As I said, you don&#8217;t have to use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process, but you want to! Because many of FreeSurfer&#8217;s other algorithms require the output of <code class="docutils literal"><span class="pre">recon-all</span></code>. The only negative point about <code class="docutils literal"><span class="pre">recon-all</span></code> is that it takes rather long to process a single subject. My average times are between 12-24h, but it is also possible that the process takes up to 40h. All of it depends on the system you are using. So far, <code class="docutils literal"><span class="pre">recon-all</span></code> can&#8217;t be run in parallel. Luckily, if you have an 8 core processor with enough memory, you should be able to process 8 subjects in parallel.</p>
+<div class="section" id="run-recon-all-on-the-tutorial-dataset-terminal-version">
+<h4>Run recon-all on the tutorial dataset (terminal version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-terminal-version" title="Permalink to this headline">⥀</a></h4>
 <p>The code to run <code class="docutils literal"><span class="pre">recon-all</span></code> on a single subject is rather simple, i.e. <code class="docutils literal"><span class="pre">recon-all</span> <span class="pre">-all</span> <span class="pre">-subjid</span> <span class="pre">sub001</span></code>. The only thing that you need to keep in mind is to tell your system the path to the freesurfer folder by specifying the variable <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code> and that each subject you want to run the process on has a according anatomical scan in this freesurfer folder under <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code>.</p>
 <p>To run <code class="docutils literal"><span class="pre">recon-all</span></code> on the 10 subjects of the tutorial dataset you can run the following code:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -503,8 +509,11 @@ file_type      NIFTI-1+
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/tutorial_2_recon_shell.sh">tutorial_2_recon_shell.sh</a></p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh">tutorial_2_recon_shell.sh</a></p>
 </div>
+</div>
+<div class="section" id="run-recon-all-on-the-tutorial-dataset-nipype-version">
+<h4>Run recon-all on the tutorial dataset (Nipype version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-nipype-version" title="Permalink to this headline">⥀</a></h4>
 <p>If you run <code class="docutils literal"><span class="pre">recon-all</span></code> only by itself, I recommend you to use the terminal version shown above. But of course, you can also create a pipeline and use Nipype to do the same steps. This might be better if you want to make better use of the parallelization implemented in Nipype or if you want to put <code class="docutils literal"><span class="pre">recon-all</span></code> in a bigger workflow.</p>
 <p>I won&#8217;t explain to much how this workflow actually works, as the structure and creation of a common pipeline is covered in more detail in the next section. But to use Nipype to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process do as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -622,7 +631,8 @@ file_type      NIFTI-1+
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/tutorial_2_recon_python.py">tutorial_2_recon_python.py</a></p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py">tutorial_2_recon_python.py</a></p>
+</div>
 </div>
 </div>
 </div>

@@ -489,7 +489,7 @@ Finally, after everything is set up correctly we can run the pipeline and let it
 
 .. hint::
 
-   You can download the code for this first level pipeline as a script here: `example_fMRI_1_first_level.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/example_fMRI_1_first_level.py>`_
+   You can download the code for this first level pipeline as a script here: `example_fMRI_1_first_level.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_1_first_level.py>`_
 
 
 Visualize your pipeline

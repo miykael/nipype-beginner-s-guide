@@ -910,7 +910,7 @@ As you see, we've executed the function ``write_graph()`` before we've run the p
 
 .. hint::
 
-    You can download the code for this preprocessing pipeline as a script here: `tutorial_3_first_steps.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/tutorial_3_first_steps.py>`_
+    You can download the code for this preprocessing pipeline as a script here: `tutorial_3_first_steps.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_3_first_steps.py>`_
 
 
 Resulting Folder Structure
