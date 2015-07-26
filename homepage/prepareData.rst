@@ -6,7 +6,7 @@ We can't start to learn how to use Nipype before we don't have any data to work 
 
 
 Download the tutorial dataset
-===========================
+=============================
 
 .. image:: _static/logo/logoOpenfmri.png
    :width: 120pt
@@ -16,7 +16,7 @@ Download the tutorial dataset
 
 
 Download the dataset from OpenfMRI
----------------------------
+----------------------------------
 
 I chose to use the dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ as the tutorial dataset for this beginner’s guide because the dataset is complete, in good quality, the experiment is representative for most fMRI experiments and the dataset as a whole is with its 1.8GB not too big to download. To download the dataset go to the button of the `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ page and click on the link: `Raw data on AWS <https://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.
 
@@ -30,7 +30,7 @@ I chose to use the dataset `DS102: Flanker task (event-related) <https://openfmr
 
 
 Unpack and prepare the folder structure
----------------------------
+---------------------------------------
 
 The file you've just downloaded contains amongst others one anatomical and two functional MRI scans and the behavioral response and onsets of stimuli during those functional scans. The whole dataset consists of 26 subjects. Information about gender and age of each subject is stored in the `demographics.txt` file, also found in downloaded file. To reduce the total time of computation, this tutorial will only analyze the first 10 subjects of the whole dataset. Now let's get ready.
 
@@ -116,12 +116,12 @@ This can either be done manually or with the following code:
 
 
 Acquire scan and experiment parameters
----------------------------
+--------------------------------------
 
 One of the most important things when analyzing any data is to know your data. What does it consist of, how was it recorded, what are its characteristics and most importantly, what does it look like. The `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ page helps us already to answer many of those parameters:
 
 Scan parameters
-......................
+...............
 
 
     * Magnetic field: 3T [Tesla]
@@ -142,14 +142,14 @@ Scan parameters
         * Field of view (FOV): 256mm
 
 Experiment parameters
-......................
+.....................
 
     * **Task**: On each trial, participants used one of two buttons on a response pad to indicate the direction of a central arrow in an array of 5 arrows. In *congruent* trials the flanking arrows pointed in the same direction as the central arrow (e.g., < < < < <), while in more demanding *incongruent* trials the flanking arrows pointed in the opposite direction (e.g., < < > < <).
     * **Condition**: congruent and incongruent
     * **Scan sessions**: Subjects performed two 5-minute blocks, each containing 12 congruent and 12 incongruent trials, presented in a pseudo-random order.
 
 So what do we know?
-......................
+...................
 
     * We know that we have two functional scans per subjects, in our case called `run001` and `run002`. Each functional scan represents 5min of scan time and consists of 146 volumes. Each of those volume consists 40 slices (with a thickness of 4mm) and each slice consists of 64x64 voxel with the size of 3x3mm. The TR of each volume is 2000ms.
     * So far we don't know what the slice order of the functional acquisition is. But a closer look at the provided references tells us that the data was acquired with an *interleaved* slice to slice order. The fact that it is not stated if it is ascending or descending interleaved means that the acquisition is most certainly ascending.
@@ -159,7 +159,7 @@ So what do we know?
 
 
 Check the data
-------------------
+--------------
 
 It is always important to look at your data and verify that it actually is recorded the way it should be. To take a look at the data, I usually use FreeSurfer's ``freeview``. For example, if you want to load the anatomical scan of all ten subjects use the following code:
 
@@ -219,7 +219,7 @@ This output tells us that this functional scan consists of 146 volumes, of which
 
 
 For those who use their own dataset
-------------------
+-----------------------------------
 
 If you want to use your own dataset, make sure that you know the following parameters:
 
@@ -232,10 +232,10 @@ If you want to use your own dataset, make sure that you know the following param
 
 
 Make the dataset ready for Nipype
-===========================
+=================================
 
 Convert your data into NIfTI format
----------------------------
+-----------------------------------
 
 You don't have to do this step if you're using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common ``NIfTI`` format, but rather in a scanner specific format (e.g. ``DICOM``, ``PAR/REC``, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.
 
@@ -284,7 +284,7 @@ So, to accomplish this with some few terminal command, we first have to tell the
 
 
 Run FreeSurfer's recon-all
----------------------------
+--------------------------
 
 Not mandatory but highly recommended is to run FreeSurfer's ``recon-all`` process on the anatomical scans of your subject. ``recon-all`` is FreeSurfer's cortical reconstruction process that automatically creates a `parcellation of cortical <https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation>`_ and a `segmentation of subcortical <http://freesurfer.net/fswiki/SubcorticalSegmentation>`_ regions. A more detailed description about the ``recon-all`` process can be found on the `official homepage <http://surfer.nmr.mgh.harvard.edu/fswiki/recon-all>`_.
 
@@ -293,7 +293,7 @@ As I said, you don't have to use FreeSurfer's ``recon-all`` process, but you wan
 
 
 Run recon-all on the tutorial dataset (terminal version)
-***************************
+........................................................
 
 The code to run ``recon-all`` on a single subject is rather simple, i.e. ``recon-all -all -subjid sub001``. The only thing that you need to keep in mind is to tell your system the path to the freesurfer folder by specifying the variable ``SUBJECTS_DIR`` and that each subject you want to run the process on has a according anatomical scan in this freesurfer folder under ``SUBJECTS_DIR``.
 
@@ -338,7 +338,7 @@ This code will run the subjects in sequential order. If you want to process the 
 
 
 Run recon-all on the tutorial dataset (Nipype version)
-***************************
+......................................................
 
 If you run ``recon-all`` only by itself, I recommend you to use the terminal version shown above. But of course, you can also create a pipeline and use Nipype to do the same steps. This might be better if you want to make better use of the parallelization implemented in Nipype or if you want to put ``recon-all`` in a bigger workflow.
 

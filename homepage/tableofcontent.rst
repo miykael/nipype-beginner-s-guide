@@ -50,7 +50,6 @@ From beginner to expert
     firstLevel
     normalize
     secondLevel
-    tips_and_tricks
 
 
 Support

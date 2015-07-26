@@ -334,8 +334,6 @@ Nowadays almost all scientific fields take advantage of `MATLAB <http://www.math
 
 Having MATLAB is always a good thing, and as I myself rely often on algorithms from the `SPM <http://www.fil.ion.ucl.ac.uk/spm/>`_ interface, I need it to be on my system. A detailed documentation on how to install MATLAB can be found `here <http://www.mathworks.com/help/install/index.html>`_. In my case, MATLAB is installed at the following location: ``/usr/local/MATLAB/R2014a``.
 
-.. note::
-
 The only thing you need to do to run MATLAB on your Ubuntu System is to add the following lines to your ``.bashrc`` file:
 
 .. code-block:: sh

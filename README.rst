@@ -26,7 +26,7 @@ Examples
 --------
 
 All examples and codes which are used in the guide can be found here:
-http://github.com/miykael/nipype-beginner-s-guide
+http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts
 
 
 Contact

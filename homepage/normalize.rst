@@ -12,7 +12,7 @@ This section will show you how to use Nipype to do a normalization with ANTs (wh
 
 
 Normalize Your Data with ANTs
-==========================
+=============================
 
 Usually, we first normalize the subject specific anatomy to the template and than use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.
 
@@ -24,7 +24,7 @@ The coregistration of the functional data to the anatomical data means multiple 
 
 
 Import modules and specify interface behaviors
-**************************
+**********************************************
 
 But first, as always, we have to import necessary modules and tell the system where to find the FreeSurfer folder.
 
@@ -47,7 +47,7 @@ But first, as always, we have to import necessary modules and tell the system wh
 
 
 Define experiment specific parameters
-**************************
+*************************************
 
 Now we define the names of the folders used for this pipeline, we specify the list of subjects which should be normalized and specify which template the data should be normalized too. In this case it is the ``MNI152_T1_1mm_brain.nii.gz`` template.
 
@@ -78,7 +78,7 @@ Now we define the names of the folders used for this pipeline, we specify the li
 
 
 Create nodes
-**************************
+************
 
 In both cases, the **complete** as well as the **partial** transformation approach, we will use ANTs' ``Registration`` to compute the transformation matrix between the subject specific anatomy and the template:
 
@@ -170,7 +170,7 @@ Now that we have the transformation matrix to normalize the functional data to t
 
 
 Partial Transformation
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 In the partial transformation approach, we only need the following additional nodes. One to normalize the anatomical and one to normalize the functional data.
 
@@ -199,7 +199,7 @@ In the partial transformation approach, we only need the following additional no
 
 
 Complete Transformation
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 For the complete transformation, we also need to calculate the coregistration matrix (we will use FreeSurfer's `BBRegister` for that). But first, we need to use FreeSurfer's ``FreeSurferSource`` to grab the subject specific anatomy, convert it from MGZ to NII format with ``MRIConvert``. Than we need to transform the BBRegister transformation matrix to ITK format with ``C3dAffineTool`` and merge this transformation matrix with the transformation matrix from the normalization, i.e. ``antsreg``, by using a ``Merge`` node.
 
@@ -267,7 +267,7 @@ Now that we have the couplet transformation matrix, we can normalize the anatomi
 
 
 Create the pipeline and connect nodes to it
-**************************
+*******************************************
 
 .. code-block:: py
    :linenos:
@@ -308,7 +308,7 @@ For the **complete transformation** use the following code:
 
 
 Establish Input & Output Stream
-**************************
+*******************************
 
 .. code-block:: py
    :linenos:
@@ -400,7 +400,7 @@ For the **complete transformation** use the following code:
 
 
 Run the pipeline and generate the graphs
-**************************
+****************************************
 
 Now, let's run the workflow with the following code:
 
@@ -417,7 +417,7 @@ Now, let's run the workflow with the following code:
 
 
 Visualize the workflow
-***********************
+**********************
 
 The colored graph of the **partial**  normalization workflow looks as follows:
 
@@ -441,7 +441,7 @@ The colored graph of the **complete**  normalization workflow looks as follows:
 
 
 Resulting Folder Structure
-***********************
+**************************
 
 The resulting folder structure looks for the **partial** and **complete** approach combined as follows:
 
@@ -493,13 +493,13 @@ The resulting folder structure looks for the **partial** and **complete** approa
 
 
 Normalize Your Data with SPM12
-==========================
+==============================
 
 The normalization of your data with SPM12 is much simpler than the one with ANTs. We only need to feed all the necessary inputs to a node called ``Normalize12``.
 
 
 Import modules and specify interface behaviors
-**************************
+**********************************************
 
 As always, let's import necessary modules and tell the system where to find MATLAB.
 
@@ -521,7 +521,7 @@ As always, let's import necessary modules and tell the system where to find MATL
    
 
 Define experiment specific parameters
-**************************
+*************************************
 
 .. code-block:: py
    :linenos:
@@ -543,7 +543,7 @@ It's important to note that SPM12 provides its own template ``TMP.nii`` to which
 
 
 Create nodes
-**************************
+************
 
 The functional and anatomical data that we want to normalize is in compressed ZIP format, which SPM12 can't handle. Therefore we first have to unzip those files with ``Gunzip``, before we can feed those files to SPM's ``Normalize12`` node.
 
@@ -565,7 +565,7 @@ The functional and anatomical data that we want to normalize is in compressed ZI
 
 
 Create the pipeline and connect nodes to it
-**************************
+*******************************************
 
 .. code-block:: py
    :linenos:
@@ -581,7 +581,7 @@ Create the pipeline and connect nodes to it
 
 
 Establish Input & Output Stream
-**************************
+*******************************
 
 .. code-block:: py
    :linenos:
@@ -626,7 +626,7 @@ Establish Input & Output Stream
 
 
 Run the pipeline and generate the graphs
-**************************
+****************************************
 
 Now, let's run the workflow with the following code:
 
@@ -643,7 +643,7 @@ Now, let's run the workflow with the following code:
 
 
 Visualize the workflow
-***********************
+**********************
 
 The colored graph of this normalization workflow looks as follows:
 
@@ -662,7 +662,7 @@ The colored graph of this normalization workflow looks as follows:
 
 
 Resulting Folder Structure
-***********************
+**************************
 
 The resulting folder structure looks as follows:
 
