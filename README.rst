@@ -38,7 +38,7 @@ You can contact me on: miykaelnotter@gmail.com
 License
 -------
 
-This beginner's guide has been written by Michael Notter. But some of its ideas and content is from the original Nipype homepage (http://nipy.sourceforge.net/nipype/) and other various homepages (e.g. http://mindhive.mit.edu/imaging).
+This beginner's guide was mostly written by Michael Notter. But some of its ideas and content is from the original Nipype homepage (http://nipy.sourceforge.net/nipype/) and other various homepages (e.g. http://mindhive.mit.edu/imaging).
 
 ::
 
