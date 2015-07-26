@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="Links to Nipype, Programming and Neuroimaging" href="links.html" />
     <link rel="prev" title="How To Build A Pipeline For A Second Level fMRI Analysis" href="secondLevel.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -122,27 +130,27 @@
             <!-- Disqus counter -->
             
   <div class="section" id="help-support">
-<h1>Help &amp; Support<a class="headerlink" href="#help-support" title="Permalink to this headline">⥀</a></h1>
+<h1>Help &amp; Support<a class="headerlink" href="#help-support" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="how-nipype-can-help-you">
-<h2>How Nipype Can Help You<a class="headerlink" href="#how-nipype-can-help-you" title="Permalink to this headline">⥀</a></h2>
+<h2>How Nipype Can Help You<a class="headerlink" href="#how-nipype-can-help-you" title="Permalink to this headline">¶</a></h2>
 <p>Often times the first trouble with Nipype arise because of misunderstanding a node or its function. This can be because a mandatory input was forgotten, a input or output field is not what you thought it was or something similar. That&#8217;s why the first step when running into a problem while building a pipeline should be to check out the description of the interface that causes the trouble. I&#8217;ve already described this <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#nodes">here</a> but to recap:</p>
 <p>Let&#8217;s assume that you&#8217;ve imported FreeSurfer&#8217;s BBRegister with the command <code class="docutils literal"><span class="pre">from</span> <span class="pre">nipype.interfaces.freesurfer</span> <span class="pre">import</span> <span class="pre">BBRegister</span></code>. Now, if you want to know what this module generally does, use the <cite>?</cite> character, i.e. <code class="docutils literal"><span class="pre">BBRegister?</span></code>. This gives you a short description as well as an implementation example of this module. If you want to know a more detailed description of BBRegister, with all mandatory and possible inputs and outputs, use the <code class="docutils literal"><span class="pre">help()</span></code> function, i.e. <code class="docutils literal"><span class="pre">BBRegister.help()</span></code>.</p>
 <p>Also, I highly recommend to check out Nipype&#8217;s official <a class="reference external" href="http://nipy.sourceforge.net/nipype/documentation.html">Documentation</a> section, where you can browse through all possible interfaces, function and description of them.</p>
 </div>
 <div class="section" id="how-to-help-yourself">
-<h2>How to Help Yourself<a class="headerlink" href="#how-to-help-yourself" title="Permalink to this headline">⥀</a></h2>
+<h2>How to Help Yourself<a class="headerlink" href="#how-to-help-yourself" title="Permalink to this headline">¶</a></h2>
 <p>If you have any <strong>questions about or comments to this beginner&#8217;s guide</strong>, don&#8217;t hesitate to leave a comment on the bottom of the corresponding homepage (you don&#8217;t need an account to do so) or contact me directly by e-mail under: <a class="reference external" href="mailto:miykaelnotter&#37;&#52;&#48;gmail&#46;com">miykaelnotter<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
 <p>If you have general <strong>questions about what certain neuroimaging or nipype term</strong> mean, check out the beginner&#8217;s guide <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a> section.</p>
 <p>If you have any <strong>questions about Nipype or neuroimaging</strong> itself please go directly to <a class="reference external" href="https://neurostars.org/">neurostars.org</a> or the beginner&#8217;s guide <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a> section. <a class="reference external" href="https://neurostars.org/">Neurostars.org</a> is a community driven Q&amp;A platform that will help you to answer any nipype or neuroimaging related question that you possibly could have.</p>
 </div>
 <div class="section" id="how-to-help-me">
-<h2>How to Help Me<a class="headerlink" href="#how-to-help-me" title="Permalink to this headline">⥀</a></h2>
+<h2>How to Help Me<a class="headerlink" href="#how-to-help-me" title="Permalink to this headline">¶</a></h2>
 <p>The list of interfaces Nipype supports grows everyday more and more and the best practice to analyze MRI data is changing all the time. It&#8217;s impossible for one person to keep track of all of those softwares and to know the state of the art analysis. That&#8217;s why I&#8217;m very much counting on the input and support of the community to help me to make this beginner&#8217;s guide as detailed and complete as possible.</p>
 <p>So, if you found any mistakes, want to point out some alternative ways to do something or have any scripts or tutorials to share, your input is highly appreciated!</p>
 <p>The best way to help me is to fork my repo on github (<a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/homepage">http://github.com/miykael/nipype-beginner-s-guide/blob/master/homepage</a>) and send me a pull request. Alternatively you can also contact me with your ideas or feedback under <a class="reference external" href="mailto:miykaelnotter&#37;&#52;&#48;gmail&#46;com">miykaelnotter<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
 </div>
 <div class="section" id="how-to-read-crash-files">
-<h2>How to Read Crash Files<a class="headerlink" href="#how-to-read-crash-files" title="Permalink to this headline">⥀</a></h2>
+<h2>How to Read Crash Files<a class="headerlink" href="#how-to-read-crash-files" title="Permalink to this headline">¶</a></h2>
 <p>Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes">this section</a>. In this example the name of the crash file is <code class="docutils literal"><span class="pre">crash-20141018-140440-mnotter-art.b0.pklz</span></code>.</p>
 <p>The name of the file gives you already an information about when it crashed (<code class="docutils literal"><span class="pre">20141018-140440</span></code>) and which node crashed (<code class="docutils literal"><span class="pre">art.b0</span></code>). If you want to read the node you can use the terminal command <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. In our example the command to read the crash file is:</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_display_crash ~/nipype_tutorial/crash-20141018-140857-mnotter-art.b0.pklz

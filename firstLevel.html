@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="How To Normalize Your Data" href="normalize.html" />
     <link rel="prev" title="How To Visualize A Pipeline" href="visualizePipeline.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -133,10 +141,10 @@
             <!-- Disqus counter -->
             
   <div class="section" id="how-to-build-a-pipeline-for-a-first-level-fmri-analysis">
-<h1>How To Build A Pipeline For A First Level fMRI Analysis<a class="headerlink" href="#how-to-build-a-pipeline-for-a-first-level-fmri-analysis" title="Permalink to this headline">⥀</a></h1>
+<h1>How To Build A Pipeline For A First Level fMRI Analysis<a class="headerlink" href="#how-to-build-a-pipeline-for-a-first-level-fmri-analysis" title="Permalink to this headline">¶</a></h1>
 <p>In this section you will learn how to create a workflow that does a <strong>first level analysis</strong> on fMRI data. There are multiple ways how you can do this, as there are different ways and strategies to preprocess your data and different ways to create a model of your design. So keep in mind that the workflow in this section is just an example and may not suite your specific experiment or design. Having said that, it still contains the most common steps used in a first level analysis.</p>
 <div class="section" id="define-the-structure-of-your-pipeline">
-<h2>Define the structure of your pipeline<a class="headerlink" href="#define-the-structure-of-your-pipeline" title="Permalink to this headline">⥀</a></h2>
+<h2>Define the structure of your pipeline<a class="headerlink" href="#define-the-structure-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>A typical first level fMRI workflow can be divided into two sections: <strong>preprocessing</strong> and <strong>first level analysis</strong>. The first one deals with removing noise and confounding factors such as movement from your data and the second one deals with fitting the model of your experiment to the data. The best way to build a pipeline from scratch is to think about the steps the data has to go through:</p>
 <p>In the <strong>preprocessing</strong> part of the pipeline we first want to <code class="docutils literal"><span class="pre">Despike</span></code> the data. This is a process that removes local and short timeline &#8216;spikes&#8217; from the functional data. After that we want to correct for the slice wise acquisition of the data with <code class="docutils literal"><span class="pre">SliceTiming</span></code> and get rid of the movement in the scanner with <code class="docutils literal"><span class="pre">Realign</span></code>. We want to detrend our data by removing polynomial to the 2nd order with <code class="docutils literal"><span class="pre">TSNR</span></code>. Additional to that, we also want to check the realignment parameters for extreme movements, i.e. artifacts, with <code class="docutils literal"><span class="pre">ArtifactDetect</span></code> and prepare an inclusion mask for the first level model with <code class="docutils literal"><span class="pre">DilateImage</span></code>. This inclusion mask is created by taking the <code class="docutils literal"><span class="pre">aseg.mgz</span></code> segmentation file from FreeSurfer (with the node <code class="docutils literal"><span class="pre">FreeSurferSource</span></code>), binarizing the values with <code class="docutils literal"><span class="pre">Binarize</span></code> (values above 0.5 become 1 and below become 0) and than dilating this binarized mask by a smoothing kernel with <code class="docutils literal"><span class="pre">DilateImage</span></code>. After all this is done we are ready to smooth our data with <code class="docutils literal"><span class="pre">Smooth</span></code>.</p>
 <p>In the <strong>first level analysis</strong> part of the pipeline we first want to specify our model with <code class="docutils literal"><span class="pre">SpecifyModel</span></code>, than create the first level design with <code class="docutils literal"><span class="pre">Level1Design</span></code>. After that we are able to estimate the model with <code class="docutils literal"><span class="pre">EstimateModel</span></code> and estimate the contrasts with <code class="docutils literal"><span class="pre">EstimateContrast</span></code>. Before we&#8217;re done we want to coregister our contrasts to the subject specific anatomy with <code class="docutils literal"><span class="pre">BBRegister</span></code> and <code class="docutils literal"><span class="pre">ApplyVolTransform</span></code> and convert the final output to zipped NIfTI files with <code class="docutils literal"><span class="pre">MRIConvert</span></code>.</p>
@@ -151,10 +159,10 @@
 </div>
 </div>
 <div class="section" id="write-your-pipeline-script">
-<h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">⥀</a></h2>
+<h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">¶</a></h2>
 <p>Before we can start with writing a pipeline script, we first have to make sure that we have all necessary information. We know how the structure of the metaflow should look like from the previous section. But what are the experiment specific parameters? Lets assume that we use the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/prepareData.html">tutorial dataset</a> with the ten subjects <code class="docutils literal"><span class="pre">sub001</span></code> to <code class="docutils literal"><span class="pre">sub010</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>. We know from the openfmri homepage <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> that this experiment has a a TR of 2.0 seconds and that each volume of the functional data consists of 40 slices, acquired in an ascending interleaved slice order. And we know that we can find condition specific onset times for each subject in the subject folder in our data folder, e.g. <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/sub001/</span></code>. So let&#8217;s start!</p>
 <div class="section" id="import-modules">
-<h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">⥀</a></h3>
+<h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
 <p>First we have to import all necessary modules. Which modules you have to import becomes clear while you’re adding specific nodes.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -183,7 +191,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="specify-interface-behaviors">
-<h3>Specify interface behaviors<a class="headerlink" href="#specify-interface-behaviors" title="Permalink to this headline">⥀</a></h3>
+<h3>Specify interface behaviors<a class="headerlink" href="#specify-interface-behaviors" title="Permalink to this headline">¶</a></h3>
 <p>To make sure that the MATLAB and FreeSurfer interface run correctly, add the following code to your script.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -204,7 +212,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="define-experiment-specific-parameters">
-<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">⥀</a></h3>
+<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <p>I suggest to keep experiment specific parameters that change often between experiments like subject names, output folders, scan parameters and name of functional runs at the beginning of your script. Like this they can be accessed and changed more easily.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -231,7 +239,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="create-preprocessing-pipeline">
-<h3>Create preprocessing pipeline<a class="headerlink" href="#create-preprocessing-pipeline" title="Permalink to this headline">⥀</a></h3>
+<h3>Create preprocessing pipeline<a class="headerlink" href="#create-preprocessing-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>Let&#8217;s first create all nodes needed for the preprocessing subworkflow:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -383,7 +391,7 @@
 <p>If you are wondering how we know which parameters to specify and which connections to establish. It is simple: First, specify or connect all mandatory inputs of each node. Second, add the additional inputs that your data requires. For more informations about what is mandatory and what&#8217;s not, go either to <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">Interfaces and Algorithms</a> or use the <code class="docutils literal"><span class="pre">.help()</span></code> method (e.g. <code class="docutils literal"><span class="pre">realign.help()</span></code>), as shown <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#input-and-output-fields">here</a>.</p>
 </div>
 <div class="section" id="create-first-level-analysis-pipeline">
-<h3>Create first level analysis pipeline<a class="headerlink" href="#create-first-level-analysis-pipeline" title="Permalink to this headline">⥀</a></h3>
+<h3>Create first level analysis pipeline<a class="headerlink" href="#create-first-level-analysis-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>Now, let us define the pipeline for the first level analysis. Again, first we need to implement the nodes:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -490,7 +498,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="define-meta-workflow-and-connect-subworkflows">
-<h3>Define meta workflow and connect subworkflows<a class="headerlink" href="#define-meta-workflow-and-connect-subworkflows" title="Permalink to this headline">⥀</a></h3>
+<h3>Define meta workflow and connect subworkflows<a class="headerlink" href="#define-meta-workflow-and-connect-subworkflows" title="Permalink to this headline">¶</a></h3>
 <p>After we&#8217;ve created the subworkflows <code class="docutils literal"><span class="pre">preproc</span></code> and <code class="docutils literal"><span class="pre">l1analysis</span></code> we are ready to create the meta workflow <code class="docutils literal"><span class="pre">metaflow</span></code> and establish the connections between the two subworkflows.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -525,7 +533,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="define-model-specific-parameters">
-<h3>Define model specific parameters<a class="headerlink" href="#define-model-specific-parameters" title="Permalink to this headline">⥀</a></h3>
+<h3>Define model specific parameters<a class="headerlink" href="#define-model-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <p>The procedure of how we get subject specific parameters into our metaflow is a bit tricky but can be done as shown below. First, we have to specify the conditions of our paradigm and what contrasts we want to compute from them. In our case, the names of the condition are <code class="docutils literal"><span class="pre">'congruent'</span></code> and <code class="docutils literal"><span class="pre">'incongruent'</span></code>. The original condition of the tutorial dataset also include a subdivision into correct and incorrect trials (see <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/condition_key.txt</span></code>). This example will not consider this subdivision, as there are very few or no occurrences of incorrect responses per subject.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -680,7 +688,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="establish-input-output-stream">
-<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">⥀</a></h3>
+<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">¶</a></h3>
 <p>As always, our metaflow needs an input stream to have data to work and an output stream to know where to store the computed output. This can be done with the following three nodes:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">infosource</span></code>: This node will iterate over the <code class="docutils literal"><span class="pre">subject_list</span></code> and feed the <code class="docutils literal"><span class="pre">contrast_list</span></code> to the first level analysis.</li>
@@ -819,7 +827,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="run-the-pipeline-and-generate-the-graph">
-<h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">⥀</a></h3>
+<h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <p>Finally, after everything is set up correctly we can run the pipeline and let it draw the graph of the workflow.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;colored&#39;</span><span class="p">)</span>
@@ -833,11 +841,11 @@
 </div>
 </div>
 <div class="section" id="visualize-your-pipeline">
-<h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">⥀</a></h2>
+<h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>The visualization of this graph can be seen in all different graph types under the section <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/visualizePipeline.html">How to visualize a pipeline</a> or as a colored graph at the beginning of this section.</p>
 </div>
 <div class="section" id="resulting-folder-structure">
-<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">⥀</a></h2>
+<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> our folder structure should look like this:</p>
 <p>After we’ve executed the first level workflow we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_fMRI_example_1st</span></code> which contains all files created during the execution of the metaflow, and the output folder <code class="docutils literal"><span class="pre">output_fMRI_example_1st</span></code> which contains all the files that we sent to the DataSink. Let’s take a closer look at the DataSink folder:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_1st

@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="Prepare your Dataset" href="prepareData.html" />
     <link rel="prev" title="Nipype and Neuroimaging" href="nipypeAndNeuroimaging.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -158,7 +166,7 @@
             <!-- Disqus counter -->
             
   <div class="section" id="download-and-install-nipype">
-<h1>Download and Install Nipype<a class="headerlink" href="#download-and-install-nipype" title="Permalink to this headline">⥀</a></h1>
+<h1>Download and Install Nipype<a class="headerlink" href="#download-and-install-nipype" title="Permalink to this headline">¶</a></h1>
 <p>All you need to know to download and install Nipype can be found on the official homepage under <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/install.html">Download and Install</a>. There you find a link to the newest version and more information about which dependencies are necessary or recommended.</p>
 <p>Installing Nipype as described on the official homepage should be rather easy for most users. There are some tricky steps that sometimes seem to be less straight forward. But don&#8217;t worry, I&#8217;ve written my own installation guide to help and assist users with less UNIX experience. The following instructions hopefully help everybody to install and run Nipype on their system. Note that some steps strongly depend on the system you are using and it might be possible that some dependencies are already installed on your system. Also,</p>
 <div class="admonition note">
@@ -168,7 +176,7 @@
 <p>The following steps describe how I was able to set up and run Nipype on a System with a newly installed Ubuntu 14.04 LTS OS (64-bit), called &#8220;<cite>trusty</cite>&#8221;. To people with older Ubuntu version, don&#8217;t worry, Nipype does also run on much older versions, as long as they are not too ancient. To check which version of Ubuntu you are running use the command <code class="docutils literal"><span class="pre">lsb_release</span> <span class="pre">-d</span></code>. You don&#8217;t have to upgrade to version 14.04 if you have an older version as long as it isn&#8217;t too ancient.</p>
 <p><strong>To Mac Users</strong>: I haven&#8217;t installed Nipype on a Mac, yet. But the steps should be almost identical. If any major differences occur, please let me know.</p>
 <div class="section" id="prepare-your-system">
-<h2>Prepare your System<a class="headerlink" href="#prepare-your-system" title="Permalink to this headline">⥀</a></h2>
+<h2>Prepare your System<a class="headerlink" href="#prepare-your-system" title="Permalink to this headline">¶</a></h2>
 <p>Before we start, make sure that your Ubuntu system is up to date with the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#Update and upgrade your system</span>
 sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
@@ -176,11 +184,11 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 </div>
 </div>
 <div class="section" id="anaconda">
-<h2>Anaconda<a class="headerlink" href="#anaconda" title="Permalink to this headline">⥀</a></h2>
+<h2>Anaconda<a class="headerlink" href="#anaconda" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoAnaconda.png"><img alt="_images/logoAnaconda.png" class="align-left" src="_images/logoAnaconda.png" style="width: 90pt;" /></a>
 <p>As you can see under <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/install.html#dependencies">Dependencies</a>, there are a lot of software packages that have to be installed on your system to run Nipype. For example: <cite>python</cite>, <cite>ipython</cite>, <cite>matplotlib</cite>, <cite>networkx</cite>, <cite>numpy</cite>, <cite>scipy</cite>, <cite>sphinx</cite> etc. Luckily, most of the those required dependencies, most importantly a working Python environment, can be set up by installing <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda</a>.</p>
 <div class="section" id="install-anaconda">
-<h3>Install Anaconda<a class="headerlink" href="#install-anaconda" title="Permalink to this headline">⥀</a></h3>
+<h3>Install Anaconda<a class="headerlink" href="#install-anaconda" title="Permalink to this headline">¶</a></h3>
 <p>Instructions on how to install Anaconda can be found <a class="reference external" href="http://docs.continuum.io/anaconda/install.html">here</a>. Following are the steps how I&#8217;ve installed the Anaconda package on my system:</p>
 <ol class="arabic">
 <li><p class="first">Download the software under <a class="reference external" href="http://continuum.io/downloads">http://continuum.io/downloads</a> and move the downloaded sh-file to your Download folder. In my case this folder is at <code class="docutils literal"><span class="pre">/home/username/Downloads</span></code> abbreviated with <code class="docutils literal"><span class="pre">~/Downloads</span></code>.</p>
@@ -208,7 +216,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 </div>
 </div>
 <div class="section" id="update-anaconda">
-<h3>Update Anaconda<a class="headerlink" href="#update-anaconda" title="Permalink to this headline">⥀</a></h3>
+<h3>Update Anaconda<a class="headerlink" href="#update-anaconda" title="Permalink to this headline">¶</a></h3>
 <p>To update anaconda to the newest version and to clean unused and older content use the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>conda update conda <span class="o">&amp;&amp;</span> conda update anaconda <span class="o">&amp;&amp;</span> conda clean --packages --tarballs
 </pre></div>
@@ -224,7 +232,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 </div>
 </div>
 <div class="section" id="test-anaconda">
-<h3>Test Anaconda<a class="headerlink" href="#test-anaconda" title="Permalink to this headline">⥀</a></h3>
+<h3>Test Anaconda<a class="headerlink" href="#test-anaconda" title="Permalink to this headline">¶</a></h3>
 <p>Now that Anaconda is installed let&#8217;s test if our python environment is ready to run.</p>
 <ol class="arabic">
 <li><p class="first">Open a new terminal and type in the command <code class="docutils literal"><span class="pre">ipython</span></code>. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/ipython.html">IPython support section</a> of this beginner&#8217;s guide.</p>
@@ -241,7 +249,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 </div>
 </div>
 <div class="section" id="neurodebian">
-<h2>NeuroDebian<a class="headerlink" href="#neurodebian" title="Permalink to this headline">⥀</a></h2>
+<h2>NeuroDebian<a class="headerlink" href="#neurodebian" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoNeurodebian.png"><img alt="_images/logoNeurodebian.png" class="align-left" src="_images/logoNeurodebian.png" style="width: 70pt;" /></a>
 <p>To facilitate the installation of some necessary and recommended software packages such as FSL and Nipype itself, Debian and Ubuntu based system should install the <a class="reference external" href="http://neuro.debian.net/">NeuroDebian</a> repository. To see which software packages are included in NeuroDebian, go to <a class="reference external" href="http://www.nitrc.org/projects/neurodebian/">NITRCT - NeuroDebian</a>.</p>
 <ol class="arabic">
@@ -268,9 +276,9 @@ sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
 </div>
 </div>
 <div class="section" id="nipype">
-<h2>Nipype<a class="headerlink" href="#nipype" title="Permalink to this headline">⥀</a></h2>
+<h2>Nipype<a class="headerlink" href="#nipype" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="install-nipype-and-other-python-dependencies">
-<h3>Install Nipype (and other python dependencies)<a class="headerlink" href="#install-nipype-and-other-python-dependencies" title="Permalink to this headline">⥀</a></h3>
+<h3>Install Nipype (and other python dependencies)<a class="headerlink" href="#install-nipype-and-other-python-dependencies" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="_images/logoNipype.png"><img alt="_images/logoNipype.png" class="align-left" src="_images/logoNipype.png" style="width: 100pt;" /></a>
 <p>Finally, it&#8217;s time to install Nipype. And while doing so, let&#8217;s also install additional python dependencies, such as: nibabel, rdflib, nipy, dipy and graphviz. Some of those packages might already be installed on your system when you&#8217;ve installed Anaconda.</p>
 <p>So what do you have to do to install Nipype? It&#8217;s simple, just use either <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">nipype</span></code> or <code class="docutils literal"><span class="pre">easy_install</span> <span class="pre">nipype</span></code>. More information about the installation of Nipype on a Mac or from sourcecode, go to the <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/install.html">main page</a>.</p>
@@ -289,11 +297,11 @@ pip install --upgrade pygraphviz graphviz
 </div>
 </div>
 <div class="section" id="test-nipype">
-<h3>Test Nipype<a class="headerlink" href="#test-nipype" title="Permalink to this headline">⥀</a></h3>
+<h3>Test Nipype<a class="headerlink" href="#test-nipype" title="Permalink to this headline">¶</a></h3>
 <p>To test if everything worked fine and if you&#8217;re able to use Nipype go into an IPython environment and import nipype with the command: <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype</span></code>. If you see no <cite>ImportError</cite> message, everything is set up correctly.</p>
 </div>
 <div class="section" id="upgrade-nipype-and-other-python-dependencies">
-<h3>Upgrade Nipype (and other python dependencies)<a class="headerlink" href="#upgrade-nipype-and-other-python-dependencies" title="Permalink to this headline">⥀</a></h3>
+<h3>Upgrade Nipype (and other python dependencies)<a class="headerlink" href="#upgrade-nipype-and-other-python-dependencies" title="Permalink to this headline">¶</a></h3>
 <p>If you want to be sure that you have the newest version or update a certain package use the <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code> command with the flag <code class="docutils literal"><span class="pre">--upgrade</span></code>. So, if you want to upgrade Nipype to the newest version use the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>pip install --upgrade nipype
 </pre></div>
@@ -304,7 +312,7 @@ pip install --upgrade pygraphviz graphviz
 </div>
 </div>
 <div class="section" id="upgrade-nipype-to-the-developer-version">
-<h3>Upgrade Nipype to the developer version<a class="headerlink" href="#upgrade-nipype-to-the-developer-version" title="Permalink to this headline">⥀</a></h3>
+<h3>Upgrade Nipype to the developer version<a class="headerlink" href="#upgrade-nipype-to-the-developer-version" title="Permalink to this headline">¶</a></h3>
 <p>If you want or have to upgrade Nipype to the developer version us the following steps. Such an upgrade is only recommended to people who know what they are doing or need a certain fix that isn&#8217;t distributed yet in the general Nipype version.</p>
 <p>The most current developer version of Nipype can be found on <a class="reference external" href="https://github.com/">GitHub</a> under <a class="reference external" href="https://github.com/nipy/nipype">Nipype &#64; GitHub</a>. The following steps assume assume that you&#8217;ve already set up your own GitHub account and are ready to download the Nipype repository:</p>
 <ol class="arabic">
@@ -329,11 +337,11 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 </div>
 </div>
 <div class="section" id="download-and-install-interfaces">
-<h1>Download and Install Interfaces<a class="headerlink" href="#download-and-install-interfaces" title="Permalink to this headline">⥀</a></h1>
+<h1>Download and Install Interfaces<a class="headerlink" href="#download-and-install-interfaces" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="fsl">
-<h2>FSL<a class="headerlink" href="#fsl" title="Permalink to this headline">⥀</a></h2>
+<h2>FSL<a class="headerlink" href="#fsl" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="download-and-installation">
-<h3>Download and Installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">⥀</a></h3>
+<h3>Download and Installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="_images/logoFSL.jpg"><img alt="_images/logoFSL.jpg" class="align-left" src="_images/logoFSL.jpg" style="width: 70pt;" /></a>
 <p><a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/">FSL</a> is a comprehensive library of analysis tools for fMRI, MRI and DTI data. An overview of FSL&#8217;s tools can be found <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview">here</a>.</p>
 <p>The installation of <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSL">FSL</a> is simple if you&#8217;ve already installed the NeuroDebian repository. Just run the following command:</p>
@@ -343,7 +351,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 <p>Otherwise, go through the official FSL installation guide, found <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation">here</a>.</p>
 </div>
 <div class="section" id="configuration">
-<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">⥀</a></h3>
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
 <p>Before you can run FSL, your system first needs to know where the software is installed at. On a ubuntu system, this is usually under <code class="docutils literal"><span class="pre">/usr/share/fsl</span></code>. Therefore, add the following code to your <cite>.bashrc</cite> file. (To open and edit your <cite>.bashrc</cite> file on Ubuntu, us the following command: <code class="docutils literal"><span class="pre">gedit</span> <span class="pre">~/.bashrc</span></code>)</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#FSL</span>
 <span class="nv">FSLDIR</span><span class="o">=</span>/usr/share/fsl
@@ -354,16 +362,16 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 </div>
 </div>
 <div class="section" id="test-fsl">
-<h3>Test FSL<a class="headerlink" href="#test-fsl" title="Permalink to this headline">⥀</a></h3>
+<h3>Test FSL<a class="headerlink" href="#test-fsl" title="Permalink to this headline">¶</a></h3>
 <p>To test if FSL is correctly installed, open a new terminal and type in the command <code class="docutils literal"><span class="pre">fsl</span></code>. If everything was set up correctly you should see the FSL GUI with the version number in the header. In my case this is version 5.0.7.</p>
 </div>
 </div>
 <div class="section" id="freesurfer">
-<h2>FreeSurfer<a class="headerlink" href="#freesurfer" title="Permalink to this headline">⥀</a></h2>
+<h2>FreeSurfer<a class="headerlink" href="#freesurfer" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoFreeSurfer.jpg"><img alt="_images/logoFreeSurfer.jpg" class="align-left" src="_images/logoFreeSurfer.jpg" style="height: 55pt;" /></a>
 <p><a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> is an open source software suite for processing and analyzing (human) brain MRI images. The installation of <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> includes abit more steps than the other installations, but the official <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">FreeSurfer: Download and Install</a> homepage is written very well and should get you through it without any problem. Nonetheless, following are the steps how I&#8217;ve installed FreeSurfer on my system.</p>
 <div class="section" id="id9">
-<h3>Download and Installation<a class="headerlink" href="#id9" title="Permalink to this headline">⥀</a></h3>
+<h3>Download and Installation<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
 <li><p class="first">Go to <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/Download">FreeSurfer: Download</a> and download the corresponding version for your system. In my case this was the <cite>Linux CentOS 6 x86_64 (64b) stable v5.3.0</cite> version. The file is called <code class="docutils literal"><span class="pre">freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0.tar.gz</span></code>.</p>
 </li>
@@ -402,7 +410,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 </ol>
 </div>
 <div class="section" id="test-freesurfer">
-<h3>Test FreeSurfer<a class="headerlink" href="#test-freesurfer" title="Permalink to this headline">⥀</a></h3>
+<h3>Test FreeSurfer<a class="headerlink" href="#test-freesurfer" title="Permalink to this headline">¶</a></h3>
 <p>After setting everything up, we can test if FreeSurfer is set up correctly and run a test with the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#Test 1</span>
 freeview -v <span class="nv">$SUBJECTS_DIR</span>/bert/mri/brainmask.mgz <span class="se">\</span>
@@ -429,7 +437,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 </div>
 </div>
 <div class="section" id="matlab">
-<h2>MATLAB<a class="headerlink" href="#matlab" title="Permalink to this headline">⥀</a></h2>
+<h2>MATLAB<a class="headerlink" href="#matlab" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoMatlab.png"><img alt="_images/logoMatlab.png" class="align-left" src="_images/logoMatlab.png" style="width: 70pt;" /></a>
 <p>Nowadays almost all scientific fields take advantage of <a class="reference external" href="http://www.mathworks.ch/">MATLAB</a>. Neuroscience is no exception in this and also some of Nipype&#8217;s recommended interfaces can (but don&#8217;t have to) take advantage of MATLAB, e.g. SPM, FSL, FreeSurfer.</p>
 <p>Having MATLAB is always a good thing, and as I myself rely often on algorithms from the <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a> interface, I need it to be on my system. A detailed documentation on how to install MATLAB can be found <a class="reference external" href="http://www.mathworks.com/help/install/index.html">here</a>. In my case, MATLAB is installed at the following location: <code class="docutils literal"><span class="pre">/usr/local/MATLAB/R2014a</span></code>.</p>
@@ -442,7 +450,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 <p>To test if everything is set up correctly. Open a new Terminal and type in the command: &#8220;matlab&#8221;.</p>
 </div>
 <div class="section" id="spm12">
-<h2>SPM12<a class="headerlink" href="#spm12" title="Permalink to this headline">⥀</a></h2>
+<h2>SPM12<a class="headerlink" href="#spm12" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoSPM12.png"><img alt="_images/logoSPM12.png" class="align-right" src="_images/logoSPM12.png" style="width: 80pt;" /></a>
 <p><a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a> stands for Statistical Parametric Mapping and is probably one of the most widely-used neuroimaging analysis software package worldwide. SPM is based on MATLAB and therefore needs it to be installed on your system. Luckily, the previous step just made that sure.</p>
 <p>As of 1st October 2014, SPM released it&#8217;s newest version <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a>. The <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf">Release Notes</a> mention some important updates and I therefore recommend to use <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a> instead of <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm8/">SPM8</a>. Nonetheless, Nipype has no issue with either <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm8/">SPM8</a> or <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a>. Therefore, you can install the version that you prefer.</p>
@@ -451,7 +459,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 <p class="last">There is a standalone version of SPM available that doesn&#8217;t need MATLAB, but so far it isn&#8217;t recommended as a lot of additional toolboxes don&#8217;t work with the standalone, yet. For more information go <a class="reference external" href="http://en.wikibooks.org/wiki/SPM/Standalone">here</a>.</p>
 </div>
 <div class="section" id="id19">
-<h3>Download and Installation<a class="headerlink" href="#id19" title="Permalink to this headline">⥀</a></h3>
+<h3>Download and Installation<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>To download and install the newest version <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a> do as follows:</p>
 <ol class="arabic">
 <li><p class="first">Got to SPM12&#8217;s <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/download.html">Download and registration</a> page and fill out the form. Under <strong>Select SPM version required</strong>, chose SPM12 (or SPM8 if preferred) and download the zip file.</p>
@@ -495,12 +503,12 @@ end
 </div>
 </div>
 <div class="section" id="test-spm12">
-<h3>Test SPM12<a class="headerlink" href="#test-spm12" title="Permalink to this headline">⥀</a></h3>
+<h3>Test SPM12<a class="headerlink" href="#test-spm12" title="Permalink to this headline">¶</a></h3>
 <p>To test if SPM12 is set up correctly, open MATLAB and type in the command <code class="docutils literal"><span class="pre">spm</span> <span class="pre">fmri</span></code>. This can also be achieved in one command: <code class="docutils literal"><span class="pre">matlab</span> <span class="pre">-r</span> <span class="pre">&quot;spm</span> <span class="pre">fmri&quot;</span></code>.</p>
 </div>
 </div>
 <div class="section" id="ants">
-<h2>ANTs<a class="headerlink" href="#ants" title="Permalink to this headline">⥀</a></h2>
+<h2>ANTs<a class="headerlink" href="#ants" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoANTS.png"><img alt="_images/logoANTS.png" class="align-left" src="_images/logoANTS.png" style="width: 70pt;" /></a>
 <p><a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> stands for Advanced Normalization Tools and is a great software package for registration, segmentation and normalization of MRI data. I highly recommend to use ANTs for the normalization of your data. <strong>Side note</strong>: ANTs can also be used to create a very cool looking average brain (template) out of a your own population of subjects.</p>
 <p>There are two ways how you can set up ANTS on your own system:</p>
@@ -574,7 +582,7 @@ sudo cp ~/Downloads/stnava-ANTs-b4eb279/Scripts/* /usr/local/antsbin/bin/
 </ol>
 </div>
 <div class="section" id="afni">
-<h2>AFNI<a class="headerlink" href="#afni" title="Permalink to this headline">⥀</a></h2>
+<h2>AFNI<a class="headerlink" href="#afni" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoAFNI.png"><img alt="_images/logoAFNI.png" class="align-left" src="_images/logoAFNI.png" style="width: 70pt;" /></a>
 <p><a class="reference external" href="http://afni.nimh.nih.gov/afni">AFNI</a> is an open source software package specialized on the analysis of functional MRI. To see a list of all AFNI algorithms that can be used with Nipype go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.afni.preprocess.html">interfaces.afni.preprocess</a>.</p>
 <p>If you&#8217;ve installed the NeuroDebian repository, just use the following command to install AFNI on your system: <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">afni</span></code></p>
@@ -585,12 +593,12 @@ sudo cp ~/Downloads/stnava-ANTs-b4eb279/Scripts/* /usr/local/antsbin/bin/
 </div>
 </div>
 <div class="section" id="additional-interfaces">
-<h2>Additional interfaces<a class="headerlink" href="#additional-interfaces" title="Permalink to this headline">⥀</a></h2>
+<h2>Additional interfaces<a class="headerlink" href="#additional-interfaces" title="Permalink to this headline">¶</a></h2>
 <p>There are many additional interfaces, such as <a class="reference external" href="http://cmic.cs.ucl.ac.uk/camino/">Camino</a>, <a class="reference external" href="http://www.brain.org.au/software/mrtrix/index.html">MRtrix</a>, <a class="reference external" href="http://slicer.org/">Slicer</a>, <a class="reference external" href="http://www.connectomics.org/viewer/">ConnectomeViewer</a>, for which I haven&#8217;t created an installation guide yet. This is also due to my lack of knowledge about them. Feel free to help me to complete this list.</p>
 </div>
 </div>
 <div class="section" id="clean-up-your-system">
-<h1>Clean up your System<a class="headerlink" href="#clean-up-your-system" title="Permalink to this headline">⥀</a></h1>
+<h1>Clean up your System<a class="headerlink" href="#clean-up-your-system" title="Permalink to this headline">¶</a></h1>
 <p>Now that everything is downloaded and installed, make sure that everything is correctly updated with the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#Update and upgrade your system</span>
 sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
@@ -605,7 +613,7 @@ sudo apt-get remove <span class="o">&amp;&amp;</span> sudo apt-get clean
 </div>
 </div>
 <div class="section" id="test-your-system">
-<h1>Test your System<a class="headerlink" href="#test-your-system" title="Permalink to this headline">⥀</a></h1>
+<h1>Test your System<a class="headerlink" href="#test-your-system" title="Permalink to this headline">¶</a></h1>
 <p>Nipype is installed, recommended interfaces are ready to go and so are you. But before you want to start your first steps with Nipype, I recommend you to test your system first. To do this open up an IPython environment (open a terminal and start IPython with the command <code class="docutils literal"><span class="pre">ipython</span></code>) and run the following code:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c"># Import the nipype module</span>
 <span class="kn">import</span> <span class="nn">nipype</span>

@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="How To Visualize A Pipeline" href="visualizePipeline.html" />
     <link rel="prev" title="Prepare your Dataset" href="prepareData.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -179,11 +187,11 @@
             <!-- Disqus counter -->
             
   <div class="section" id="how-to-build-a-pipeline">
-<h1>How To Build A Pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">⥀</a></h1>
+<h1>How To Build A Pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">¶</a></h1>
 <p>So, you&#8217;ve <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/installation.html">installed Nipype</a> on your system? And you&#8217;ve <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/prepareData.html">prepared your dataset</a> for the analysis? This means that you are ready to start this tutorial.</p>
 <p>The following section is a general step by step introduction on how to build a pipeline. It will first introduce you to the building blocks of any pipeline, show you on an example how a basic pipeline is implemented, how to read the output and most importantly how to tackle problems. At the end you should understand what a pipeline is, how the key parts interact with each other and how to solve certain issues. Short, you should be able to build any kind of neuroimaging pipeline that you like. So let&#8217;s get started!</p>
 <div class="section" id="important-building-blocks">
-<h2>Important building blocks<a class="headerlink" href="#important-building-blocks" title="Permalink to this headline">⥀</a></h2>
+<h2>Important building blocks<a class="headerlink" href="#important-building-blocks" title="Permalink to this headline">¶</a></h2>
 <p>The following example pipeline is based on the preprocessing steps of a functional MRI study. Nonetheless, all elements are relevant for any kind of pipeline and it is important that you understand them well. They can be summarized into the following sections:</p>
 <ul class="simple">
 <li><strong>Import modules</strong>: The first step in any script is to import necessary functions or modules.</li>
@@ -195,7 +203,7 @@
 </ul>
 <p>So, make yourself ready, start an IPython environment (type <code class="docutils literal"><span class="pre">ipython</span></code> into the terminal) and have fun.</p>
 <div class="section" id="import-modules">
-<h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">⥀</a></h3>
+<h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
 <p>The first thing you should do in any script is to import the modules you want to use in your script. In our case, most modules are actually interfaces to other software packages (e.g. FSL, FreeSurfer or SPM) and can be found in the <code class="docutils literal"><span class="pre">nipype</span></code> module.</p>
 <p>If you want to import a module as a whole use the command structure <code class="docutils literal"><span class="pre">import</span> <span class="pre">&lt;module&gt;</span> <span class="pre">as</span> <span class="pre">&lt;name&gt;</span></code>. For example:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c"># Import the SPM interface under the name spm</span>
@@ -214,7 +222,7 @@
 </div>
 </div>
 <div class="section" id="specify-variables">
-<h3>Specify variables<a class="headerlink" href="#specify-variables" title="Permalink to this headline">⥀</a></h3>
+<h3>Specify variables<a class="headerlink" href="#specify-variables" title="Permalink to this headline">¶</a></h3>
 <p>There are always variables that change between analysis or that are specific for a certain computer structure. That&#8217;s why it is important to keep them all together and at one place. This allows you to be fast, flexible and to keep the changes in your script just to this section.</p>
 <p>So which variables should you declare in this section? <strong>All of them!</strong> Every variable that you change more than once between analysis should be specified here.</p>
 <p>For example:</p>
@@ -249,13 +257,13 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="specify-nodes">
-<h3>Specify Nodes<a class="headerlink" href="#specify-nodes" title="Permalink to this headline">⥀</a></h3>
+<h3>Specify Nodes<a class="headerlink" href="#specify-nodes" title="Permalink to this headline">¶</a></h3>
 <p>It is impossible to build a pipeline without any scaffold or objects to build with. Therefore, we first have to create those scaffolds (i.e. <code class="docutils literal"><span class="pre">workflows</span></code>) and objects (i.e. <code class="docutils literal"><span class="pre">nodes</span></code> or other <code class="docutils literal"><span class="pre">workflows</span></code>).</p>
 <div class="section" id="nodes">
-<h4>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">⥀</a></h4>
+<h4>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h4>
 <p>A node is an object that represents a certain interface function, for example SPM&#8217;s <code class="docutils literal"><span class="pre">Realign</span></code> method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes.</p>
 <div class="section" id="input-and-output-fields">
-<h5>Input and Output Fields<a class="headerlink" href="#input-and-output-fields" title="Permalink to this headline">⥀</a></h5>
+<h5>Input and Output Fields<a class="headerlink" href="#input-and-output-fields" title="Permalink to this headline">¶</a></h5>
 <p>Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/index.html">here</a>. So how do you know which input and output field a given node has? Don&#8217;t worry. There&#8217;s an easy way how you can figure out which input fields are <strong>mandatory</strong> or <strong>optional</strong> and which output fields you can use.</p>
 <p>Let&#8217;s assume that we want to know more about FSL&#8217;s function <code class="docutils literal"><span class="pre">SmoothEstimate</span></code>. First, make sure that you&#8217;ve imported the spm module with the following python command <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype.interfaces.fsl</span> <span class="pre">as</span> <span class="pre">fsl</span></code>.</p>
 <p>Now that we have access to FSL, we simply can run <code class="docutils literal"><span class="pre">fsl.SmoothEstimate.help()</span></code>. This will give us the following output:</p>
@@ -380,7 +388,7 @@
 </div>
 </div>
 <div class="section" id="default-value-of-inputs">
-<h5>Default value of Inputs<a class="headerlink" href="#default-value-of-inputs" title="Permalink to this headline">⥀</a></h5>
+<h5>Default value of Inputs<a class="headerlink" href="#default-value-of-inputs" title="Permalink to this headline">¶</a></h5>
 <p>As you&#8217;ve might seen in the example above <em>(line 32)</em>, some input fields have Nipype specific default values. To figure out which default values are used for which functions, use the method <code class="docutils literal"><span class="pre">input_spec()</span></code>.</p>
 <p>For example, if you want to know that the default values for SPM&#8217;s Threshold function are, use the following command:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -425,7 +433,7 @@
 </div>
 </div>
 <div class="section" id="stand-alone-nodes">
-<h4>Stand-alone nodes<a class="headerlink" href="#stand-alone-nodes" title="Permalink to this headline">⥀</a></h4>
+<h4>Stand-alone nodes<a class="headerlink" href="#stand-alone-nodes" title="Permalink to this headline">¶</a></h4>
 <p>Nodes are most of the time used inside a pipeline. But it is also possible to use one just by itself. Such a &#8220;stand-alone&#8221; node is often times very convenient when you run a python script and want to use just one function of a given dependency package, e.g. FSL, and are not really interested in creating an elaborate workflow.</p>
 <p>Such a &#8220;stand-alone&#8221; node is also a good opportunity to introduce the implementation of nodes. Because there are many ways how you can create a node. Let&#8217;s assume that you want to create a single node that runs FSL&#8217;s Brain Extraction Tool function <code class="docutils literal"><span class="pre">BET</span></code> on the anatomical scan of our tutorial subject <code class="docutils literal"><span class="pre">sub001</span></code>. This can be achieved in the following three ways:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -475,7 +483,7 @@
 </div>
 </div>
 <div class="section" id="workflow-nodes">
-<h4>Workflow Nodes<a class="headerlink" href="#workflow-nodes" title="Permalink to this headline">⥀</a></h4>
+<h4>Workflow Nodes<a class="headerlink" href="#workflow-nodes" title="Permalink to this headline">¶</a></h4>
 <p>Most of the times when you create a node you want to use it later on in a workflow. The creation of such a &#8220;workflow&#8221; node is only partly different from the creation of &#8220;stand-alone&#8221; nodes. The implementation of a &#8220;workflow&#8221; node has always the following structure:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;label&#39;</span><span class="p">)</span>
 </pre></div>
@@ -563,7 +571,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="iterables">
-<h5>Iterables<a class="headerlink" href="#iterables" title="Permalink to this headline">⥀</a></h5>
+<h5>Iterables<a class="headerlink" href="#iterables" title="Permalink to this headline">¶</a></h5>
 <p>Iterables are a special kind of input fields and any input field of any Node can be turned into an Iterable. Iterables are very important for the repeated execution of a workflow with slightly changed parameters.</p>
 <p>For example, let&#8217;s assume that you have a preprocessing pipeline and on one step smooth the data with a FWHM smoothing kernel of 6mm. But because you&#8217;re not sure if the FWHM value is right you would want to execute the workflow again with 4mm and 8mm. Instead of running your workflow three times with slightly different parameters you could also just define the FWHM input field as an iterables:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -595,7 +603,7 @@
 </div>
 </div>
 <div class="section" id="mapnodes-and-iterfields">
-<h4>MapNodes and Iterfields<a class="headerlink" href="#mapnodes-and-iterfields" title="Permalink to this headline">⥀</a></h4>
+<h4>MapNodes and Iterfields<a class="headerlink" href="#mapnodes-and-iterfields" title="Permalink to this headline">¶</a></h4>
 <p>A MapNode is a sub-class of a Node. It therefore has exactly the same properties as a normal Node. The only difference is that a MapNode can put multiple input parameters into one input field, where a normal Node only can take one.</p>
 <p>The creation of a MapNode is only slightly different to the creation of a normal Node.</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;label&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
@@ -604,7 +612,7 @@
 <p>First, you have to use <code class="docutils literal"><span class="pre">MapNode</span></code> instead of <code class="docutils literal"><span class="pre">Node</span></code>. Second, you also have to define which of the input fields can receive multiple parameters at once. An input field with this special properties is also called an <code class="docutils literal"><span class="pre">iterfield</span></code>. For a more detailed explanation go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield">MapNode and iterfield</a> on the official homepage.</p>
 </div>
 <div class="section" id="individual-nodes">
-<h4>Individual Nodes<a class="headerlink" href="#individual-nodes" title="Permalink to this headline">⥀</a></h4>
+<h4>Individual Nodes<a class="headerlink" href="#individual-nodes" title="Permalink to this headline">¶</a></h4>
 <p>There are situations where you need to create your own Node that is independent from any other interface or function provided by Nipype. You need a Node with your specific input and output fields, that does what you want. Well, this can be achieved with Nipype&#8217;s <code class="docutils literal"><span class="pre">Function</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface.</p>
 <p>Let&#8217;s assume that you want to have a node that takes as an input a NIfTI file and returns the voxel dimension and the TR of this file. We will read the voxel dimension and the TR value of the NIfTI file with <code class="docutils literal"><span class="pre">nibabel</span></code>&#8216;s <code class="docutils literal"><span class="pre">get_header()</span></code> function.</p>
 <p>Here is how it&#8217;s done:</p>
@@ -671,7 +679,7 @@
 </div>
 </div>
 <div class="section" id="function-free-nodes">
-<h4>Function Free Nodes<a class="headerlink" href="#function-free-nodes" title="Permalink to this headline">⥀</a></h4>
+<h4>Function Free Nodes<a class="headerlink" href="#function-free-nodes" title="Permalink to this headline">¶</a></h4>
 <p>Sometimes you need a Node without a specific interface function. A Node that just distributes values. For example, when you need to feed the voxel dimension and the different subject names into your pipeline. Don&#8217;t worry that you&#8217;ll need a complex node to do this. You only need a Node that can receive the input <code class="docutils literal"><span class="pre">[3.0,</span> <span class="pre">3.0,</span> <span class="pre">4.0]</span></code> and <code class="docutils literal"><span class="pre">['sub001','sub002','sub003']</span></code> and distribute those inputs to the workflow.</p>
 <p>Such a way of identity mapping input to output can be achieved with Nipype&#8217;s own <code class="docutils literal"><span class="pre">IdentityInterface</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -706,9 +714,9 @@
 </div>
 </div>
 <div class="section" id="specify-workflows-connect-nodes">
-<h3>Specify Workflows &amp; Connect Nodes<a class="headerlink" href="#specify-workflows-connect-nodes" title="Permalink to this headline">⥀</a></h3>
+<h3>Specify Workflows &amp; Connect Nodes<a class="headerlink" href="#specify-workflows-connect-nodes" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="workflows">
-<h4>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">⥀</a></h4>
+<h4>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h4>
 <p>Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each either in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?</p>
 <p>Pipelines are implemented almost the same as Nodes are. Except that you don&#8217;t need to declare any interface or function:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">workflowname</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;label&#39;</span><span class="p">)</span>
@@ -717,10 +725,10 @@
 <p>This is all you have to do.</p>
 </div>
 <div class="section" id="establish-connections">
-<h4>Establish Connections<a class="headerlink" href="#establish-connections" title="Permalink to this headline">⥀</a></h4>
+<h4>Establish Connections<a class="headerlink" href="#establish-connections" title="Permalink to this headline">¶</a></h4>
 <p>But just creating workflows is not enough. You also have to tell it which nodes to connect with which other nodes and therefore specify the direction and order of execution.</p>
 <div class="section" id="connect-nodes-to-nodes">
-<h5>Connect Nodes to Nodes<a class="headerlink" href="#connect-nodes-to-nodes" title="Permalink to this headline">⥀</a></h5>
+<h5>Connect Nodes to Nodes<a class="headerlink" href="#connect-nodes-to-nodes" title="Permalink to this headline">¶</a></h5>
 <p>There is a basic and an advanced way how to create connections between two nodes. The basic way allows only to connect two nodes at a time whereas the advanced way can establish multiple connections at once.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -748,7 +756,7 @@
 <a class="reference internal image-reference" href="_images/example_node_connection.png"><img alt="_images/example_node_connection.png" class="align-center" src="_images/example_node_connection.png" style="width: 480pt;" /></a>
 </div>
 <div class="section" id="connect-workflows-to-workflows">
-<h5>Connect Workflows to Workflows<a class="headerlink" href="#connect-workflows-to-workflows" title="Permalink to this headline">⥀</a></h5>
+<h5>Connect Workflows to Workflows<a class="headerlink" href="#connect-workflows-to-workflows" title="Permalink to this headline">¶</a></h5>
 <p>Sometimes you also want to connect a workflow to another workflow. For example a preprocessing pipeline to a analysis pipeline. This, so that you can execute the whole pipeline as one. To do this, you can&#8217;t just connect the nodes to each other. You have to additionally connect the workflows to themselves.</p>
 <p>Let&#8217;s assume that we have a node <code class="docutils literal"><span class="pre">realign</span></code> which is part of a preprocessing pipeline called <code class="docutils literal"><span class="pre">preprocess</span></code> and that we have a node called <code class="docutils literal"><span class="pre">modelspec</span></code> which is part of an analysis pipeline called <code class="docutils literal"><span class="pre">modelestimation</span></code>. To be able to connect those two pipelines at those particular points we need another workflow to serve as a connection scaffold:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -765,7 +773,7 @@
 <p>As you see, the main difference to the connections between nodes is that you connect the pipelines first. Nonetheless, you still have to specify which nodes with which output or input fields have to be connected to each other.</p>
 </div>
 <div class="section" id="add-stand-alone-nodes-to-workflow">
-<h5>Add stand-alone Nodes to Workflow<a class="headerlink" href="#add-stand-alone-nodes-to-workflow" title="Permalink to this headline">⥀</a></h5>
+<h5>Add stand-alone Nodes to Workflow<a class="headerlink" href="#add-stand-alone-nodes-to-workflow" title="Permalink to this headline">¶</a></h5>
 <p>There is also the option to add nodes to a workflow without really connecting them to any other nodes or workflow. This can be done with the <code class="docutils literal"><span class="pre">add_nodes</span></code> function.</p>
 <p>For example</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -775,7 +783,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="modify-values-between-connections">
-<h5>Modify Values between Connections<a class="headerlink" href="#modify-values-between-connections" title="Permalink to this headline">⥀</a></h5>
+<h5>Modify Values between Connections<a class="headerlink" href="#modify-values-between-connections" title="Permalink to this headline">¶</a></h5>
 <p>Sometimes you want to modify the output of one node before sending it on to the next node. This can be done in two ways. Either use an individual node as described <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes">above</a>, or plant a function directly between the output and input of two nodes. To do the second approach, do as follows:</p>
 <p>First, define your function that modifies the data as you want and returns the new output:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -823,7 +831,7 @@
 </div>
 </div>
 <div class="section" id="clone-existing-workflows">
-<h4>Clone Existing Workflows<a class="headerlink" href="#clone-existing-workflows" title="Permalink to this headline">⥀</a></h4>
+<h4>Clone Existing Workflows<a class="headerlink" href="#clone-existing-workflows" title="Permalink to this headline">¶</a></h4>
 <p>Sometimes you want to reuse a pipeline you&#8217;ve already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the <code class="docutils literal"><span class="pre">clone</span></code> command.</p>
 <p>For example, if you&#8217;ve already created an analysis pipeline that analysis the data on the volume and now would love to reuse this pipeline to do the analysis of the surface, just do as follows:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
@@ -837,7 +845,7 @@
 </div>
 </div>
 <div class="section" id="input-output-stream">
-<h3>Input &amp; Output Stream<a class="headerlink" href="#input-output-stream" title="Permalink to this headline">⥀</a></h3>
+<h3>Input &amp; Output Stream<a class="headerlink" href="#input-output-stream" title="Permalink to this headline">¶</a></h3>
 <p>This is probably one of the more important and difficult sections of a workflow script, as most of the errors and issues you can encounter with your pipeline are mostly based on some kind of error in the specification of the workflow input or output stream. So make sure that this section is correct.</p>
 <p>Before you can tell your computer where it can find your data, you yourself have to understand where and in which format your data is stored at. If you use the tutorial dataset, than your folder structure look as follows:</p>
 <div class="highlight-none"><div class="highlight"><pre>nipype_tutorial
@@ -857,7 +865,7 @@
 </div>
 <p>So this means that your scans are stored in a zipped NIfTI format (i.e. <code class="docutils literal"><span class="pre">nii.gz</span></code>) and that you can find them as follows: <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/subjectname/scanimage.nii.gz</span></code></p>
 <div class="section" id="input-stream">
-<h4>Input Stream<a class="headerlink" href="#input-stream" title="Permalink to this headline">⥀</a></h4>
+<h4>Input Stream<a class="headerlink" href="#input-stream" title="Permalink to this headline">¶</a></h4>
 <p>Now there are two different functions that you can use to specify the folder structure of the input stream. One of them is called <code class="docutils literal"><span class="pre">SelectFiles</span></code> and the other one is called <code class="docutils literal"><span class="pre">DataGrabber</span></code>. Both are string based and easy to use once understood. Nonetheless, I would recommend to use <code class="docutils literal"><span class="pre">SelectFiles</span></code>, as it is much more straight forward to use:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -898,7 +906,7 @@
 </div>
 </div>
 <div class="section" id="output-stream">
-<h4>Output Stream<a class="headerlink" href="#output-stream" title="Permalink to this headline">⥀</a></h4>
+<h4>Output Stream<a class="headerlink" href="#output-stream" title="Permalink to this headline">¶</a></h4>
 <p>In contrast to this, the definition of the output stream is rather simple. You only have to created a <code class="docutils literal"><span class="pre">DataSink</span></code>. A <code class="docutils literal"><span class="pre">DataSink</span></code> is a node that specifies in which output folder all the relevant results should be stored at.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -951,7 +959,7 @@
 </div>
 </div>
 <div class="section" id="run-workflow">
-<h3>Run Workflow<a class="headerlink" href="#run-workflow" title="Permalink to this headline">⥀</a></h3>
+<h3>Run Workflow<a class="headerlink" href="#run-workflow" title="Permalink to this headline">¶</a></h3>
 <p>After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the <code class="docutils literal"><span class="pre">run()</span></code> method of the workflow.</p>
 <p>As already described in the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/nipype.html#execution-plugins">introduction section</a>, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.</p>
 <p>Here are just a few example how you can run your workflow:</p>
@@ -983,10 +991,10 @@
 </div>
 </div>
 <div class="section" id="example-script">
-<h2>Example Script<a class="headerlink" href="#example-script" title="Permalink to this headline">⥀</a></h2>
+<h2>Example Script<a class="headerlink" href="#example-script" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s try to summarize what we&#8217;ve learned by building a short preprocessing pipeline. The following script assumes that you&#8217;re using the tutorial dataset with the three subjects <code class="docutils literal"><span class="pre">sub001</span></code>, <code class="docutils literal"><span class="pre">sub002</span></code> and <code class="docutils literal"><span class="pre">sub003</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>.</p>
 <div class="section" id="id1">
-<h3>Import modules<a class="headerlink" href="#id1" title="Permalink to this headline">⥀</a></h3>
+<h3>Import modules<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>First, import all necessary modules. Which modules you have to import becomes clear while you&#8217;re adding specific nodes.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1005,7 +1013,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="id2">
-<h3>Specify variables<a class="headerlink" href="#id2" title="Permalink to this headline">⥀</a></h3>
+<h3>Specify variables<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Specify all variables that you want to use later in the script. This makes the modification between experiments easy.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1036,7 +1044,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="id3">
-<h3>Specify Nodes<a class="headerlink" href="#id3" title="Permalink to this headline">⥀</a></h3>
+<h3>Specify Nodes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Let&#8217;s now create all the nodes we need for this preprocessing workflow:</p>
 <ul class="simple">
 <li><strong>Gunzip</strong>: This node is needed to convert the NIfTI files from the zipped version <code class="docutils literal"><span class="pre">.nii.gz</span></code> to the unzipped version <code class="docutils literal"><span class="pre">.nii</span></code>. This step has to be done because SPM&#8217;s SliceTiming can not handle zipped files.</li>
@@ -1106,7 +1114,7 @@
 </div>
 </div>
 <div class="section" id="id4">
-<h3>Specify Workflows &amp; Connect Nodes<a class="headerlink" href="#id4" title="Permalink to this headline">⥀</a></h3>
+<h3>Specify Workflows &amp; Connect Nodes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>After we&#8217;ve created all the nodes we can create our preprocessing workflow and connect the nodes to this workflow.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1141,7 +1149,7 @@
 </div>
 </div>
 <div class="section" id="id5">
-<h3>Input &amp; Output Stream<a class="headerlink" href="#id5" title="Permalink to this headline">⥀</a></h3>
+<h3>Input &amp; Output Stream<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>Before we can run our preprocessing workflow, we first have to specify the input and output stream. To do this, we first have to create the distributor node <code class="docutils literal"><span class="pre">Infosource</span></code>, the input node <code class="docutils literal"><span class="pre">SelectFiles</span></code> and the output node <code class="docutils literal"><span class="pre">DataSink</span></code>. The purpose of <code class="docutils literal"><span class="pre">Infosource</span></code> is to tell <code class="docutils literal"><span class="pre">SelectFiles</span></code> over which elements of its input stream it should iterate over.</p>
 <p>To finish it all up, those three nodes now have to be connected to the rest of the pipeline.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -1219,7 +1227,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="id6">
-<h3>Run Workflow<a class="headerlink" href="#id6" title="Permalink to this headline">⥀</a></h3>
+<h3>Run Workflow<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>The running of the pipeline is a rather simple thing. Just use the <code class="docutils literal"><span class="pre">.run()</span></code> command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">preproc</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
@@ -1234,10 +1242,10 @@
 </div>
 </div>
 <div class="section" id="resulting-folder-structure">
-<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">⥀</a></h2>
+<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve executed the preprocessing pipeline we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_firstSteps</span></code> which contains all files created during the execution of the workflow, and the output folder <code class="docutils literal"><span class="pre">output_firstSteps</span></code> which contains all the files that we sent to the DataSink. Let&#8217;s take a closer look at those two folders.</p>
 <div class="section" id="working-directory">
-<h3>Working Directory<a class="headerlink" href="#working-directory" title="Permalink to this headline">⥀</a></h3>
+<h3>Working Directory<a class="headerlink" href="#working-directory" title="Permalink to this headline">¶</a></h3>
 <p>The working directory contains many temporary files that might be not so important for your further analysis. That&#8217;s why I highly recommend to save all the important outputs of your workflow in a DataSink folder. So that everything important is at one place.</p>
 <p>The following folder structure represents the working directory of the above preprocessing workflow:</p>
 <div class="highlight-sh"><div class="highlight"><pre>workingdir_firstSteps
@@ -1264,7 +1272,7 @@
 </ul>
 </div>
 <div class="section" id="output-folder">
-<h3>Output Folder<a class="headerlink" href="#output-folder" title="Permalink to this headline">⥀</a></h3>
+<h3>Output Folder<a class="headerlink" href="#output-folder" title="Permalink to this headline">¶</a></h3>
 <p>The output folder contains exactly the files that we sent to the DataSink. Each node contains its own folder and in each of those folder a subfolder for each subject is created.</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_firstSteps
 ├── art
@@ -1299,10 +1307,10 @@
 </div>
 </div>
 <div class="section" id="common-issues-problems-and-crashes">
-<h2>Common Issues, Problems and Crashes<a class="headerlink" href="#common-issues-problems-and-crashes" title="Permalink to this headline">⥀</a></h2>
+<h2>Common Issues, Problems and Crashes<a class="headerlink" href="#common-issues-problems-and-crashes" title="Permalink to this headline">¶</a></h2>
 <p>As so often in life, there is always something that doesn&#8217;t go as planed. And this is the same for Nipype. There are many reasons why a pipeline can cause problems or even crash. But there&#8217;s always a way to figure out what went wrong and what needs to be fixed.</p>
 <div class="section" id="best-case-scenario-everything-works">
-<h3>Best Case Scenario - Everything Works<a class="headerlink" href="#best-case-scenario-everything-works" title="Permalink to this headline">⥀</a></h3>
+<h3>Best Case Scenario - Everything Works<a class="headerlink" href="#best-case-scenario-everything-works" title="Permalink to this headline">¶</a></h3>
 <p>Before we take a look at how to find errors, let&#8217;s take a look at a correct working pipeline. The following is the abbreviated terminal output of the preprocessing workflow from above. For readability reasons, lines containing the execution timestamps are not shown:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1370,7 +1378,7 @@ Executing node datasink.a2 in dir: ~/nipype_tutorial/workingdir_firstSteps/
 <p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node&#8217;s execution is accompanied by the working directory of this node. The output <code class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></code> than tells you when the execution of the node is done.</p>
 </div>
 <div class="section" id="it-crashes-but-where-is-the-problem">
-<h3>It Crashes, But Where is the Problem?<a class="headerlink" href="#it-crashes-but-where-is-the-problem" title="Permalink to this headline">⥀</a></h3>
+<h3>It Crashes, But Where is the Problem?<a class="headerlink" href="#it-crashes-but-where-is-the-problem" title="Permalink to this headline">¶</a></h3>
 <p>In the beginning when you&#8217;re not used to reading Nipype&#8217;s terminal output it can be tricky to find the actual error. But most of the time, Nipype tells you exactly what&#8217;s wrong.</p>
 <p>Let&#8217;s assume for example, that you want to create a preprocessing pipeline as shown above but forget to provide the mandatory input <code class="docutils literal"><span class="pre">realigned_files</span></code> for the artifact detection node <code class="docutils literal"><span class="pre">art</span></code>. The running of such a workflow will lead to the following terminal output:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -1487,7 +1495,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 <p>Always at the end of the output is a section that summarizes the whole crash. In this case this is <strong>line 48-54</strong>. Here you can see again which nodes lead to the crash and where the crash file to the error is stored at.</p>
 </div>
 <div class="section" id="read-the-crash-file">
-<h3>Read the Crash File<a class="headerlink" href="#read-the-crash-file" title="Permalink to this headline">⥀</a></h3>
+<h3>Read the Crash File<a class="headerlink" href="#read-the-crash-file" title="Permalink to this headline">¶</a></h3>
 <p>But sometimes, just knowing where and because of what the crash happened is not enough. You also need to know what the actual values of the crashed nodes were, to see if perhaps some input values were not transmitted correctly.</p>
 <p>This can be done with the shell command <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. To read for example the above mentioned <code class="docutils literal"><span class="pre">art</span></code>-crash file, we have to open a new terminal and run the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_display_crash ~/nipype_tutorial/crash-20141018-140857-mnotter-art.b0.pklz
@@ -1586,7 +1594,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 </div>
 </div>
 <div class="section" id="interface-issues">
-<h3>Interface Issues<a class="headerlink" href="#interface-issues" title="Permalink to this headline">⥀</a></h3>
+<h3>Interface Issues<a class="headerlink" href="#interface-issues" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes the most basic errors can occur because Nipype doesn&#8217;t know where the correct files are. Two very common issues are for example that FreeSurfer can&#8217;t find the subject folder or that MATLAB doesn&#8217;t find SPM.</p>
 <p>Before you do anything else, please make sure again that you&#8217;ve installed FreeSurfer and SPM12 as described in the installation section, <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/installation.html#freesurfer">here</a> and <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/installation.html#spm12">here</a>.</p>
 <p>But don&#8217;t worry if the problem still exists. There are two nice ways how you can tell Nipype where FreeSurfer subject folders are stored at and where MATLAB can find SPM12. Just add the following code to the beginning of your script:</p>
@@ -1607,7 +1615,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 </td></tr></table></div>
 </div>
 <div class="section" id="be-aware-of-your-data">
-<h3>Be Aware of Your Data<a class="headerlink" href="#be-aware-of-your-data" title="Permalink to this headline">⥀</a></h3>
+<h3>Be Aware of Your Data<a class="headerlink" href="#be-aware-of-your-data" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes the biggest issue with your code is that you try to force things that can&#8217;t work.</p>
 <p>One common example is that you try to feed in two values (e.g. <code class="docutils literal"><span class="pre">run001</span></code> and <code class="docutils literal"><span class="pre">run002</span></code>) into an input field that only expects one value. An example output of such an Error would contain something like this:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1

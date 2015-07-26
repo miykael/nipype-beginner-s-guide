@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="Introduction to Neuroimaging" href="neuroimaging.html" />
     <link rel="prev" title="Glossary" href="glossary.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -126,9 +134,9 @@
             <!-- Disqus counter -->
             
   <div class="section" id="introduction-to-nipype">
-<h1>Introduction to Nipype<a class="headerlink" href="#introduction-to-nipype" title="Permalink to this headline">⥀</a></h1>
+<h1>Introduction to Nipype<a class="headerlink" href="#introduction-to-nipype" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-nipype">
-<h2>What is Nipype?<a class="headerlink" href="#what-is-nipype" title="Permalink to this headline">⥀</a></h2>
+<h2>What is Nipype?<a class="headerlink" href="#what-is-nipype" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://nipy.sourceforge.net/nipype/">Nipype</a> (Neuroimaging in Python - Pipelines and Interfaces) is an open-source, user-friendly, community-developed software package under the umbrella of <a class="reference external" href="http://nipy.org/">NiPy</a>. Nipype allows you to pipeline your neuroimaging workflow in an intuitive way and enables you to use the software packages and algorithms you want to use, regardless their programing language. This is possible because Nipype provides an uniform interface to many existing neuroimaging processing and analysis packages like <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm">SPM</a>, <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a>, <a class="reference external" href="http://www.fmrib.ox.ac.uk/fsl">FSL</a>, <a class="reference external" href="http://afni.nimh.nih.gov/afni">AFNI</a>, <a class="reference external" href="http://stnava.github.io/ANTs/">ANTS</a>, <a class="reference external" href="http://cmic.cs.ucl.ac.uk/camino/">Camino</a>, <a class="reference external" href="http://www.brain.org.au/software/mrtrix/index.html">MRtrix</a>, <a class="reference external" href="http://slicer.org/">Slicer</a>, <a class="reference external" href="https://martinos.org/mne/index.html">MNE</a> and many more.</p>
 <p>Nipype allows you to easily combine all those heterogeneous software packages whithin a single workflow. This procedure gives you the opportunity to pick the best algorithm there is for the problem at hand and therefor allows you to profit from the advantages of any software package you like.</p>
 <p>Nipype is written in <a class="reference external" href="https://www.python.org/">Python</a>, an easy to learn and very intuitive programming language. This mean that your whole neuroimaging analysis can easily written in to a python scripts. And it won&#8217;t even take as many lines of code as you would imagine. Nipype is very straightforward and easy to learn. As you will see, it is quite simple to combine processing steps from different software packages. Steps from old analyses can be reused effortless and new approaches can be applied much faster.</p>
@@ -136,7 +144,7 @@
 <p>Nipype provides an environment that encourages interactive exploration of algorithms. It allows you to make your research easily reproducible and lets you share your code with the community.</p>
 </div>
 <div class="section" id="a-short-example">
-<h2>A Short Example<a class="headerlink" href="#a-short-example" title="Permalink to this headline">⥀</a></h2>
+<h2>A Short Example<a class="headerlink" href="#a-short-example" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s assume you want to do an Analysis that uses <strong>AFNI</strong> for the <em>Motion Correction</em>, <strong>FreeSurfer</strong> for the <em>Coregistration</em>, <strong>ANTS</strong> for the <em>Normalization</em>, <strong>FSL</strong> for the <em>Smoothing</em>, <strong>Nipype</strong> for the <em>Model Specification</em>, <strong>SPM</strong> for the <em>Model Estimation</em> and <strong>SPM</strong> for the <em>Statistical Inference</em>. Normally this would be a hell of a mess. Switching between multiple scripts in different programming languages with many manual interventions. Add to all this that you want to do your analysis on multiple subjects, preferably as fast as possible, i.e. in parallel. With Nipype, this is no problem! You can do all this and much more.</p>
 <p>To illustrate the straightforwardness of a Nipype workflow and show how simple it can be created look at the following example. This graph shows you a simplification of the analysis algorithm just mentioned above:</p>
 <p class="graphviz">
@@ -360,7 +368,7 @@
 </div>
 </div>
 <div class="section" id="nipype-s-architecture">
-<h2>Nipype&#8217;s Architecture<a class="headerlink" href="#nipype-s-architecture" title="Permalink to this headline">⥀</a></h2>
+<h2>Nipype&#8217;s Architecture<a class="headerlink" href="#nipype-s-architecture" title="Permalink to this headline">¶</a></h2>
 <p>Nipype consists of many parts, but the most important ones are <strong>Interfaces</strong>, the <strong>Workflow Engine</strong> and the <strong>Execution Plugins</strong>.</p>
 <img alt="_images/architecture.png" class="align-center" src="_images/architecture.png" />
 <div class="admonition note">
@@ -368,14 +376,14 @@
 <p class="last">For a deeper understanding of Nipype go either to <a class="reference external" href="http://nipy.sourceforge.net/nipype/">Nipype&#8217;s main homepage</a> or read the official paper: Gorgolewski K, Burns CD, Madison C, Clark D, Halchenko YO, Waskom ML, Ghosh SS (2011) <strong>Nipype: a flexible, lightweight and extensible neuroimaging data processing framework in Python.</strong> <em>Front. Neuroinform. 5:13</em>. <a class="reference external" href="http://dx.doi.org/10.3389/fninf.2011.00013">http://dx.doi.org/10.3389/fninf.2011.00013</a></p>
 </div>
 <div class="section" id="interfaces">
-<h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">⥀</a></h3>
+<h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h3>
 <p>Interfaces in the context of Nipype are program wrappers that allow Nipype which runs in Python to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/interface_tutorial.html">official homepage</a>. More practical examples will be given latter in this beginner&#8217;s guide.</p>
 <p>Currently (August 2014) supported Nipype interfaces are the following:</p>
 <p><a class="reference external" href="http://afni.nimh.nih.gov/afni">AFNI</a> | <a class="reference external" href="http://picsl.upenn.edu/software/ants/">ANTS</a> | <a class="reference external" href="http://cmic.cs.ucl.ac.uk/camino/">Camino</a> | <a class="reference external" href="http://www.nitrc.org/projects/camino-trackvis">Camino-TrackVis</a> | <a class="reference external" href="http://www.connectomeviewer.org/">ConnectomeViewerToolkit</a> | <a class="reference external" href="http://www.cabiatl.com/mricro/mricron/dcm2nii.html">dcm2nii</a> | <a class="reference external" href="http://www.trackvis.org/dtk/">Diffusion Toolkit</a> | <a class="reference external" href="http://nipy.org/dipy/">Dipy</a> | <a class="reference external" href="http://freesurfer.net/">FreeSurfer</a> | <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/">FSL</a> | <a class="reference external" href="http://www.brain.org.au/software/mrtrix/index.html">MRtrx</a> | <a class="reference external" href="http://nipy.org/nipy/stable/index.html">Nipy</a> | <a class="reference external" href="http://nipy.org/nitime/">Nitime</a> | <a class="reference external" href="https://github.com/pyxnat">PyXNAT</a> | <a class="reference external" href="http://www.slicer.org/">Slicer</a> | <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a></p>
 <p>For a full list of software interfaces supported by Nipype go <a class="reference external" href="http://nipy.sourceforge.net/nipype/documentation.html">here</a>.</p>
 </div>
 <div class="section" id="workflow-engine">
-<h3>Workflow Engine<a class="headerlink" href="#workflow-engine" title="Permalink to this headline">⥀</a></h3>
+<h3>Workflow Engine<a class="headerlink" href="#workflow-engine" title="Permalink to this headline">¶</a></h3>
 <p>The core of Nipype&#8217;s architecture is the workflow engine. It consists of <strong>Nodes</strong>, <strong>MapNodes</strong> and <strong>Workflows</strong>, which can be interconnected in various ways.</p>
 <ul class="simple">
 <li><strong>Node</strong>: A node wraps an interface so that it can be used in a workflow (or as a standalone).</li>
@@ -391,7 +399,7 @@
 </div>
 </div>
 <div class="section" id="execution-plugins">
-<h3>Execution Plugins<a class="headerlink" href="#execution-plugins" title="Permalink to this headline">⥀</a></h3>
+<h3>Execution Plugins<a class="headerlink" href="#execution-plugins" title="Permalink to this headline">¶</a></h3>
 <p>Plugins are components that describe how a workflow should be executed. They allow seamless execution across many architectures and make the usage of parallel computation look so easy.</p>
 <p>On a local machine, you can use the plugin <strong>Serial</strong> for a linear or <strong>Multicore</strong> for a parallel execution of your workflow. On a cluster, you have the option of using plugins for:</p>
 <blockquote>

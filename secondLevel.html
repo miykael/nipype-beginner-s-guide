@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="Help &amp; Support" href="help.html" />
     <link rel="prev" title="How To Normalize Your Data" href="normalize.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -129,17 +137,17 @@
             <!-- Disqus counter -->
             
   <div class="section" id="how-to-build-a-pipeline-for-a-second-level-fmri-analysis">
-<h1>How To Build A Pipeline For A Second Level fMRI Analysis<a class="headerlink" href="#how-to-build-a-pipeline-for-a-second-level-fmri-analysis" title="Permalink to this headline">⥀</a></h1>
+<h1>How To Build A Pipeline For A Second Level fMRI Analysis<a class="headerlink" href="#how-to-build-a-pipeline-for-a-second-level-fmri-analysis" title="Permalink to this headline">¶</a></h1>
 <p>In this section you will learn how to create a workflow that does a <strong>second level analysis</strong> on fMRI data. There are again multiple ways how you can do this, but the most simple on is to check if your contrasts from the first level analysis are still significant on the group-level a.k.a. the 2nd level.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You can only do a <strong>second level analysis</strong> if you already have done a first level analysis, obviously! But more importantly, those first level contrasts have to be in a common reference space. Otherwise there is now way of actually comparing them with each other and getting a valid results from them. Luckily, if you&#8217;ve done the previous step, you&#8217;ve already normalized your data (either with ANTs or SPM) to a template.</p>
 </div>
 <div class="section" id="write-your-pipeline-script">
-<h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">⥀</a></h2>
+<h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">¶</a></h2>
 <p>If you&#8217;ve already done the previous sections, you know how this works. We first import necessary modules, define experiment specific parameters, create nodes, create a workflow and connect the nodes to it, we create an I/O stream and connect it to the workflow and finally run this workflow.</p>
 <div class="section" id="import-modules-and-specify-interface-behaviors">
-<h3>Import modules and specify interface behaviors<a class="headerlink" href="#import-modules-and-specify-interface-behaviors" title="Permalink to this headline">⥀</a></h3>
+<h3>Import modules and specify interface behaviors<a class="headerlink" href="#import-modules-and-specify-interface-behaviors" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -165,7 +173,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="define-experiment-specific-parameters">
-<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">⥀</a></h3>
+<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -193,7 +201,7 @@
 </div>
 </div>
 <div class="section" id="create-nodes">
-<h3>Create nodes<a class="headerlink" href="#create-nodes" title="Permalink to this headline">⥀</a></h3>
+<h3>Create nodes<a class="headerlink" href="#create-nodes" title="Permalink to this headline">¶</a></h3>
 <p>We don&#8217;t need many nodes for a simple second level analysis. In fact they are the same as the ones we used for the first level analysis. We create a simple T-Test, estimate it and look at a simple mean contrast, i.e. a contrast that shows what the group mean activation of a certain first level contrast is.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -224,7 +232,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="create-the-pipeline-and-connect-nodes-to-it">
-<h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#create-the-pipeline-and-connect-nodes-to-it" title="Permalink to this headline">⥀</a></h3>
+<h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#create-the-pipeline-and-connect-nodes-to-it" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -256,7 +264,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="establish-input-output-stream">
-<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">⥀</a></h3>
+<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">¶</a></h3>
 <p>The creation of the I/O stream is as usual. But because I showed you three ways to normalize your data in the previous section, be aware that you have to point the <code class="docutils literal"><span class="pre">SelectFiles</span></code> node to the right input folder. Your option for the <code class="docutils literal"><span class="pre">SelectFiles</span></code> input template are as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -415,7 +423,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="run-the-pipeline-and-generate-the-graph">
-<h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">⥀</a></h3>
+<h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">l2analysis</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">l2analysis</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
@@ -428,12 +436,12 @@
 </div>
 </div>
 <div class="section" id="visualize-your-pipeline">
-<h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">⥀</a></h2>
+<h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>The colored graph of the 2nd-level workflow looks as follows:</p>
 <a class="reference internal image-reference" href="_images/2nd_level_colored.png"><img alt="_images/2nd_level_colored.png" class="align-center" src="_images/2nd_level_colored.png" style="width: 200pt;" /></a>
 </div>
 <div class="section" id="resulting-folder-structure">
-<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">⥀</a></h2>
+<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>The resulting folder structure looks as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_2nd
 └── contrasts

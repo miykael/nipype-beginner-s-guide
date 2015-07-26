@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="How To Build A Pipeline For A Second Level fMRI Analysis" href="secondLevel.html" />
     <link rel="prev" title="How To Build A Pipeline For A First Level fMRI Analysis" href="firstLevel.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -144,13 +152,13 @@
             <!-- Disqus counter -->
             
   <div class="section" id="how-to-normalize-your-data">
-<h1>How To Normalize Your Data<a class="headerlink" href="#how-to-normalize-your-data" title="Permalink to this headline">⥀</a></h1>
+<h1>How To Normalize Your Data<a class="headerlink" href="#how-to-normalize-your-data" title="Permalink to this headline">¶</a></h1>
 <p>Before you can start with a second level analysis you are facing the problem that all your output from the first level analysis are still in their subject specific subject-space. Because of the huge differences in brain size and cortical structure, it is very important to transform the data of each subject from its individual subject-space into a common standardized reference-space. This process of transformation is what we call normalization and it consists of a rigid body transformation (translations and rotations) as well as of a affine transformation (zooms and shears). The most common template that subject data is normalized to is the <a class="reference external" href="http://www.bic.mni.mcgill.ca/ServicesAtlases/HomePage">MNI template</a>.</p>
 <p>There are many different approaches to when to normalize your data (e.g. before smoothing your data in preprocessing or after the estimation of your contrasts at the end of your first level analysis). I prefer to do the normalization after the first level model was estimated, as I don&#8217;t want to introduce to many unnecessary transformations in the subject specific first level analysis.</p>
 <p>There are also many different softwares that you could use to normalize your data and there is a lot of debate of which ones are better and which ones are worse. There is a very good paper by Klein et al. (2009), called <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S1053811908012974">Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration</a>, that summarizes and compares the main approaches. According to this paper and from my own personal experience, I highly recommend to use <a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> to normalize your data. I also recommend to not use SPM8&#8217;s normalization module (to see why check out <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf#page=9">SPM12&#8217;s release notes</a>, page 9, section &#8220;8.5. Old Normalise&#8221;). In contrary to SPM8, SPM12&#8217;s new normalization approach seems to do very good.</p>
 <p>This section will show you how to use Nipype to do a normalization with ANTs (what I recommend) or with SPM12. I highly recommend the normalization with ANTs as it is much more accurate. But I also want to point out that the computation of ANTs normalization is much longer than the one with SPM12, which also does a good enough job.</p>
 <div class="section" id="normalize-your-data-with-ants">
-<h2>Normalize Your Data with ANTs<a class="headerlink" href="#normalize-your-data-with-ants" title="Permalink to this headline">⥀</a></h2>
+<h2>Normalize Your Data with ANTs<a class="headerlink" href="#normalize-your-data-with-ants" title="Permalink to this headline">¶</a></h2>
 <p>Usually, we first normalize the subject specific anatomy to the template and than use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.</p>
 <p>The coregistration of the functional data to the anatomical data means multiple interpolation of your data. That&#8217;s why the coregistration and the normalization of your functional data should be done directly in one transformation. To account for both possible cases, the following script will show you both ways. The approach where both coregistration and normalization will be done in one step will be called <strong>complete transformation</strong>, and the approach where we only do a normalization will be called <strong>partial transformation</strong>. Partial does not mean that it doesn&#8217;t lead to a complete normalization of the data, it just means that the coregistration of the functional and structural data was already done in an earlier step.</p>
 <div class="admonition important">
@@ -158,7 +166,7 @@
 <p class="last">A big thanks to <a class="reference external" href="https://github.com/juhuntenburg">Julia Huntenburg</a>! Without her help and knowledge about ANTs and Nipype this section wouldn&#8217;t exist, as she provided me with the relevant code and structure of this pipeline.</p>
 </div>
 <div class="section" id="import-modules-and-specify-interface-behaviors">
-<h3>Import modules and specify interface behaviors<a class="headerlink" href="#import-modules-and-specify-interface-behaviors" title="Permalink to this headline">⥀</a></h3>
+<h3>Import modules and specify interface behaviors<a class="headerlink" href="#import-modules-and-specify-interface-behaviors" title="Permalink to this headline">¶</a></h3>
 <p>But first, as always, we have to import necessary modules and tell the system where to find the FreeSurfer folder.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -189,7 +197,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="define-experiment-specific-parameters">
-<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">⥀</a></h3>
+<h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Now we define the names of the folders used for this pipeline, we specify the list of subjects which should be normalized and specify which template the data should be normalized too. In this case it is the <code class="docutils literal"><span class="pre">MNI152_T1_1mm_brain.nii.gz</span></code> template.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -226,7 +234,7 @@
 </div>
 </div>
 <div class="section" id="create-nodes">
-<h3>Create nodes<a class="headerlink" href="#create-nodes" title="Permalink to this headline">⥀</a></h3>
+<h3>Create nodes<a class="headerlink" href="#create-nodes" title="Permalink to this headline">¶</a></h3>
 <p>In both cases, the <strong>complete</strong> as well as the <strong>partial</strong> transformation approach, we will use ANTs&#8217; <code class="docutils literal"><span class="pre">Registration</span></code> to compute the transformation matrix between the subject specific anatomy and the template:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -376,7 +384,7 @@
 </td></tr></table></div>
 <p>Now that we have the transformation matrix to normalize the functional data to the template, we  can use ANTs&#8217; <code class="docutils literal"><span class="pre">ApplyTransforms</span></code> to execute that. <strong>Note</strong>: Here you have again the option to specify the number of threads used in the interpolation of the data.</p>
 <div class="section" id="partial-transformation">
-<h4>Partial Transformation<a class="headerlink" href="#partial-transformation" title="Permalink to this headline">⥀</a></h4>
+<h4>Partial Transformation<a class="headerlink" href="#partial-transformation" title="Permalink to this headline">¶</a></h4>
 <p>In the partial transformation approach, we only need the following additional nodes. One to normalize the anatomical and one to normalize the functional data.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -419,7 +427,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="complete-transformation">
-<h4>Complete Transformation<a class="headerlink" href="#complete-transformation" title="Permalink to this headline">⥀</a></h4>
+<h4>Complete Transformation<a class="headerlink" href="#complete-transformation" title="Permalink to this headline">¶</a></h4>
 <p>For the complete transformation, we also need to calculate the coregistration matrix (we will use FreeSurfer&#8217;s <cite>BBRegister</cite> for that). But first, we need to use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">FreeSurferSource</span></code> to grab the subject specific anatomy, convert it from MGZ to NII format with <code class="docutils literal"><span class="pre">MRIConvert</span></code>. Than we need to transform the BBRegister transformation matrix to ITK format with <code class="docutils literal"><span class="pre">C3dAffineTool</span></code> and merge this transformation matrix with the transformation matrix from the normalization, i.e. <code class="docutils literal"><span class="pre">antsreg</span></code>, by using a <code class="docutils literal"><span class="pre">Merge</span></code> node.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -519,7 +527,7 @@
 </div>
 </div>
 <div class="section" id="create-the-pipeline-and-connect-nodes-to-it">
-<h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#create-the-pipeline-and-connect-nodes-to-it" title="Permalink to this headline">⥀</a></h3>
+<h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#create-the-pipeline-and-connect-nodes-to-it" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Initiation of the ANTS normalization workflow</span>
@@ -565,7 +573,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="establish-input-output-stream">
-<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">⥀</a></h3>
+<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -713,7 +721,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="run-the-pipeline-and-generate-the-graphs">
-<h3>Run the pipeline and generate the graphs<a class="headerlink" href="#run-the-pipeline-and-generate-the-graphs" title="Permalink to this headline">⥀</a></h3>
+<h3>Run the pipeline and generate the graphs<a class="headerlink" href="#run-the-pipeline-and-generate-the-graphs" title="Permalink to this headline">¶</a></h3>
 <p>Now, let&#8217;s run the workflow with the following code:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">normflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;colored&#39;</span><span class="p">)</span>
@@ -726,14 +734,14 @@
 </div>
 </div>
 <div class="section" id="visualize-the-workflow">
-<h3>Visualize the workflow<a class="headerlink" href="#visualize-the-workflow" title="Permalink to this headline">⥀</a></h3>
+<h3>Visualize the workflow<a class="headerlink" href="#visualize-the-workflow" title="Permalink to this headline">¶</a></h3>
 <p>The colored graph of the <strong>partial</strong>  normalization workflow looks as follows:</p>
 <a class="reference internal image-reference" href="_images/norm_ants_colored_partial.png"><img alt="_images/norm_ants_colored_partial.png" class="align-center" src="_images/norm_ants_colored_partial.png" style="width: 350pt;" /></a>
 <p>The colored graph of the <strong>complete</strong>  normalization workflow looks as follows:</p>
 <img alt="_images/norm_ants_colored_complete.png" class="align-center" src="_images/norm_ants_colored_complete.png" />
 </div>
 <div class="section" id="resulting-folder-structure">
-<h3>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">⥀</a></h3>
+<h3>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h3>
 <p>The resulting folder structure looks for the <strong>partial</strong> and <strong>complete</strong> approach combined as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_norm_ants/
 ├── antsreg
@@ -783,10 +791,10 @@
 </div>
 </div>
 <div class="section" id="normalize-your-data-with-spm12">
-<h2>Normalize Your Data with SPM12<a class="headerlink" href="#normalize-your-data-with-spm12" title="Permalink to this headline">⥀</a></h2>
+<h2>Normalize Your Data with SPM12<a class="headerlink" href="#normalize-your-data-with-spm12" title="Permalink to this headline">¶</a></h2>
 <p>The normalization of your data with SPM12 is much simpler than the one with ANTs. We only need to feed all the necessary inputs to a node called <code class="docutils literal"><span class="pre">Normalize12</span></code>.</p>
 <div class="section" id="id1">
-<h3>Import modules and specify interface behaviors<a class="headerlink" href="#id1" title="Permalink to this headline">⥀</a></h3>
+<h3>Import modules and specify interface behaviors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>As always, let&#8217;s import necessary modules and tell the system where to find MATLAB.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -815,7 +823,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="id2">
-<h3>Define experiment specific parameters<a class="headerlink" href="#id2" title="Permalink to this headline">⥀</a></h3>
+<h3>Define experiment specific parameters<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -844,7 +852,7 @@
 <p>It&#8217;s important to note that SPM12 provides its own template <code class="docutils literal"><span class="pre">TMP.nii</span></code> to which the data will be normalized to.</p>
 </div>
 <div class="section" id="id3">
-<h3>Create nodes<a class="headerlink" href="#id3" title="Permalink to this headline">⥀</a></h3>
+<h3>Create nodes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>The functional and anatomical data that we want to normalize is in compressed ZIP format, which SPM12 can&#8217;t handle. Therefore we first have to unzip those files with <code class="docutils literal"><span class="pre">Gunzip</span></code>, before we can feed those files to SPM&#8217;s <code class="docutils literal"><span class="pre">Normalize12</span></code> node.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -873,7 +881,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="id4">
-<h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#id4" title="Permalink to this headline">⥀</a></h3>
+<h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -893,7 +901,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="id5">
-<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#id5" title="Permalink to this headline">⥀</a></h3>
+<h3>Establish Input &amp; Output Stream<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -971,7 +979,7 @@
 </td></tr></table></div>
 </div>
 <div class="section" id="id6">
-<h3>Run the pipeline and generate the graphs<a class="headerlink" href="#id6" title="Permalink to this headline">⥀</a></h3>
+<h3>Run the pipeline and generate the graphs<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>Now, let&#8217;s run the workflow with the following code:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">normflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;colored&#39;</span><span class="p">)</span>
@@ -984,12 +992,12 @@
 </div>
 </div>
 <div class="section" id="id7">
-<h3>Visualize the workflow<a class="headerlink" href="#id7" title="Permalink to this headline">⥀</a></h3>
+<h3>Visualize the workflow<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>The colored graph of this normalization workflow looks as follows:</p>
 <a class="reference internal image-reference" href="_images/norm_spm_colored.png"><img alt="_images/norm_spm_colored.png" class="align-center" src="_images/norm_spm_colored.png" style="width: 325pt;" /></a>
 </div>
 <div class="section" id="id8">
-<h3>Resulting Folder Structure<a class="headerlink" href="#id8" title="Permalink to this headline">⥀</a></h3>
+<h3>Resulting Folder Structure<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>The resulting folder structure looks as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_norm_spm/
 └── normalized

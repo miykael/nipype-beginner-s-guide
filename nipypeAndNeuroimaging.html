@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="Download and Install Nipype" href="installation.html" />
     <link rel="prev" title="Introduction to Neuroimaging" href="neuroimaging.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -120,16 +128,16 @@
             <!-- Disqus counter -->
             
   <div class="section" id="nipype-and-neuroimaging">
-<h1>Nipype and Neuroimaging<a class="headerlink" href="#nipype-and-neuroimaging" title="Permalink to this headline">⥀</a></h1>
+<h1>Nipype and Neuroimaging<a class="headerlink" href="#nipype-and-neuroimaging" title="Permalink to this headline">¶</a></h1>
 <p>As you&#8217;ve seen in the previous chapter, there are many steps involved in the analysis of neuroimaging data. And there are even more possibilities to combine them. And adding to all this complexity, there are often numerous different software packages for each step. This is where Nipype can help you. Changing the order of preprocessing or analysis steps is as simple as changing the flow of a workflow.</p>
 <div class="section" id="neuroimaging-workflow">
-<h2>Neuroimaging Workflow<a class="headerlink" href="#neuroimaging-workflow" title="Permalink to this headline">⥀</a></h2>
+<h2>Neuroimaging Workflow<a class="headerlink" href="#neuroimaging-workflow" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s get back to the steps involved in the analysis of fMRI data from the previous chapter. Keep in mind that this is only one possible way of preprocessing and analyzing fMRI data. But if we connect up all the different steps into one big workflow we end up with the following structure.</p>
 <a class="reference internal image-reference" href="_images/neuroimaging.png"><img alt="_images/neuroimaging.png" class="align-center" src="_images/neuroimaging.png" style="width: 550pt;" /></a>
 <p>This all seems to be really big and complex. And what if you want to first want to do a motion correction and than a slice timing correction? Or add an additional step into a already established analysis. With Nipype, this is very easy.</p>
 </div>
 <div class="section" id="nipype-workflow">
-<h2>Nipype Workflow<a class="headerlink" href="#nipype-workflow" title="Permalink to this headline">⥀</a></h2>
+<h2>Nipype Workflow<a class="headerlink" href="#nipype-workflow" title="Permalink to this headline">¶</a></h2>
 <p>Nipype enables you to create the exact workflow that you want and gives you the opportunity to switch between the software packages (e.g. <cite>FreeSurfer</cite>, <cite>FSL</cite>, <cite>SPM</cite>, <cite>ANTs</cite>, <cite>AFNI</cite>,...) as you like. The power to analyze your data exactly as you want it lies in your hand.</p>
 <p>Let&#8217;s get back to the workflow above. In the world of Nipype, this neuroimaging workflow would look something like this:</p>
 <a class="reference internal image-reference" href="_images/neuroimaging_nipype.svg"><div align="center" class="align-center"><img src="_images/neuroimaging_nipype.svg" width="750pt" /></div>

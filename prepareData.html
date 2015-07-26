@@ -1,4 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+    basic/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    Master layout template for Sphinx themes.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
@@ -28,7 +36,7 @@
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="How To Build A Pipeline" href="firstSteps.html" />
     <link rel="prev" title="Download and Install Nipype" href="installation.html" />
-    <meta name="keywords" content="nipype, python, guide">
+    <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -141,14 +149,14 @@
             <!-- Disqus counter -->
             
   <div class="section" id="prepare-your-dataset">
-<h1>Prepare your Dataset<a class="headerlink" href="#prepare-your-dataset" title="Permalink to this headline">⥀</a></h1>
+<h1>Prepare your Dataset<a class="headerlink" href="#prepare-your-dataset" title="Permalink to this headline">¶</a></h1>
 <p>We can&#8217;t start to learn how to use Nipype before we don&#8217;t have any data to work on. The fact that you are interested in using Nipype implies that you probably already have access to an MRI dataset. You are of course free to do your first steps with Nipype directly on your own dataset. But if you&#8217;re new to the topic or want to be sure that you get the same results like I do, I recommend to use a tutorial dataset which we can find over on <a class="reference external" href="https://openfmri.org/">OpenfMRI</a>.</p>
 <div class="section" id="download-the-tutorial-dataset">
-<h2>Download the tutorial dataset<a class="headerlink" href="#download-the-tutorial-dataset" title="Permalink to this headline">⥀</a></h2>
+<h2>Download the tutorial dataset<a class="headerlink" href="#download-the-tutorial-dataset" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoOpenfmri.png"><img alt="_images/logoOpenfmri.png" class="align-left" src="_images/logoOpenfmri.png" style="width: 120pt;" /></a>
 <p><a class="reference external" href="https://openfmri.org/">OpenfMRI</a> is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found <a class="reference external" href="https://openfmri.org/data-sets">here</a>.</p>
 <div class="section" id="download-the-dataset-from-openfmri">
-<h3>Download the dataset from OpenfMRI<a class="headerlink" href="#download-the-dataset-from-openfmri" title="Permalink to this headline">⥀</a></h3>
+<h3>Download the dataset from OpenfMRI<a class="headerlink" href="#download-the-dataset-from-openfmri" title="Permalink to this headline">¶</a></h3>
 <p>I chose to use the dataset <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> as the tutorial dataset for this beginner’s guide because the dataset is complete, in good quality, the experiment is representative for most fMRI experiments and the dataset as a whole is with its 1.8GB not too big to download. To download the dataset go to the button of the <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> page and click on the link: <a class="reference external" href="https://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">Raw data on AWS</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -159,7 +167,7 @@
 </div>
 </div>
 <div class="section" id="unpack-and-prepare-the-folder-structure">
-<h3>Unpack and prepare the folder structure<a class="headerlink" href="#unpack-and-prepare-the-folder-structure" title="Permalink to this headline">⥀</a></h3>
+<h3>Unpack and prepare the folder structure<a class="headerlink" href="#unpack-and-prepare-the-folder-structure" title="Permalink to this headline">¶</a></h3>
 <p>The file you&#8217;ve just downloaded contains amongst others one anatomical and two functional MRI scans and the behavioral response and onsets of stimuli during those functional scans. The whole dataset consists of 26 subjects. Information about gender and age of each subject is stored in the <cite>demographics.txt</cite> file, also found in downloaded file. To reduce the total time of computation, this tutorial will only analyze the first 10 subjects of the whole dataset. Now let&#8217;s get ready.</p>
 <p>What we want is an experiment folder called <code class="docutils literal"><span class="pre">nipype_tutorial</span></code> that contains a folder called <code class="docutils literal"><span class="pre">data</span></code> where we save the raw data of the first 10 subjects into. In the end, the structure should be something like this</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
@@ -277,10 +285,10 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </div>
 </div>
 <div class="section" id="acquire-scan-and-experiment-parameters">
-<h3>Acquire scan and experiment parameters<a class="headerlink" href="#acquire-scan-and-experiment-parameters" title="Permalink to this headline">⥀</a></h3>
+<h3>Acquire scan and experiment parameters<a class="headerlink" href="#acquire-scan-and-experiment-parameters" title="Permalink to this headline">¶</a></h3>
 <p>One of the most important things when analyzing any data is to know your data. What does it consist of, how was it recorded, what are its characteristics and most importantly, what does it look like. The <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> page helps us already to answer many of those parameters:</p>
 <div class="section" id="scan-parameters">
-<h4>Scan parameters<a class="headerlink" href="#scan-parameters" title="Permalink to this headline">⥀</a></h4>
+<h4>Scan parameters<a class="headerlink" href="#scan-parameters" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><ul>
 <li><p class="first">Magnetic field: 3T [Tesla]</p>
@@ -316,7 +324,7 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </div></blockquote>
 </div>
 <div class="section" id="experiment-parameters">
-<h4>Experiment parameters<a class="headerlink" href="#experiment-parameters" title="Permalink to this headline">⥀</a></h4>
+<h4>Experiment parameters<a class="headerlink" href="#experiment-parameters" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><ul class="simple">
 <li><strong>Task</strong>: On each trial, participants used one of two buttons on a response pad to indicate the direction of a central arrow in an array of 5 arrows. In <em>congruent</em> trials the flanking arrows pointed in the same direction as the central arrow (e.g., &lt; &lt; &lt; &lt; &lt;), while in more demanding <em>incongruent</em> trials the flanking arrows pointed in the opposite direction (e.g., &lt; &lt; &gt; &lt; &lt;).</li>
@@ -326,7 +334,7 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </div></blockquote>
 </div>
 <div class="section" id="so-what-do-we-know">
-<h4>So what do we know?<a class="headerlink" href="#so-what-do-we-know" title="Permalink to this headline">⥀</a></h4>
+<h4>So what do we know?<a class="headerlink" href="#so-what-do-we-know" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><ul class="simple">
 <li>We know that we have two functional scans per subjects, in our case called <cite>run001</cite> and <cite>run002</cite>. Each functional scan represents 5min of scan time and consists of 146 volumes. Each of those volume consists 40 slices (with a thickness of 4mm) and each slice consists of 64x64 voxel with the size of 3x3mm. The TR of each volume is 2000ms.</li>
@@ -339,7 +347,7 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </div>
 </div>
 <div class="section" id="check-the-data">
-<h3>Check the data<a class="headerlink" href="#check-the-data" title="Permalink to this headline">⥀</a></h3>
+<h3>Check the data<a class="headerlink" href="#check-the-data" title="Permalink to this headline">¶</a></h3>
 <p>It is always important to look at your data and verify that it actually is recorded the way it should be. To take a look at the data, I usually use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">freeview</span></code>. For example, if you want to load the anatomical scan of all ten subjects use the following code:</p>
 <div class="highlight-sh"><div class="highlight"><pre>freeview -v ~/nipype_tutorial/data/sub00*/struct.nii.gz
 </pre></div>
@@ -388,7 +396,7 @@ file_type      NIFTI-1+
 </div>
 </div>
 <div class="section" id="for-those-who-use-their-own-dataset">
-<h3>For those who use their own dataset<a class="headerlink" href="#for-those-who-use-their-own-dataset" title="Permalink to this headline">⥀</a></h3>
+<h3>For those who use their own dataset<a class="headerlink" href="#for-those-who-use-their-own-dataset" title="Permalink to this headline">¶</a></h3>
 <p>If you want to use your own dataset, make sure that you know the following parameters:</p>
 <blockquote>
 <div><ul class="simple">
@@ -403,9 +411,9 @@ file_type      NIFTI-1+
 </div>
 </div>
 <div class="section" id="make-the-dataset-ready-for-nipype">
-<h2>Make the dataset ready for Nipype<a class="headerlink" href="#make-the-dataset-ready-for-nipype" title="Permalink to this headline">⥀</a></h2>
+<h2>Make the dataset ready for Nipype<a class="headerlink" href="#make-the-dataset-ready-for-nipype" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="convert-your-data-into-nifti-format">
-<h3>Convert your data into NIfTI format<a class="headerlink" href="#convert-your-data-into-nifti-format" title="Permalink to this headline">⥀</a></h3>
+<h3>Convert your data into NIfTI format<a class="headerlink" href="#convert-your-data-into-nifti-format" title="Permalink to this headline">¶</a></h3>
 <p>You don&#8217;t have to do this step if you&#8217;re using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common <code class="docutils literal"><span class="pre">NIfTI</span></code> format, but rather in a scanner specific format (e.g. <code class="docutils literal"><span class="pre">DICOM</span></code>, <code class="docutils literal"><span class="pre">PAR/REC</span></code>, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.</p>
 <p>Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use <a class="reference external" href="http://www.mccauslandcenter.sc.edu/mricro/mricron/">MRICron</a>&#8216;s <code class="docutils literal"><span class="pre">MRIConvert</span></code> (click <a class="reference external" href="http://lcni.uoregon.edu/~jolinda/MRIConvert/">here</a> for more information). But for this Beginner&#8217;s Guide we will use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, as it is rather easy to use and doesn&#8217;t require many steps.</p>
 <p>But first, as always, be aware of your folder structure. So let&#8217;s assume that we&#8217;ve stored our dicoms in a folder called <code class="docutils literal"><span class="pre">raw_data</span></code> and that the folder structure looks something like this:</p>
@@ -458,11 +466,11 @@ file_type      NIFTI-1+
 </td></tr></table></div>
 </div>
 <div class="section" id="run-freesurfer-s-recon-all">
-<h3>Run FreeSurfer&#8217;s recon-all<a class="headerlink" href="#run-freesurfer-s-recon-all" title="Permalink to this headline">⥀</a></h3>
+<h3>Run FreeSurfer&#8217;s recon-all<a class="headerlink" href="#run-freesurfer-s-recon-all" title="Permalink to this headline">¶</a></h3>
 <p>Not mandatory but highly recommended is to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process on the anatomical scans of your subject. <code class="docutils literal"><span class="pre">recon-all</span></code> is FreeSurfer&#8217;s cortical reconstruction process that automatically creates a <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">parcellation of cortical</a> and a <a class="reference external" href="http://freesurfer.net/fswiki/SubcorticalSegmentation">segmentation of subcortical</a> regions. A more detailed description about the <code class="docutils literal"><span class="pre">recon-all</span></code> process can be found on the <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">official homepage</a>.</p>
 <p>As I said, you don&#8217;t have to use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process, but you want to! Because many of FreeSurfer&#8217;s other algorithms require the output of <code class="docutils literal"><span class="pre">recon-all</span></code>. The only negative point about <code class="docutils literal"><span class="pre">recon-all</span></code> is that it takes rather long to process a single subject. My average times are between 12-24h, but it is also possible that the process takes up to 40h. All of it depends on the system you are using. So far, <code class="docutils literal"><span class="pre">recon-all</span></code> can&#8217;t be run in parallel. Luckily, if you have an 8 core processor with enough memory, you should be able to process 8 subjects in parallel.</p>
 <div class="section" id="run-recon-all-on-the-tutorial-dataset-terminal-version">
-<h4>Run recon-all on the tutorial dataset (terminal version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-terminal-version" title="Permalink to this headline">⥀</a></h4>
+<h4>Run recon-all on the tutorial dataset (terminal version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-terminal-version" title="Permalink to this headline">¶</a></h4>
 <p>The code to run <code class="docutils literal"><span class="pre">recon-all</span></code> on a single subject is rather simple, i.e. <code class="docutils literal"><span class="pre">recon-all</span> <span class="pre">-all</span> <span class="pre">-subjid</span> <span class="pre">sub001</span></code>. The only thing that you need to keep in mind is to tell your system the path to the freesurfer folder by specifying the variable <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code> and that each subject you want to run the process on has a according anatomical scan in this freesurfer folder under <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code>.</p>
 <p>To run <code class="docutils literal"><span class="pre">recon-all</span></code> on the 10 subjects of the tutorial dataset you can run the following code:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -513,7 +521,7 @@ file_type      NIFTI-1+
 </div>
 </div>
 <div class="section" id="run-recon-all-on-the-tutorial-dataset-nipype-version">
-<h4>Run recon-all on the tutorial dataset (Nipype version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-nipype-version" title="Permalink to this headline">⥀</a></h4>
+<h4>Run recon-all on the tutorial dataset (Nipype version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-nipype-version" title="Permalink to this headline">¶</a></h4>
 <p>If you run <code class="docutils literal"><span class="pre">recon-all</span></code> only by itself, I recommend you to use the terminal version shown above. But of course, you can also create a pipeline and use Nipype to do the same steps. This might be better if you want to make better use of the parallelization implemented in Nipype or if you want to put <code class="docutils literal"><span class="pre">recon-all</span></code> in a bigger workflow.</p>
 <p>I won&#8217;t explain to much how this workflow actually works, as the structure and creation of a common pipeline is covered in more detail in the next section. But to use Nipype to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process do as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -637,7 +645,7 @@ file_type      NIFTI-1+
 </div>
 </div>
 <div class="section" id="resulting-folder-structure">
-<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">⥀</a></h2>
+<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve prepared our data and run the <code class="docutils literal"><span class="pre">recon-all</span></code> process the folder structure of our experiment folder should look as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
 ├── rawdata <span class="o">(</span>optional<span class="o">)</span>
