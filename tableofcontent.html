@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Nipype Beginner&#39;s Guide &mdash; All you need to know to become an expert in Nipype</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
+    <meta name="keywords" content="nipype, python, guide">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-24958678-1']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </head>
+  <body>
+
+    <div class="headertext" >
+     <a href="index.html">
+        Nipype Beginner's Guide</a>
+    </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="index.html">Home</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Content</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
+        <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+      </ul>
+    </div>
+  
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Table of content</a><ul>
+<li><a class="reference internal" href="#neuroimaging-and-nipype">Neuroimaging and Nipype</a></li>
+<li><a class="reference internal" href="#get-nipype-to-run-on-your-system">Get Nipype to run on your System</a></li>
+<li><a class="reference internal" href="#first-steps-with-nipype">First steps with Nipype</a></li>
+<li><a class="reference internal" href="#from-beginner-to-expert">From beginner to expert</a></li>
+<li><a class="reference internal" href="#support">Support</a></li>
+<li><a class="reference internal" href="#downloads">Downloads</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tableofcontent.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+
+            <!-- Disqus counter -->
+            
+  <div class="section" id="table-of-content">
+<h1>Table of content<a class="headerlink" href="#table-of-content" title="Permalink to this headline">⥀</a></h1>
+<div class="section" id="neuroimaging-and-nipype">
+<h2>Neuroimaging and Nipype<a class="headerlink" href="#neuroimaging-and-nipype" title="Permalink to this headline">⥀</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nipype.html">Introduction to Nipype</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nipype.html#what-is-nipype">What is Nipype?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nipype.html#a-short-example">A Short Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nipype.html#nipype-s-architecture">Nipype&#8217;s Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="neuroimaging.html">Introduction to Neuroimaging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="neuroimaging.html#acquisition-of-mri-data">Acquisition of MRI Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuroimaging.html#modalities-of-mri-data">Modalities of MRI Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuroimaging.html#specifics-of-mri-data">Specifics of MRI Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuroimaging.html#analysis-steps">Analysis Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nipypeAndNeuroimaging.html">Nipype and Neuroimaging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nipypeAndNeuroimaging.html#neuroimaging-workflow">Neuroimaging Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nipypeAndNeuroimaging.html#nipype-workflow">Nipype Workflow</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="get-nipype-to-run-on-your-system">
+<h2>Get Nipype to run on your System<a class="headerlink" href="#get-nipype-to-run-on-your-system" title="Permalink to this headline">⥀</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Download and Install Nipype</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prepare-your-system">Prepare your System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#anaconda">Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#neurodebian">NeuroDebian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#nipype">Nipype</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#download-and-install-interfaces">Download and Install Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#fsl">FSL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#freesurfer">FreeSurfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#matlab">MATLAB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#spm12">SPM12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#ants">ANTs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#afni">AFNI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#additional-interfaces">Additional interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#clean-up-your-system">Clean up your System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#test-your-system">Test your System</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="first-steps-with-nipype">
+<h2>First steps with Nipype<a class="headerlink" href="#first-steps-with-nipype" title="Permalink to this headline">⥀</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="prepareData.html">Prepare your Dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prepareData.html#download-the-tutorial-dataset">Download the tutorial dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prepareData.html#make-the-dataset-ready-for-nipype">Make the dataset ready for Nipype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prepareData.html#resulting-folder-structure">Resulting Folder Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="firstSteps.html">How To Build A Pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firstSteps.html#important-building-blocks">Important building blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firstSteps.html#example-script">Example Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firstSteps.html#resulting-folder-structure">Resulting Folder Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firstSteps.html#common-issues-problems-and-crashes">Common Issues, Problems and Crashes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualizePipeline.html">How To Visualize A Pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualizePipeline.html#what-kind-of-graph-do-you-need">What kind of graph do you need?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualizePipeline.html#tweak-your-visualization">Tweak your visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualizePipeline.html#examples-of-each-visualization-type">Examples of each visualization type</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="from-beginner-to-expert">
+<h2>From beginner to expert<a class="headerlink" href="#from-beginner-to-expert" title="Permalink to this headline">⥀</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="firstLevel.html">How To Build A Pipeline For A First Level fMRI Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firstLevel.html#define-the-structure-of-your-pipeline">Define the structure of your pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firstLevel.html#write-your-pipeline-script">Write your pipeline script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firstLevel.html#visualize-your-pipeline">Visualize your pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firstLevel.html#resulting-folder-structure">Resulting Folder Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="normalize.html">How To Normalize Your Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="normalize.html#normalize-your-data-with-ants">Normalize Your Data with ANTs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="normalize.html#normalize-your-data-with-spm12">Normalize Your Data with SPM12</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="secondLevel.html">How To Build A Pipeline For A Second Level fMRI Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="secondLevel.html#write-your-pipeline-script">Write your pipeline script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="secondLevel.html#visualize-your-pipeline">Visualize your pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="secondLevel.html#resulting-folder-structure">Resulting Folder Structure</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">⥀</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Help &amp; Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="help.html#how-nipype-can-help-you">How Nipype Can Help You</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html#how-to-help-yourself">How to Help Yourself</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html#how-to-help-me">How to Help Me</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html#how-to-read-crash-files">How to Read Crash Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="links.html">Links to Nipype, Programming and Neuroimaging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="links.html#nipype">Nipype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="links.html#programming-python-git-more">Programming: Python, Git &amp; more</a></li>
+<li class="toctree-l2"><a class="reference internal" href="links.html#neuroimaging">Neuroimaging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#basic-statistical-modeling">Basic Statistical Modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#connectivity">Connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#contrasts">Contrasts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#coregistration">Coregistration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#design">Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#hrf">HRF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#jitter">Jitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#matlab-basics">MATLAB Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#mental-chronometry">Mental Chronometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#p-threshold">P threshold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#percent-signal-change">Percent Signal Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#physiology-and-fmri">Physiology and fMRI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#roi">ROI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#random-and-fixed-effects">Random and Fixed Effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#realignment">Realignment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#scanning">Scanning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#segmentation">Segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#slice-timing">Slice Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#smoothing">Smoothing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#spm-in-a-nutshell">SPM in a Nutshell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#temporal-filtering">Temporal Filtering</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#a">A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#b">B</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#c">C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#d">D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#e">E</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#f">F</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#g">G</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#h">H</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#i">I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#j">J</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#k">K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#l">L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#m">M</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#n">N</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#o">O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#p">P</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#q">Q</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#r">R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#s">S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#t">T</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#u">U</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#v">V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#w">W</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#x">X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#y">Y</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#z">Z</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#numbers">Numbers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="downloads">
+<h2>Downloads<a class="headerlink" href="#downloads" title="Permalink to this headline">⥀</a></h2>
+<ul class="simple">
+<li>Download Nipype here: <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/install.html">Nipype Homepage</a>.</li>
+<li>Download this beginner&#8217;s guide as a PDF here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true">Nipype Beginner&#8217;s Guide</a></li>
+<li>Download all scripts from this beginner&#8217;s guide here:<a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/">Scripts</a></li>
+<li>Download the <a class="reference external" href="https://openfmri.org/dataset/ds000102">Open fMRI dataset &#8216;Flanker task (event-related)&#8217;</a> used in this tutorial here: <a class="reference external" href="http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">Open fMRI Dataset - ds102</a></li>
+</ul>
+</div>
+</div>
+
+   
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Disqus message -->
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="index.html">Home</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Content</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
+        <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    <p>
+        &copy; Copyright 2015, Michael Notter.
+      Last updated on July 26, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+    </p>
+    <p>
+    This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
+the JavaScript coming from www.google-analytics.com.
+    </p>
+    </div>
+  </body>
+</html>

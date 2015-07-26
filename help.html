@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Nipype Beginner&#39;s Guide &mdash; All you need to know to become an expert in Nipype</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
+    <link rel="next" title="Links to Nipype, Programming and Neuroimaging" href="links.html" />
+    <link rel="prev" title="How To Build A Pipeline For A Second Level fMRI Analysis" href="secondLevel.html" />
+    <meta name="keywords" content="nipype, python, guide">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-24958678-1']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </head>
+  <body>
+
+    <div class="headertext" >
+     <a href="index.html">
+        Nipype Beginner's Guide</a>
+    </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="links.html" title="Links to Nipype, Programming and Neuroimaging"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="secondLevel.html" title="How To Build A Pipeline For A Second Level fMRI Analysis"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Home</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Content</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
+        <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+      </ul>
+    </div>
+  
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Help &amp; Support</a><ul>
+<li><a class="reference internal" href="#how-nipype-can-help-you">How Nipype Can Help You</a></li>
+<li><a class="reference internal" href="#how-to-help-yourself">How to Help Yourself</a></li>
+<li><a class="reference internal" href="#how-to-help-me">How to Help Me</a></li>
+<li><a class="reference internal" href="#how-to-read-crash-files">How to Read Crash Files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="secondLevel.html"
+                        title="previous chapter">How To Build A Pipeline For A Second Level fMRI Analysis</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="links.html"
+                        title="next chapter">Links to Nipype, Programming and Neuroimaging</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/help.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+
+            <!-- Disqus counter -->
+            
+  <div class="section" id="help-support">
+<h1>Help &amp; Support<a class="headerlink" href="#help-support" title="Permalink to this headline">⥀</a></h1>
+<div class="section" id="how-nipype-can-help-you">
+<h2>How Nipype Can Help You<a class="headerlink" href="#how-nipype-can-help-you" title="Permalink to this headline">⥀</a></h2>
+<p>Often times the first trouble with Nipype arise because of misunderstanding a node or its function. This can be because a mandatory input was forgotten, a input or output field is not what you thought it was or something similar. That&#8217;s why the first step when running into a problem while building a pipeline should be to check out the description of the interface that causes the trouble. I&#8217;ve already described this <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#nodes">here</a> but to recap:</p>
+<p>Let&#8217;s assume that you&#8217;ve imported FreeSurfer&#8217;s BBRegister with the command <code class="docutils literal"><span class="pre">from</span> <span class="pre">nipype.interfaces.freesurfer</span> <span class="pre">import</span> <span class="pre">BBRegister</span></code>. Now, if you want to know what this module generally does, use the <cite>?</cite> character, i.e. <code class="docutils literal"><span class="pre">BBRegister?</span></code>. This gives you a short description as well as an implementation example of this module. If you want to know a more detailed description of BBRegister, with all mandatory and possible inputs and outputs, use the <code class="docutils literal"><span class="pre">help()</span></code> function, i.e. <code class="docutils literal"><span class="pre">BBRegister.help()</span></code>.</p>
+<p>Also, I highly recommend to check out Nipype&#8217;s official <a class="reference external" href="http://nipy.sourceforge.net/nipype/documentation.html">Documentation</a> section, where you can browse through all possible interfaces, function and description of them.</p>
+</div>
+<div class="section" id="how-to-help-yourself">
+<h2>How to Help Yourself<a class="headerlink" href="#how-to-help-yourself" title="Permalink to this headline">⥀</a></h2>
+<p>If you have any <strong>questions about or comments to this beginner&#8217;s guide</strong>, don&#8217;t hesitate to leave a comment on the bottom of the corresponding homepage (you don&#8217;t need an account to do so) or contact me directly by e-mail under: <a class="reference external" href="mailto:miykaelnotter&#37;&#52;&#48;gmail&#46;com">miykaelnotter<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+<p>If you have general <strong>questions about what certain neuroimaging or nipype term</strong> mean, check out the beginner&#8217;s guide <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a> section.</p>
+<p>If you have any <strong>questions about Nipype or neuroimaging</strong> itself please go directly to <a class="reference external" href="https://neurostars.org/">neurostars.org</a> or the beginner&#8217;s guide <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a> section. <a class="reference external" href="https://neurostars.org/">Neurostars.org</a> is a community driven Q&amp;A platform that will help you to answer any nipype or neuroimaging related question that you possibly could have.</p>
+</div>
+<div class="section" id="how-to-help-me">
+<h2>How to Help Me<a class="headerlink" href="#how-to-help-me" title="Permalink to this headline">⥀</a></h2>
+<p>The list of interfaces Nipype supports grows everyday more and more and the best practice to analyze MRI data is changing all the time. It&#8217;s impossible for one person to keep track of all of those softwares and to know the state of the art analysis. That&#8217;s why I&#8217;m very much counting on the input and support of the community to help me to make this beginner&#8217;s guide as detailed and complete as possible.</p>
+<p>So, if you found any mistakes, want to point out some alternative ways to do something or have any scripts or tutorials to share, your input is highly appreciated!</p>
+<p>The best way to help me is to fork my repo on github (<a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/tree/gh-pages">https://github.com/miykael/nipype-beginner-s-guide/tree/gh-pages</a>) and send me a pull request. Alternatively you can also contact me with your ideas or feedback under <a class="reference external" href="mailto:miykaelnotter&#37;&#52;&#48;gmail&#46;com">miykaelnotter<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+</div>
+<div class="section" id="how-to-read-crash-files">
+<h2>How to Read Crash Files<a class="headerlink" href="#how-to-read-crash-files" title="Permalink to this headline">⥀</a></h2>
+<p>Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes">this section</a>. In this example the name of the crash file is <code class="docutils literal"><span class="pre">crash-20141018-140440-mnotter-art.b0.pklz</span></code>.</p>
+<p>The name of the file gives you already an information about when it crashed (<code class="docutils literal"><span class="pre">20141018-140440</span></code>) and which node crashed (<code class="docutils literal"><span class="pre">art.b0</span></code>). If you want to read the node you can use the terminal command <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. In our example the command to read the crash file is:</p>
+<div class="highlight-sh"><div class="highlight"><pre>nipype_display_crash ~/nipype_tutorial/crash-20141018-140857-mnotter-art.b0.pklz
+</pre></div>
+</div>
+<p>This leads to the following output:</p>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre></div></td><td class="code"><div class="highlight"><pre>File: crash-20141018-140857-mnotter-art.b0.pklz
+Node: preproc.art.b0
+Working directory: ~/nipype_tutorial/workingdir_firstSteps/
+                     preproc/_subject_id_sub001/art
+
+Node inputs:
+
+<span class="nv">bound_by_brainmask</span> <span class="o">=</span> False
+<span class="nv">global_threshold</span> <span class="o">=</span> 8.0
+<span class="nv">ignore_exception</span> <span class="o">=</span> False
+<span class="nv">intersect_mask</span> <span class="o">=</span> &lt;undefined&gt;
+<span class="nv">mask_file</span> <span class="o">=</span> &lt;undefined&gt;
+<span class="nv">mask_threshold</span> <span class="o">=</span> &lt;undefined&gt;
+<span class="nv">mask_type</span> <span class="o">=</span> spm_global
+<span class="nv">norm_threshold</span> <span class="o">=</span> 0.5
+<span class="nv">parameter_source</span> <span class="o">=</span> SPM
+<span class="nv">plot_type</span> <span class="o">=</span> png
+<span class="nv">realigned_files</span> <span class="o">=</span> &lt;undefined&gt;
+<span class="nv">realignment_parameters</span> <span class="o">=</span> <span class="o">[</span><span class="s1">&#39;~/nipype_tutorial/workingdir_firstSteps/preproc/</span>
+<span class="s1">                             _subject_id_sub001/realign/rp_arun001.txt&#39;</span><span class="o">]</span>
+<span class="nv">rotation_threshold</span> <span class="o">=</span> &lt;undefined&gt;
+<span class="nv">save_plot</span> <span class="o">=</span> True
+<span class="nv">translation_threshold</span> <span class="o">=</span> &lt;undefined&gt;
+<span class="nv">use_differences</span> <span class="o">=</span> <span class="o">[</span>True, False<span class="o">]</span>
+<span class="nv">use_norm</span> <span class="o">=</span> True
+<span class="nv">zintensity_threshold</span> <span class="o">=</span> 3.0
+
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/plugins/linear.py&quot;</span>,
+       line 38, in run node.run<span class="o">(</span><span class="nv">updatehash</span><span class="o">=</span>updatehash<span class="o">)</span>
+  File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
+       line 1424, in run self._run_interface<span class="o">()</span>
+  File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
+       line 1534, in _run_interface self._result <span class="o">=</span> self._run_command<span class="o">(</span>execute<span class="o">)</span>
+  File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
+       line 1660, in _run_command <span class="nv">result</span> <span class="o">=</span> self._interface.run<span class="o">()</span>
+  File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
+       line 965, in run self._check_mandatory_inputs<span class="o">()</span>
+  File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
+       line 903, in _check_mandatory_inputs raise ValueError<span class="o">(</span>msg<span class="o">)</span>
+ValueError: ArtifactDetect requires a value <span class="k">for</span> input <span class="s1">&#39;realigned_files&#39;</span>.
+            For a list of required inputs, see ArtifactDetect.help<span class="o">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>The first part of the crash report contains information about the node and the second part contains the error log. In this example, the last two lines tell us exactly, that the crash was caused because the input field <cite>&#8216;realigned_files&#8217;</cite> was not specified. This error is easy corrected, just add the required input and rerun the workflow.</p>
+<p>Under certain circumstances it is possible and desired to rerun the crashed node. This can be done with the additional command flags to <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. The following flags are available:</p>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre>-h, --help       show this <span class="nb">help </span>message and <span class="nb">exit</span>
+-r, --rerun      rerun crashed node <span class="o">(</span>default False<span class="o">)</span>
+-d, --debug      <span class="nb">enable </span>python debugger when re-executing <span class="o">(</span>default False<span class="o">)</span>
+-i, --ipydebug   <span class="nb">enable </span>ipython debugger when re-executing <span class="o">(</span>default False<span class="o">)</span>
+--dir DIRECTORY  Directory to run the node in <span class="o">(</span>default None<span class="o">)</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more information about how to debug your code and handle crashes go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/debug.html">this official Nipype section</a>.</p>
+</div>
+</div>
+</div>
+
+   
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Disqus message -->
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="links.html" title="Links to Nipype, Programming and Neuroimaging"
+             >next</a></li>
+        <li class="right" >
+          <a href="secondLevel.html" title="How To Build A Pipeline For A Second Level fMRI Analysis"
+             >previous</a> |</li>
+        <li><a href="index.html">Home</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Content</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
+        <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    <p>
+        &copy; Copyright 2015, Michael Notter.
+      Last updated on July 26, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+    </p>
+    <p>
+    This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
+the JavaScript coming from www.google-analytics.com.
+    </p>
+    </div>
+  </body>
+</html>

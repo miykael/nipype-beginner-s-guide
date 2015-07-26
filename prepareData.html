@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Nipype Beginner&#39;s Guide &mdash; All you need to know to become an expert in Nipype</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
+    <link rel="next" title="How To Build A Pipeline" href="firstSteps.html" />
+    <link rel="prev" title="Download and Install Nipype" href="installation.html" />
+    <meta name="keywords" content="nipype, python, guide">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-24958678-1']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </head>
+  <body>
+
+    <div class="headertext" >
+     <a href="index.html">
+        Nipype Beginner's Guide</a>
+    </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="firstSteps.html" title="How To Build A Pipeline"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="installation.html" title="Download and Install Nipype"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Home</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Content</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
+        <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+      </ul>
+    </div>
+  
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Prepare your Dataset</a><ul>
+<li><a class="reference internal" href="#download-the-tutorial-dataset">Download the tutorial dataset</a><ul>
+<li><a class="reference internal" href="#download-the-dataset-from-openfmri">Download the dataset from OpenfMRI</a></li>
+<li><a class="reference internal" href="#unpack-and-prepare-the-folder-structure">Unpack and prepare the folder structure</a></li>
+<li><a class="reference internal" href="#acquire-scan-and-experiment-parameters">Acquire scan and experiment parameters</a><ul>
+<li><a class="reference internal" href="#scan-parameters">Scan parameters</a></li>
+<li><a class="reference internal" href="#experiment-parameters">Experiment parameters</a></li>
+<li><a class="reference internal" href="#so-what-do-we-know">So what do we know?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#check-the-data">Check the data</a></li>
+<li><a class="reference internal" href="#for-those-who-use-their-own-dataset">For those who use their own dataset</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#make-the-dataset-ready-for-nipype">Make the dataset ready for Nipype</a><ul>
+<li><a class="reference internal" href="#convert-your-data-into-nifti-format">Convert your data into NIfTI format</a></li>
+<li><a class="reference internal" href="#run-freesurfer-s-recon-all">Run FreeSurfer&#8217;s recon-all</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resulting-folder-structure">Resulting Folder Structure</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Download and Install Nipype</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="firstSteps.html"
+                        title="next chapter">How To Build A Pipeline</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/prepareData.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+
+            <!-- Disqus counter -->
+            
+  <div class="section" id="prepare-your-dataset">
+<h1>Prepare your Dataset<a class="headerlink" href="#prepare-your-dataset" title="Permalink to this headline">⥀</a></h1>
+<p>We can&#8217;t start to learn how to use Nipype before we don&#8217;t have any data to work on. The fact that you are interested in using Nipype implies that you probably already have access to an MRI dataset. You are of course free to do your first steps with Nipype directly on your own dataset. But if you&#8217;re new to the topic or want to be sure that you get the same results like I do, I recommend to use a tutorial dataset which we can find over on <a class="reference external" href="https://openfmri.org/">OpenfMRI</a>.</p>
+<div class="section" id="download-the-tutorial-dataset">
+<h2>Download the tutorial dataset<a class="headerlink" href="#download-the-tutorial-dataset" title="Permalink to this headline">⥀</a></h2>
+<a class="reference internal image-reference" href="_images/logoOpenfmri.png"><img alt="_images/logoOpenfmri.png" class="align-left" src="_images/logoOpenfmri.png" style="width: 120pt;" /></a>
+<p><a class="reference external" href="https://openfmri.org/">OpenfMRI</a> is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found <a class="reference external" href="https://openfmri.org/data-sets">here</a>.</p>
+<div class="section" id="download-the-dataset-from-openfmri">
+<h3>Download the dataset from OpenfMRI<a class="headerlink" href="#download-the-dataset-from-openfmri" title="Permalink to this headline">⥀</a></h3>
+<p>I chose to use the dataset <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> as the tutorial dataset for this beginner’s guide because the dataset is complete, in good quality, the experiment is representative for most fMRI experiments and the dataset as a whole is with its 1.8GB not too big to download. To download the dataset go to the button of the <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> page and click on the link: <a class="reference external" href="https://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">Raw data on AWS</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you are on a Linux system, you can also download the tutorial dataset directly to your <code class="docutils literal"><span class="pre">Downloads</span></code> folder with the following command:</p>
+<div class="last highlight-sh"><div class="highlight"><pre>wget https://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz ~/Downloads
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="unpack-and-prepare-the-folder-structure">
+<h3>Unpack and prepare the folder structure<a class="headerlink" href="#unpack-and-prepare-the-folder-structure" title="Permalink to this headline">⥀</a></h3>
+<p>The file you&#8217;ve just downloaded contains amongst others one anatomical and two functional MRI scans and the behavioral response and onsets of stimuli during those functional scans. The whole dataset consists of 26 subjects. Information about gender and age of each subject is stored in the <cite>demographics.txt</cite> file, also found in downloaded file. To reduce the total time of computation, this tutorial will only analyze the first 10 subjects of the whole dataset. Now let&#8217;s get ready.</p>
+<p>What we want is an experiment folder called <code class="docutils literal"><span class="pre">nipype_tutorial</span></code> that contains a folder called <code class="docutils literal"><span class="pre">data</span></code> where we save the raw data of the first 10 subjects into. In the end, the structure should be something like this</p>
+<div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
+└── data
+    ├── demographics.txt
+    ├── sub001
+    │   ├── behavdata_run001.txt
+    │   ├── behavdata_run002.txt
+    │   ├── onset_run001_cond001.txt
+    │   ├── onset_run001_cond002.txt
+    │   ├── onset_run001_cond003.txt
+    │   ├── onset_run001_cond004.txt
+    │   ├── onset_run002_cond001.txt
+    │   ├── onset_run002_cond002.txt
+    │   ├── onset_run002_cond003.txt
+    │   ├── onset_run002_cond004.txt
+    │   ├── run001.nii.gz
+    │   ├── run002.nii.gz
+    │   └── struct.nii.gz
+    ├── sub0..
+    └── sub010
+        ├── behav...
+        ├── onset_...
+        ├── run...
+        └── struct.nii.gz
+</pre></div>
+</div>
+<p>This can either be done manually or with the following code:</p>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Specify important variables</span>
+<span class="nv">ZIP_FILE</span><span class="o">=</span>~/Downloads/ds102_raw.tgz   <span class="c">#location of download file</span>
+<span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial       <span class="c">#location of experiment folder</span>
+<span class="nv">TMP_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/tmp            <span class="c">#location of temporary folder</span>
+<span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data          <span class="c">#location of data folder</span>
+
+<span class="c"># Unzip ds102 dataset into TMP_DIR</span>
+mkdir -p <span class="nv">$TMP_DIR</span>
+tar -zxvf <span class="nv">$ZIP_FILE</span> -C <span class="nv">$TMP_DIR</span>
+
+<span class="c"># Copy data of first ten subjects into DATA_DIR</span>
+<span class="k">for</span> id in <span class="o">{</span>01..10<span class="o">}</span>
+<span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Creating dataset for subject: sub0</span><span class="nv">$id</span><span class="s2">&quot;</span>
+    mkdir -p <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>
+    cp <span class="nv">$TMP_DIR</span>/ds102/sub0<span class="nv">$id</span>/anatomy/highres001.nii.gz <span class="se">\</span>
+       <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/struct.nii.gz
+
+    <span class="k">for</span> session in run001 run002
+    <span class="k">do</span>
+        cp <span class="nv">$TMP_DIR</span>/ds102/sub0<span class="nv">$id</span>/BOLD/task001_<span class="nv">$session</span>/bold.nii.gz <span class="se">\</span>
+           <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/<span class="nv">$session</span>.nii.gz
+        cp <span class="nv">$TMP_DIR</span>/ds102/sub0<span class="nv">$id</span>/behav/task001_<span class="nv">$session</span>/behavdata.txt <span class="se">\</span>
+           <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/behavdata_<span class="nv">$session</span>.txt
+
+        <span class="k">for</span> con_id in <span class="o">{</span>1..4<span class="o">}</span>
+        <span class="k">do</span>
+            cp <span class="nv">$TMP_DIR</span>/ds102/sub0<span class="nv">$id</span>/model/model001/onsets/task001_<span class="nv">$session</span>/cond00<span class="nv">$con_id</span>.txt <span class="se">\</span>
+               <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/onset_<span class="si">${</span><span class="nv">session</span><span class="si">}</span>_cond00<span class="nv">$con_id</span>.txt
+        <span class="k">done</span>
+    <span class="k">done</span>
+
+    <span class="nb">echo</span> <span class="s2">&quot;sub0</span><span class="nv">$id</span><span class="s2"> done.&quot;</span>
+<span class="k">done</span>
+
+<span class="c"># Copy information about demographics, conditions and tasks into DATA_DIR</span>
+cp <span class="nv">$TMP_DIR</span>/ds102/demographics.txt <span class="nv">$DATA_DIR</span>/demographics.txt
+cp <span class="nv">$TMP_DIR</span>/ds102/models/model001/* <span class="nv">$DATA_DIR</span>/.
+
+<span class="c"># Delete the temporary folder</span>
+rm -rf <span class="nv">$TMP_DIR</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/tutorial_1_create_dataset.sh">tutorial_1_create_dataset.sh</a></p>
+</div>
+</div>
+<div class="section" id="acquire-scan-and-experiment-parameters">
+<h3>Acquire scan and experiment parameters<a class="headerlink" href="#acquire-scan-and-experiment-parameters" title="Permalink to this headline">⥀</a></h3>
+<p>One of the most important things when analyzing any data is to know your data. What does it consist of, how was it recorded, what are its characteristics and most importantly, what does it look like. The <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> page helps us already to answer many of those parameters:</p>
+<div class="section" id="scan-parameters">
+<h4>Scan parameters<a class="headerlink" href="#scan-parameters" title="Permalink to this headline">⥀</a></h4>
+<blockquote>
+<div><ul>
+<li><p class="first">Magnetic field: 3T [Tesla]</p>
+</li>
+<li><p class="first">Head coil: Siemens standard, which probably means 32-channel</p>
+</li>
+<li><dl class="first docutils">
+<dt>Information about <strong>functional</strong> acquisition</dt>
+<dd><ul class="first last simple">
+<li>Acquisition type: contiguous echo planar imaging (EPI)</li>
+<li>Number of volumes per session: 146</li>
+<li>Number of slices per volume: 40</li>
+<li>Slice order: unknown</li>
+<li>Repetition time (TR): 2000ms</li>
+<li>Field of view (FOV): 64x64</li>
+<li>Voxel size: 3x3x4mm</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Information about <strong>anatomical</strong> acquisition</dt>
+<dd><ul class="first last simple">
+<li>Acquisition type: magnetization prepared gradient echo sequence (MPRAGE)</li>
+<li>Number of slices: 176</li>
+<li>Repetition time (TR): 2500ms</li>
+<li>Field of view (FOV): 256mm</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="experiment-parameters">
+<h4>Experiment parameters<a class="headerlink" href="#experiment-parameters" title="Permalink to this headline">⥀</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Task</strong>: On each trial, participants used one of two buttons on a response pad to indicate the direction of a central arrow in an array of 5 arrows. In <em>congruent</em> trials the flanking arrows pointed in the same direction as the central arrow (e.g., &lt; &lt; &lt; &lt; &lt;), while in more demanding <em>incongruent</em> trials the flanking arrows pointed in the opposite direction (e.g., &lt; &lt; &gt; &lt; &lt;).</li>
+<li><strong>Condition</strong>: congruent and incongruent</li>
+<li><strong>Scan sessions</strong>: Subjects performed two 5-minute blocks, each containing 12 congruent and 12 incongruent trials, presented in a pseudo-random order.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="so-what-do-we-know">
+<h4>So what do we know?<a class="headerlink" href="#so-what-do-we-know" title="Permalink to this headline">⥀</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>We know that we have two functional scans per subjects, in our case called <cite>run001</cite> and <cite>run002</cite>. Each functional scan represents 5min of scan time and consists of 146 volumes. Each of those volume consists 40 slices (with a thickness of 4mm) and each slice consists of 64x64 voxel with the size of 3x3mm. The TR of each volume is 2000ms.</li>
+<li>So far we don&#8217;t know what the slice order of the functional acquisition is. But a closer look at the provided references tells us that the data was acquired with an <em>interleaved</em> slice to slice order. The fact that it is not stated if it is ascending or descending interleaved means that the acquisition is most certainly ascending.</li>
+<li>We know that we have one anatomical scan per subject, in our case called <cite>struct</cite> and that this anatomical scan consists of 176 slices with each having a FOV of 256mm. This hints to an isometric voxel resolution of 1x1x1mm.</li>
+<li>We know the task of the experiment and that it consists of two conditions, <em>congruent</em> and <em>incongruent</em>. With each condition being presented 12 times per session.</li>
+<li>We know from the onset file found in the subject folder what the actual onset of the two conditions are, but we have no clear information about the duration of each stimulation. The <a class="reference external" href="https://openfmri.org/dataset/ds000102">description of the design on OpenfMRI.org</a> tells us that the inter-trial interval varies between 8 and 14s with a mean of 12s. A closer look at the references tells us that the subjects first see a fixation cross for 500ms, followed by the congruent or incongruent condition (i.e. the arrows) for 1500ms, followed by a blank screen for 8000-12000ms.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="check-the-data">
+<h3>Check the data<a class="headerlink" href="#check-the-data" title="Permalink to this headline">⥀</a></h3>
+<p>It is always important to look at your data and verify that it actually is recorded the way it should be. To take a look at the data, I usually use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">freeview</span></code>. For example, if you want to load the anatomical scan of all ten subjects use the following code:</p>
+<div class="highlight-sh"><div class="highlight"><pre>freeview -v ~/nipype_tutorial/data/sub00*/struct.nii.gz
+</pre></div>
+</div>
+<p>To verify the information about the scan parameters we can use <code class="docutils literal"><span class="pre">fslinfo</span></code>. <code class="docutils literal"><span class="pre">fslinfo</span></code> allows us to read the header information of a NIfTI file and therefore get information about voxel resolution and TR. For example, reading the header of the anatomical scan of subject2 with the command <code class="docutils literal"><span class="pre">fslinfo</span> <span class="pre">~/nipype_tutorial/data/sub002/struct.nii.gz</span></code> gives us following output:</p>
+<div class="highlight-sh"><div class="highlight"><pre>data_type      INT16
+dim1           176
+dim2           256
+dim3           256
+dim4           1
+datatype       4
+pixdim1        1.000000
+pixdim2        1.000000
+pixdim3        1.000000
+pixdim4        0.000000
+cal_max        0.0000
+cal_min        0.0000
+file_type      NIFTI-1+
+</pre></div>
+</div>
+<p>This output tells us, that the anatomical volume consists of 256x256x176 voxels with each having 1x1x1mm resolution.</p>
+<p>Using the same command on a functional scan of subject 2 gives as following output:</p>
+<div class="highlight-sh"><div class="highlight"><pre>data_type      INT16
+dim1           64
+dim2           64
+dim3           40
+dim4           146
+datatype       4
+pixdim1        3.000000
+pixdim2        3.000000
+pixdim3        4.000000
+pixdim4        2000.000000
+cal_max        0.0000
+cal_min        0.0000
+file_type      NIFTI-1+
+</pre></div>
+</div>
+<p>This output tells us that this functional scan consists of 146 volumes, of which each consists of 64x64x40 voxels with a resolution of 3x3x4mm. <cite>pixdim4</cite> gives us additionally information about the TR of this functional scan.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Just as a side note: The <cite>data_type</cite> of a NIfTI file tells you the amount of bits used to store the value of each voxel. <strong>INT16</strong> stands for <em>signed short</em> (16 bits/voxel), <strong>INT32</strong> stands for <em>signed int</em> (32 bits/voxel) and <strong>FLOAT64</strong> stands for <em>float</em> (64 bits/voxel). The more bits used for storing a voxel value the bigger the whole NIfTI file.</p>
+<p>If you want to change the data type of your image, either use Nipype&#8217;s function <code class="docutils literal"><span class="pre">ChangeDataType</span></code> found in the <code class="docutils literal"><span class="pre">nipype.interfaces.fsl.maths</span></code> package (read more <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype">here</a>) or use <code class="docutils literal"><span class="pre">fslmaths</span></code> directly to change the data_type to INT32 with the following command:</p>
+<div class="last highlight-sh"><div class="highlight"><pre>fslmaths input.nii output.nii -odt int
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="for-those-who-use-their-own-dataset">
+<h3>For those who use their own dataset<a class="headerlink" href="#for-those-who-use-their-own-dataset" title="Permalink to this headline">⥀</a></h3>
+<p>If you want to use your own dataset, make sure that you know the following parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Number of volumes, number of slices per volume, slice order and TR of the functional scan.</li>
+<li>Number of conditions during a session, as well as onset and duration of stimulation during each condition.</li>
+</ul>
+</div></blockquote>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Make sure that the layout of your data is similar to the one stated above, so that further code is also applicable for your case.</p>
+</div>
+</div>
+</div>
+<div class="section" id="make-the-dataset-ready-for-nipype">
+<h2>Make the dataset ready for Nipype<a class="headerlink" href="#make-the-dataset-ready-for-nipype" title="Permalink to this headline">⥀</a></h2>
+<div class="section" id="convert-your-data-into-nifti-format">
+<h3>Convert your data into NIfTI format<a class="headerlink" href="#convert-your-data-into-nifti-format" title="Permalink to this headline">⥀</a></h3>
+<p>You don&#8217;t have to do this step if you&#8217;re using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common <code class="docutils literal"><span class="pre">NIfTI</span></code> format, but rather in a scanner specific format (e.g. <code class="docutils literal"><span class="pre">DICOM</span></code>, <code class="docutils literal"><span class="pre">PAR/REC</span></code>, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.</p>
+<p>Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use <a class="reference external" href="http://www.mccauslandcenter.sc.edu/mricro/mricron/">MRICron</a>&#8216;s <code class="docutils literal"><span class="pre">MRIConvert</span></code> (click <a class="reference external" href="http://lcni.uoregon.edu/~jolinda/MRIConvert/">here</a> for more information). But for this Beginner&#8217;s Guide we will use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, as it is rather easy to use and doesn&#8217;t require many steps.</p>
+<p>But first, as always, be aware of your folder structure. So let&#8217;s assume that we&#8217;ve stored our dicoms in a folder called <code class="docutils literal"><span class="pre">raw_data</span></code> and that the folder structure looks something like this:</p>
+<div class="highlight-none"><div class="highlight"><pre>raw_dicom
+├── sub001
+│   ├── t1w_3d_MPRAGE
+│   │   ├── 00001.dcm
+│   │   ├── ...
+│   │   └── 00176.dcm
+│   ├── fmri_run1_long
+│   │   ├── 00001.dcm
+│   │   ├── ...
+│   │   └── 00240.dcm
+│   └── fmri_run2_long
+│       └── ...
+├── sub0..
+└── sub010
+</pre></div>
+</div>
+<p>This means, that we have one folder per subject with each containing another folder, one for the structural T1 weighted image and 2 for the functional T2 weighted images. The conversion of the dicom files in those folders is rather easy. If you use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, the command is as as follows: <code class="docutils literal"><span class="pre">mri_convert</span> <span class="pre">&lt;in</span> <span class="pre">volume&gt;</span> <span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code>. You have to replace <code class="docutils literal"><span class="pre">&lt;in</span> <span class="pre">volume&gt;</span></code> by the actual path to any one dicom file in the folder and <code class="docutils literal"><span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code> with the name for your outputfile.</p>
+<p>So, to accomplish this with some few terminal command, we first have to tell the system the path and names of the folders that we later want to feed to the <code class="docutils literal"><span class="pre">mri_convert</span></code> function. This is done by the following variables (line 1 to 6). If this is done, we only have to run the loop (line 8 to 17) to actually run <code class="docutils literal"><span class="pre">mri_convert</span></code> for each subject and each scanner image.</p>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial     <span class="c"># location of experiment folder</span>
+<span class="nv">RAW_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/raw_dicom    <span class="c"># location of raw data folder</span>
+<span class="nv">T1_FOLDER</span><span class="o">=</span>t1w_3d_MPRAGE            <span class="c"># dicom folder containing anatomical scan</span>
+<span class="nv">FUNC_FOLDER1</span><span class="o">=</span>fmri_run1_long        <span class="c"># dicom folder containing 1st     functional scan</span>
+<span class="nv">FUNC_FOLDER2</span><span class="o">=</span>fmri_run2_long        <span class="c"># dicom folder containing 2nd functional scan</span>
+<span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data        <span class="c"># location of output folder</span>
+
+<span class="k">for</span> id in <span class="o">{</span>01..10<span class="o">}</span>
+<span class="k">do</span>
+    mkdir -p <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>
+    mri_convert <span class="nv">$RAW_DIR</span>/sub0<span class="nv">$id</span>/<span class="nv">$T1_FOLDER</span>/00001.dcm    <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/struct.nii.gz
+    mri_convert <span class="nv">$RAW_DIR</span>/sub0<span class="nv">$id</span>/<span class="nv">$FUNC_FOLDER1</span>/00001.dcm <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/run001.nii.gz
+    mri_convert <span class="nv">$RAW_DIR</span>/sub0<span class="nv">$id</span>/<span class="nv">$FUNC_FOLDER2</span>/00001.dcm <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/run002.nii.gz
+<span class="k">done</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="run-freesurfer-s-recon-all">
+<h3>Run FreeSurfer&#8217;s recon-all<a class="headerlink" href="#run-freesurfer-s-recon-all" title="Permalink to this headline">⥀</a></h3>
+<p>Not mandatory but highly recommended is to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process on the anatomical scans of your subject. <code class="docutils literal"><span class="pre">recon-all</span></code> is FreeSurfer&#8217;s cortical reconstruction process that automatically creates a <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">parcellation of cortical</a> and a <a class="reference external" href="http://freesurfer.net/fswiki/SubcorticalSegmentation">segmentation of subcortical</a> regions. A more detailed description about the <code class="docutils literal"><span class="pre">recon-all</span></code> process can be found on the <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">official homepage</a>.</p>
+<p>As I said, you don&#8217;t have to use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process, but you want to! Because many of FreeSurfer&#8217;s other algorithms require the output of <code class="docutils literal"><span class="pre">recon-all</span></code>. The only negative point about <code class="docutils literal"><span class="pre">recon-all</span></code> is that it takes rather long to process a single subject. My average times are between 12-24h, but it is also possible that the process takes up to 40h. All of it depends on the system you are using. So far, <code class="docutils literal"><span class="pre">recon-all</span></code> can&#8217;t be run in parallel. Luckily, if you have an 8 core processor with enough memory, you should be able to process 8 subjects in parallel.</p>
+<p>The code to run <code class="docutils literal"><span class="pre">recon-all</span></code> on a single subject is rather simple, i.e. <code class="docutils literal"><span class="pre">recon-all</span> <span class="pre">-all</span> <span class="pre">-subjid</span> <span class="pre">sub001</span></code>. The only thing that you need to keep in mind is to tell your system the path to the freesurfer folder by specifying the variable <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code> and that each subject you want to run the process on has a according anatomical scan in this freesurfer folder under <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code>.</p>
+<p>To run <code class="docutils literal"><span class="pre">recon-all</span></code> on the 10 subjects of the tutorial dataset you can run the following code:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Specify important variables</span>
+<span class="nb">export </span><span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial         <span class="c">#location of experiment folder</span>
+<span class="nb">export </span><span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data            <span class="c">#location of data folder</span>
+<span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/freesurfer  <span class="c">#location of freesurfer folder</span>
+
+<span class="k">for</span> id in <span class="o">{</span>01..10<span class="o">}</span>
+<span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;working on sub0</span><span class="nv">$id</span><span class="s2">&quot;</span>
+    mkdir -p <span class="nv">$SUBJECTS_DIR</span>/sub0<span class="nv">$id</span>/mri/orig
+    mri_convert <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/struct.nii.gz <span class="se">\</span>
+                <span class="nv">$SUBJECTS_DIR</span>/sub0<span class="nv">$id</span>/mri/orig/001.mgz
+    recon-all -all -subjid sub0<span class="nv">$id</span>
+    <span class="nb">echo</span> <span class="s2">&quot;sub0</span><span class="nv">$id</span><span class="s2"> finished&quot;</span>
+<span class="k">done</span>
+</pre></div>
+</td></tr></table></div>
+<p>This code will run the subjects in sequential order. If you want to process the 10 subjects in (manual) parallel order, delete line 12 - <code class="docutils literal"><span class="pre">recon-all</span> <span class="pre">-all</span> <span class="pre">-subjid</span> <span class="pre">sub0$id</span></code> - from the code above, run it and than run the following code, each line in its own terminal:</p>
+<blockquote>
+<div><div class="highlight-sh"><div class="highlight"><pre><span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub001
+<span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub002
+...
+<span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub010
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your MRI data was recorded on a 3T scanner, I highly recommend to use the <code class="docutils literal"><span class="pre">-nuintensitycor-3T</span></code> flag on the <code class="docutils literal"><span class="pre">recon-all</span></code> command, e.g. <code class="docutils literal"><span class="pre">recon-all</span> <span class="pre">-all</span> <span class="pre">-subjid</span> <span class="pre">sub0$id</span> <span class="pre">-nuintensitycor-3T</span></code>. This flag was created specifically for 3T scans and <a class="reference external" href="http://web.mysites.ntu.edu.sg/zvitali/publications/documents/N3_NI.pdf">improves the brain segmentation accuracy by optimizing non-uniformity correction using N3</a>.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/tutorial_2_recon_shell.sh">tutorial_2_recon_shell.sh</a></p>
+</div>
+<p>If you run <code class="docutils literal"><span class="pre">recon-all</span></code> only by itself, I recommend you to use the terminal version shown above. But of course, you can also create a pipeline and use Nipype to do the same steps. This might be better if you want to make better use of the parallelization implemented in Nipype or if you want to put <code class="docutils literal"><span class="pre">recon-all</span></code> in a bigger workflow.</p>
+<p>I won&#8217;t explain to much how this workflow actually works, as the structure and creation of a common pipeline is covered in more detail in the next section. But to use Nipype to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process do as follows:</p>
+<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Import modules</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">import</span> <span class="n">ReconAll</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">import</span> <span class="n">IdentityInterface</span>
+<span class="kn">from</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">import</span> <span class="n">Workflow</span><span class="p">,</span> <span class="n">Node</span>
+
+<span class="c"># Specify important variables</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial&#39;</span>             <span class="c"># location of experiment folder</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">)</span>  <span class="c"># location of data folder</span>
+<span class="n">fs_folder</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;freesurfer&#39;</span><span class="p">)</span>  <span class="c"># location of freesurfer folder</span>
+<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sub001&#39;</span><span class="p">,</span> <span class="s">&#39;sub002&#39;</span><span class="p">,</span> <span class="s">&#39;sub003&#39;</span><span class="p">,</span>
+                <span class="s">&#39;sub004&#39;</span><span class="p">,</span> <span class="s">&#39;sub005&#39;</span><span class="p">,</span> <span class="s">&#39;sub006&#39;</span><span class="p">,</span>
+                <span class="s">&#39;sub007&#39;</span><span class="p">,</span> <span class="s">&#39;sub008&#39;</span><span class="p">,</span> <span class="s">&#39;sub009&#39;</span><span class="p">,</span>
+                <span class="s">&#39;sub010&#39;</span><span class="p">]</span>                        <span class="c"># subject identifier</span>
+<span class="n">T1_identifier</span> <span class="o">=</span> <span class="s">&#39;struct.nii.gz&#39;</span>                  <span class="c"># Name of T1-weighted image</span>
+
+<span class="c"># Create the output folder - FreeSurfer can only run if this folder exists</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;mkdir -p </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">fs_folder</span><span class="p">)</span>
+
+<span class="c"># Create the pipeline that runs the recon-all command</span>
+<span class="n">reconflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;reconflow&quot;</span><span class="p">)</span>
+<span class="n">reconflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;workingdir_reconflow&#39;</span><span class="p">)</span>
+
+<span class="c"># Some magical stuff happens here (not important for now)</span>
+<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource&quot;</span><span class="p">)</span>
+<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)</span>
+
+<span class="c"># This node represents the actual recon-all command</span>
+<span class="n">reconall</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ReconAll</span><span class="p">(</span><span class="n">directive</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">,</span>
+                         <span class="c">#flags=&#39;-nuintensitycor-3T&#39;,</span>
+                         <span class="n">subjects_dir</span><span class="o">=</span><span class="n">fs_folder</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s">&quot;reconall&quot;</span><span class="p">)</span>
+
+<span class="c"># This function returns for each subject the path to struct.nii.gz</span>
+<span class="k">def</span> <span class="nf">pathfinder</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">foldername</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
+    <span class="n">struct_path</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct_path</span>
+
+<span class="c"># This section connects all the nodes of the pipeline to each other</span>
+<span class="n">reconflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">reconall</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                   <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">reconall</span><span class="p">,</span> <span class="p">[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span>
+                                             <span class="n">data_dir</span><span class="p">,</span> <span class="n">T1_identifier</span><span class="p">),</span>
+                                            <span class="s">&#39;T1_files&#39;</span><span class="p">)]),</span>
+                   <span class="p">])</span>
+
+<span class="c"># This command runs the recon-all pipeline in parallel (using 8 cores)</span>
+<span class="n">reconflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
+</pre></div>
+</td></tr></table></div>
+<p>After this script has run, all important outputs will be stored directly under <code class="docutils literal"><span class="pre">~/nipype_tutorial/freesurfer</span></code>. But the running of the <code class="docutils literal"><span class="pre">reconflow</span></code> pipeline also created some temporary files. As defined by the script above, those files were stored under <code class="docutils literal"><span class="pre">~/nipype_tutorial/workingdir_reconflow</span></code>. Now that the script has run you can delete this folder again. Either do this manually, use the shell command <code class="docutils literal"><span class="pre">rm</span> <span class="pre">-rf</span> <span class="pre">~/nipype_tutorial/workingdir_reconflow</span></code> or add the following lines to the end of the python script above:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c"># Delete all temporary files stored under the &#39;workingdir_reconflow&#39; folder</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;rm -rf </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">reconflow</span><span class="o">.</span><span class="n">base_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>In the code above, if we don&#8217;t create the <code class="docutils literal"><span class="pre">freesurfer</span></code> output folder on line 15, we would get following error:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">TraitError</span><span class="p">:</span> <span class="n">The</span> <span class="s">&#39;subjects_dir&#39;</span> <span class="n">trait</span> <span class="n">of</span> <span class="n">a</span> <span class="n">ReconAllInputSpec</span> <span class="n">instance</span> <span class="n">must</span> <span class="n">be</span> <span class="n">an</span> <span class="n">existing</span>
+<span class="n">directory</span> <span class="n">name</span><span class="p">,</span> <span class="n">but</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="s">&#39;~/nipype_tutorial/freesurfer&#39;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;str&#39;</span><span class="o">&gt;</span> <span class="n">was</span> <span class="n">specified</span><span class="o">.</span>
+</pre></div>
+</div>
+<p class="last">Also, if your data was recorded on a 3T scanner and you want to use the mentioned <code class="docutils literal"><span class="pre">-nuintensitycor-3T</span></code> flag, just uncomment line 28, i.e. delete the <code class="docutils literal"><span class="pre">#</span></code> sign before <code class="docutils literal"><span class="pre">flags='-nuintensitycor-3T'</span></code> on line 28.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/tutorial_2_recon_python.py">tutorial_2_recon_python.py</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="resulting-folder-structure">
+<h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">⥀</a></h2>
+<p>After we&#8217;ve prepared our data and run the <code class="docutils literal"><span class="pre">recon-all</span></code> process the folder structure of our experiment folder should look as follows:</p>
+<div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
+├── rawdata <span class="o">(</span>optional<span class="o">)</span>
+├── data
+│   ├── sub001
+│   ├── sub0..
+│   └── sub010
+└── freesurfer
+    ├── sub001
+    ├── sub0..
+    └── sub010
+</pre></div>
+</div>
+</div>
+</div>
+
+   
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Disqus message -->
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="firstSteps.html" title="How To Build A Pipeline"
+             >next</a></li>
+        <li class="right" >
+          <a href="installation.html" title="Download and Install Nipype"
+             >previous</a> |</li>
+        <li><a href="index.html">Home</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Content</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
+        <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
+        <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    <p>
+        &copy; Copyright 2015, Michael Notter.
+      Last updated on July 26, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+    </p>
+    <p>
+    This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
+the JavaScript coming from www.google-analytics.com.
+    </p>
+    </div>
+  </body>
+</html>

@@ -614,5 +614,6 @@ If the ``run()`` method is called twice, the workflow input hashing mechanism en
 
    More informations about how to run your pipeline in a distributed system can be found here: `Distributed processing with nipype <http://nipy.sourceforge.net/nipype/users/parallel_processing.html#distributed-processing-with-nipype>`_.
 
-   More informations about how to change the configuration of the ``run()`` method can be found `here <http://nipy.sourceforge.net/nipype/users/config_file.html>`_. There you can learn how to change the configuration so that every node gets fully executed everytime, how to specify that only the necessary output gets stored into the working directory, etc.
+   More informations about how to change the configuration of the ``run()`` method can be found `here <http://nipy.sourceforge.net/nipype/users/config_file.html>`_. There you can learn how to change the configuration so that every node gets fully executed every time, how to specify that only the necessary output gets stored into the working directory, etc.
+
 
