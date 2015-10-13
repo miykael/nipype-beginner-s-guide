@@ -227,7 +227,6 @@ For the complete transformation, we also need to calculate the coregistration ma
 
    
    # Concatenate BBRegister's and ANTS' transforms into a list
-   pickfirst = lambda x: x[0]
    merge = Node(Merge(2), iterfield=['in2'], name='mergexfm')
 
 .. note::
@@ -300,7 +299,7 @@ For the **complete transformation** use the following code:
                      (bbregister, convert2itk, [('out_fsl_file',
                                                  'transform_file')]),
                      (convert2itk, merge, [('itk_transform', 'in2')]),
-                     (antsreg, merge, [(('composite_transform', pickfirst),
+                     (antsreg, merge, [('composite_transform',
                                         'in1')]),
                      (merge, warpmean, [('out', 'transforms')]),
                      (merge, warpall, [('out', 'transforms')]),
