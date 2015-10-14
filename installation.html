@@ -128,7 +128,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="prepareData.html"
                         title="next chapter">Prepare your Dataset</a></p>
-<div id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -141,13 +141,11 @@
     </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/installation.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
         </div>
       </div>
     <div class="document">
@@ -165,7 +163,7 @@
 <p class="first admonition-title">Note</p>
 <p class="last">It is highly recommended to run Nipype on a machine with either a Mac or Linux OS, as most dependencies such as FSL or FreeSurfer don&#8217;t run on Windows. If you have a Windows machine, I recommend you to install <a class="reference external" href="http://www.ubuntu.com/download/desktop">Ubuntu</a> on your system.</p>
 </div>
-<p>The following steps describe how I was able to set up and run Nipype on a System with a newly installed Ubuntu 14.04 LTS OS (64-bit), called &#8220;<cite>trusty</cite>&#8221;. To people with older Ubuntu version, don&#8217;t worry, Nipype does also run on much older versions, as long as they are not too ancient. To check which version of Ubuntu you are running use the command <code class="docutils literal"><span class="pre">lsb_release</span> <span class="pre">-d</span></code>. You don&#8217;t have to upgrade to version 14.04 if you have an older version as long as it isn&#8217;t too ancient.</p>
+<p>The following steps describe how I was able to set up and run Nipype on a System with a newly installed Ubuntu 14.04 LTS OS (64-bit), called &#8220;<cite>trusty</cite>&#8221;. To people with older Ubuntu version, don&#8217;t worry, Nipype does also run on much older versions, as long as they are not too ancient. To check which version of Ubuntu you are running use the command <tt class="docutils literal"><span class="pre">lsb_release</span> <span class="pre">-d</span></tt>. You don&#8217;t have to upgrade to version 14.04 if you have an older version as long as it isn&#8217;t too ancient.</p>
 <p><strong>To Mac Users</strong>: I haven&#8217;t installed Nipype on a Mac, yet. But the steps should be almost identical. If any major differences occur, please let me know.</p>
 <div class="section" id="prepare-your-system">
 <h2>Prepare your System<a class="headerlink" href="#prepare-your-system" title="Permalink to this headline">¶</a></h2>
@@ -183,7 +181,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 <h3>Install Anaconda<a class="headerlink" href="#install-anaconda" title="Permalink to this headline">¶</a></h3>
 <p>Instructions on how to install Anaconda can be found <a class="reference external" href="http://docs.continuum.io/anaconda/install.html">here</a>. Following are the steps how I&#8217;ve installed the Anaconda package on my system:</p>
 <ol class="arabic">
-<li><p class="first">Download the software under <a class="reference external" href="http://continuum.io/downloads">http://continuum.io/downloads</a> and move the downloaded sh-file to your Download folder. In my case this folder is at <code class="docutils literal"><span class="pre">/home/username/Downloads</span></code> abbreviated with <code class="docutils literal"><span class="pre">~/Downloads</span></code>.</p>
+<li><p class="first">Download the software under <a class="reference external" href="http://continuum.io/downloads">http://continuum.io/downloads</a> and move the downloaded sh-file to your Download folder. In my case this folder is at <tt class="docutils literal"><span class="pre">/home/username/Downloads</span></tt> abbreviated with <tt class="docutils literal"><span class="pre">~/Downloads</span></tt>.</p>
 </li>
 <li><p class="first">Install the downloaded sh-file with the following command:</p>
 <blockquote>
@@ -204,7 +202,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal"><span class="pre">.bashrc</span></code> is read and executed whenever you run bash using an interactive shell, i.e. the terminal. This file usually is stored in your home folder at <code class="docutils literal"><span class="pre">/home/username/.bashrc</span></code> or in other words <code class="docutils literal"><span class="pre">~/.bashrc</span></code>. The <code class="docutils literal"><span class="pre">export</span></code> command tells your system to export a variables from the specified package so that they can be used inside the current shell. For example, <code class="docutils literal"><span class="pre">export</span> <span class="pre">PATH=/home/somepath:$PATH</span></code> inserts <code class="docutils literal"><span class="pre">/home/somepath</span></code> to the beginning of the variable PATH and exports it.</p>
+<p class="last"><tt class="docutils literal"><span class="pre">.bashrc</span></tt> is read and executed whenever you run bash using an interactive shell, i.e. the terminal. This file usually is stored in your home folder at <tt class="docutils literal"><span class="pre">/home/username/.bashrc</span></tt> or in other words <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt>. The <tt class="docutils literal"><span class="pre">export</span></tt> command tells your system to export a variables from the specified package so that they can be used inside the current shell. For example, <tt class="docutils literal"><span class="pre">export</span> <span class="pre">PATH=/home/somepath:$PATH</span></tt> inserts <tt class="docutils literal"><span class="pre">/home/somepath</span></tt> to the beginning of the variable PATH and exports it.</p>
 </div>
 </div>
 <div class="section" id="update-anaconda">
@@ -227,7 +225,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 <h3>Test Anaconda<a class="headerlink" href="#test-anaconda" title="Permalink to this headline">¶</a></h3>
 <p>Now that Anaconda is installed let&#8217;s test if our python environment is ready to run.</p>
 <ol class="arabic">
-<li><p class="first">Open a new terminal and type in the command <code class="docutils literal"><span class="pre">ipython</span></code>. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/ipython.html">IPython support section</a> of this beginner&#8217;s guide.</p>
+<li><p class="first">Open a new terminal and type in the command <tt class="docutils literal"><span class="pre">ipython</span></tt>. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/ipython.html">IPython support section</a> of this beginner&#8217;s guide.</p>
 </li>
 <li><p class="first">To check if everything is set up correctly try to import numpy with the following command:</p>
 <blockquote>
@@ -258,13 +256,13 @@ sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
 </div></blockquote>
 <p>Run those two lines of code in your terminal.</p>
 </li>
-<li><p class="first">After all this is done, update your system with the following command: <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">update</span></code></p>
+<li><p class="first">After all this is done, update your system with the following command: <tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">update</span></tt></p>
 </li>
 </ol>
 <p>Now you are read to install Nipype, FSL, AFNI and more.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you have problem with the <code class="docutils literal"><span class="pre">wget</span></code> command in the 3rd step it is most likely because of the root permission (the sudo command in the second half of the command). When the wget command seems to halt and do nothing type in your password and it should go on.</p>
+<p class="last">If you have problem with the <tt class="docutils literal"><span class="pre">wget</span></tt> command in the 3rd step it is most likely because of the root permission (the sudo command in the second half of the command). When the wget command seems to halt and do nothing type in your password and it should go on.</p>
 </div>
 </div>
 <div class="section" id="nipype">
@@ -273,7 +271,7 @@ sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
 <h3>Install Nipype (and other python dependencies)<a class="headerlink" href="#install-nipype-and-other-python-dependencies" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="_images/logoNipype.png"><img alt="_images/logoNipype.png" class="align-left" src="_images/logoNipype.png" style="width: 100pt;" /></a>
 <p>Finally, it&#8217;s time to install Nipype. And while doing so, let&#8217;s also install additional python dependencies, such as: nibabel, rdflib, nipy, dipy and graphviz. Some of those packages might already be installed on your system when you&#8217;ve installed Anaconda.</p>
-<p>So what do you have to do to install Nipype? It&#8217;s simple, just use either <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">nipype</span></code> or <code class="docutils literal"><span class="pre">easy_install</span> <span class="pre">nipype</span></code>. More information about the installation of Nipype on a Mac or from sourcecode, go to the <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/install.html">main page</a>.</p>
+<p>So what do you have to do to install Nipype? It&#8217;s simple, just use either <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">nipype</span></tt> or <tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">nipype</span></tt>. More information about the installation of Nipype on a Mac or from sourcecode, go to the <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/install.html">main page</a>.</p>
 <p>If you also want to install other python based dependencies use the following commands:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#Install packages with pip</span>
 pip install nipype
@@ -290,11 +288,11 @@ pip install --upgrade pygraphviz graphviz
 </div>
 <div class="section" id="test-nipype">
 <h3>Test Nipype<a class="headerlink" href="#test-nipype" title="Permalink to this headline">¶</a></h3>
-<p>To test if everything worked fine and if you&#8217;re able to use Nipype go into an IPython environment and import nipype with the command: <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype</span></code>. If you see no <cite>ImportError</cite> message, everything is set up correctly.</p>
+<p>To test if everything worked fine and if you&#8217;re able to use Nipype go into an IPython environment and import nipype with the command: <tt class="docutils literal"><span class="pre">import</span> <span class="pre">nipype</span></tt>. If you see no <cite>ImportError</cite> message, everything is set up correctly.</p>
 </div>
 <div class="section" id="upgrade-nipype-and-other-python-dependencies">
 <h3>Upgrade Nipype (and other python dependencies)<a class="headerlink" href="#upgrade-nipype-and-other-python-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>If you want to be sure that you have the newest version or update a certain package use the <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code> command with the flag <code class="docutils literal"><span class="pre">--upgrade</span></code>. So, if you want to upgrade Nipype to the newest version use the following command:</p>
+<p>If you want to be sure that you have the newest version or update a certain package use the <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></tt> command with the flag <tt class="docutils literal"><span class="pre">--upgrade</span></tt>. So, if you want to upgrade Nipype to the newest version use the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>pip install --upgrade nipype
 </pre></div>
 </div>
@@ -308,11 +306,11 @@ pip install --upgrade pygraphviz graphviz
 <p>If you want or have to upgrade Nipype to the developer version us the following steps. Such an upgrade is only recommended to people who know what they are doing or need a certain fix that isn&#8217;t distributed yet in the general Nipype version.</p>
 <p>The most current developer version of Nipype can be found on <a class="reference external" href="https://github.com/">GitHub</a> under <a class="reference external" href="https://github.com/nipy/nipype">Nipype &#64; GitHub</a>. The following steps assume assume that you&#8217;ve already set up your own GitHub account and are ready to download the Nipype repository:</p>
 <ol class="arabic">
-<li><p class="first">First, open a terminal and download the Nipype repository at the current location with <code class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/nipy/nipype.git</span></code>, or download the repository directly by using <a class="reference external" href="https://github.com/nipy/nipype/archive/master.zip">this link</a>.</p>
+<li><p class="first">First, open a terminal and download the Nipype repository at the current location with <tt class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/nipy/nipype.git</span></tt>, or download the repository directly by using <a class="reference external" href="https://github.com/nipy/nipype/archive/master.zip">this link</a>.</p>
 </li>
 <li><p class="first">The just downloaded nipype folder contains another folder called <cite>nipype`</cite>. This is the folder that contains the newest version of Nipype.</p>
 </li>
-<li><p class="first">Now, either add the path to this folder to the <code class="docutils literal"><span class="pre">PYTHONPATH</span></code> list (make sure that <code class="docutils literal"><span class="pre">PYTHONPATH</span></code> only contains one Nipype folder) or delete the current nipype folder and move the new github <code class="docutils literal"><span class="pre">nipype</span></code> folder to this location. This can be done with the following command:</p>
+<li><p class="first">Now, either add the path to this folder to the <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt> list (make sure that <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt> only contains one Nipype folder) or delete the current nipype folder and move the new github <tt class="docutils literal"><span class="pre">nipype</span></tt> folder to this location. This can be done with the following command:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre>rm -rf ~/anaconda/lib/python2.7/site-packages/nipype
 cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
@@ -345,7 +343,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 </div>
 <div class="section" id="configuration">
 <h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
-<p>Before you can run FSL, your system first needs to know where the software is installed at. On a ubuntu system, this is usually under <code class="docutils literal"><span class="pre">/usr/share/fsl</span></code>. Therefore, add the following code to your <cite>.bashrc</cite> file. (To open and edit your <cite>.bashrc</cite> file on Ubuntu, us the following command: <code class="docutils literal"><span class="pre">gedit</span> <span class="pre">~/.bashrc</span></code>)</p>
+<p>Before you can run FSL, your system first needs to know where the software is installed at. On a ubuntu system, this is usually under <tt class="docutils literal"><span class="pre">/usr/share/fsl</span></tt>. Therefore, add the following code to your <cite>.bashrc</cite> file. (To open and edit your <cite>.bashrc</cite> file on Ubuntu, us the following command: <tt class="docutils literal"><span class="pre">gedit</span> <span class="pre">~/.bashrc</span></tt>)</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#FSL</span>
 <span class="nv">FSLDIR</span><span class="o">=</span>/usr/share/fsl
 . <span class="si">${</span><span class="nv">FSLDIR</span><span class="si">}</span>/5.0/etc/fslconf/fsl.sh
@@ -356,7 +354,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 </div>
 <div class="section" id="test-fsl">
 <h3>Test FSL<a class="headerlink" href="#test-fsl" title="Permalink to this headline">¶</a></h3>
-<p>To test if FSL is correctly installed, open a new terminal and type in the command <code class="docutils literal"><span class="pre">fsl</span></code>. If everything was set up correctly you should see the FSL GUI with the version number in the header. In my case this is version 5.0.7.</p>
+<p>To test if FSL is correctly installed, open a new terminal and type in the command <tt class="docutils literal"><span class="pre">fsl</span></tt>. If everything was set up correctly you should see the FSL GUI with the version number in the header. In my case this is version 5.0.7.</p>
 </div>
 </div>
 <div class="section" id="freesurfer">
@@ -366,9 +364,9 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 <div class="section" id="id9">
 <h3>Download and Installation<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
-<li><p class="first">Go to <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/Download">FreeSurfer: Download</a> and download the corresponding version for your system. In my case this was the <cite>Linux CentOS 6 x86_64 (64b) stable v5.3.0</cite> version. The file is called <code class="docutils literal"><span class="pre">freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0.tar.gz</span></code>.</p>
+<li><p class="first">Go to <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/Download">FreeSurfer: Download</a> and download the corresponding version for your system. In my case this was the <cite>Linux CentOS 6 x86_64 (64b) stable v5.3.0</cite> version. The file is called <tt class="docutils literal"><span class="pre">freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0.tar.gz</span></tt>.</p>
 </li>
-<li><p class="first">Unpack FreeSurfer&#8217;s binary folder to the place where you want the software to be at. In my case, I want to install FreeSurfer at <code class="docutils literal"><span class="pre">/usr/local/freesurfer</span></code>, which in my case needs root privilege. In my case this all can be done with the following command:</p>
+<li><p class="first">Unpack FreeSurfer&#8217;s binary folder to the place where you want the software to be at. In my case, I want to install FreeSurfer at <tt class="docutils literal"><span class="pre">/usr/local/freesurfer</span></tt>, which in my case needs root privilege. In my case this all can be done with the following command:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre>sudo tar xzvf <span class="se">\</span>
     ~/Downloads/freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0.tar.gz
@@ -384,7 +382,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
  *A3zKO68mtFu5
 </pre></div>
 </div>
-<p>This key has to be saved under a file with the name <cite>.license</cite> and has to be stored at your <code class="docutils literal"><span class="pre">$FREESURFER_HOME</span></code> location. In my case, this is <code class="docutils literal"><span class="pre">/usr/local/freesurfer</span></code>. To create this file in an Ubuntu environment use the following command:</p>
+<p>This key has to be saved under a file with the name <cite>.license</cite> and has to be stored at your <tt class="docutils literal"><span class="pre">$FREESURFER_HOME</span></tt> location. In my case, this is <tt class="docutils literal"><span class="pre">/usr/local/freesurfer</span></tt>. To create this file in an Ubuntu environment use the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>sudo gedit /usr/local/freesurfer/.license
 </pre></div>
 </div>
@@ -419,13 +417,13 @@ tksurfer bert lh pial -curv -annot aparc.a2009s.annot
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>On a new Ubuntu System this might lead to the following error: <code class="docutils literal"><span class="pre">freeview.bin:</span> <span class="pre">error</span> <span class="pre">while</span> <span class="pre">loading</span> <span class="pre">shared</span> <span class="pre">libraries:</span> <span class="pre">libjpeg.so.62:</span> <span class="pre">cannot</span> <span class="pre">open</span> <span class="pre">shared</span> <span class="pre">object</span> <span class="pre">file:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code>. This is a common error on Ubuntu and can be solved with the following command:</p>
+<p>On a new Ubuntu System this might lead to the following error: <tt class="docutils literal"><span class="pre">freeview.bin:</span> <span class="pre">error</span> <span class="pre">while</span> <span class="pre">loading</span> <span class="pre">shared</span> <span class="pre">libraries:</span> <span class="pre">libjpeg.so.62:</span> <span class="pre">cannot</span> <span class="pre">open</span> <span class="pre">shared</span> <span class="pre">object</span> <span class="pre">file:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></tt>. This is a common error on Ubuntu and can be solved with the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="nb">cd</span> /usr/lib/x86_64-linux-gnu
 sudo ln -s libjpeg.so.8 libjpeg.so.62
 sudo ln -s libtiff.so.4 libtiff.so.3
 </pre></div>
 </div>
-<p class="last">Alternately, this error can sometimes also be overcome by installing the libjpeg62-dev package with the following command: <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">libjpeg62-dev</span></code></p>
+<p class="last">Alternately, this error can sometimes also be overcome by installing the libjpeg62-dev package with the following command: <tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">libjpeg62-dev</span></tt></p>
 </div>
 </div>
 </div>
@@ -433,8 +431,8 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 <h2>MATLAB<a class="headerlink" href="#matlab" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoMatlab.png"><img alt="_images/logoMatlab.png" class="align-left" src="_images/logoMatlab.png" style="width: 70pt;" /></a>
 <p>Nowadays almost all scientific fields take advantage of <a class="reference external" href="http://www.mathworks.ch/">MATLAB</a>. Neuroscience is no exception in this and also some of Nipype&#8217;s recommended interfaces can (but don&#8217;t have to) take advantage of MATLAB, e.g. SPM, FSL, FreeSurfer.</p>
-<p>Having MATLAB is always a good thing, and as I myself rely often on algorithms from the <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a> interface, I need it to be on my system. A detailed documentation on how to install MATLAB can be found <a class="reference external" href="http://www.mathworks.com/help/install/index.html">here</a>. In my case, MATLAB is installed at the following location: <code class="docutils literal"><span class="pre">/usr/local/MATLAB/R2014a</span></code>.</p>
-<p>The only thing you need to do to run MATLAB on your Ubuntu System is to add the following lines to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file:</p>
+<p>Having MATLAB is always a good thing, and as I myself rely often on algorithms from the <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a> interface, I need it to be on my system. A detailed documentation on how to install MATLAB can be found <a class="reference external" href="http://www.mathworks.com/help/install/index.html">here</a>. In my case, MATLAB is installed at the following location: <tt class="docutils literal"><span class="pre">/usr/local/MATLAB/R2014a</span></tt>.</p>
+<p>The only thing you need to do to run MATLAB on your Ubuntu System is to add the following lines to your <tt class="docutils literal"><span class="pre">.bashrc</span></tt> file:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#MATLAB</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/MATLAB/R2014a/bin:<span class="nv">$PATH</span>
 <span class="nb">export </span><span class="nv">MATLABCMD</span><span class="o">=</span>/usr/local/MATLAB/R2014a/bin/glnxa64/MATLAB
@@ -457,7 +455,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 <ol class="arabic">
 <li><p class="first">Got to SPM12&#8217;s <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/download.html">Download and registration</a> page and fill out the form. Under <strong>Select SPM version required</strong>, chose SPM12 (or SPM8 if preferred) and download the zip file.</p>
 </li>
-<li><p class="first">Now, unpack the zip file and copy the content to the recommended folder <code class="docutils literal"><span class="pre">/usr/local/MATLAB/R2014a/toolbox/</span></code> use the following code:</p>
+<li><p class="first">Now, unpack the zip file and copy the content to the recommended folder <tt class="docutils literal"><span class="pre">/usr/local/MATLAB/R2014a/toolbox/</span></tt> use the following code:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre>sudo unzip ~/Downloads/spm12.zip -d /usr/local/MATLAB/R2014a/toolbox/
 </pre></div>
@@ -465,7 +463,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 <p><strong>Note:</strong> You don&#8217;t have to put the spm12 folder into this folder, just make sure that you tell your system where to find it.</p>
 </div></blockquote>
 </li>
-<li><p class="first">Now tell your system where it can find SPM12 by adding the following line to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file:</p>
+<li><p class="first">Now tell your system where it can find SPM12 by adding the following line to your <tt class="docutils literal"><span class="pre">.bashrc</span></tt> file:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span class="c">#SPM12</span>
 <span class="nb">export </span><span class="nv">SPM_PATH</span><span class="o">=</span>/usr/local/MATLAB/R2014a/toolbox/spm12/
@@ -473,7 +471,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Now, set up your MATLAB <code class="docutils literal"><span class="pre">startup.m</span></code> script so that MATLAB knows where SPM12 is stored at. If you&#8217;ve already installed FreeSurfer, than the <code class="docutils literal"><span class="pre">startup.m</span></code> file should be at <code class="docutils literal"><span class="pre">~/matlab/startup.m</span></code>. Otherwise create it and save it at this location. Now add the following code to this file:</p>
+<li><p class="first">Now, set up your MATLAB <tt class="docutils literal"><span class="pre">startup.m</span></tt> script so that MATLAB knows where SPM12 is stored at. If you&#8217;ve already installed FreeSurfer, than the <tt class="docutils literal"><span class="pre">startup.m</span></tt> file should be at <tt class="docutils literal"><span class="pre">~/matlab/startup.m</span></tt>. Otherwise create it and save it at this location. Now add the following code to this file:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre>%-SPM12-
 <span class="nv">spm_path</span> <span class="o">=</span> getenv<span class="o">(</span><span class="s1">&#39;SPM_PATH&#39;</span><span class="o">)</span><span class="p">;</span>
@@ -489,15 +487,15 @@ end
 <p class="first admonition-title">Note</p>
 <p>There are some interesting ways on how you can change the default behaviors of your SPM.</p>
 <ul class="simple">
-<li><strong>Example 1:</strong> By default, SPM uses only 64MB of memory during GLM estimation. This can be changed by changing the <code class="docutils literal"><span class="pre">defaults.stats.maxmem</span></code> parameter. Change this value to <code class="docutils literal"><span class="pre">2^29</span></code> and use 512MB or to <code class="docutils literal"><span class="pre">2^30</span></code> and use 1GB of memory during GLM estimation. Another option only available in SPM12 is to set <code class="docutils literal"><span class="pre">defaults.stats.resmem</span> <span class="pre">=</span> <span class="pre">true;</span></code>. Setting this parameter to true means that the temporary files during GLM estimation are kept in memory and not stored on disk (if value is set to false). For more information about increasing the speed of your SPM see the official <a class="reference external" href="http://en.wikibooks.org/wiki/SPM/Faster_SPM">Faster SPM</a> section.</li>
-<li><strong>Example 2</strong>: One computational unimportant but nice parameter to change is <code class="docutils literal"><span class="pre">defaults.ui.colour</span> <span class="pre">=</span> <span class="pre">[0.141</span> <span class="pre">0</span> <span class="pre">0.848];</span></code>. Change it to the recommended value and see the nice color change in your SPM GUI.</li>
+<li><strong>Example 1:</strong> By default, SPM uses only 64MB of memory during GLM estimation. This can be changed by changing the <tt class="docutils literal"><span class="pre">defaults.stats.maxmem</span></tt> parameter. Change this value to <tt class="docutils literal"><span class="pre">2^29</span></tt> and use 512MB or to <tt class="docutils literal"><span class="pre">2^30</span></tt> and use 1GB of memory during GLM estimation. Another option only available in SPM12 is to set <tt class="docutils literal"><span class="pre">defaults.stats.resmem</span> <span class="pre">=</span> <span class="pre">true;</span></tt>. Setting this parameter to true means that the temporary files during GLM estimation are kept in memory and not stored on disk (if value is set to false). For more information about increasing the speed of your SPM see the official <a class="reference external" href="http://en.wikibooks.org/wiki/SPM/Faster_SPM">Faster SPM</a> section.</li>
+<li><strong>Example 2</strong>: One computational unimportant but nice parameter to change is <tt class="docutils literal"><span class="pre">defaults.ui.colour</span> <span class="pre">=</span> <span class="pre">[0.141</span> <span class="pre">0</span> <span class="pre">0.848];</span></tt>. Change it to the recommended value and see the nice color change in your SPM GUI.</li>
 </ul>
-<p class="last"><strong>How to change those values:</strong> SPM8 and SPM12 differ a bit in how those changes have to be implemented. In SPM8 you can change the default behavior by directly changing the parameters in the <code class="docutils literal"><span class="pre">spm_defaults.m</span></code> file, stored in the <code class="docutils literal"><span class="pre">spm8</span></code> folder. If you want to change default values in SPM12, you should create a new file called <code class="docutils literal"><span class="pre">spm_my_defaults.m</span></code>, store it in your <code class="docutils literal"><span class="pre">spm12</span></code> folder. The first line of your <code class="docutils literal"><span class="pre">spm_my_defaults.m</span></code> file has to be <code class="docutils literal"><span class="pre">global</span> <span class="pre">defaults</span></code>, followed by all the parameters you want to change, e.g. <code class="docutils literal"><span class="pre">defaults.ui.colour</span> <span class="pre">=</span> <span class="pre">[0.141</span> <span class="pre">0</span> <span class="pre">0.848];</span></code></p>
+<p class="last"><strong>How to change those values:</strong> SPM8 and SPM12 differ a bit in how those changes have to be implemented. In SPM8 you can change the default behavior by directly changing the parameters in the <tt class="docutils literal"><span class="pre">spm_defaults.m</span></tt> file, stored in the <tt class="docutils literal"><span class="pre">spm8</span></tt> folder. If you want to change default values in SPM12, you should create a new file called <tt class="docutils literal"><span class="pre">spm_my_defaults.m</span></tt>, store it in your <tt class="docutils literal"><span class="pre">spm12</span></tt> folder. The first line of your <tt class="docutils literal"><span class="pre">spm_my_defaults.m</span></tt> file has to be <tt class="docutils literal"><span class="pre">global</span> <span class="pre">defaults</span></tt>, followed by all the parameters you want to change, e.g. <tt class="docutils literal"><span class="pre">defaults.ui.colour</span> <span class="pre">=</span> <span class="pre">[0.141</span> <span class="pre">0</span> <span class="pre">0.848];</span></tt></p>
 </div>
 </div>
 <div class="section" id="test-spm12">
 <h3>Test SPM12<a class="headerlink" href="#test-spm12" title="Permalink to this headline">¶</a></h3>
-<p>To test if SPM12 is set up correctly, open MATLAB and type in the command <code class="docutils literal"><span class="pre">spm</span> <span class="pre">fmri</span></code>. This can also be achieved in one command: <code class="docutils literal"><span class="pre">matlab</span> <span class="pre">-r</span> <span class="pre">&quot;spm</span> <span class="pre">fmri&quot;</span></code>.</p>
+<p>To test if SPM12 is set up correctly, open MATLAB and type in the command <tt class="docutils literal"><span class="pre">spm</span> <span class="pre">fmri</span></tt>. This can also be achieved in one command: <tt class="docutils literal"><span class="pre">matlab</span> <span class="pre">-r</span> <span class="pre">&quot;spm</span> <span class="pre">fmri&quot;</span></tt>.</p>
 </div>
 </div>
 <div class="section" id="ants">
@@ -505,7 +503,7 @@ end
 <a class="reference internal image-reference" href="_images/logoANTS.png"><img alt="_images/logoANTS.png" class="align-left" src="_images/logoANTS.png" style="width: 70pt;" /></a>
 <p><a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> stands for Advanced Normalization Tools and is a great software package for registration, segmentation and normalization of MRI data. I highly recommend to use ANTs for the normalization of your data. <strong>Side note</strong>: ANTs can also be used to create a very cool looking average brain (template) out of a your own population of subjects.</p>
 <p>There are two ways how you can set up ANTS on your own system:</p>
-<p>The <strong>first</strong> way is very fast and simple. Just download the newest release of ANTs from their <a class="reference external" href="https://github.com/stnava/ANTs/releases">official github homepage</a>. Decompress the downloaded files and store them somewhere on your system, e.g. under <code class="docutils literal"><span class="pre">/usr/local/antsbin</span></code>. After you&#8217;ve done that, just add the following line to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file so that your system knows where to find the ANTs binaries:</p>
+<p>The <strong>first</strong> way is very fast and simple. Just download the newest release of ANTs from their <a class="reference external" href="https://github.com/stnava/ANTs/releases">official github homepage</a>. Decompress the downloaded files and store them somewhere on your system, e.g. under <tt class="docutils literal"><span class="pre">/usr/local/antsbin</span></tt>. After you&#8217;ve done that, just add the following line to your <tt class="docutils literal"><span class="pre">.bashrc</span></tt> file so that your system knows where to find the ANTs binaries:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span class="c">#ANTs</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/antsbin/bin:<span class="nv">$PATH</span>
@@ -531,7 +529,7 @@ end
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Go into this folder with <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/Downloads/stnava-ANTs-b4eb279/antsbin</span></code> and proceed with the following steps:</p>
+<li><p class="first">Go into this folder with <tt class="docutils literal"><span class="pre">cd</span> <span class="pre">~/Downloads/stnava-ANTs-b4eb279/antsbin</span></tt> and proceed with the following steps:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span class="c">#1. Install ccmake and other dependencies to be able to compile the code</span>
 sudo apt-get install cmake-curses-gui build-essential zlib1g-dev
@@ -563,7 +561,7 @@ sudo cp ~/Downloads/stnava-ANTs-b4eb279/Scripts/* /usr/local/antsbin/bin/
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Just one last thing before your can run ANTs, add the following lines to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file:</p>
+<li><p class="first">Just one last thing before your can run ANTs, add the following lines to your <tt class="docutils literal"><span class="pre">.bashrc</span></tt> file:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span class="c">#ANTs</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/antsbin/bin:<span class="nv">$PATH</span>
@@ -578,8 +576,8 @@ sudo cp ~/Downloads/stnava-ANTs-b4eb279/Scripts/* /usr/local/antsbin/bin/
 <h2>AFNI<a class="headerlink" href="#afni" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoAFNI.png"><img alt="_images/logoAFNI.png" class="align-left" src="_images/logoAFNI.png" style="width: 70pt;" /></a>
 <p><a class="reference external" href="http://afni.nimh.nih.gov/afni">AFNI</a> is an open source software package specialized on the analysis of functional MRI. To see a list of all AFNI algorithms that can be used with Nipype go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.afni.preprocess.html">interfaces.afni.preprocess</a>.</p>
-<p>If you&#8217;ve installed the NeuroDebian repository, just use the following command to install AFNI on your system: <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">afni</span></code></p>
-<p>To be able to run AFNI make sure to add the following lines of code to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file:</p>
+<p>If you&#8217;ve installed the NeuroDebian repository, just use the following command to install AFNI on your system: <tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">afni</span></tt></p>
+<p>To be able to run AFNI make sure to add the following lines of code to your <tt class="docutils literal"><span class="pre">.bashrc</span></tt> file:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span class="c">#AFNI</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/lib/afni/bin:<span class="nv">$PATH</span>
 </pre></div>
@@ -607,7 +605,7 @@ sudo apt-get remove <span class="o">&amp;&amp;</span> sudo apt-get clean
 </div>
 <div class="section" id="test-your-system">
 <h1>Test your System<a class="headerlink" href="#test-your-system" title="Permalink to this headline">¶</a></h1>
-<p>Nipype is installed, recommended interfaces are ready to go and so are you. But before you want to start your first steps with Nipype, I recommend you to test your system first. To do this open up an IPython environment (open a terminal and start IPython with the command <code class="docutils literal"><span class="pre">ipython</span></code>) and run the following code:</p>
+<p>Nipype is installed, recommended interfaces are ready to go and so are you. But before you want to start your first steps with Nipype, I recommend you to test your system first. To do this open up an IPython environment (open a terminal and start IPython with the command <tt class="docutils literal"><span class="pre">ipython</span></tt>) and run the following code:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="c"># Import the nipype module</span>
 <span class="kn">import</span> <span class="nn">nipype</span>
 
@@ -627,7 +625,7 @@ sudo apt-get remove <span class="o">&amp;&amp;</span> sudo apt-get clean
 <span class="n">Out</span><span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">nose</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">TextTestResult</span> <span class="n">run</span><span class="o">=</span><span class="mi">7454</span> <span class="n">errors</span><span class="o">=</span><span class="mi">0</span> <span class="n">failures</span><span class="o">=</span><span class="mi">0</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>Don&#8217;t worry if some modules are being skipped or some side modules show up as errors or failures during the run. As long as no main modules cause any problems, you&#8217;re fine. The number of tests and time will vary depending on which interfaces you have installed on your system. But if you receive an <code class="docutils literal"><span class="pre">OK</span></code>, <code class="docutils literal"><span class="pre">errors=0</span></code> and <code class="docutils literal"><span class="pre">failures=0</span></code> then everything is ready.</p>
+<p>Don&#8217;t worry if some modules are being skipped or some side modules show up as errors or failures during the run. As long as no main modules cause any problems, you&#8217;re fine. The number of tests and time will vary depending on which interfaces you have installed on your system. But if you receive an <tt class="docutils literal"><span class="pre">OK</span></tt>, <tt class="docutils literal"><span class="pre">errors=0</span></tt> and <tt class="docutils literal"><span class="pre">failures=0</span></tt> then everything is ready.</p>
 <p><strong>Congratulation! You now have a system with a fully working Nipype environment. Have fun!</strong></p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -643,7 +641,7 @@ Interface MatlabCommand failed to run.
 Interface SliceTiming failed to run.
 </pre></div>
 </div>
-<p>As mentioned in the error message <cite>SPM not in matlab path</cite>, Nipype can&#8217;t find the path to SPM. To change that, you can either add <code class="docutils literal"><span class="pre">addpath</span> <span class="pre">/usr/local/MATLAB/R2014a/toolbox/spm12b</span></code> to your <code class="docutils literal"><span class="pre">startup.m</span></code> file, stored at <code class="docutils literal"><span class="pre">~/matlab/startup.m</span></code> or add the following line of code at the beginning of your Nipype script:</p>
+<p>As mentioned in the error message <cite>SPM not in matlab path</cite>, Nipype can&#8217;t find the path to SPM. To change that, you can either add <tt class="docutils literal"><span class="pre">addpath</span> <span class="pre">/usr/local/MATLAB/R2014a/toolbox/spm12b</span></tt> to your <tt class="docutils literal"><span class="pre">startup.m</span></tt> file, stored at <tt class="docutils literal"><span class="pre">~/matlab/startup.m</span></tt> or add the following line of code at the beginning of your Nipype script:</p>
 <blockquote class="last">
 <div><div class="highlight-py"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">nipype.interfaces.matlab</span> <span class="kn">import</span> <span class="n">MatlabCommand</span>
 <span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12b&#39;</span><span class="p">)</span>
@@ -696,8 +694,8 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2015, Michael Notter.
-      Last updated on July 28, 2015.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Last updated on October 14, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

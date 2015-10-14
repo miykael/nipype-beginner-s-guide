@@ -99,7 +99,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="help.html"
                         title="next chapter">Help &amp; Support</a></p>
-<div id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -112,13 +112,11 @@
     </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/secondLevel.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/secondLevel.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
         </div>
       </div>
     <div class="document">
@@ -189,7 +187,7 @@
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Pay attention to the name of the <code class="docutils literal"><span class="pre">input_dir_norm</span></code>. Depending on the way you normalized your data, ANTs or SPM, the folder name has either the ending <code class="docutils literal"><span class="pre">_ants</span></code> or <code class="docutils literal"><span class="pre">_spm</span></code>.</p>
+<p class="last">Pay attention to the name of the <tt class="docutils literal"><span class="pre">input_dir_norm</span></tt>. Depending on the way you normalized your data, ANTs or SPM, the folder name has either the ending <tt class="docutils literal"><span class="pre">_ants</span></tt> or <tt class="docutils literal"><span class="pre">_spm</span></tt>.</p>
 </div>
 </div>
 <div class="section" id="create-nodes">
@@ -257,7 +255,7 @@
 </div>
 <div class="section" id="establish-input-output-stream">
 <h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">¶</a></h3>
-<p>The creation of the I/O stream is as usual. But because I showed you three ways to normalize your data in the previous section, be aware that you have to point the <code class="docutils literal"><span class="pre">SelectFiles</span></code> node to the right input folder. Your option for the <code class="docutils literal"><span class="pre">SelectFiles</span></code> input template are as follows:</p>
+<p>The creation of the I/O stream is as usual. But because I showed you three ways to normalize your data in the previous section, be aware that you have to point the <tt class="docutils literal"><span class="pre">SelectFiles</span></tt> node to the right input folder. Your option for the <tt class="docutils literal"><span class="pre">SelectFiles</span></tt> input template are as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -283,7 +281,7 @@
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">It is very important to notice that only contrast images (e.g. <code class="docutils literal"><span class="pre">con</span></code>-images) can be used for a second-level group analysis. It is statistically incorrect to use statistic images, such as <code class="docutils literal"><span class="pre">spmT</span></code>- or <code class="docutils literal"><span class="pre">spmF</span></code>-images.</p>
+<p class="last">It is very important to notice that only contrast images (e.g. <tt class="docutils literal"><span class="pre">con</span></tt>-images) can be used for a second-level group analysis. It is statistically incorrect to use statistic images, such as <tt class="docutils literal"><span class="pre">spmT</span></tt>- or <tt class="docutils literal"><span class="pre">spmF</span></tt>-images.</p>
 </div>
 <p>The following example is adjusted for the situation where the normalization was done with ANTs. The code for the I/O stream looks as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -373,7 +371,7 @@
 <span class="n">Interface</span> <span class="n">OneSampleTTestDesign</span> <span class="n">failed</span> <span class="n">to</span> <span class="n">run</span><span class="p">.</span>
 </pre></div>
 </td></tr></table></div>
-<p>Such errors are sometimes hard to read. What this message means is that SPM&#8217;s <code class="docutils literal"><span class="pre">onesamplettestdes</span></code> tried to open an image-file but was only able to read out 0 scans, of the requested at least 1. This is a common message where SPM tries to read a zipped NIfTI file (ending with <code class="docutils literal"><span class="pre">nii.gz</span></code>) and cannot unpack it. To solve this issue we only need to insert an additional <code class="docutils literal"><span class="pre">Gunzip</span></code> node in our pipeline and redirect the workflow through this new gunzip node before it goes to the <code class="docutils literal"><span class="pre">onesamplettestdes</span></code> node. So the new code looks as follows:</p>
+<p>Such errors are sometimes hard to read. What this message means is that SPM&#8217;s <tt class="docutils literal"><span class="pre">onesamplettestdes</span></tt> tried to open an image-file but was only able to read out 0 scans, of the requested at least 1. This is a common message where SPM tries to read a zipped NIfTI file (ending with <tt class="docutils literal"><span class="pre">nii.gz</span></tt>) and cannot unpack it. To solve this issue we only need to insert an additional <tt class="docutils literal"><span class="pre">Gunzip</span></tt> node in our pipeline and redirect the workflow through this new gunzip node before it goes to the <tt class="docutils literal"><span class="pre">onesamplettestdes</span></tt> node. So the new code looks as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -497,8 +495,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2015, Michael Notter.
-      Last updated on July 28, 2015.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Last updated on October 14, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

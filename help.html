@@ -92,7 +92,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="links.html"
                         title="next chapter">Links to Nipype, Programming and Neuroimaging</a></p>
-<div id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -105,13 +105,11 @@
     </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/help.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/help.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
         </div>
       </div>
     <div class="document">
@@ -126,7 +124,7 @@
 <div class="section" id="how-nipype-can-help-you">
 <h2>How Nipype Can Help You<a class="headerlink" href="#how-nipype-can-help-you" title="Permalink to this headline">¶</a></h2>
 <p>Often times the first trouble with Nipype arise because of misunderstanding a node or its function. This can be because a mandatory input was forgotten, a input or output field is not what you thought it was or something similar. That&#8217;s why the first step when running into a problem while building a pipeline should be to check out the description of the interface that causes the trouble. I&#8217;ve already described this <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#nodes">here</a> but to recap:</p>
-<p>Let&#8217;s assume that you&#8217;ve imported FreeSurfer&#8217;s BBRegister with the command <code class="docutils literal"><span class="pre">from</span> <span class="pre">nipype.interfaces.freesurfer</span> <span class="pre">import</span> <span class="pre">BBRegister</span></code>. Now, if you want to know what this module generally does, use the <cite>?</cite> character, i.e. <code class="docutils literal"><span class="pre">BBRegister?</span></code>. This gives you a short description as well as an implementation example of this module. If you want to know a more detailed description of BBRegister, with all mandatory and possible inputs and outputs, use the <code class="docutils literal"><span class="pre">help()</span></code> function, i.e. <code class="docutils literal"><span class="pre">BBRegister.help()</span></code>.</p>
+<p>Let&#8217;s assume that you&#8217;ve imported FreeSurfer&#8217;s BBRegister with the command <tt class="docutils literal"><span class="pre">from</span> <span class="pre">nipype.interfaces.freesurfer</span> <span class="pre">import</span> <span class="pre">BBRegister</span></tt>. Now, if you want to know what this module generally does, use the <cite>?</cite> character, i.e. <tt class="docutils literal"><span class="pre">BBRegister?</span></tt>. This gives you a short description as well as an implementation example of this module. If you want to know a more detailed description of BBRegister, with all mandatory and possible inputs and outputs, use the <tt class="docutils literal"><span class="pre">help()</span></tt> function, i.e. <tt class="docutils literal"><span class="pre">BBRegister.help()</span></tt>.</p>
 <p>Also, I highly recommend to check out Nipype&#8217;s official <a class="reference external" href="http://nipy.sourceforge.net/nipype/documentation.html">Documentation</a> section, where you can browse through all possible interfaces, function and description of them.</p>
 </div>
 <div class="section" id="how-to-help-yourself">
@@ -143,8 +141,8 @@
 </div>
 <div class="section" id="how-to-read-crash-files">
 <h2>How to Read Crash Files<a class="headerlink" href="#how-to-read-crash-files" title="Permalink to this headline">¶</a></h2>
-<p>Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes">this section</a>. In this example the name of the crash file is <code class="docutils literal"><span class="pre">crash-20141018-140440-mnotter-art.b0.pklz</span></code>.</p>
-<p>The name of the file gives you already an information about when it crashed (<code class="docutils literal"><span class="pre">20141018-140440</span></code>) and which node crashed (<code class="docutils literal"><span class="pre">art.b0</span></code>). If you want to read the node you can use the terminal command <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. In our example the command to read the crash file is:</p>
+<p>Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see <a class="reference external" href="https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes">this section</a>. In this example the name of the crash file is <tt class="docutils literal"><span class="pre">crash-20141018-140440-mnotter-art.b0.pklz</span></tt>.</p>
+<p>The name of the file gives you already an information about when it crashed (<tt class="docutils literal"><span class="pre">20141018-140440</span></tt>) and which node crashed (<tt class="docutils literal"><span class="pre">art.b0</span></tt>). If you want to read the node you can use the terminal command <tt class="docutils literal"><span class="pre">nipype_display_crash</span></tt>. In our example the command to read the crash file is:</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_display_crash ~/nipype_tutorial/crash-20141018-140857-mnotter-art.b0.pklz
 </pre></div>
 </div>
@@ -235,7 +233,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 </pre></div>
 </td></tr></table></div>
 <p>The first part of the crash report contains information about the node and the second part contains the error log. In this example, the last two lines tell us exactly, that the crash was caused because the input field <cite>&#8216;realigned_files&#8217;</cite> was not specified. This error is easy corrected, just add the required input and rerun the workflow.</p>
-<p>Under certain circumstances it is possible and desired to rerun the crashed node. This can be done with the additional command flags to <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. The following flags are available:</p>
+<p>Under certain circumstances it is possible and desired to rerun the crashed node. This can be done with the additional command flags to <tt class="docutils literal"><span class="pre">nipype_display_crash</span></tt>. The following flags are available:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -297,8 +295,8 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
     <div class="footer">
     <p>
         &copy; Copyright 2015, Michael Notter.
-      Last updated on July 28, 2015.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Last updated on October 14, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
