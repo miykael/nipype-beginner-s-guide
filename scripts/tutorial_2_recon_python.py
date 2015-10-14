@@ -6,8 +6,8 @@ from nipype.interfaces.utility import IdentityInterface
 from nipype.pipeline.engine import Workflow, Node
 
 # Specify important variables
-experiment_dir = '/home/egeiser/Dropbox/nipype/nipype_tutorial'             # location of experiment folder
-data_dir = opj(experiment_dir, 'data')  # location of data folder
+experiment_dir = '~/nipype_tutorial'           # location of experiment folder
+data_dir = opj(experiment_dir, 'data')         # location of data folder
 fs_folder = opj(experiment_dir, 'freesurfer')  # location of freesurfer folder
 subject_list = ['sub001', 'sub002', 'sub003',
                 'sub004', 'sub005', 'sub006',
@@ -16,7 +16,7 @@ subject_list = ['sub001', 'sub002', 'sub003',
 T1_identifier = 'struct.nii.gz'                  # Name of T1-weighted image
 
 # Create the output folder - FreeSurfer can only run if this folder exists
-os.system('mkdir -p %s'%fs_folder)
+os.system('mkdir -p %s' % fs_folder)
 
 # Create the pipeline that runs the recon-all command
 reconflow = Workflow(name="reconflow")
