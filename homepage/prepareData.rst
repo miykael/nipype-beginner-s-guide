@@ -348,6 +348,7 @@ I won't explain to much how this workflow actually works, as the structure and c
     :linenos:
 
     # Import modules
+    import os
     from os.path import join as opj
     from nipype.interfaces.freesurfer import ReconAll
     from nipype.interfaces.utility import IdentityInterface
