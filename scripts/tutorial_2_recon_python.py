@@ -1,11 +1,12 @@
 # Import modules
+import os
 from os.path import join as opj
 from nipype.interfaces.freesurfer import ReconAll
 from nipype.interfaces.utility import IdentityInterface
 from nipype.pipeline.engine import Workflow, Node
 
 # Specify important variables
-experiment_dir = '~/nipype_tutorial'             # location of experiment folder
+experiment_dir = '/home/egeiser/Dropbox/nipype/nipype_tutorial'             # location of experiment folder
 data_dir = opj(experiment_dir, 'data')  # location of data folder
 fs_folder = opj(experiment_dir, 'freesurfer')  # location of freesurfer folder
 subject_list = ['sub001', 'sub002', 'sub003',
@@ -26,7 +27,7 @@ infosource = Node(IdentityInterface(fields=['subject_id']),
                   name="infosource")
 infosource.iterables = ('subject_id', subject_list)
 # This node represents the actual recon-all command
-econall = Node(ReconAll(directive='all',
+reconall = Node(ReconAll(directive='all',
                         #flags='-nuintensitycor- 3T',
                          subjects_dir=fs_folder),
                 name="reconall")
