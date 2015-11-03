@@ -75,7 +75,7 @@ Now make sure that you have all Nipype required dependencies up to date with the
 .. code-block:: sh
 
     conda update python ipython ipython-notebook matplotlib \
-                 networkx numpy scipy sphinx traits dateutil nose
+                 networkx numpy scipy sphinx traits dateutil nose pydot
 
 .. note::
 
