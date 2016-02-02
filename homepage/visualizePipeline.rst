@@ -99,7 +99,7 @@ The detailed graph of the visualization type ``orig`` shows the ``metaflow`` to 
 
     .. image:: images/graph_orig_detailed.png
        :align: center
-       :width: 500pt
+       :width: 465pt
 
 
 ``flat`` - simple graph
@@ -153,7 +153,7 @@ The detailed graph of the visualization type ``exec`` doesn't really show you an
 
     .. image:: images/graph_exec_simple.png
        :align: center
-       :width: 500pt
+       :width: 465pt
 
 
 ``exec`` - detailed graph
@@ -171,7 +171,7 @@ The detailed graph of the visualization type ``exec`` shows you the nodes of the
 
     .. image:: images/graph_exec_detailed.png
        :align: center
-       :width: 500pt
+       :width: 465pt
 
 
 .. note::

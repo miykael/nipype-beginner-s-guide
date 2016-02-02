@@ -273,7 +273,7 @@ Normalization is done to warp the data of a subject from the individual subject-
 .. only:: latex
 
     .. image:: images/normalization.png
-       :width: 500pt
+       :width: 465pt
        :align: left
 
 

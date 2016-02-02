@@ -1262,7 +1262,7 @@ So what will the terminal output look like if we try to feed a zipped ``run001.n
     Name:pyscript_slicetiming
     Line:459
     File:ç
-    Name:Ū
+    Name:U
     Line:
     Return code: 0
     Interface MatlabCommand failed to run.
