@@ -190,10 +190,6 @@ Interfaces
 
 Interfaces in the context of Nipype are program wrappers that allow Nipype which runs in Python to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the `official homepage <http://nipy.sourceforge.net/nipype/users/interface_tutorial.html>`_. More practical examples will be given latter in this beginner's guide.
 
-Currently (August 2014) supported Nipype interfaces are the following:
-
-`AFNI <http://afni.nimh.nih.gov/afni>`_ | `ANTS <http://picsl.upenn.edu/software/ants/>`_ | `Camino <http://cmic.cs.ucl.ac.uk/camino/>`_ | `Camino-TrackVis <http://www.nitrc.org/projects/camino-trackvis>`_ | `ConnectomeViewerToolkit <http://www.connectomeviewer.org/>`_ | `dcm2nii <http://www.cabiatl.com/mricro/mricron/dcm2nii.html>`_ | `Diffusion Toolkit <http://www.trackvis.org/dtk/>`_ | `Dipy <http://nipy.org/dipy/>`_ | `FreeSurfer <http://freesurfer.net/>`_ | `FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/>`_ | `MRtrx <http://www.brain.org.au/software/mrtrix/index.html>`_ | `Nipy <http://nipy.org/nipy/stable/index.html>`_ | `Nitime <http://nipy.org/nitime/>`_ | `PyXNAT <https://github.com/pyxnat>`_ | `Slicer <http://www.slicer.org/>`_ | `SPM <http://www.fil.ion.ucl.ac.uk/spm/>`_
-
 For a full list of software interfaces supported by Nipype go `here <http://nipy.sourceforge.net/nipype/documentation.html>`_.
 
 
@@ -210,7 +206,7 @@ Each Node, MapNode or Workflow has (at least) one input field and (at least) one
 
 A very cool feature of a Nipype workflow are so called **iterables**. Iterables allow you to run a given workflow or subgraph several times with changing input values. For example if you want to run a analysis pipeline on multiple subjects or with a FWHM smoothing kernel of 4mm, 6mm and 8mm. This can easily be achieved with iterables and additionally allows you to do this all in parallel, if requested.
 
-Go to the documentation section of `Nipype's main homepage <http://nipy.sourceforge.net/nipype/>`_ to read more about `MapNode, iterfield, and iterables <http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html>`_, `JoinNode, synchronize and itersource <http://nipy.sourceforge.net/nipype/users/joinnode_and_itersource.html>`_ and `Workflows <http://nipy.sourceforge.net/nipype/users/pipeline_tutorial.html>`_. Nonetheless, a more detailed explanation will be given in a `latter section <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#specify-workflow-nodes>`_ of this beginner's guide.
+Go to the documentation section of `Nipype's main homepage <http://nipy.sourceforge.net/nipype/>`_ to read more about `MapNode, iterfield, and iterables <http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html>`_, `JoinNode, synchronize and itersource <http://nipy.sourceforge.net/nipype/users/joinnode_and_itersource.html>`_ and `much more <http://nipy.sourceforge.net/nipype/users/pipeline_tutorial.html>`_. Nonetheless, a more detailed explanation will be given in a `latter section <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#specify-workflow-nodes>`_ of this beginner's guide.
 
 .. note::
     For more practical example of Nipype concepts see `Michael Waskom <https://github.com/mwaskom>`_'s really cool IPython notebooks about `Interfaces <http://nbviewer.ipython.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb>`_, `Iteration <http://nbviewer.ipython.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb>`_ and `Workflows <http://nbviewer.ipython.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb>`_.

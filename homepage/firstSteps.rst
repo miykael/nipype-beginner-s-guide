@@ -1174,7 +1174,7 @@ From this output you can see in the lower half the same error stack of the crash
 
 .. note::
 
-    Note that the information about the exact input values of a node can also be obtained from the ``report.rst`` file, stored in the nodes subfolder under the working directory. More about this `here <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#working-directory>`_.
+    Note that the information about the exact input values of a node can also be obtained from the ``report.rst`` file, stored in the nodes subfolder under the working directory. More about this later under `Working Directory <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#working-directory>`_.
 
 
 Interface Issues
@@ -1182,7 +1182,7 @@ Interface Issues
 
 Sometimes the most basic errors can occur because Nipype doesn't know where the correct files are. Two very common issues are for example that FreeSurfer can't find the subject folder or that MATLAB doesn't find SPM.
 
-Before you do anything else, please make sure again that you've installed FreeSurfer and SPM12 as described in the installation section, `here <http://miykael.github.com/nipype-beginner-s-guide/installation.html#freesurfer>`_ and `here <http://miykael.github.com/nipype-beginner-s-guide/installation.html#spm12>`_.
+Before you do anything else, please make sure again that you've installed FreeSurfer and SPM12 as described in the installation section, `How to install FreeSurfer <http://miykael.github.com/nipype-beginner-s-guide/installation.html#freesurfer>`_ and `How to install SPM <http://miykael.github.com/nipype-beginner-s-guide/installation.html#spm12>`_.
 
 But don't worry if the problem still exists. There are two nice ways how you can tell Nipype where FreeSurfer subject folders are stored at and where MATLAB can find SPM12. Just add the following code to the beginning of your script:
 

@@ -54,7 +54,7 @@ B
 
 B-spline, B-spline interpolation
 ********************************
-A type of spline which is the generalization of the Bezier curve. Don't know what I'm talking about? Neither do I. The nice folks at `MathWorld <http://mathworld.wolfram.com/>`_ have this to say about them: `B-Spline <http://mathworld.wolfram.com/B-Spline.html>`_. Essentially, though, a B-spline is a type of easily describable and computable function which can take many locally smooth but globally arbitrary shapes. This makes them very nice for interpolation. SPM2 has ditched sinc interpolation in all of its resampling/interpolation functions (like normalization or coregistration - anything involving resampling and/or reslicing). Instead, it's now using B-spline interpolation, improving both computational speed and accuracy.
+A type of spline which is the generalization of the Bezier curve. Don't know what I'm talking about? Neither do I. The nice folks at `MathWorld - Wolfram <http://mathworld.wolfram.com/>`_ have this to say about them: `B-Spline <http://mathworld.wolfram.com/B-Spline.html>`_. Essentially, though, a B-spline is a type of easily describable and computable function which can take many locally smooth but globally arbitrary shapes. This makes them very nice for interpolation. SPM2 has ditched sinc interpolation in all of its resampling/interpolation functions (like normalization or coregistration - anything involving resampling and/or reslicing). Instead, it's now using B-spline interpolation, improving both computational speed and accuracy.
 
 band-pass filter
 ****************
@@ -248,7 +248,7 @@ FreeSurfer
 
 FSL (FMRIB Software Libraryand)
 *******************************
-`FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSL>`_ is a comprehensive library of analysis tools for fMRI, MRI and DTI brain imaging data. It runs on Apple and PCs (both Linux, and Windows via a Virtual Machine), and is very easy to install. Most of the tools can be run both from the command line and as GUIs. For an overview of the algorithms included in FSL go `here <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview>`_.
+`FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSL>`_ is a comprehensive library of analysis tools for fMRI, MRI and DTI brain imaging data. It runs on Apple and PCs (both Linux, and Windows via a Virtual Machine), and is very easy to install. Most of the tools can be run both from the command line and as GUIs. For an overview of the algorithms included in FSL go to the `overview section <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview>`_ on their homepage.
 
 Fourier basis set
 *****************
@@ -333,7 +333,7 @@ Related to flattening_. A downer about superimposing activation results on the b
 
 Interfaces
 **********
-Interfaces in the context of Nipype are program wrappers that allow Nipype which runs in Python_ to run a program or function in any other programming language. As a result, Python_ becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. For a full list of software interfaces supported by Nipype go `here <http://nipy.sourceforge.net/nipype/documentation.html>`_. For more see the `introductory section <http://miykael.github.com/nipype-beginner-s-guide/nipype.html#interfaces>`_ of this beginner's guide.
+Interfaces in the context of Nipype are program wrappers that allow Nipype which runs in Python_ to run a program or function in any other programming language. As a result, Python_ becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. For a full list of software interfaces supported by Nipype go `here <http://nipy.sourceforge.net/nipype/documentation.html>`_. For more see the `introduction section of this beginner's guide <http://miykael.github.com/nipype-beginner-s-guide/nipype.html#interfaces>`_.
 
 Inter-stimulus Interval (ISI)
 *****************************
@@ -515,7 +515,7 @@ Any object you scan in an MRI machine that's intended only to help you calibrate
 
 Plugin
 ******
-In the context of Nipype, plugins are components that describe how a workflow should be executed. They allow seamless execution across many architectures and make the usage of parallel computation look so easy. For more see the `introductory section <http://miykael.github.com/nipype-beginner-s-guide/nipype.html#execution-plugins>`_ of this beginner's guide.
+In the context of Nipype, plugins are components that describe how a workflow should be executed. They allow seamless execution across many architectures and make the usage of parallel computation look so easy. For more see the `introduction section <http://miykael.github.com/nipype-beginner-s-guide/nipype.html#execution-plugins>`_ of this beginner's guide.
 
 Positron Emission Tomography (PET)
 **********************************
@@ -768,7 +768,7 @@ See `pre-whitening`_.
 
 Workflow
 ********
-Workflows are the core elements of Nipype and can also be called pipelines. Workflows consists of Nodes, MapNodes and other Workflows and define the sequential order data processing and other algorithms should be executed by. For more see the `introductory section <http://miykael.github.com/nipype-beginner-s-guide/nipype.html#workflow-engine>`_ of this beginner's guide.
+Workflows are the core elements of Nipype and can also be called pipelines. Workflows consists of Nodes, MapNodes and other Workflows and define the sequential order data processing and other algorithms should be executed by. For more see this `beginner's guide introduction section <http://miykael.github.com/nipype-beginner-s-guide/nipype.html#workflow-engine>`_.
 
 
 X

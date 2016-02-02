@@ -12,7 +12,7 @@ Download the tutorial dataset
    :width: 120pt
    :align: left
 
-`OpenfMRI <https://openfmri.org/>`_ is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found `here <https://openfmri.org/data-sets>`_.
+`OpenfMRI <https://openfmri.org/>`_ is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found on `openfmri.org <https://openfmri.org/data-sets>`_.
 
 
 Download the dataset from OpenfMRI
@@ -239,7 +239,7 @@ Convert your data into NIfTI format
 
 You don't have to do this step if you're using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common ``NIfTI`` format, but rather in a scanner specific format (e.g. ``DICOM``, ``PAR/REC``, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.
 
-Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use `MRICron <http://www.mccauslandcenter.sc.edu/mricro/mricron/>`_'s ``MRIConvert`` (click `here <http://lcni.uoregon.edu/~jolinda/MRIConvert/>`_ for more information). But for this Beginner's Guide we will use FreeSurfer's ``mri_convert`` function, as it is rather easy to use and doesn't require many steps. 
+Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use `MRICron <http://www.mccauslandcenter.sc.edu/mricro/mricron/>`_'s `MRIConvert <http://lcni.uoregon.edu/~jolinda/MRIConvert/>`_. But for this Beginner's Guide we will use FreeSurfer's ``mri_convert`` function, as it is rather easy to use and doesn't require many steps. 
 
 But first, as always, be aware of your folder structure. So let's assume that we've stored our dicoms in a folder called ``raw_data`` and that the folder structure looks something like this:
 

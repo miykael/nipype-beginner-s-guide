@@ -56,7 +56,7 @@ Welcome to Nipype Beginner's Guide!
 
     Download all scripts from this beginner's guide here:`Scripts <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_.
 
-    Download the dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset for this beginner's guide directly `here <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.
+    Download the dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset for this beginner's guide directly here: `ds102_raw.tgz <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.
 
 
 
@@ -143,14 +143,14 @@ Welcome to Nipype Beginner's Guide!
     Downloads
     =========
 
-    +----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-    ||data|    |   Everything important to download can be found in this section.                                                                                    |
-    |          |                                                                                                                                                     |
-    |          |   * Nipype can be downloaded `here <http://nipy.sourceforge.net/nipype/users/install.html>`_.                                                       |
-    |          |   * All Scripts used in this Beginner's Guide can be found `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_.         |
-    |          |   * The dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset                         |
-    |          |     for this beginner's guide can be directly downloaded `here <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.                         |
-    |          |   * This Beginner's Guide can be downloaded as a PDF                                                                                                |
-    |          |     `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.                                      |
-    +----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+    +----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    ||data|    |   Everything important to download can be found in this section.                                                                                                               |
+    |          |                                                                                                                                                                                |
+    |          |   * Nipype can be downloaded here: `How to install Nipype <http://nipy.sourceforge.net/nipype/users/install.html>`_.                                                           |
+    |          |   * All Scripts used in this Beginner's Guide can be found on the Beginner's Guide `Github homepage <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_. |
+    |          |   * The dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset                                                    |
+    |          |     for this beginner's guide can be directly downloaded here: `ds102_raw.tgz <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.                                     |
+    |          |   * This Beginner's Guide can be downloaded as a PDF                                                                                                                           |
+    |          |     `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.                                                                 |
+    +----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 

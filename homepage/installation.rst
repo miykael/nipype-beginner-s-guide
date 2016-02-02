@@ -39,7 +39,7 @@ As you can see under `Dependencies <http://nipy.sourceforge.net/nipype/users/ins
 Install Anaconda
 ----------------
 
-Instructions on how to install Anaconda can be found `here <http://docs.continuum.io/anaconda/install.html>`_. Following are the steps how I've installed the Anaconda package on my system:
+Instructions on how to install Anaconda can be found on the `official homepage <http://docs.continuum.io/anaconda/install.html>`_. Following are the steps how I've installed the Anaconda package on my system:
 
 1. Download the software under http://continuum.io/downloads and move the downloaded sh-file to your Download folder. In my case this folder is at ``/home/username/Downloads`` abbreviated with ``~/Downloads``.
 2. Install the downloaded sh-file with the following command:
@@ -215,9 +215,9 @@ Download and Installation
    :width: 70pt
    :align: left
 
-`FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/>`_ is a comprehensive library of analysis tools for fMRI, MRI and DTI data. An overview of FSL's tools can be found `here <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview>`_.
+`FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/>`_ is a comprehensive library of analysis tools for fMRI, MRI and DTI data. An overview of FSL's tools can be found on their homepage under `FSL Overview <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview>`_.
 
-The installation of `FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSL>`_ is simple if you've already installed the NeuroDebian repository.
+The installation of FSL is simple if you've already installed the NeuroDebian repository.
 
 Just run the following command:
 
@@ -225,7 +225,7 @@ Just run the following command:
 
     sudo apt-get install fsl
 
-Otherwise, go through the official FSL installation guide, found `here <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation>`_.
+Otherwise, go through the official `FSL installation guide <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation>`_.
 
 Configuration
 -------------
@@ -269,7 +269,7 @@ Download and Installation
             ~/Downloads/freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0.tar.gz
             -C /usr/local/
 
-3. The usage of FreeSurfer requires a license file. Therefore, before you can use FreeSurfer, make sure to register `here <https://surfer.nmr.mgh.harvard.edu/registration.html>`_. The content of the license file looks something like this:
+3. The usage of FreeSurfer requires a license file. Therefore, before you can use FreeSurfer, make sure to `register <https://surfer.nmr.mgh.harvard.edu/registration.html>`_. The content of the license file looks something like this:
 
     .. code-block:: sh
 
@@ -370,7 +370,7 @@ As of 1st October 2014, SPM released it's newest version `SPM12 <http://www.fil.
 
 .. note::
 
-    There is a standalone version of SPM available that doesn't need MATLAB, but so far it isn't recommended as a lot of additional toolboxes don't work with the standalone, yet. For more information go `here <http://en.wikibooks.org/wiki/SPM/Standalone>`_.
+    There is a standalone version of SPM available that doesn't need MATLAB, but so far it isn't recommended as a lot of additional toolboxes don't work with the standalone, yet. For more information go on the `SPM wikipage <http://en.wikibooks.org/wiki/SPM/Standalone>`_.
 
 
 Download and Installation
