@@ -1,6 +1,6 @@
-===========================
+====================
 Prepare your Dataset
-===========================
+====================
 
 We can't start to learn how to use Nipype before we don't have any data to work on. The fact that you are interested in using Nipype implies that you probably already have access to an MRI dataset. You are of course free to do your first steps with Nipype directly on your own dataset. But if you're new to the topic or want to be sure that you get the same results like I do, I recommend to use a tutorial dataset which we can find over on `OpenfMRI <https://openfmri.org/>`_.
 
@@ -12,7 +12,7 @@ Download the tutorial dataset
    :width: 120pt
    :align: left
 
-`OpenfMRI <https://openfmri.org/>`_ is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found `here <https://openfmri.org/data-sets>`_.
+`OpenfMRI <https://openfmri.org/>`_ is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found on `openfmri.org <https://openfmri.org/dataset/>`_.
 
 
 Download the dataset from OpenfMRI
@@ -39,28 +39,28 @@ What we want is an experiment folder called ``nipype_tutorial`` that contains a 
 .. code-block:: sh
 
     nipype_tutorial
-    └── data
-        ├── demographics.txt
-        ├── sub001
-        │   ├── behavdata_run001.txt
-        │   ├── behavdata_run002.txt
-        │   ├── onset_run001_cond001.txt
-        │   ├── onset_run001_cond002.txt
-        │   ├── onset_run001_cond003.txt
-        │   ├── onset_run001_cond004.txt
-        │   ├── onset_run002_cond001.txt
-        │   ├── onset_run002_cond002.txt
-        │   ├── onset_run002_cond003.txt
-        │   ├── onset_run002_cond004.txt
-        │   ├── run001.nii.gz
-        │   ├── run002.nii.gz
-        │   └── struct.nii.gz
-        ├── sub0..
-        └── sub010
-            ├── behav...
-            ├── onset_...
-            ├── run...
-            └── struct.nii.gz
+    |-- data
+        |-- demographics.txt
+        |-- sub001
+        |   |-- behavdata_run001.txt
+        |   |-- behavdata_run002.txt
+        |   |-- onset_run001_cond001.txt
+        |   |-- onset_run001_cond002.txt
+        |   |-- onset_run001_cond003.txt
+        |   |-- onset_run001_cond004.txt
+        |   |-- onset_run002_cond001.txt
+        |   |-- onset_run002_cond002.txt
+        |   |-- onset_run002_cond003.txt
+        |   |-- onset_run002_cond004.txt
+        |   |-- run001.nii.gz
+        |   |-- run002.nii.gz
+        |   |-- struct.nii.gz
+        |-- sub0..
+        |-- sub010
+            |-- behav...
+            |-- onset_...
+            |-- run...
+            |-- struct.nii.gz
 
 
 This can either be done manually or with the following code:
@@ -112,7 +112,7 @@ This can either be done manually or with the following code:
 
 .. hint:: 
 
-    You can download this code as a script here: `tutorial_1_create_dataset.sh <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh>`_
+    You can download this code as a script here: `tutorial_1_create_dataset.sh <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh>`_
 
 
 Acquire scan and experiment parameters
@@ -211,7 +211,7 @@ This output tells us that this functional scan consists of 146 volumes, of which
 
     Just as a side note: The `data_type` of a NIfTI file tells you the amount of bits used to store the value of each voxel. **INT16** stands for *signed short* (16 bits/voxel), **INT32** stands for *signed int* (32 bits/voxel) and **FLOAT64** stands for *float* (64 bits/voxel). The more bits used for storing a voxel value the bigger the whole NIfTI file.
 
-    If you want to change the data type of your image, either use Nipype's function ``ChangeDataType`` found in the ``nipype.interfaces.fsl.maths`` package (read more `here <http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype>`_) or use ``fslmaths`` directly to change the data_type to INT32 with the following command:
+    If you want to change the data type of your image, either use Nipype's function ``ChangeDataType`` found in the ``nipype.interfaces.fsl.maths`` package (read more `here <http://nipy.org/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype>`_) or use ``fslmaths`` directly to change the data_type to INT32 with the following command:
 
     .. code-block:: sh
 
@@ -239,26 +239,26 @@ Convert your data into NIfTI format
 
 You don't have to do this step if you're using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common ``NIfTI`` format, but rather in a scanner specific format (e.g. ``DICOM``, ``PAR/REC``, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.
 
-Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use `MRICron <http://www.mccauslandcenter.sc.edu/mricro/mricron/>`_'s ``MRIConvert`` (click `here <http://lcni.uoregon.edu/~jolinda/MRIConvert/>`_ for more information). But for this Beginner's Guide we will use FreeSurfer's ``mri_convert`` function, as it is rather easy to use and doesn't require many steps. 
+Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use `MRICron <http://www.mccauslandcenter.sc.edu/mricro/mricron/>`_'s `MRIConvert <http://lcni.uoregon.edu/~jolinda/MRIConvert/>`_. But for this Beginner's Guide we will use FreeSurfer's ``mri_convert`` function, as it is rather easy to use and doesn't require many steps. 
 
 But first, as always, be aware of your folder structure. So let's assume that we've stored our dicoms in a folder called ``raw_data`` and that the folder structure looks something like this:
 
 .. code-block:: none
 
     raw_dicom
-    ├── sub001
-    │   ├── t1w_3d_MPRAGE
-    │   │   ├── 00001.dcm
-    │   │   ├── ...
-    │   │   └── 00176.dcm
-    │   ├── fmri_run1_long
-    │   │   ├── 00001.dcm
-    │   │   ├── ...
-    │   │   └── 00240.dcm
-    │   └── fmri_run2_long
-    │       └── ...
-    ├── sub0..
-    └── sub010
+    |-- sub001
+    |   |-- t1w_3d_MPRAGE
+    |   |   |-- 00001.dcm
+    |   |   |-- ...
+    |   |   |-- 00176.dcm
+    |   |-- fmri_run1_long
+    |   |   |-- 00001.dcm
+    |   |   |-- ...
+    |   |   |-- 00240.dcm
+    |   |-- fmri_run2_long
+    |       |-- ...
+    |-- sub0..
+    |-- sub010
 
 This means, that we have one folder per subject with each containing another folder, one for the structural T1 weighted image and 2 for the functional T2 weighted images. The conversion of the dicom files in those folders is rather easy. If you use FreeSurfer's ``mri_convert`` function, the command is as as follows: ``mri_convert <in volume> <out volume>``. You have to replace ``<in volume>`` by the actual path to any one dicom file in the folder and ``<out volume>`` with the name for your outputfile.
 
@@ -334,7 +334,7 @@ This code will run the subjects in sequential order. If you want to process the 
 
 .. hint:: 
 
-    You can download this code as a script here: `tutorial_2_recon_shell.sh <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh>`_
+    You can download this code as a script here: `tutorial_2_recon_shell.sh <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh>`_
 
 
 Run recon-all on the tutorial dataset (Nipype version)
@@ -419,7 +419,7 @@ After this script has run, all important outputs will be stored directly under `
 
 .. hint:: 
 
-    You can download this code as a script here: `tutorial_2_recon_python.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py>`_
+    You can download this code as a script here: `tutorial_2_recon_python.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py>`_
 
 
 Resulting Folder Structure
@@ -430,13 +430,13 @@ After we've prepared our data and run the ``recon-all`` process the folder struc
 .. code-block:: sh
 
     nipype_tutorial
-    ├── rawdata (optional)
-    ├── data
-    │   ├── sub001
-    │   ├── sub0..
-    │   └── sub010
-    └── freesurfer
-        ├── sub001
-        ├── sub0..
-        └── sub010
+    |-- rawdata (optional)
+    |-- data
+    |   |-- sub001
+    |   |-- sub0..
+    |   |-- sub010
+    |-- freesurfer
+        |-- sub001
+        |-- sub0..
+        |-- sub010
 

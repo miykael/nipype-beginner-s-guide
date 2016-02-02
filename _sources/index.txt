@@ -20,11 +20,47 @@
 .. |data| image:: _static/data.png
    :width: 60pt
 
-.. only:: html
 
-    ===================================
-    Welcome to Nipype Beginner's Guide!
-    ===================================
+===================================
+Welcome to Nipype Beginner's Guide!
+===================================
+
+
+.. only:: latex
+
+    .. toctree::
+       :maxdepth: 2
+
+       nipype
+       neuroimaging
+       nipypeAndNeuroimaging
+       installation
+       prepareData
+       firstSteps
+       visualizePipeline
+       firstLevel
+       normalize
+       secondLevel
+       help
+       links
+       faq
+       glossary
+
+
+    Downloads
+    =========
+
+    Download Nipype here: `Nipype Homepage <http://nipy.org/nipype/users/install.html>`_.
+
+    Download this beginner's guide as a PDF here: `Nipype Beginner's Guide <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.
+
+    Download all scripts from this beginner's guide here:`Scripts <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_.
+
+    Download the dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset for this beginner's guide directly here: `ds102_raw.tgz <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.
+
+
+
+.. only:: html
 
     This Beginner's guide will teach you all you need to know for your first steps with Nipype. You will see that Nipype is a really practical and easy to learn neuroimaging toolbox, written in Python, that helps to connect many of the different softwares used in neuroimaging, such as SPM, FSL, FreeSurfer and AFNI. The goal of this Beginner's guide is to teach you the basics about Neuroimaging and to show you each step along the way of a complete neuroimaging analysis. By learning Nipype, you will become an expert in neuroimaging and be able to analyze your own dataset in no time.
 
@@ -85,7 +121,7 @@
     |          |      normalize                            |
     |          |      secondLevel                          |
     +----------+-------------------------------------------+
-       
+
 
     Support
     =======
@@ -107,54 +143,14 @@
     Downloads
     =========
 
-    +----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-    ||data|    |   Everything important to download can be found in this section.                                                                                    |
-    |          |                                                                                                                                                     |
-    |          |   * Nipype can be downloaded `here <http://nipy.sourceforge.net/nipype/users/install.html>`_.                                                       |
-    |          |   * All Scripts used in this Beginner's Guide can be found `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_.         |
-    |          |   * The dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset                         |
-    |          |     for this beginner's guide can be directly downloaded `here <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.                         |
-    |          |   * This Beginner's Guide can be downloaded as a PDF                                                                                                |
-    |          |     `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.                                      |
-    +----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-
-
-.. only:: latex
-
-    ==========================================
-    Welcome to the Beginner's Guide to Nipype!
-    ==========================================
-
-    
-    .. toctree::
-       :maxdepth: 2
-
-       nipype
-       neuroimaging
-       nipypeAndNeuroimaging
-       installation
-       prepareData
-       firstSteps
-       visualizePipeline
-       firstLevel
-       normalize
-       secondLevel
-       help
-       links
-       faq
-       glossary
-
-
-
-    Downloads
-    =========
-
-    Download Nipype here: `Nipype Homepage <http://nipy.sourceforge.net/nipype/users/install.html>`_.
-
-    Download this beginner's guide as a PDF here: `Nipype Beginner's Guide <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.
-
-    Download all scripts from this beginner's guide here:`Scripts <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_.
-
-    Download the dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset for this beginner's guide directly `here <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.
-
+    +----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    ||data|    |   Everything important to download can be found in this section.                                                                                                               |
+    |          |                                                                                                                                                                                |
+    |          |   * Nipype can be downloaded here: `How to install Nipype <http://nipy.org/nipype/users/install.html>`_.                                                                       |
+    |          |   * All Scripts used in this Beginner's Guide can be found on the Beginner's Guide `Github homepage <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_. |
+    |          |   * The dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset                                                    |
+    |          |     for this beginner's guide can be directly downloaded here: `ds102_raw.tgz <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.                                     |
+    |          |   * This Beginner's Guide can be downloaded as a PDF                                                                                                                           |
+    |          |     `here <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.                                                                 |
+    +----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 

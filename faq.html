@@ -66,7 +66,8 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
   
@@ -687,7 +688,7 @@
 <h2>MATLAB Basics<a class="headerlink" href="#matlab-basics" title="Permalink to this headline">¶</a></h2>
 <p>Here&#8217;s a very quick intro to some of the basic concepts and syntax of MATLAB. The hope is that after covering some of these basics, you&#8217;ll be able to troubleshoot SPM and MATLAB errors to some degree. Experienced MATLAB programmers may find most of this redundant, but there&#8217;s always more you can pick up in MATLAB, so please, if you experience folk&#8217;ve got tips and tricks to suggest, add them onto these page!</p>
 <p>This part looks specifically at the most basic of basics. For info on how to read m-files and m-file programming concepts, check out <a class="reference internal" href="#matlab-programming">MATLAB Programming</a>. As well, <a class="reference internal" href="#matlab-paths">MATLAB Paths</a> answers questions about modifying your search paths, and <a class="reference internal" href="#matlab-debugging">MATLAB Debugging</a> touches specifically on strategies for troubleshooting - how to get more information, what parts of error messages to look for, and how you can dig through a script to find what&#8217;s gone wrong.</p>
-<p>If you take nothing else away from this page, take this: The MATLAB tutorial, contained within the program&#8217;s help section, is terrific. It&#8217;ll teach you a lot of the basics of MATLAB and a lot of things you wouldn&#8217;t think to learn. The progam help is always a great place to go for more info or to learn something new. Nothing will help your troubleshooting and programming skills like curiousity - when you hit something you don&#8217;t know or recognize, spend a couple minutes trying to figure out what it is, with the MATLAB and SPM help. If your help within the program isn&#8217;t working, it&#8217;s all online at the <a class="reference external" href="http://www.mathworks.com/access/helpdesk/help/techdoc/MATLAB.shtml">Mathworks website</a>.
+<p>If you take nothing else away from this page, take this: The MATLAB tutorial, contained within the program&#8217;s help section, is terrific. It&#8217;ll teach you a lot of the basics of MATLAB and a lot of things you wouldn&#8217;t think to learn. The progam help is always a great place to go for more info or to learn something new. Nothing will help your troubleshooting and programming skills like curiousity - when you hit something you don&#8217;t know or recognize, spend a couple minutes trying to figure out what it is, with the MATLAB and SPM help. If your help within the program isn&#8217;t working, it&#8217;s all online at the <a class="reference external" href="http://www.mathworks.com/help/">Mathworks website</a>.
 As well, if you type help command into MATLAB, where command is some MATLAB function name, you&#8217;ll almost always get a quick blurb telling you something about the function and how it&#8217;s supposed to operate. It&#8217;s invaluable for reference or learning on the fly.</p>
 <div class="section" id="matlab-language">
 <h3>MATLAB Language<a class="headerlink" href="#matlab-language" title="Permalink to this headline">¶</a></h3>
@@ -741,7 +742,7 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <p>First, the order to read it in. The top of the stack - the first error listed - is the most immediate error. It&#8217;s what caused the crash. MATLAB will tell you what function the error was in - in this case, it&#8217;s spm_input_ui - and some information about what the error was. That error message may be written by the function&#8217;s programmer (in which case it&#8217;s often quite specific) or be built-in to MATLAB (in which case it&#8217;s usually not). Sometimes that top error may also give you a line number on which the error was generated within the function.</p>
 <p>The rest of the stack is there to tell you where the function that crashed was called from. In this case, the next one down the stack was in spm_input - so our error was in spm_input_ui, which was called by spm_input. The line in spm_input that calls spm_input_ui is highlighted for us - it&#8217;s line 77 within spm_input.m. The next error down tells us that spm_input was itself called from within spm_get_ons, on line 146, and so on. The last error tells us that the very first function that was called was spm_fmri_spm_ui - that&#8217;s the function that was called when we first hit a button.</p>
 <p>From only this limited information, you can often tell a lot about the error. One important distinction to draw is whether the function where the error happened was an SPM function or a MATLAB function. Built-in MATLAB functions are generally pretty stable, and so if they crash, it&#8217;s usually because you, the user, made a mistake somewhere along the line.</p>
-<p>When the function that generated the error is an spm function, you can usually tell - it&#8217;ll have the prefix &#8216;<a href="#id3"><span class="problematic" id="id4">spm_</span></a>&#8216; or generally sound like something from fMRI analysis and not MATLAB generally. In this case, the error is sometimes in the code and sometimes a mistake earlier in your analysis. The error messages can sometimes tell you enough to figure out what&#8217;s going on: perhaps it says that there&#8217;s an index out of range, and you realize it&#8217;s because you&#8217;re trying to omit the 200th scan from a session that only has 199. Just looking at the line that generated the error and what the actual error message says can give you a lot of info off the bat. Study the message carefully and look at the function stack it came from and see if you can figure out what the program was doing when it crashed.</p>
+<p>When the function that generated the error is an spm function, you can usually tell - it&#8217;ll have the prefix <cite>spm_</cite> or generally sound like something from fMRI analysis and not MATLAB generally. In this case, the error is sometimes in the code and sometimes a mistake earlier in your analysis. The error messages can sometimes tell you enough to figure out what&#8217;s going on: perhaps it says that there&#8217;s an index out of range, and you realize it&#8217;s because you&#8217;re trying to omit the 200th scan from a session that only has 199. Just looking at the line that generated the error and what the actual error message says can give you a lot of info off the bat. Study the message carefully and look at the function stack it came from and see if you can figure out what the program was doing when it crashed.</p>
 <p>It&#8217;s not always enough to look at the problem after it&#8217;s crashed, though. Sometimes you need to figure out what&#8217;s happening when it actually crashed, and in that case, you need MATLAB&#8217;s debugging package.</p>
 <p><strong>MATLAB Debugging</strong></p>
 <p>MATLAB&#8217;s debugging package is pretty good. Hard-core debugging is a skill that&#8217;s acquired only after a lot of programming, but even someone brand-new to reading code can use some debugging techniques to make sense of what&#8217;s going on with their data, and hopefully learn some details about MATLAB code at the same time.</p>
@@ -1471,12 +1472,13 @@ Finally, you could apply combinations of these filters to try and restrict the s
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
     <div class="footer">
     <p>
-        &copy; Copyright 2015, Michael Notter.
+        &copy; Copyright 2016, Michael Notter.
       Last updated on February 02, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>

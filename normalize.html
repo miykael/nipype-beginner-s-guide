@@ -66,7 +66,8 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
   
@@ -147,7 +148,7 @@
 <h1>How To Normalize Your Data<a class="headerlink" href="#how-to-normalize-your-data" title="Permalink to this headline">¶</a></h1>
 <p>Before you can start with a second level analysis you are facing the problem that all your output from the first level analysis are still in their subject specific subject-space. Because of the huge differences in brain size and cortical structure, it is very important to transform the data of each subject from its individual subject-space into a common standardized reference-space. This process of transformation is what we call normalization and it consists of a rigid body transformation (translations and rotations) as well as of a affine transformation (zooms and shears). The most common template that subject data is normalized to is the <a class="reference external" href="http://www.bic.mni.mcgill.ca/ServicesAtlases/HomePage">MNI template</a>.</p>
 <p>There are many different approaches to when to normalize your data (e.g. before smoothing your data in preprocessing or after the estimation of your contrasts at the end of your first level analysis). I prefer to do the normalization after the first level model was estimated, as I don&#8217;t want to introduce to many unnecessary transformations in the subject specific first level analysis.</p>
-<p>There are also many different softwares that you could use to normalize your data and there is a lot of debate of which ones are better and which ones are worse. There is a very good paper by Klein et al. (2009), called <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S1053811908012974">Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration</a>, that summarizes and compares the main approaches. According to this paper and from my own personal experience, I highly recommend to use <a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> to normalize your data. I also recommend to not use SPM8&#8217;s normalization module (to see why check out <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf#page=9">SPM12&#8217;s release notes</a>, page 9, section &#8220;8.5. Old Normalise&#8221;). In contrary to SPM8, SPM12&#8217;s new normalization approach seems to do very good.</p>
+<p>There are also many different softwares that you could use to normalize your data and there is a lot of debate of which ones are better and which ones are worse. There is a very good paper by Klein et al. (2009), called <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2747506/">Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration</a>, that summarizes and compares the main approaches. According to this paper and from my own personal experience, I highly recommend to use <a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> to normalize your data. I also recommend to not use SPM8&#8217;s normalization module (to see why check out <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf#page=9">SPM12&#8217;s release notes</a>, page 9, section &#8220;8.5. Old Normalise&#8221;). In contrary to SPM8, SPM12&#8217;s new normalization approach seems to do very good.</p>
 <p>This section will show you how to use Nipype to do a normalization with ANTs (what I recommend) or with SPM12. I highly recommend the normalization with ANTs as it is much more accurate. But I also want to point out that the computation of ANTs normalization is much longer than the one with SPM12, which also does a good enough job.</p>
 <div class="section" id="normalize-your-data-with-ants">
 <h2>Normalize Your Data with ANTs<a class="headerlink" href="#normalize-your-data-with-ants" title="Permalink to this headline">¶</a></h2>
@@ -720,7 +721,7 @@
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download the code for the partial and complete normalization with ANTS as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_complete.py">example_fMRI_2_normalize_ANTS_complete.py</a> or <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_partial.py">example_fMRI_2_normalize_ANTS_partial.py</a></p>
+<p class="last">You can download the code for the partial and complete normalization with ANTS as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_complete.py">example_fMRI_2_normalize_ANTS_complete.py</a> or <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_partial.py">example_fMRI_2_normalize_ANTS_partial.py</a></p>
 </div>
 </div>
 <div class="section" id="visualize-the-workflow">
@@ -734,48 +735,48 @@
 <h3>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h3>
 <p>The resulting folder structure looks for the <strong>partial</strong> and <strong>complete</strong> approach combined as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_norm_ants/
-├── antsreg
-│   ├── sub001
-│   │   ├── transformComposite.h5
-│   │   ├── transformInverseComposite.h5
-│   │   ├── transform_InverseWarped.nii.gz
-│   │   └── transform_Warped.nii.gz
-│   ├── sub0..
-│   └── sub010
-├── warp_partial
-│   ├── sub001
-│   │   ├── apply2con0
-│   │   │   └── con_0001_out_trans.nii.gz
-│   │   ├── apply2con1
-│   │   │   └── con_0002_out_trans.nii.gz
-│   │   ├── apply2con2
-│   │   │   └── con_0003_out_trans.nii.gz
-│   │   ├── apply2con3
-│   │   │   └── con_0004_out_trans.nii.gz
-│   │   ├── apply2con4
-│   │   │   └── ess_0005_out_trans.nii.gz
-│   │   ├── apply2con5
-│   │   │   └── ess_0006_out_trans.nii.gz
-│   │   └── meanarun001_trans.nii
-│   ├── sub0..
-│   └── sub010
-└── warp_complete
-    ├── sub001
-    │   ├── meanarun001_trans.nii
-    │   ├── warpall0
-    │   │   └── con_0001_trans.nii
-    │   ├── warpall1
-    │   │   └── con_0002_trans.nii
-    │   ├── warpall2
-    │   │   └── con_0003_trans.nii
-    │   ├── warpall3
-    │   │   └── con_0004_trans.nii
-    │   ├── warpall4
-    │   │   └── ess_0005_trans.nii
-    │   └── warpall5
-    │       └── ess_0006_trans.nii
-    ├── sub0..
-    └── sub010
+<span class="p">|</span>-- antsreg
+<span class="p">|</span>   <span class="p">|</span>-- sub001
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- transformComposite.h5
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- transformInverseComposite.h5
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- transform_InverseWarped.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- transform_Warped.nii.gz
+<span class="p">|</span>   <span class="p">|</span>-- sub0..
+<span class="p">|</span>   <span class="p">|</span>-- sub010
+<span class="p">|</span>-- warp_partial
+<span class="p">|</span>   <span class="p">|</span>-- sub001
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- apply2con0
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0001_out_trans.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- apply2con1
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0002_out_trans.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- apply2con2
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0003_out_trans.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- apply2con3
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0004_out_trans.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- apply2con4
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- ess_0005_out_trans.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- apply2con5
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- ess_0006_out_trans.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meanarun001_trans.nii
+<span class="p">|</span>   <span class="p">|</span>-- sub0..
+<span class="p">|</span>   <span class="p">|</span>-- sub010
+<span class="p">|</span>-- warp_complete
+    <span class="p">|</span>-- sub001
+    <span class="p">|</span>   <span class="p">|</span>-- meanarun001_trans.nii
+    <span class="p">|</span>   <span class="p">|</span>-- warpall0
+    <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0001_trans.nii
+    <span class="p">|</span>   <span class="p">|</span>-- warpall1
+    <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0002_trans.nii
+    <span class="p">|</span>   <span class="p">|</span>-- warpall2
+    <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0003_trans.nii
+    <span class="p">|</span>   <span class="p">|</span>-- warpall3
+    <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0004_trans.nii
+    <span class="p">|</span>   <span class="p">|</span>-- warpall4
+    <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- ess_0005_trans.nii
+    <span class="p">|</span>   <span class="p">|</span>-- warpall5
+    <span class="p">|</span>       <span class="p">|</span>-- ess_0006_trans.nii
+    <span class="p">|</span>-- sub0..
+    <span class="p">|</span>-- sub010
 </pre></div>
 </div>
 </div>
@@ -978,7 +979,7 @@
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download the code for the normalization with SPM12 as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_SPM.py">example_fMRI_2_normalize_SPM.py</a></p>
+<p class="last">You can download the code for the normalization with SPM12 as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_SPM.py">example_fMRI_2_normalize_SPM.py</a></p>
 </div>
 </div>
 <div class="section" id="id7">
@@ -990,18 +991,18 @@
 <h3>Resulting Folder Structure<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>The resulting folder structure looks as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_norm_spm/
-└── normalized
-    ├── sub001
-    │   ├── wcon_0001_out.nii
-    │   ├── wcon_0002_out.nii
-    │   ├── wcon_0003_out.nii
-    │   ├── wcon_0004_out.nii
-    │   ├── wess_0005_out.nii
-    │   ├── wess_0006_out.nii
-    │   ├── wstruct.nii
-    │   └── y_struct.nii
-    ├── sub0..
-    └── sub010
+<span class="p">|</span>-- normalized
+    <span class="p">|</span>-- sub001
+    <span class="p">|</span>   <span class="p">|</span>-- wcon_0001_out.nii
+    <span class="p">|</span>   <span class="p">|</span>-- wcon_0002_out.nii
+    <span class="p">|</span>   <span class="p">|</span>-- wcon_0003_out.nii
+    <span class="p">|</span>   <span class="p">|</span>-- wcon_0004_out.nii
+    <span class="p">|</span>   <span class="p">|</span>-- wess_0005_out.nii
+    <span class="p">|</span>   <span class="p">|</span>-- wess_0006_out.nii
+    <span class="p">|</span>   <span class="p">|</span>-- wstruct.nii
+    <span class="p">|</span>   <span class="p">|</span>-- y_struct.nii
+    <span class="p">|</span>-- sub0..
+    <span class="p">|</span>-- sub010
 </pre></div>
 </div>
 </div>
@@ -1045,12 +1046,13 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
     <div class="footer">
     <p>
-        &copy; Copyright 2015, Michael Notter.
+        &copy; Copyright 2016, Michael Notter.
       Last updated on February 02, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>

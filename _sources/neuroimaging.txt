@@ -6,7 +6,7 @@ With this part I want to introduce you to the basics of analyzing neuroimaging d
 
 .. note::
 
-    This part serves as a brief introduction to neuroimaging. Further information on this topic can be found under the `Glossary <http://miykael.github.com/nipype-beginner-s-guide/glossary.html>`_ and `FAQ <http://miykael.github.com/nipype-beginner-s-guide/faq.html>`_ pages of this beginner's guide.
+    This part serves as a brief introduction to neuroimaging. Further information on this topic can be found under the `Glossary <http://miykael.github.io/nipype-beginner-s-guide/glossary.html>`_ and `FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html>`_ pages of this beginner's guide.
 
 
 Acquisition of MRI Data
@@ -117,7 +117,7 @@ dMRI (diffusion MRI)
     .. image:: images/tractography_small.gif
        :align: left
 
-Diffusion imaging is done to get information about the brain's white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make assumptions about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecule in this region will mostly diffuse (move) in a horizontal manner, as they can't move vertically because of this neural barrier. The diffusion itself is caused mostly by the `Brownian motion <en.wikipedia.org/wiki/Brownian_motion>`_.
+Diffusion imaging is done to get information about the brain's white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make assumptions about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecule in this region will mostly diffuse (move) in a horizontal manner, as they can't move vertically because of this neural barrier. The diffusion itself is caused mostly by the `Brownian motion <https://en.wikipedia.org/wiki/Brownian_motion>`_.
 
 .. only:: latex
 
@@ -125,15 +125,15 @@ Diffusion imaging is done to get information about the brain's white matter conn
        :width: 200pt
        :align: center
 
-There are many different diffusion measurements, such as **mean diffusivity** (MD), `fractional anisotropy <http://en.wikipedia.org/wiki/Fractional_anisotropy>`_ (FA) and `Tractography <en.wikipedia.org/wiki/Tractography>`_. Each measurement gives different insights into the brain's neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.
+There are many different diffusion measurements, such as **mean diffusivity** (MD), `fractional anisotropy <https://en.wikipedia.org/wiki/Fractional_anisotropy>`_ (FA) and `Tractography <https://en.wikipedia.org/wiki/Tractography>`_. Each measurement gives different insights into the brain's neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.
 
-Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance to reliably detect kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as **High-angular-resolution diffusion imaging** (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the `Diffusion MRI Wiki-homepage <http://en.wikipedia.org/wiki/Diffusion_MRI>`_.
+Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance to reliably detect kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as **High-angular-resolution diffusion imaging** (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the `Diffusion MRI Wiki-homepage <https://en.wikipedia.org/wiki/Diffusion_MRI>`_.
 
 
 Specifics of MRI Data
 =====================
 
-Many MRI scanners output their neuroimaging data in **DICOM** format, a standardized medical image format. But depending on the scanner, the format of your raw data can also be something else, e.g. **PAR/REC** on Philips scanners. This raw data is saved in `k-space <http://en.wikipedia.org/wiki/K-space_(MRI)>`_ with which most analysis packages can't work with. Therefore the raw data has to be converted into another, more common format, called `NIfTI <http://nifti.nimh.nih.gov/>`_. As many other MRI dataformats, **NIfTI**-files (``.nii``-file) consist also of an **image** and a **header** part.
+Many MRI scanners output their neuroimaging data in **DICOM** format, a standardized medical image format. But depending on the scanner, the format of your raw data can also be something else, e.g. **PAR/REC** on Philips scanners. This raw data is saved in `k-space <https://en.wikipedia.org/wiki/K-space_(MRI)>`_ with which most analysis packages can't work with. Therefore the raw data has to be converted into another, more common format, called `NIfTI <http://nifti.nimh.nih.gov/>`_. As many other MRI dataformats, **NIfTI**-files (``.nii``-file) consist also of an **image** and a **header** part.
 
 * The **image** is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.
 * The **header** contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the **image** part in a 3D coordinate system, etc.
@@ -273,7 +273,7 @@ Normalization is done to warp the data of a subject from the individual subject-
 .. only:: latex
 
     .. image:: images/normalization.png
-       :width: 500pt
+       :width: 465pt
        :align: left
 
 

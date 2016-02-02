@@ -66,7 +66,8 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
   
@@ -146,7 +147,7 @@
 <div class="section" id="download-the-tutorial-dataset">
 <h2>Download the tutorial dataset<a class="headerlink" href="#download-the-tutorial-dataset" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoOpenfmri.png"><img alt="_images/logoOpenfmri.png" class="align-left" src="_images/logoOpenfmri.png" style="width: 120pt;" /></a>
-<p><a class="reference external" href="https://openfmri.org/">OpenfMRI</a> is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found <a class="reference external" href="https://openfmri.org/data-sets">here</a>.</p>
+<p><a class="reference external" href="https://openfmri.org/">OpenfMRI</a> is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found on <a class="reference external" href="https://openfmri.org/dataset/">openfmri.org</a>.</p>
 <div class="section" id="download-the-dataset-from-openfmri">
 <h3>Download the dataset from OpenfMRI<a class="headerlink" href="#download-the-dataset-from-openfmri" title="Permalink to this headline">¶</a></h3>
 <p>I chose to use the dataset <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> as the tutorial dataset for this beginner’s guide because the dataset is complete, in good quality, the experiment is representative for most fMRI experiments and the dataset as a whole is with its 1.8GB not too big to download. To download the dataset go to the button of the <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> page and click on the link: <a class="reference external" href="https://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">Raw data on AWS</a>.</p>
@@ -163,28 +164,28 @@
 <p>The file you&#8217;ve just downloaded contains amongst others one anatomical and two functional MRI scans and the behavioral response and onsets of stimuli during those functional scans. The whole dataset consists of 26 subjects. Information about gender and age of each subject is stored in the <cite>demographics.txt</cite> file, also found in downloaded file. To reduce the total time of computation, this tutorial will only analyze the first 10 subjects of the whole dataset. Now let&#8217;s get ready.</p>
 <p>What we want is an experiment folder called <code class="docutils literal"><span class="pre">nipype_tutorial</span></code> that contains a folder called <code class="docutils literal"><span class="pre">data</span></code> where we save the raw data of the first 10 subjects into. In the end, the structure should be something like this</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
-└── data
-    ├── demographics.txt
-    ├── sub001
-    │   ├── behavdata_run001.txt
-    │   ├── behavdata_run002.txt
-    │   ├── onset_run001_cond001.txt
-    │   ├── onset_run001_cond002.txt
-    │   ├── onset_run001_cond003.txt
-    │   ├── onset_run001_cond004.txt
-    │   ├── onset_run002_cond001.txt
-    │   ├── onset_run002_cond002.txt
-    │   ├── onset_run002_cond003.txt
-    │   ├── onset_run002_cond004.txt
-    │   ├── run001.nii.gz
-    │   ├── run002.nii.gz
-    │   └── struct.nii.gz
-    ├── sub0..
-    └── sub010
-        ├── behav...
-        ├── onset_...
-        ├── run...
-        └── struct.nii.gz
+<span class="p">|</span>-- data
+    <span class="p">|</span>-- demographics.txt
+    <span class="p">|</span>-- sub001
+    <span class="p">|</span>   <span class="p">|</span>-- behavdata_run001.txt
+    <span class="p">|</span>   <span class="p">|</span>-- behavdata_run002.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run001_cond001.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run001_cond002.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run001_cond003.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run001_cond004.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run002_cond001.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run002_cond002.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run002_cond003.txt
+    <span class="p">|</span>   <span class="p">|</span>-- onset_run002_cond004.txt
+    <span class="p">|</span>   <span class="p">|</span>-- run001.nii.gz
+    <span class="p">|</span>   <span class="p">|</span>-- run002.nii.gz
+    <span class="p">|</span>   <span class="p">|</span>-- struct.nii.gz
+    <span class="p">|</span>-- sub0..
+    <span class="p">|</span>-- sub010
+        <span class="p">|</span>-- behav...
+        <span class="p">|</span>-- onset_...
+        <span class="p">|</span>-- run...
+        <span class="p">|</span>-- struct.nii.gz
 </pre></div>
 </div>
 <p>This can either be done manually or with the following code:</p>
@@ -273,7 +274,7 @@ rm -rf $TMP_DIR
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh">tutorial_1_create_dataset.sh</a></p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh">tutorial_1_create_dataset.sh</a></p>
 </div>
 </div>
 <div class="section" id="acquire-scan-and-experiment-parameters">
@@ -381,7 +382,7 @@ file_type      NIFTI-1+
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Just as a side note: The <cite>data_type</cite> of a NIfTI file tells you the amount of bits used to store the value of each voxel. <strong>INT16</strong> stands for <em>signed short</em> (16 bits/voxel), <strong>INT32</strong> stands for <em>signed int</em> (32 bits/voxel) and <strong>FLOAT64</strong> stands for <em>float</em> (64 bits/voxel). The more bits used for storing a voxel value the bigger the whole NIfTI file.</p>
-<p>If you want to change the data type of your image, either use Nipype&#8217;s function <code class="docutils literal"><span class="pre">ChangeDataType</span></code> found in the <code class="docutils literal"><span class="pre">nipype.interfaces.fsl.maths</span></code> package (read more <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype">here</a>) or use <code class="docutils literal"><span class="pre">fslmaths</span></code> directly to change the data_type to INT32 with the following command:</p>
+<p>If you want to change the data type of your image, either use Nipype&#8217;s function <code class="docutils literal"><span class="pre">ChangeDataType</span></code> found in the <code class="docutils literal"><span class="pre">nipype.interfaces.fsl.maths</span></code> package (read more <a class="reference external" href="http://nipy.org/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype">here</a>) or use <code class="docutils literal"><span class="pre">fslmaths</span></code> directly to change the data_type to INT32 with the following command:</p>
 <div class="last highlight-sh"><div class="highlight"><pre>fslmaths input.nii output.nii -odt int
 </pre></div>
 </div>
@@ -407,22 +408,22 @@ file_type      NIFTI-1+
 <div class="section" id="convert-your-data-into-nifti-format">
 <h3>Convert your data into NIfTI format<a class="headerlink" href="#convert-your-data-into-nifti-format" title="Permalink to this headline">¶</a></h3>
 <p>You don&#8217;t have to do this step if you&#8217;re using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common <code class="docutils literal"><span class="pre">NIfTI</span></code> format, but rather in a scanner specific format (e.g. <code class="docutils literal"><span class="pre">DICOM</span></code>, <code class="docutils literal"><span class="pre">PAR/REC</span></code>, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.</p>
-<p>Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use <a class="reference external" href="http://www.mccauslandcenter.sc.edu/mricro/mricron/">MRICron</a>&#8216;s <code class="docutils literal"><span class="pre">MRIConvert</span></code> (click <a class="reference external" href="http://lcni.uoregon.edu/~jolinda/MRIConvert/">here</a> for more information). But for this Beginner&#8217;s Guide we will use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, as it is rather easy to use and doesn&#8217;t require many steps.</p>
+<p>Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use <a class="reference external" href="http://www.mccauslandcenter.sc.edu/mricro/mricron/">MRICron</a>&#8216;s <a class="reference external" href="http://lcni.uoregon.edu/~jolinda/MRIConvert/">MRIConvert</a>. But for this Beginner&#8217;s Guide we will use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, as it is rather easy to use and doesn&#8217;t require many steps.</p>
 <p>But first, as always, be aware of your folder structure. So let&#8217;s assume that we&#8217;ve stored our dicoms in a folder called <code class="docutils literal"><span class="pre">raw_data</span></code> and that the folder structure looks something like this:</p>
 <div class="highlight-none"><div class="highlight"><pre>raw_dicom
-├── sub001
-│   ├── t1w_3d_MPRAGE
-│   │   ├── 00001.dcm
-│   │   ├── ...
-│   │   └── 00176.dcm
-│   ├── fmri_run1_long
-│   │   ├── 00001.dcm
-│   │   ├── ...
-│   │   └── 00240.dcm
-│   └── fmri_run2_long
-│       └── ...
-├── sub0..
-└── sub010
+|-- sub001
+|   |-- t1w_3d_MPRAGE
+|   |   |-- 00001.dcm
+|   |   |-- ...
+|   |   |-- 00176.dcm
+|   |-- fmri_run1_long
+|   |   |-- 00001.dcm
+|   |   |-- ...
+|   |   |-- 00240.dcm
+|   |-- fmri_run2_long
+|       |-- ...
+|-- sub0..
+|-- sub010
 </pre></div>
 </div>
 <p>This means, that we have one folder per subject with each containing another folder, one for the structural T1 weighted image and 2 for the functional T2 weighted images. The conversion of the dicom files in those folders is rather easy. If you use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, the command is as as follows: <code class="docutils literal"><span class="pre">mri_convert</span> <span class="pre">&lt;in</span> <span class="pre">volume&gt;</span> <span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code>. You have to replace <code class="docutils literal"><span class="pre">&lt;in</span> <span class="pre">volume&gt;</span></code> by the actual path to any one dicom file in the folder and <code class="docutils literal"><span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code> with the name for your outputfile.</p>
@@ -509,7 +510,7 @@ file_type      NIFTI-1+
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh">tutorial_2_recon_shell.sh</a></p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh">tutorial_2_recon_shell.sh</a></p>
 </div>
 </div>
 <div class="section" id="run-recon-all-on-the-tutorial-dataset-nipype-version">
@@ -633,7 +634,7 @@ file_type      NIFTI-1+
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download this code as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py">tutorial_2_recon_python.py</a></p>
+<p class="last">You can download this code as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py">tutorial_2_recon_python.py</a></p>
 </div>
 </div>
 </div>
@@ -642,15 +643,15 @@ file_type      NIFTI-1+
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve prepared our data and run the <code class="docutils literal"><span class="pre">recon-all</span></code> process the folder structure of our experiment folder should look as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
-├── rawdata <span class="o">(</span>optional<span class="o">)</span>
-├── data
-│   ├── sub001
-│   ├── sub0..
-│   └── sub010
-└── freesurfer
-    ├── sub001
-    ├── sub0..
-    └── sub010
+<span class="p">|</span>-- rawdata <span class="o">(</span>optional<span class="o">)</span>
+<span class="p">|</span>-- data
+<span class="p">|</span>   <span class="p">|</span>-- sub001
+<span class="p">|</span>   <span class="p">|</span>-- sub0..
+<span class="p">|</span>   <span class="p">|</span>-- sub010
+<span class="p">|</span>-- freesurfer
+    <span class="p">|</span>-- sub001
+    <span class="p">|</span>-- sub0..
+    <span class="p">|</span>-- sub010
 </pre></div>
 </div>
 </div>
@@ -693,12 +694,13 @@ file_type      NIFTI-1+
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
     <div class="footer">
     <p>
-        &copy; Copyright 2015, Michael Notter.
+        &copy; Copyright 2016, Michael Notter.
       Last updated on February 02, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>

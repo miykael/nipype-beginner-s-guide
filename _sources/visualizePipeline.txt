@@ -31,7 +31,7 @@ All types, except hierarchical and colored, create two graph files. The differen
 
 
 Tweak your visualization
-===============================
+========================
 
 There are two additional parameters ``format`` and ``simple_form`` that you can use to change your output graph. ``format`` can be used to change the output format of the image file to either ``png`` or ``svg``. ``simple_form`` determines if the node name shown in the visualization is either of the form ``nodename (package)`` when set to ``True`` or ``nodename.Class.package`` when set to ``False``.
 
@@ -63,7 +63,7 @@ To illustrate, on the left you can see a simple graph of the visualization type 
 Examples of each visualization type
 ===================================
 
-The graphs shown below are visualizations of the **first level analysis pipeline** or ``metaflow`` from the section: `How To Build A First Level Pipeline <http://miykael.github.com/nipype-beginner-s-guide/firstLevel.html>`_
+The graphs shown below are visualizations of the **first level analysis pipeline** or ``metaflow`` from the section: `How To Build A First Level Pipeline <http://miykael.github.io/nipype-beginner-s-guide/firstLevel.html>`_
 
 
 ``orig`` - simple graph
@@ -99,7 +99,7 @@ The detailed graph of the visualization type ``orig`` shows the ``metaflow`` to 
 
     .. image:: images/graph_orig_detailed.png
        :align: center
-       :width: 500pt
+       :width: 465pt
 
 
 ``flat`` - simple graph
@@ -153,7 +153,7 @@ The detailed graph of the visualization type ``exec`` doesn't really show you an
 
     .. image:: images/graph_exec_simple.png
        :align: center
-       :width: 500pt
+       :width: 465pt
 
 
 ``exec`` - detailed graph
@@ -171,7 +171,7 @@ The detailed graph of the visualization type ``exec`` shows you the nodes of the
 
     .. image:: images/graph_exec_detailed.png
        :align: center
-       :width: 500pt
+       :width: 465pt
 
 
 .. note::
@@ -201,7 +201,7 @@ In this example you see that the ``metaflow`` contains a ``preproc`` and a ``l1a
 
 
 ``colored`` - simple graph
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The graph of the visualization type ``colored`` shows the ``metaflow`` as seen with the visualization type ``hierarchical`` but color codes the different ``hierarchical`` levels as well as the connections between and within those levels with different colors. 
 

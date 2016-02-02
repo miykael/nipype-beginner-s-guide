@@ -66,7 +66,8 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
   
@@ -180,7 +181,7 @@
             
   <div class="section" id="how-to-build-a-pipeline">
 <h1>How To Build A Pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">¶</a></h1>
-<p>So, you&#8217;ve <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/installation.html">installed Nipype</a> on your system? And you&#8217;ve <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/prepareData.html">prepared your dataset</a> for the analysis? This means that you are ready to start this tutorial.</p>
+<p>So, you&#8217;ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html">installed Nipype</a> on your system? And you&#8217;ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/prepareData.html">prepared your dataset</a> for the analysis? This means that you are ready to start this tutorial.</p>
 <p>The following section is a general step by step introduction on how to build a pipeline. It will first introduce you to the building blocks of any pipeline, show you on an example how a basic pipeline is implemented, how to read the output and most importantly how to tackle problems. At the end you should understand what a pipeline is, how the key parts interact with each other and how to solve certain issues. Short, you should be able to build any kind of neuroimaging pipeline that you like. So let&#8217;s get started!</p>
 <div class="section" id="important-building-blocks">
 <h2>Important building blocks<a class="headerlink" href="#important-building-blocks" title="Permalink to this headline">¶</a></h2>
@@ -256,7 +257,7 @@
 <p>A node is an object that represents a certain interface function, for example SPM&#8217;s <code class="docutils literal"><span class="pre">Realign</span></code> method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes.</p>
 <div class="section" id="input-and-output-fields">
 <h5>Input and Output Fields<a class="headerlink" href="#input-and-output-fields" title="Permalink to this headline">¶</a></h5>
-<p>Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/index.html">here</a>. So how do you know which input and output field a given node has? Don&#8217;t worry. There&#8217;s an easy way how you can figure out which input fields are <strong>mandatory</strong> or <strong>optional</strong> and which output fields you can use.</p>
+<p>Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">here</a>. So how do you know which input and output field a given node has? Don&#8217;t worry. There&#8217;s an easy way how you can figure out which input fields are <strong>mandatory</strong> or <strong>optional</strong> and which output fields you can use.</p>
 <p>Let&#8217;s assume that we want to know more about FSL&#8217;s function <code class="docutils literal"><span class="pre">SmoothEstimate</span></code>. First, make sure that you&#8217;ve imported the spm module with the following python command <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype.interfaces.fsl</span> <span class="pre">as</span> <span class="pre">fsl</span></code>.</p>
 <p>Now that we have access to FSL, we simply can run <code class="docutils literal"><span class="pre">fsl.SmoothEstimate.help()</span></code>. This will give us the following output:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -376,7 +377,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you want to brows through the different functions, or just want to view the help information in a nicer way, go to the official homepage and either navigate to <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/index.html">Interfaces and Algorithms</a> or <a class="reference external" href="http://nipy.sourceforge.net/nipype/documentation.html">Documentation</a>.</p>
+<p class="last">If you want to brows through the different functions, or just want to view the help information in a nicer way, go to the official homepage and either navigate to <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">Interfaces and Algorithms</a> or <a class="reference external" href="http://nipy.org/nipype/documentation.html">Documentation</a>.</p>
 </div>
 </div>
 <div class="section" id="default-value-of-inputs">
@@ -591,7 +592,7 @@
 </td></tr></table></div>
 <p>The usage of Iterables causes the execution workflow to be splitted into as many different clones of itself as needed. In this case, three execution workflows would be created, where only the FWHM smoothing kernel would be different. The advantage of this is that all three workflows can be executed in parallel.</p>
 <p>Usually, Iterables are used to feed the different subject names into the workflow, causing your workflow to create as many execution workflows as subjects. And depending on your system, all of those workflows could be executed in parallel.</p>
-<p>For a more detailed explanation of Iterables go to the <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#iterables">Iterables section</a> on the official homepage.</p>
+<p>For a more detailed explanation of Iterables go to the <a class="reference external" href="http://nipy.org/nipype/users/mapnode_and_iterables.html#iterables">Iterables section</a> on the official homepage.</p>
 </div>
 </div>
 <div class="section" id="mapnodes-and-iterfields">
@@ -601,7 +602,7 @@
 <div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>First, you have to use <code class="docutils literal"><span class="pre">MapNode</span></code> instead of <code class="docutils literal"><span class="pre">Node</span></code>. Second, you also have to define which of the input fields can receive multiple parameters at once. An input field with this special properties is also called an <code class="docutils literal"><span class="pre">iterfield</span></code>. For a more detailed explanation go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield">MapNode and iterfield</a> on the official homepage.</p>
+<p>First, you have to use <code class="docutils literal"><span class="pre">MapNode</span></code> instead of <code class="docutils literal"><span class="pre">Node</span></code>. Second, you also have to define which of the input fields can receive multiple parameters at once. An input field with this special properties is also called an <code class="docutils literal"><span class="pre">iterfield</span></code>. For a more detailed explanation go to <a class="reference external" href="http://nipy.org/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield">MapNode and iterfield</a> on the official homepage.</p>
 </div>
 <div class="section" id="individual-nodes">
 <h4>Individual Nodes<a class="headerlink" href="#individual-nodes" title="Permalink to this headline">¶</a></h4>
@@ -667,7 +668,7 @@
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">For more information about the function <code class="docutils literal"><span class="pre">Function</span></code>, see <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/function_interface.html">this section</a> on the official homepage.</p>
+<p class="last">For more information about the function <code class="docutils literal"><span class="pre">Function</span></code>, see <a class="reference external" href="http://nipy.org/nipype/users/function_interface.html">this section</a> on the official homepage.</p>
 </div>
 </div>
 <div class="section" id="function-free-nodes">
@@ -776,7 +777,7 @@
 </div>
 <div class="section" id="modify-values-between-connections">
 <h5>Modify Values between Connections<a class="headerlink" href="#modify-values-between-connections" title="Permalink to this headline">¶</a></h5>
-<p>Sometimes you want to modify the output of one node before sending it on to the next node. This can be done in two ways. Either use an individual node as described <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes">above</a>, or plant a function directly between the output and input of two nodes. To do the second approach, do as follows:</p>
+<p>Sometimes you want to modify the output of one node before sending it on to the next node. This can be done in two ways. Either use an individual node as described <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#individual-nodes">above</a>, or plant a function directly between the output and input of two nodes. To do the second approach, do as follows:</p>
 <p>First, define your function that modifies the data as you want and returns the new output:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -841,18 +842,18 @@
 <p>This is probably one of the more important and difficult sections of a workflow script, as most of the errors and issues you can encounter with your pipeline are mostly based on some kind of error in the specification of the workflow input or output stream. So make sure that this section is correct.</p>
 <p>Before you can tell your computer where it can find your data, you yourself have to understand where and in which format your data is stored at. If you use the tutorial dataset, than your folder structure look as follows:</p>
 <div class="highlight-none"><div class="highlight"><pre>nipype_tutorial
-├── data
-│   ├── sub001
-│   │   ├── ...
-│   │   ├── run001.nii.gz
-│   │   ├── run002.nii.gz
-│   │   └── struct.nii.gz
-│   ├── sub002
-│   └── sub003
-└── freesurfer
-    ├── sub001
-    ├── sub002
-    └── sub003
+|-- data
+|   |-- sub001
+|   |   |-- ...
+|   |   |-- run001.nii.gz
+|   |   |-- run002.nii.gz
+|   |   |-- struct.nii.gz
+|   |-- sub002
+|   |-- sub003
+|-- freesurfer
+    |-- sub001
+    |-- sub002
+    |-- sub003
 </pre></div>
 </div>
 <p>So this means that your scans are stored in a zipped NIfTI format (i.e. <code class="docutils literal"><span class="pre">nii.gz</span></code>) and that you can find them as follows: <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/subjectname/scanimage.nii.gz</span></code></p>
@@ -894,7 +895,7 @@
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Go to the official homepage to read more about <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html#datagrabber">DataGrabber</a> and <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/select_files.html">SelectFiles</a>.</p>
+<p class="last">Go to the official homepage to read more about <a class="reference external" href="http://nipy.org/nipype/users/grabbing_and_sinking.html#datagrabber">DataGrabber</a> and <a class="reference external" href="http://nipy.org/nipype/users/select_files.html">SelectFiles</a>.</p>
 </div>
 </div>
 <div class="section" id="output-stream">
@@ -939,10 +940,10 @@
 </pre></div>
 </td></tr></table></div>
 <p>This substition will change <code class="docutils literal"><span class="pre">'_subject_id_sub002/con_0001_warped_out.nii'</span></code> into <code class="docutils literal"><span class="pre">'sub002/con_0001_final.nii'</span></code>.</p>
-<p>The DataSink is really useful to keep control over your storage capacity. If you store all the important outputs of your workflow in this folder, you can delete the workflow working directory after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a working directory at all. For more information go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/config_file.html">Configuration File</a>.</p>
+<p>The DataSink is really useful to keep control over your storage capacity. If you store all the important outputs of your workflow in this folder, you can delete the workflow working directory after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a working directory at all. For more information go to <a class="reference external" href="http://nipy.org/nipype/users/config_file.html">Configuration File</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Go to the official homepage to read more about <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html#datasink">DataSink</a>.</p>
+<p class="last">Go to the official homepage to read more about <a class="reference external" href="http://nipy.org/nipype/users/grabbing_and_sinking.html#datasink">DataSink</a>.</p>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -953,7 +954,7 @@
 <div class="section" id="run-workflow">
 <h3>Run Workflow<a class="headerlink" href="#run-workflow" title="Permalink to this headline">¶</a></h3>
 <p>After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the <code class="docutils literal"><span class="pre">run()</span></code> method of the workflow.</p>
-<p>As already described in the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/nipype.html#execution-plugins">introduction section</a>, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.</p>
+<p>As already described in the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/nipype.html#execution-plugins">introduction section</a>, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.</p>
 <p>Here are just a few example how you can run your workflow:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -978,7 +979,7 @@
 <p>But the nice thing about Nipype is that it will always check if a node has already been run and if the input parameters have changed or not. Only nodes that have different input parameters will be rerun. Nipype&#8217;s hashing mechanism ensures that none of the nodes are executed during a new run if the inputs remain the same. This keeps the computation time to its minimum.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">More about Plugins and how you can run your pipeline in a distributed system can be found on the official homepage under <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/plugins.html">Using Nipype Plugins</a>.</p>
+<p class="last">More about Plugins and how you can run your pipeline in a distributed system can be found on the official homepage under <a class="reference external" href="http://nipy.org/nipype/users/plugins.html">Using Nipype Plugins</a>.</p>
 </div>
 </div>
 </div>
@@ -1226,10 +1227,10 @@
 <span class="n">preproc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
-<p>As you see, we&#8217;ve executed the function <code class="docutils literal"><span class="pre">write_graph()</span></code> before we&#8217;ve run the pipeline. <code class="docutils literal"><span class="pre">write_graph()</span></code> is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/visualizePipeline.html">How To Visualize A Pipeline</a>.</p>
+<p>As you see, we&#8217;ve executed the function <code class="docutils literal"><span class="pre">write_graph()</span></code> before we&#8217;ve run the pipeline. <code class="docutils literal"><span class="pre">write_graph()</span></code> is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html">How To Visualize A Pipeline</a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download the code for this preprocessing pipeline as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_3_first_steps.py">tutorial_3_first_steps.py</a></p>
+<p class="last">You can download the code for this preprocessing pipeline as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_3_first_steps.py">tutorial_3_first_steps.py</a></p>
 </div>
 </div>
 </div>
@@ -1241,20 +1242,20 @@
 <p>The working directory contains many temporary files that might be not so important for your further analysis. That&#8217;s why I highly recommend to save all the important outputs of your workflow in a DataSink folder. So that everything important is at one place.</p>
 <p>The following folder structure represents the working directory of the above preprocessing workflow:</p>
 <div class="highlight-sh"><div class="highlight"><pre>workingdir_firstSteps
-└── preproc
-    ├── _session_id_run001_subject_id_sub001
-    │   ├── art
-    │   ├── datasink
-    │   ├── gunzip
-    │   ├── realign
-    │   ├── selectfiles
-    │   ├── sliceTiming
-    │   └── smooth
-    ├── _session_id_run001_subject_id_sub002
-    ├── _session_id_run001_subject_id_sub003
-    ├── _session_id_run002_subject_id_sub001
-    ├── _session_id_run002_subject_id_sub002
-    └── _session_id_run002_subject_id_sub003
+<span class="p">|</span>-- preproc
+    <span class="p">|</span>-- _session_id_run001_subject_id_sub001
+    <span class="p">|</span>   <span class="p">|</span>-- art
+    <span class="p">|</span>   <span class="p">|</span>-- datasink
+    <span class="p">|</span>   <span class="p">|</span>-- gunzip
+    <span class="p">|</span>   <span class="p">|</span>-- realign
+    <span class="p">|</span>   <span class="p">|</span>-- selectfiles
+    <span class="p">|</span>   <span class="p">|</span>-- sliceTiming
+    <span class="p">|</span>   <span class="p">|</span>-- smooth
+    <span class="p">|</span>-- _session_id_run001_subject_id_sub002
+    <span class="p">|</span>-- _session_id_run001_subject_id_sub003
+    <span class="p">|</span>-- _session_id_run002_subject_id_sub001
+    <span class="p">|</span>-- _session_id_run002_subject_id_sub002
+    <span class="p">|</span>-- _session_id_run002_subject_id_sub003
 </pre></div>
 </div>
 <p>Even though the working directory is most often only temporary, it contains many relevant files to be found and explore. Following are some of the highlights:</p>
@@ -1267,32 +1268,32 @@
 <h3>Output Folder<a class="headerlink" href="#output-folder" title="Permalink to this headline">¶</a></h3>
 <p>The output folder contains exactly the files that we sent to the DataSink. Each node contains its own folder and in each of those folder a subfolder for each subject is created.</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_firstSteps
-├── art
-│   ├── run001_sub001
-│   │   ├── art.rarun001_outliers.txt
-│   │   └── plot.rarun001.png
-│   ├── run001_sub002
-│   ├── run001_sub003
-│   ├── run002_sub001
-│   ├── run002_sub002
-│   └── run002_sub003
-├── realign
-│   ├── run001_sub001
-│   │   ├── meanarun001.nii
-│   │   └── rp_arun001.txt
-│   ├── run001_sub002
-│   ├── run001_sub003
-│   ├── run002_sub001
-│   ├── run002_sub002
-│   └── run002_sub003
-└── smooth
-    ├── run001_sub001
-    │   └── srarun001.nii
-    ├── run001_sub002
-    ├── run001_sub003
-    ├── run002_sub001
-    ├── run002_sub002
-    └── run002_sub003
+<span class="p">|</span>-- art
+<span class="p">|</span>   <span class="p">|</span>-- run001_sub001
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- art.rarun001_outliers.txt
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- plot.rarun001.png
+<span class="p">|</span>   <span class="p">|</span>-- run001_sub002
+<span class="p">|</span>   <span class="p">|</span>-- run001_sub003
+<span class="p">|</span>   <span class="p">|</span>-- run002_sub001
+<span class="p">|</span>   <span class="p">|</span>-- run002_sub002
+<span class="p">|</span>   <span class="p">|</span>-- run002_sub003
+<span class="p">|</span>-- realign
+<span class="p">|</span>   <span class="p">|</span>-- run001_sub001
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meanarun001.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- rp_arun001.txt
+<span class="p">|</span>   <span class="p">|</span>-- run001_sub002
+<span class="p">|</span>   <span class="p">|</span>-- run001_sub003
+<span class="p">|</span>   <span class="p">|</span>-- run002_sub001
+<span class="p">|</span>   <span class="p">|</span>-- run002_sub002
+<span class="p">|</span>   <span class="p">|</span>-- run002_sub003
+<span class="p">|</span>-- smooth
+    <span class="p">|</span>-- run001_sub001
+    <span class="p">|</span>   <span class="p">|</span>-- srarun001.nii
+    <span class="p">|</span>-- run001_sub002
+    <span class="p">|</span>-- run001_sub003
+    <span class="p">|</span>-- run002_sub001
+    <span class="p">|</span>-- run002_sub002
+    <span class="p">|</span>-- run002_sub003
 </pre></div>
 </div>
 <p>The goal of this output folder is to store all important outputs in this folder. This allows you to delete the working directory and get rid of its many unnecessary temporary files.</p>
@@ -1582,13 +1583,13 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 <p>From this output you can see in the lower half the same error stack of the crash and the exact description of what is wrong, as we&#8217;ve seen in the terminal output. But in the first half you also have additional information of the nodes input, which might help to solve some problems.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Note that the information about the exact input values of a node can also be obtained from the <code class="docutils literal"><span class="pre">report.rst</span></code> file, stored in the nodes subfolder under the working directory. More about this <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#working-directory">here</a>.</p>
+<p class="last">Note that the information about the exact input values of a node can also be obtained from the <code class="docutils literal"><span class="pre">report.rst</span></code> file, stored in the nodes subfolder under the working directory. More about this later under <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#working-directory">Working Directory</a>.</p>
 </div>
 </div>
 <div class="section" id="interface-issues">
 <h3>Interface Issues<a class="headerlink" href="#interface-issues" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes the most basic errors can occur because Nipype doesn&#8217;t know where the correct files are. Two very common issues are for example that FreeSurfer can&#8217;t find the subject folder or that MATLAB doesn&#8217;t find SPM.</p>
-<p>Before you do anything else, please make sure again that you&#8217;ve installed FreeSurfer and SPM12 as described in the installation section, <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/installation.html#freesurfer">here</a> and <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/installation.html#spm12">here</a>.</p>
+<p>Before you do anything else, please make sure again that you&#8217;ve installed FreeSurfer and SPM12 as described in the installation section, <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html#freesurfer">How to install FreeSurfer</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html#spm12">How to install SPM</a>.</p>
 <p>But don&#8217;t worry if the problem still exists. There are two nice ways how you can tell Nipype where FreeSurfer subject folders are stored at and where MATLAB can find SPM12. Just add the following code to the beginning of your script:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1715,7 +1716,7 @@ File:pm_jobman
 Name:pyscript_slicetiming
 Line:459
 File:ç
-Name:Ū
+Name:U
 Line:
 Return code: 0
 Interface MatlabCommand failed to run.
@@ -1734,7 +1735,7 @@ Interface SliceTiming failed to run.
 <p>This error message doesn&#8217;t tell you directly what is wrong. Unfortunately, Nipype can&#8217;t go deep enough into SPM&#8217;s code and figure out what is wrong, because SPM itself doesn&#8217;t tell us what&#8217;s wrong. But <strong>line 25-26</strong> tells us that SPM has some issues with finding the appropriate files.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">For more information about Errors go to the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/index.html#support">Support section</a> of this beginner&#8217;s guide.</p>
+<p class="last">For more information about Errors go to the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/index.html#support">Support section</a> of this beginner&#8217;s guide.</p>
 </div>
 </div>
 </div>
@@ -1777,12 +1778,13 @@ Interface SliceTiming failed to run.
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
     <div class="footer">
     <p>
-        &copy; Copyright 2015, Michael Notter.
+        &copy; Copyright 2016, Michael Notter.
       Last updated on February 02, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>

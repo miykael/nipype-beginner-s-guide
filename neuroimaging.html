@@ -66,7 +66,8 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
   
@@ -155,7 +156,7 @@
 <p>With this part I want to introduce you to the basics of analyzing neuroimaging data. I want to give you a brief explanation of how the neuroimaging data is acquired, how the data is prepared for analysis (also called preprocessing) and, eventually, how you can test your data on a model based on your hypothesis.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This part serves as a brief introduction to neuroimaging. Further information on this topic can be found under the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a> and <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a> pages of this beginner&#8217;s guide.</p>
+<p class="last">This part serves as a brief introduction to neuroimaging. Further information on this topic can be found under the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/glossary.html">Glossary</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/faq.html">FAQ</a> pages of this beginner&#8217;s guide.</p>
 </div>
 <div class="section" id="acquisition-of-mri-data">
 <h2>Acquisition of MRI Data<a class="headerlink" href="#acquisition-of-mri-data" title="Permalink to this headline">¶</a></h2>
@@ -198,14 +199,14 @@
 <div class="section" id="dmri-diffusion-mri">
 <h3>dMRI (diffusion MRI)<a class="headerlink" href="#dmri-diffusion-mri" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/tractography_small.gif" class="align-left" src="_images/tractography_small.gif" />
-<p>Diffusion imaging is done to get information about the brain&#8217;s white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make assumptions about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecule in this region will mostly diffuse (move) in a horizontal manner, as they can&#8217;t move vertically because of this neural barrier. The diffusion itself is caused mostly by the <a class="reference external" href="en.wikipedia.org/wiki/Brownian_motion">Brownian motion</a>.</p>
-<p>There are many different diffusion measurements, such as <strong>mean diffusivity</strong> (MD), <a class="reference external" href="http://en.wikipedia.org/wiki/Fractional_anisotropy">fractional anisotropy</a> (FA) and <a class="reference external" href="en.wikipedia.org/wiki/Tractography">Tractography</a>. Each measurement gives different insights into the brain&#8217;s neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.</p>
-<p>Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance to reliably detect kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as <strong>High-angular-resolution diffusion imaging</strong> (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the <a class="reference external" href="http://en.wikipedia.org/wiki/Diffusion_MRI">Diffusion MRI Wiki-homepage</a>.</p>
+<p>Diffusion imaging is done to get information about the brain&#8217;s white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make assumptions about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecule in this region will mostly diffuse (move) in a horizontal manner, as they can&#8217;t move vertically because of this neural barrier. The diffusion itself is caused mostly by the <a class="reference external" href="https://en.wikipedia.org/wiki/Brownian_motion">Brownian motion</a>.</p>
+<p>There are many different diffusion measurements, such as <strong>mean diffusivity</strong> (MD), <a class="reference external" href="https://en.wikipedia.org/wiki/Fractional_anisotropy">fractional anisotropy</a> (FA) and <a class="reference external" href="https://en.wikipedia.org/wiki/Tractography">Tractography</a>. Each measurement gives different insights into the brain&#8217;s neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.</p>
+<p>Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance to reliably detect kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as <strong>High-angular-resolution diffusion imaging</strong> (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the <a class="reference external" href="https://en.wikipedia.org/wiki/Diffusion_MRI">Diffusion MRI Wiki-homepage</a>.</p>
 </div>
 </div>
 <div class="section" id="specifics-of-mri-data">
 <h2>Specifics of MRI Data<a class="headerlink" href="#specifics-of-mri-data" title="Permalink to this headline">¶</a></h2>
-<p>Many MRI scanners output their neuroimaging data in <strong>DICOM</strong> format, a standardized medical image format. But depending on the scanner, the format of your raw data can also be something else, e.g. <strong>PAR/REC</strong> on Philips scanners. This raw data is saved in <a class="reference external" href="http://en.wikipedia.org/wiki/K-space_(MRI)">k-space</a> with which most analysis packages can&#8217;t work with. Therefore the raw data has to be converted into another, more common format, called <a class="reference external" href="http://nifti.nimh.nih.gov/">NIfTI</a>. As many other MRI dataformats, <strong>NIfTI</strong>-files (<code class="docutils literal"><span class="pre">.nii</span></code>-file) consist also of an <strong>image</strong> and a <strong>header</strong> part.</p>
+<p>Many MRI scanners output their neuroimaging data in <strong>DICOM</strong> format, a standardized medical image format. But depending on the scanner, the format of your raw data can also be something else, e.g. <strong>PAR/REC</strong> on Philips scanners. This raw data is saved in <a class="reference external" href="https://en.wikipedia.org/wiki/K-space_(MRI)">k-space</a> with which most analysis packages can&#8217;t work with. Therefore the raw data has to be converted into another, more common format, called <a class="reference external" href="http://nifti.nimh.nih.gov/">NIfTI</a>. As many other MRI dataformats, <strong>NIfTI</strong>-files (<code class="docutils literal"><span class="pre">.nii</span></code>-file) consist also of an <strong>image</strong> and a <strong>header</strong> part.</p>
 <ul class="simple">
 <li>The <strong>image</strong> is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.</li>
 <li>The <strong>header</strong> contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the <strong>image</strong> part in a 3D coordinate system, etc.</li>
@@ -438,12 +439,13 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
     <div class="footer">
     <p>
-        &copy; Copyright 2015, Michael Notter.
+        &copy; Copyright 2016, Michael Notter.
       Last updated on February 02, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>

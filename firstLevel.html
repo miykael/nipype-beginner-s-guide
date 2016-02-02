@@ -66,7 +66,8 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
   
@@ -147,12 +148,12 @@
 </a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The normalization of the first level output into a common reference space (e.g. MNI-space) will not be done by this metaflow. This because I want to dedicate a whole section on different ways on <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/normalize.html">how to normalize your data</a>. Normalizing your data is very important for the analysis on the group level and a good normalization can be the difference between super results or none at all.</p>
+<p class="last">The normalization of the first level output into a common reference space (e.g. MNI-space) will not be done by this metaflow. This because I want to dedicate a whole section on different ways on <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/normalize.html">how to normalize your data</a>. Normalizing your data is very important for the analysis on the group level and a good normalization can be the difference between super results or none at all.</p>
 </div>
 </div>
 <div class="section" id="write-your-pipeline-script">
 <h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">¶</a></h2>
-<p>Before we can start with writing a pipeline script, we first have to make sure that we have all necessary information. We know how the structure of the metaflow should look like from the previous section. But what are the experiment specific parameters? Lets assume that we use the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/prepareData.html">tutorial dataset</a> with the ten subjects <code class="docutils literal"><span class="pre">sub001</span></code> to <code class="docutils literal"><span class="pre">sub010</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>. We know from the openfmri homepage <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> that this experiment has a a TR of 2.0 seconds and that each volume of the functional data consists of 40 slices, acquired in an ascending interleaved slice order. And we know that we can find condition specific onset times for each subject in the subject folder in our data folder, e.g. <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/sub001/</span></code>. So let&#8217;s start!</p>
+<p>Before we can start with writing a pipeline script, we first have to make sure that we have all necessary information. We know how the structure of the metaflow should look like from the previous section. But what are the experiment specific parameters? Lets assume that we use the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/prepareData.html">tutorial dataset</a> with the ten subjects <code class="docutils literal"><span class="pre">sub001</span></code> to <code class="docutils literal"><span class="pre">sub010</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>. We know from the openfmri homepage <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> that this experiment has a a TR of 2.0 seconds and that each volume of the functional data consists of 40 slices, acquired in an ascending interleaved slice order. And we know that we can find condition specific onset times for each subject in the subject folder in our data folder, e.g. <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/sub001/</span></code>. So let&#8217;s start!</p>
 <div class="section" id="import-modules">
 <h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
 <p>First we have to import all necessary modules. Which modules you have to import becomes clear while you’re adding specific nodes.</p>
@@ -380,7 +381,7 @@
                  <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
-<p>If you are wondering how we know which parameters to specify and which connections to establish. It is simple: First, specify or connect all mandatory inputs of each node. Second, add the additional inputs that your data requires. For more informations about what is mandatory and what&#8217;s not, go either to <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">Interfaces and Algorithms</a> or use the <code class="docutils literal"><span class="pre">.help()</span></code> method (e.g. <code class="docutils literal"><span class="pre">realign.help()</span></code>), as shown <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#input-and-output-fields">here</a>.</p>
+<p>If you are wondering how we know which parameters to specify and which connections to establish. It is simple: First, specify or connect all mandatory inputs of each node. Second, add the additional inputs that your data requires. For more informations about what is mandatory and what&#8217;s not, go either to <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">Interfaces and Algorithms</a> or use the <code class="docutils literal"><span class="pre">.help()</span></code> method (e.g. <code class="docutils literal"><span class="pre">realign.help()</span></code>), as shown <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#input-and-output-fields">here</a>.</p>
 </div>
 <div class="section" id="create-first-level-analysis-pipeline">
 <h3>Create first level analysis pipeline<a class="headerlink" href="#create-first-level-analysis-pipeline" title="Permalink to this headline">¶</a></h3>
@@ -665,8 +666,8 @@
             <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">54.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">76.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">144.0</span><span class="p">,</span> <span class="mf">154.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p><strong>Line 36 to 50</strong> is the part of the <code class="docutils literal"><span class="pre">get_subject_info</span></code> function that has to be included in almost all first level analysis workflows. For more information see <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/model_specification.html">Model Specification for First Level fMRI Analysis</a>. Important to know are the following things: The for loop <code class="docutils literal"><span class="pre">for</span> <span class="pre">r</span> <span class="pre">in</span> <span class="pre">range(2)</span></code> in line 40 is set to 2 because we have two runs per subject. The idea is to create an output variable <code class="docutils literal"><span class="pre">subjectinfo</span></code> that contains a <code class="docutils literal"><span class="pre">Bunch</span></code> object for each run. The content of this <code class="docutils literal"><span class="pre">Bunch</span></code> object depends on the subject and contains the name of the conditions, onsets of them, duration of each event, as well as possible amplitude modifications, temporal or polynomial derivatives or regressors. <strong>Note:</strong> The duration of all events per condition were set to <code class="docutils literal"><span class="pre">[0]</span></code>, as this assumes that the events should be modeled as impulses.</p>
-<p>Now that the tricky part is done, we only need to create an additional node that applies this function and has the value of the <code class="docutils literal"><span class="pre">subjectinfo</span></code> variable as an output field. This can be done with a function node (as shown in the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes">previous section</a>)</p>
+<p><strong>Line 36 to 50</strong> is the part of the <code class="docutils literal"><span class="pre">get_subject_info</span></code> function that has to be included in almost all first level analysis workflows. For more information see <a class="reference external" href="http://nipy.org/nipype/users/model_specification.html">Model Specification for First Level fMRI Analysis</a>. Important to know are the following things: The for loop <code class="docutils literal"><span class="pre">for</span> <span class="pre">r</span> <span class="pre">in</span> <span class="pre">range(2)</span></code> in line 40 is set to 2 because we have two runs per subject. The idea is to create an output variable <code class="docutils literal"><span class="pre">subjectinfo</span></code> that contains a <code class="docutils literal"><span class="pre">Bunch</span></code> object for each run. The content of this <code class="docutils literal"><span class="pre">Bunch</span></code> object depends on the subject and contains the name of the conditions, onsets of them, duration of each event, as well as possible amplitude modifications, temporal or polynomial derivatives or regressors. <strong>Note:</strong> The duration of all events per condition were set to <code class="docutils literal"><span class="pre">[0]</span></code>, as this assumes that the events should be modeled as impulses.</p>
+<p>Now that the tricky part is done, we only need to create an additional node that applies this function and has the value of the <code class="docutils literal"><span class="pre">subjectinfo</span></code> variable as an output field. This can be done with a function node (as shown in the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#individual-nodes">previous section</a>)</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -828,67 +829,67 @@
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">You can download the code for this first level pipeline as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_1_first_level.py">example_fMRI_1_first_level.py</a></p>
+<p class="last">You can download the code for this first level pipeline as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_1_first_level.py">example_fMRI_1_first_level.py</a></p>
 </div>
 </div>
 </div>
 <div class="section" id="visualize-your-pipeline">
 <h2>Visualize your pipeline<a class="headerlink" href="#visualize-your-pipeline" title="Permalink to this headline">¶</a></h2>
-<p>The visualization of this graph can be seen in all different graph types under the section <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/visualizePipeline.html">How to visualize a pipeline</a> or as a colored graph at the beginning of this section.</p>
+<p>The visualization of this graph can be seen in all different graph types under the section <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html">How to visualize a pipeline</a> or as a colored graph at the beginning of this section.</p>
 </div>
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> our folder structure should look like this:</p>
 <p>After we’ve executed the first level workflow we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_fMRI_example_1st</span></code> which contains all files created during the execution of the metaflow, and the output folder <code class="docutils literal"><span class="pre">output_fMRI_example_1st</span></code> which contains all the files that we sent to the DataSink. Let’s take a closer look at the DataSink folder:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_1st
-├── bbregister
-│   ├── sub001
-│   │   ├── meanarun001_bbreg_sub001.dat
-│   │   └── meanarun001_bbreg_sub001.mat
-│   ├── sub0..
-│   └── sub010
-├── contrasts
-│   ├── sub001
-│   │   ├── con_0001.nii
-│   │   ├── con_0002.nii
-│   │   ├── con_0003.nii
-│   │   ├── con_0004.nii
-│   │   ├── con_0005.nii
-│   │   ├── ess_0005.nii
-│   │   ├── ess_0006.nii
-│   │   ├── _mriconvert0
-│   │   │   └── con_0001_out.nii.gz
-│   │   ├── _mriconvert1
-│   │   │   └── con_0002_out.nii.gz
-│   │   ├── _mriconvert2
-│   │   │   └── con_0003_out.nii.gz
-│   │   ├── _mriconvert3
-│   │   │   └── con_0004_out.nii.gz
-│   │   ├── _mriconvert4
-│   │   │   └── ess_0005_out.nii.gz
-│   │   ├── _mriconvert5
-│   │   │   └── ess_0006_out.nii.gz
-│   │   ├── spmF_0005.nii
-│   │   ├── spmF_0006.nii
-│   │   ├── SPM.mat
-│   │   ├── spmT_0001.nii
-│   │   ├── spmT_0002.nii
-│   │   ├── spmT_0003.nii
-│   │   └── spmT_0004.nii
-│   ├── sub0..
-│   └── sub010
-└── preprocout
-    ├── sub001
-    │   ├── art.rarun001_outliers.txt
-    │   ├── art.rarun002_outliers.txt
-    │   ├── brainmask_thresh.nii
-    │   ├── meanarun001.nii
-    │   ├── plot.rarun001.png
-    │   ├── plot.rarun002.png
-    │   ├── rp_arun001.txt
-    │   └── rp_arun002.txt
-    ├── sub0..
-    └── sub010
+<span class="p">|</span>-- bbregister
+<span class="p">|</span>   <span class="p">|</span>-- sub001
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meanarun001_bbreg_sub001.dat
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meanarun001_bbreg_sub001.mat
+<span class="p">|</span>   <span class="p">|</span>-- sub0..
+<span class="p">|</span>   <span class="p">|</span>-- sub010
+<span class="p">|</span>-- contrasts
+<span class="p">|</span>   <span class="p">|</span>-- sub001
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0001.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0002.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0003.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0004.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0005.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- ess_0005.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- ess_0006.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- _mriconvert0
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0001_out.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- _mriconvert1
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0002_out.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- _mriconvert2
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0003_out.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- _mriconvert3
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- con_0004_out.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- _mriconvert4
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- ess_0005_out.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- _mriconvert5
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- ess_0006_out.nii.gz
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- spmF_0005.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- spmF_0006.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- SPM.mat
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- spmT_0001.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- spmT_0002.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- spmT_0003.nii
+<span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- spmT_0004.nii
+<span class="p">|</span>   <span class="p">|</span>-- sub0..
+<span class="p">|</span>   <span class="p">|</span>-- sub010
+<span class="p">|</span>-- preprocout
+    <span class="p">|</span>-- sub001
+    <span class="p">|</span>   <span class="p">|</span>-- art.rarun001_outliers.txt
+    <span class="p">|</span>   <span class="p">|</span>-- art.rarun002_outliers.txt
+    <span class="p">|</span>   <span class="p">|</span>-- brainmask_thresh.nii
+    <span class="p">|</span>   <span class="p">|</span>-- meanarun001.nii
+    <span class="p">|</span>   <span class="p">|</span>-- plot.rarun001.png
+    <span class="p">|</span>   <span class="p">|</span>-- plot.rarun002.png
+    <span class="p">|</span>   <span class="p">|</span>-- rp_arun001.txt
+    <span class="p">|</span>   <span class="p">|</span>-- rp_arun002.txt
+    <span class="p">|</span>-- sub0..
+    <span class="p">|</span>-- sub010
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">bbregister</span></code> folder contains two files that both contain the registration information between the functional mean image and the anatomical image. The <code class="docutils literal"><span class="pre">.dat</span></code> file is the registration matrix in FreeSurfer and the <code class="docutils literal"><span class="pre">.mat</span></code> file in FSL format.</p>
@@ -941,12 +942,13 @@
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/faq.html">FAQ</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/glossary.html">Glossary</a>|</li>
         <li><a href="https://github.com/miykael/nipype-beginner-s-guide/">github</a>|</li>
-        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li> 
+        <li><a href="http://nipy.org/nipype/">Nipype</a>|</li>
+        <li><a href="http://miykael.github.io/nipype-beginner-s-guide/help.html">Help</a>|</li> 
       </ul>
     </div>
     <div class="footer">
     <p>
-        &copy; Copyright 2015, Michael Notter.
+        &copy; Copyright 2016, Michael Notter.
       Last updated on February 02, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>
