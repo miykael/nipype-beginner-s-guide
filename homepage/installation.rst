@@ -1,6 +1,6 @@
-=========================
+===========================
 Download and Install Nipype
-=========================
+===========================
 
 All you need to know to download and install Nipype can be found on the official homepage under `Download and Install <http://nipy.sourceforge.net/nipype/users/install.html>`_. There you find a link to the newest version and more information about which dependencies are necessary or recommended.
 
@@ -27,7 +27,7 @@ Before we start, make sure that your Ubuntu system is up to date with the follow
 
 
 Anaconda
-====================
+========
 
 .. image:: _static/logo/logoAnaconda.png
    :width: 90pt
@@ -98,7 +98,7 @@ If you see no `ImportError` message, everything is fine and we can get on to the
 
 
 NeuroDebian
-====================
+===========
 
 .. image:: _static/logo/logoNeurodebian.png
    :width: 70pt
@@ -127,10 +127,10 @@ Now you are read to install Nipype, FSL, AFNI and more.
 
 
 Nipype
-====================
+======
 
 Install Nipype (and other python dependencies)
---------------------
+----------------------------------------------
 
 .. image:: _static/logo/logoNipype.png
    :width: 100pt
@@ -157,13 +157,13 @@ If you also want to install other python based dependencies use the following co
 
 
 Test Nipype
----------------
+-----------
 
 To test if everything worked fine and if you're able to use Nipype go into an IPython environment and import nipype with the command: ``import nipype``. If you see no `ImportError` message, everything is set up correctly.
 
 
 Upgrade Nipype (and other python dependencies)
---------------------
+----------------------------------------------
 
 If you want to be sure that you have the newest version or update a certain package use the ``pip install`` command with the flag ``--upgrade``. So, if you want to upgrade Nipype to the newest version use the following command:
 
@@ -179,7 +179,7 @@ If you want to upgrade all other required python dependencies as well use the fo
 
 
 Upgrade Nipype to the developer version
---------------------
+---------------------------------------
 
 If you want or have to upgrade Nipype to the developer version us the following steps. Such an upgrade is only recommended to people who know what they are doing or need a certain fix that isn't distributed yet in the general Nipype version.
 
@@ -200,16 +200,16 @@ The most current developer version of Nipype can be found on `GitHub <https://gi
     If you haven't set up a GitHub account yet but don't know how to set everything up, see this link: `Set Up Git <https://help.github.com/articles/set-up-git>`_.
 
 
-=========================
+===============================
 Download and Install Interfaces
-=========================
+===============================
 
 
 FSL
-====================
+===
 
 Download and Installation
----------------
+-------------------------
 
 .. image:: _static/logo/logoFSL.jpg
    :width: 70pt
@@ -228,7 +228,7 @@ Just run the following command:
 Otherwise, go through the official FSL installation guide, found `here <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation>`_.
 
 Configuration
----------------
+-------------
 
 Before you can run FSL, your system first needs to know where the software is installed at. On a ubuntu system, this is usually under ``/usr/share/fsl``. Therefore, add the following code to your `.bashrc` file. (To open and edit your `.bashrc` file on Ubuntu, us the following command: ``gedit ~/.bashrc``)
 
@@ -242,13 +242,13 @@ Before you can run FSL, your system first needs to know where the software is in
 
 
 Test FSL
----------------
+--------
 
 To test if FSL is correctly installed, open a new terminal and type in the command ``fsl``. If everything was set up correctly you should see the FSL GUI with the version number in the header. In my case this is version 5.0.7.
 
 
 FreeSurfer
-====================
+==========
 
 .. image:: _static/logo/logoFreeSurfer.jpg
    :height: 55pt
@@ -326,7 +326,7 @@ After setting everything up, we can test if FreeSurfer is set up correctly and r
 
 
 MATLAB
-====================
+======
 
 .. image:: _static/logo/logoMatlab.png
    :width: 70pt
@@ -348,7 +348,7 @@ To test if everything is set up correctly. Open a new Terminal and type in the c
 
 
 SPM12
-====================
+=====
 
 .. only:: html
 
@@ -374,7 +374,7 @@ As of 1st October 2014, SPM released it's newest version `SPM12 <http://www.fil.
 
 
 Download and Installation
----------------
+-------------------------
 
 To download and install the newest version `SPM12 <http://www.fil.ion.ucl.ac.uk/spm/software/spm12/>`_ do as follows:
 
@@ -414,13 +414,13 @@ To download and install the newest version `SPM12 <http://www.fil.ion.ucl.ac.uk/
 
 
 Test SPM12
----------------
+----------
 
 To test if SPM12 is set up correctly, open MATLAB and type in the command ``spm fmri``. This can also be achieved in one command: ``matlab -r "spm fmri"``.
 
 
 ANTs
-====================
+====
 
 .. image:: _static/logo/logoANTS.png
    :width: 70pt
@@ -495,7 +495,7 @@ The **second** way to get ANTs on your system takes a bit longer, but guarantees
 
 
 AFNI
-====================
+====
 
 .. image:: _static/logo/logoAFNI.png
    :width: 70pt
@@ -514,14 +514,14 @@ To be able to run AFNI make sure to add the following lines of code to your ``.b
 
 
 Additional interfaces
-====================
+=====================
 
 There are many additional interfaces, such as `Camino <http://cmic.cs.ucl.ac.uk/camino/>`_, `MRtrix <http://www.brain.org.au/software/mrtrix/index.html>`_, `Slicer <http://slicer.org/>`_, `ConnectomeViewer <http://www.connectomics.org/viewer/>`_, for which I haven't created an installation guide yet. This is also due to my lack of knowledge about them. Feel free to help me to complete this list.
 
 
-=========================
+====================
 Clean up your System
-=========================
+====================
 
 Now that everything is downloaded and installed, make sure that everything is correctly updated with the following command:
 
@@ -538,9 +538,9 @@ Now that everything is downloaded and installed, make sure that everything is co
     sudo apt-get remove && sudo apt-get clean
 
 
-=========================
+================
 Test your System
-=========================
+================
 
 Nipype is installed, recommended interfaces are ready to go and so are you. But before you want to start your first steps with Nipype, I recommend you to test your system first. To do this open up an IPython environment (open a terminal and start IPython with the command ``ipython``) and run the following code:
 

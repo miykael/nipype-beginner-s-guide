@@ -1,6 +1,6 @@
-===========================
+====================
 Prepare your Dataset
-===========================
+====================
 
 We can't start to learn how to use Nipype before we don't have any data to work on. The fact that you are interested in using Nipype implies that you probably already have access to an MRI dataset. You are of course free to do your first steps with Nipype directly on your own dataset. But if you're new to the topic or want to be sure that you get the same results like I do, I recommend to use a tutorial dataset which we can find over on `OpenfMRI <https://openfmri.org/>`_.
 

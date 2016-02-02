@@ -1,9 +1,9 @@
-=========================
+==============
 Help & Support
-=========================
+==============
 
 How Nipype Can Help You
-=========================
+=======================
 
 Often times the first trouble with Nipype arise because of misunderstanding a node or its function. This can be because a mandatory input was forgotten, a input or output field is not what you thought it was or something similar. That's why the first step when running into a problem while building a pipeline should be to check out the description of the interface that causes the trouble. I've already described this `here <https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#nodes>`_ but to recap:
 
@@ -13,7 +13,7 @@ Also, I highly recommend to check out Nipype's official `Documentation <http://n
 
 
 How to Help Yourself
-=========================
+====================
 
 If you have any **questions about or comments to this beginner's guide**, don't hesitate to leave a comment on the bottom of the corresponding homepage (you don't need an account to do so) or contact me directly by e-mail under: `miykaelnotter@gmail.com <miykaelnotter@gmail.com>`_.
 
@@ -23,7 +23,7 @@ If you have any **questions about Nipype or neuroimaging** itself please go dire
 
 
 How to Help Me
-=========================
+==============
 
 The list of interfaces Nipype supports grows everyday more and more and the best practice to analyze MRI data is changing all the time. It's impossible for one person to keep track of all of those softwares and to know the state of the art analysis. That's why I'm very much counting on the input and support of the community to help me to make this beginner's guide as detailed and complete as possible.
 
@@ -33,7 +33,7 @@ The best way to help me is to fork my repo on github (`http://github.com/miykael
 
 
 How to Read Crash Files
-=========================
+=======================
 
 Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see `this section <https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes>`_. In this example the name of the crash file is ``crash-20141018-140440-mnotter-art.b0.pklz``.
 

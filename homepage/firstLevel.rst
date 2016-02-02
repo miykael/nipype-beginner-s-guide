@@ -1,6 +1,6 @@
-===================================
+=======================================================
 How To Build A Pipeline For A First Level fMRI Analysis
-===================================
+=======================================================
 
 In this section you will learn how to create a workflow that does a **first level analysis** on fMRI data. There are multiple ways how you can do this, as there are different ways and strategies to preprocess your data and different ways to create a model of your design. So keep in mind that the workflow in this section is just an example and may not suite your specific experiment or design. Having said that, it still contains the most common steps used in a first level analysis.
 
@@ -67,7 +67,7 @@ First we have to import all necessary modules. Which modules you have to import 
 
 
 Specify interface behaviors
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To make sure that the MATLAB and FreeSurfer interface run correctly, add the following code to your script.
 
@@ -397,7 +397,7 @@ Now that the tricky part is done, we only need to create an additional node that
 
 
 Establish Input & Output Stream
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As always, our metaflow needs an input stream to have data to work and an output stream to know where to store the computed output. This can be done with the following three nodes:
 

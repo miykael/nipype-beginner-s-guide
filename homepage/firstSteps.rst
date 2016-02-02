@@ -23,7 +23,7 @@ So, make yourself ready, start an IPython environment (type ``ipython`` into the
 
 
 Import modules
-*************************
+**************
 
 The first thing you should do in any script is to import the modules you want to use in your script. In our case, most modules are actually interfaces to other software packages (e.g. FSL, FreeSurfer or SPM) and can be found in the ``nipype`` module.
 
@@ -50,7 +50,7 @@ And if you want to import multiple functions or classes from a module use the fo
 
 
 Specify variables
-*************************
+*****************
 
 There are always variables that change between analysis or that are specific for a certain computer structure. That's why it is important to keep them all together and at one place. This allows you to be fast, flexible and to keep the changes in your script just to this section.
 
@@ -78,18 +78,18 @@ For example:
 
 
 Specify Nodes
-*************************
+*************
 
 It is impossible to build a pipeline without any scaffold or objects to build with. Therefore, we first have to create those scaffolds (i.e. ``workflows``) and objects (i.e. ``nodes`` or other ``workflows``).
 
 Nodes
------------------------
+-----
 
 A node is an object that represents a certain interface function, for example SPM's ``Realign`` method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes. 
 
 
 Input and Output Fields
-......................
+.......................
 
 Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go `here <http://nipy.sourceforge.net/nipype/interfaces/index.html>`_. So how do you know which input and output field a given node has? Don't worry. There's an easy way how you can figure out which input fields are **mandatory** or **optional** and which output fields you can use.
 
@@ -170,7 +170,7 @@ The first few lines *(line 1-3)* give as a short explanation of the function, fo
 
 
 Default value of Inputs
-......................
+.......................
 
 As you've might seen in the example above *(line 32)*, some input fields have Nipype specific default values. To figure out which default values are used for which functions, use the method ``input_spec()``.
 
@@ -206,7 +206,7 @@ This will give you the following output:
 
 
 Stand-alone nodes
------------------------
+-----------------
 
 Nodes are most of the time used inside a pipeline. But it is also possible to use one just by itself. Such a "stand-alone" node is often times very convenient when you run a python script and want to use just one function of a given dependency package, e.g. FSL, and are not really interested in creating an elaborate workflow.
 
@@ -245,7 +245,7 @@ Such a "stand-alone" node is also a good opportunity to introduce the implementa
 
 
 Workflow Nodes
------------------------
+--------------
 
 Most of the times when you create a node you want to use it later on in a workflow. The creation of such a "workflow" node is only partly different from the creation of "stand-alone" nodes. The implementation of a "workflow" node has always the following structure:
 
@@ -310,7 +310,7 @@ For example: If you want to create a node called ``realign`` that runs SPM's ``R
 
 
 Iterables
-......................
+.........
 
 Iterables are a special kind of input fields and any input field of any Node can be turned into an Iterable. Iterables are very important for the repeated execution of a workflow with slightly changed parameters.
 
@@ -353,7 +353,7 @@ First, you have to use ``MapNode`` instead of ``Node``. Second, you also have to
 
 
 Individual Nodes
------------------------
+----------------
 
 There are situations where you need to create your own Node that is independent from any other interface or function provided by Nipype. You need a Node with your specific input and output fields, that does what you want. Well, this can be achieved with Nipype's ``Function`` function from the ``utility`` interface.
 
@@ -399,7 +399,7 @@ Here is how it's done:
 
 
 Function Free Nodes
------------------------
+-------------------
 
 Sometimes you need a Node without a specific interface function. A Node that just distributes values. For example, when you need to feed the voxel dimension and the different subject names into your pipeline. Don't worry that you'll need a complex node to do this. You only need a Node that can receive the input ``[3.0, 3.0, 4.0]`` and ``['sub001','sub002','sub003']`` and distribute those inputs to the workflow.
 
@@ -425,10 +425,10 @@ Such a way of identity mapping input to output can be achieved with Nipype's own
 
 
 Specify Workflows & Connect Nodes
-*************************
+*********************************
 
 Workflows
------------------------
+---------
 
 Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each either in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?
 
@@ -442,7 +442,7 @@ This is all you have to do.
 
 
 Establish Connections
------------------------
+---------------------
 
 But just creating workflows is not enough. You also have to tell it which nodes to connect with which other nodes and therefore specify the direction and order of execution.
 
@@ -487,7 +487,7 @@ If you visualize the advanced connection example as a detailed graph, which will
 
 
 Connect Workflows to Workflows
-......................
+..............................
 
 Sometimes you also want to connect a workflow to another workflow. For example a preprocessing pipeline to a analysis pipeline. This, so that you can execute the whole pipeline as one. To do this, you can't just connect the nodes to each other. You have to additionally connect the workflows to themselves.
 
@@ -506,7 +506,7 @@ As you see, the main difference to the connections between nodes is that you con
 
 
 Add stand-alone Nodes to Workflow
-......................
+.................................
 
 There is also the option to add nodes to a workflow without really connecting them to any other nodes or workflow. This can be done with the ``add_nodes`` function.
 
@@ -520,7 +520,7 @@ For example
 
 
 Modify Values between Connections
-......................
+.................................
 
 Sometimes you want to modify the output of one node before sending it on to the next node. This can be done in two ways. Either use an individual node as described `above <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes>`_, or plant a function directly between the output and input of two nodes. To do the second approach, do as follows:
 
@@ -564,7 +564,7 @@ If you want to insert more than one parameter into the function do as follows:
 
 
 Clone Existing Workflows
------------------------
+------------------------
 
 Sometimes you want to reuse a pipeline you've already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the ``clone`` command.
 
@@ -584,7 +584,7 @@ If you want to change some parameters of the pipeline after cloning, just  speci
 
 
 Input & Output Stream
-*************************
+*********************
 
 This is probably one of the more important and difficult sections of a workflow script, as most of the errors and issues you can encounter with your pipeline are mostly based on some kind of error in the specification of the workflow input or output stream. So make sure that this section is correct.
 
@@ -610,7 +610,7 @@ So this means that your scans are stored in a zipped NIfTI format (i.e. ``nii.gz
 
 
 Input Stream
-----------------------
+------------
 
 Now there are two different functions that you can use to specify the folder structure of the input stream. One of them is called ``SelectFiles`` and the other one is called ``DataGrabber``. Both are string based and easy to use once understood. Nonetheless, I would recommend to use ``SelectFiles``, as it is much more straight forward to use:
 
@@ -641,7 +641,7 @@ Now there are two different functions that you can use to specify the folder str
 
 
 Output Stream
-----------------------
+-------------
 
 In contrast to this, the definition of the output stream is rather simple. You only have to created a ``DataSink``. A ``DataSink`` is a node that specifies in which output folder all the relevant results should be stored at.
 
@@ -695,7 +695,7 @@ The DataSink is really useful to keep control over your storage capacity. If you
 
 
 Run Workflow
-*************************
+************
 
 After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the ``run()`` method of the workflow.
 
@@ -727,7 +727,7 @@ But the nice thing about Nipype is that it will always check if a node has alrea
 
 
 Example Script
-===================
+==============
 
 Let's try to summarize what we've learned by building a short preprocessing pipeline. The following script assumes that you're using the tutorial dataset with the three subjects ``sub001``, ``sub002`` and ``sub003``, each having two functional scans ``run001.nii.gz`` and ``run002.nii.gz``.
 
@@ -749,7 +749,7 @@ First, import all necessary modules. Which modules you have to import becomes cl
 
 
 Specify variables
-*******************
+*****************
 
 Specify all variables that you want to use later in the script. This makes the modification between experiments easy.
 
@@ -773,7 +773,7 @@ Specify all variables that you want to use later in the script. This makes the m
 
 
 Specify Nodes
-*******************
+*************
 
 Let's now create all the nodes we need for this preprocessing workflow:
 
@@ -820,7 +820,7 @@ Let's now create all the nodes we need for this preprocessing workflow:
 
 
 Specify Workflows & Connect Nodes
-*******************
+*********************************
 
 After we've created all the nodes we can create our preprocessing workflow and connect the nodes to this workflow.
 
@@ -847,7 +847,7 @@ After we've created all the nodes we can create our preprocessing workflow and c
 
 
 Input & Output Stream
-*******************
+*********************
 
 Before we can run our preprocessing workflow, we first have to specify the input and output stream. To do this, we first have to create the distributor node ``Infosource``, the input node ``SelectFiles`` and the output node ``DataSink``. The purpose of ``Infosource`` is to tell ``SelectFiles`` over which elements of its input stream it should iterate over.
 
@@ -895,7 +895,7 @@ To finish it all up, those three nodes now have to be connected to the rest of t
 
 
 Run Workflow
-*******************
+************
 
 The running of the pipeline is a rather simple thing. Just use the ``.run()`` command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.
 
@@ -914,13 +914,13 @@ As you see, we've executed the function ``write_graph()`` before we've run the p
 
 
 Resulting Folder Structure
-===================
+==========================
 
 After we've executed the preprocessing pipeline we have two new folders under ``~/nipype_tutorial``. The working directory ``workingdir_firstSteps`` which contains all files created during the execution of the workflow, and the output folder ``output_firstSteps`` which contains all the files that we sent to the DataSink. Let's take a closer look at those two folders.
 
 
 Working Directory
-********************
+*****************
 
 The working directory contains many temporary files that might be not so important for your further analysis. That's why I highly recommend to save all the important outputs of your workflow in a DataSink folder. So that everything important is at one place.
 
@@ -952,7 +952,7 @@ Even though the working directory is most often only temporary, it contains many
 
 
 Output Folder
-********************
+*************
 
 The output folder contains exactly the files that we sent to the DataSink. Each node contains its own folder and in each of those folder a subfolder for each subject is created.
 
@@ -991,13 +991,13 @@ The goal of this output folder is to store all important outputs in this folder.
 
 
 Common Issues, Problems and Crashes
-===================
+===================================
 
 As so often in life, there is always something that doesn't go as planed. And this is the same for Nipype. There are many reasons why a pipeline can cause problems or even crash. But there's always a way to figure out what went wrong and what needs to be fixed.
 
 
 Best Case Scenario - Everything Works
-****************************
+*************************************
 
 Before we take a look at how to find errors, let's take a look at a correct working pipeline. The following is the abbreviated terminal output of the preprocessing workflow from above. For readability reasons, lines containing the execution timestamps are not shown:
 
@@ -1040,7 +1040,7 @@ This output shows you the chronological execution of the pipeline, run in parall
 
 
 It Crashes, But Where is the Problem?
-****************************
+*************************************
 
 In the beginning when you're not used to reading Nipype's terminal output it can be tricky to find the actual error. But most of the time, Nipype tells you exactly what's wrong.
 
@@ -1112,7 +1112,7 @@ Always at the end of the output is a section that summarizes the whole crash. In
 
 
 Read the Crash File
-****************************
+*******************
 
 But sometimes, just knowing where and because of what the crash happened is not enough. You also need to know what the actual values of the crashed nodes were, to see if perhaps some input values were not transmitted correctly.
 
@@ -1178,7 +1178,7 @@ From this output you can see in the lower half the same error stack of the crash
 
 
 Interface Issues
-*******************
+****************
 
 Sometimes the most basic errors can occur because Nipype doesn't know where the correct files are. Two very common issues are for example that FreeSurfer can't find the subject folder or that MATLAB doesn't find SPM.
 
@@ -1199,7 +1199,7 @@ But don't worry if the problem still exists. There are two nice ways how you can
 
 
 Be Aware of Your Data
-*******************
+*********************
 
 Sometimes the biggest issue with your code is that you try to force things that can't work.
 

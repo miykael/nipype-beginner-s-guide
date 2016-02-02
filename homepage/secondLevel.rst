@@ -1,6 +1,6 @@
-====================================
+========================================================
 How To Build A Pipeline For A Second Level fMRI Analysis
-====================================
+========================================================
 
 In this section you will learn how to create a workflow that does a **second level analysis** on fMRI data. There are again multiple ways how you can do this, but the most simple on is to check if your contrasts from the first level analysis are still significant on the group-level a.k.a. the 2nd level.
 
@@ -16,7 +16,7 @@ If you've already done the previous sections, you know how this works. We first 
 
 
 Import modules and specify interface behaviors
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
    :linenos:
@@ -57,7 +57,7 @@ Define experiment specific parameters
 
 
 Create nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 We don't need many nodes for a simple second level analysis. In fact they are the same as the ones we used for the first level analysis. We create a simple T-Test, estimate it and look at a simple mean contrast, i.e. a contrast that shows what the group mean activation of a certain first level contrast is.
 
@@ -80,7 +80,7 @@ We don't need many nodes for a simple second level analysis. In fact they are th
 
 
 Create the pipeline and connect nodes to it
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: py
    :linenos:
@@ -103,7 +103,7 @@ Create the pipeline and connect nodes to it
 
 
 Establish Input & Output Stream
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The creation of the I/O stream is as usual. But because I showed you three ways to normalize your data in the previous section, be aware that you have to point the ``SelectFiles`` node to the right input folder. Your option for the ``SelectFiles`` input template are as follows:
 

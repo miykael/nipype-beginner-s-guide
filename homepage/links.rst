@@ -1,10 +1,10 @@
-=====
+=============================================
 Links to Nipype, Programming and Neuroimaging
-=====
+=============================================
 
 
 Nipype
-================
+======
 
 - `Nipype <http://nipy.org/nipype/>`_: The official homepage contains all about Nipype that you want to know.
 - `Michael Waskom <https://github.com/mwaskom/nipype_concepts>`_ has written very nice introductions about `Workflows <http://nbviewer.ipython.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb>`_, `Interfaces <http://nbviewer.ipython.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb>`_ and `Iteration <http://nbviewer.ipython.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb>`_.
@@ -12,7 +12,7 @@ Nipype
 
 
 Programming: Python, Git & more
-================
+===============================
 
 I highly recommend to use `Sublime Text 3 <http://www.sublimetext.com/3>`_ to write and edit your scripts. It's a really good and cool looking text editor with many helpful plugins, like the `Anaconda Plugion <http://damnwidget.github.io/anaconda/>`_ for example.
 
@@ -30,7 +30,7 @@ Learn Python
 
 
 Learn Git
-------------
+---------
 
 - `Got 15 minutes and want to learn Git? <https://try.github.io/levels/1/challenges/1>`_: Github's own git tutorial. It's fun and very short.
 - `Git Real <http://gitreal.codeschool.com/>`_ on `Code School <https://www.codeschool.com/>`_: An interactive tutorial about GIT
@@ -38,13 +38,13 @@ Learn Git
 
 
 Learn Unix Shell
-------------
+----------------
 
 - `the Unix Shell <http://software-carpentry.org/v5/novice/shell/index.html>`_: If you're new to Linux, here's a quick starter guide by software carpentry that teaches you the basics.
 
 
 Neuroimaging
-================
+============
 
 - `Neurostars.org <https://neurostars.org/>`_: If you have any questions about Neuroinformatics, this is the place to go! 
 - `Design efficiency in FMRI <http://imaging.mrc-cbu.cam.ac.uk/imaging/DesignEfficiency>`_: A nice and detailed guide on how to design a good fMRI study.

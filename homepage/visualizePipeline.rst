@@ -31,7 +31,7 @@ All types, except hierarchical and colored, create two graph files. The differen
 
 
 Tweak your visualization
-===============================
+========================
 
 There are two additional parameters ``format`` and ``simple_form`` that you can use to change your output graph. ``format`` can be used to change the output format of the image file to either ``png`` or ``svg``. ``simple_form`` determines if the node name shown in the visualization is either of the form ``nodename (package)`` when set to ``True`` or ``nodename.Class.package`` when set to ``False``.
 
@@ -201,7 +201,7 @@ In this example you see that the ``metaflow`` contains a ``preproc`` and a ``l1a
 
 
 ``colored`` - simple graph
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The graph of the visualization type ``colored`` shows the ``metaflow`` as seen with the visualization type ``hierarchical`` but color codes the different ``hierarchical`` levels as well as the connections between and within those levels with different colors. 
 
