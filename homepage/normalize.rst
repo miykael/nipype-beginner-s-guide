@@ -6,7 +6,7 @@ Before you can start with a second level analysis you are facing the problem tha
 
 There are many different approaches to when to normalize your data (e.g. before smoothing your data in preprocessing or after the estimation of your contrasts at the end of your first level analysis). I prefer to do the normalization after the first level model was estimated, as I don't want to introduce to many unnecessary transformations in the subject specific first level analysis.
 
-There are also many different softwares that you could use to normalize your data and there is a lot of debate of which ones are better and which ones are worse. There is a very good paper by Klein et al. (2009), called `Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration <http://www.sciencedirect.com/science/article/pii/S1053811908012974>`_, that summarizes and compares the main approaches. According to this paper and from my own personal experience, I highly recommend to use `ANTs <http://stnava.github.io/ANTs/>`_ to normalize your data. I also recommend to not use SPM8's normalization module (to see why check out `SPM12's release notes <http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf#page=9>`_, page 9, section "8.5. Old Normalise"). In contrary to SPM8, SPM12's new normalization approach seems to do very good.
+There are also many different softwares that you could use to normalize your data and there is a lot of debate of which ones are better and which ones are worse. There is a very good paper by Klein et al. (2009), called `Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration <http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2747506/>`_, that summarizes and compares the main approaches. According to this paper and from my own personal experience, I highly recommend to use `ANTs <http://stnava.github.io/ANTs/>`_ to normalize your data. I also recommend to not use SPM8's normalization module (to see why check out `SPM12's release notes <http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf#page=9>`_, page 9, section "8.5. Old Normalise"). In contrary to SPM8, SPM12's new normalization approach seems to do very good.
 
 This section will show you how to use Nipype to do a normalization with ANTs (what I recommend) or with SPM12. I highly recommend the normalization with ANTs as it is much more accurate. But I also want to point out that the computation of ANTs normalization is much longer than the one with SPM12, which also does a good enough job.
 
@@ -412,7 +412,7 @@ Now, let's run the workflow with the following code:
 
 .. hint::
 
-   You can download the code for the partial and complete normalization with ANTS as a script here: `example_fMRI_2_normalize_ANTS_complete.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_complete.py>`_ or `example_fMRI_2_normalize_ANTS_partial.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_partial.py>`_
+   You can download the code for the partial and complete normalization with ANTS as a script here: `example_fMRI_2_normalize_ANTS_complete.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_complete.py>`_ or `example_fMRI_2_normalize_ANTS_partial.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_partial.py>`_
 
 
 Visualize the workflow
@@ -638,7 +638,7 @@ Now, let's run the workflow with the following code:
 
 .. hint::
 
-   You can download the code for the normalization with SPM12 as a script here: `example_fMRI_2_normalize_SPM.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_SPM.py>`_
+   You can download the code for the normalization with SPM12 as a script here: `example_fMRI_2_normalize_SPM.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_SPM.py>`_
 
 
 Visualize the workflow

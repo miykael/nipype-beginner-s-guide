@@ -2,7 +2,7 @@
 Download and Install Nipype
 ===========================
 
-All you need to know to download and install Nipype can be found on the official homepage under `Download and Install <http://nipy.sourceforge.net/nipype/users/install.html>`_. There you find a link to the newest version and more information about which dependencies are necessary or recommended.
+All you need to know to download and install Nipype can be found on the official homepage under `Download and Install <http://nipy.org/nipype/users/install.html>`_. There you find a link to the newest version and more information about which dependencies are necessary or recommended.
 
 Installing Nipype as described on the official homepage should be rather easy for most users. There are some tricky steps that sometimes seem to be less straight forward. But don't worry, I've written my own installation guide to help and assist users with less UNIX experience. The following instructions hopefully help everybody to install and run Nipype on their system. Note that some steps strongly depend on the system you are using and it might be possible that some dependencies are already installed on your system. Also, 
 
@@ -33,15 +33,15 @@ Anaconda
    :width: 90pt
    :align: left
 
-As you can see under `Dependencies <http://nipy.sourceforge.net/nipype/users/install.html#dependencies>`_, there are a lot of software packages that have to be installed on your system to run Nipype. For example: `python`, `ipython`, `matplotlib`, `networkx`, `numpy`, `scipy`, `sphinx` etc. Luckily, most of the those required dependencies, most importantly a working Python environment, can be set up by installing `Anaconda <https://store.continuum.io/cshop/anaconda/>`_.
+As you can see under `Dependencies <http://nipy.org/nipype/users/install.html#dependencies>`_, there are a lot of software packages that have to be installed on your system to run Nipype. For example: `python`, `ipython`, `matplotlib`, `networkx`, `numpy`, `scipy`, `sphinx` etc. Luckily, most of the those required dependencies, most importantly a working Python environment, can be set up by installing `Anaconda <https://www.continuum.io/downloads>`_.
 
 
 Install Anaconda
 ----------------
 
-Instructions on how to install Anaconda can be found on the `official homepage <http://docs.continuum.io/anaconda/install.html>`_. Following are the steps how I've installed the Anaconda package on my system:
+Instructions on how to install Anaconda can be found on the `official homepage <http://docs.continuum.io/anaconda/install>`_. Following are the steps how I've installed the Anaconda package on my system:
 
-1. Download the software under http://continuum.io/downloads and move the downloaded sh-file to your Download folder. In my case this folder is at ``/home/username/Downloads`` abbreviated with ``~/Downloads``.
+1. Download the software under https://www.continuum.io/downloads and move the downloaded sh-file to your Download folder. In my case this folder is at ``/home/username/Downloads`` abbreviated with ``~/Downloads``.
 2. Install the downloaded sh-file with the following command:
 
     .. code-block:: sh
@@ -87,7 +87,7 @@ Test Anaconda
 
 Now that Anaconda is installed let's test if our python environment is ready to run.
 
-1. Open a new terminal and type in the command ``ipython``. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the `IPython support section <http://miykael.github.com/nipype-beginner-s-guide/ipython.html>`_ of this beginner's guide.
+1. Open a new terminal and type in the command ``ipython``. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the `support section <http://miykael.github.io/nipype-beginner-s-guide/links.html>`_ of this beginner's guide.
 2. To check if everything is set up correctly try to import numpy with the following command: 
 
     .. code-block:: py
@@ -138,7 +138,7 @@ Install Nipype (and other python dependencies)
 
 Finally, it's time to install Nipype. And while doing so, let's also install additional python dependencies, such as: nibabel, rdflib, nipy, dipy and graphviz. Some of those packages might already be installed on your system when you've installed Anaconda.
 
-So what do you have to do to install Nipype? It's simple, just use either ``pip install nipype`` or ``easy_install nipype``. More information about the installation of Nipype on a Mac or from sourcecode, go to the `main page <http://nipy.sourceforge.net/nipype/users/install.html>`_.
+So what do you have to do to install Nipype? It's simple, just use either ``pip install nipype`` or ``easy_install nipype``. More information about the installation of Nipype on a Mac or from sourcecode, go to the `main page <http://nipy.org/nipype/users/install.html>`_.
 
 If you also want to install other python based dependencies use the following commands:
 
@@ -185,7 +185,7 @@ If you want or have to upgrade Nipype to the developer version us the following 
 
 The most current developer version of Nipype can be found on `GitHub <https://github.com/>`_ under `Nipype @ GitHub <https://github.com/nipy/nipype>`_. The following steps assume assume that you've already set up your own GitHub account and are ready to download the Nipype repository:
 
-1. First, open a terminal and download the Nipype repository at the current location with ``git clone https://github.com/nipy/nipype.git``, or download the repository directly by using `this link <https://github.com/nipy/nipype/archive/master.zip>`_.
+1. First, open a terminal and download the Nipype repository at the current location with ``git clone https://github.com/nipy/nipype.git``, or download the repository directly by using `this link <https://codeload.github.com/nipy/nipype/zip/master>`_.
 2. The just downloaded nipype folder contains another folder called `nipype``. This is the folder that contains the newest version of Nipype.
 3. Now, either add the path to this folder to the ``PYTHONPATH`` list (make sure that ``PYTHONPATH`` only contains one Nipype folder) or delete the current nipype folder and move the new github ``nipype`` folder to this location. This can be done with the following command:
 
@@ -332,9 +332,9 @@ MATLAB
    :width: 70pt
    :align: left
 
-Nowadays almost all scientific fields take advantage of `MATLAB <http://www.mathworks.ch/>`_. Neuroscience is no exception in this and also some of Nipype's recommended interfaces can (but don't have to) take advantage of MATLAB, e.g. SPM, FSL, FreeSurfer.
+Nowadays almost all scientific fields take advantage of `MATLAB <http://www.mathworks.com/>`_. Neuroscience is no exception in this and also some of Nipype's recommended interfaces can (but don't have to) take advantage of MATLAB, e.g. SPM, FSL, FreeSurfer.
 
-Having MATLAB is always a good thing, and as I myself rely often on algorithms from the `SPM <http://www.fil.ion.ucl.ac.uk/spm/>`_ interface, I need it to be on my system. A detailed documentation on how to install MATLAB can be found `here <http://www.mathworks.com/help/install/index.html>`_. In my case, MATLAB is installed at the following location: ``/usr/local/MATLAB/R2014a``.
+Having MATLAB is always a good thing, and as I myself rely often on algorithms from the `SPM <http://www.fil.ion.ucl.ac.uk/spm/>`_ interface, I need it to be on my system. A detailed documentation on how to install MATLAB can be found `here <http://www.mathworks.com/help/>`_. In my case, MATLAB is installed at the following location: ``/usr/local/MATLAB/R2014a``.
 
 The only thing you need to do to run MATLAB on your Ubuntu System is to add the following lines to your ``.bashrc`` file:
 
@@ -370,7 +370,7 @@ As of 1st October 2014, SPM released it's newest version `SPM12 <http://www.fil.
 
 .. note::
 
-    There is a standalone version of SPM available that doesn't need MATLAB, but so far it isn't recommended as a lot of additional toolboxes don't work with the standalone, yet. For more information go on the `SPM wikipage <http://en.wikibooks.org/wiki/SPM/Standalone>`_.
+    There is a standalone version of SPM available that doesn't need MATLAB, but so far it isn't recommended as a lot of additional toolboxes don't work with the standalone, yet. For more information go on the `SPM wikipage <https://en.wikibooks.org/wiki/SPM/Standalone>`_.
 
 
 Download and Installation
@@ -378,7 +378,7 @@ Download and Installation
 
 To download and install the newest version `SPM12 <http://www.fil.ion.ucl.ac.uk/spm/software/spm12/>`_ do as follows:
 
-1. Got to SPM12's `Download and registration <http://www.fil.ion.ucl.ac.uk/spm/software/download.html>`_ page and fill out the form. Under **Select SPM version required**, chose SPM12 (or SPM8 if preferred) and download the zip file.
+1. Got to SPM12's `Download and registration <http://www.fil.ion.ucl.ac.uk/spm/software/download/>`_ page and fill out the form. Under **Select SPM version required**, chose SPM12 (or SPM8 if preferred) and download the zip file.
 2. Now, unpack the zip file and copy the content to the recommended folder ``/usr/local/MATLAB/R2014a/toolbox/`` use the following code:
 
     .. code-block:: sh
@@ -407,7 +407,7 @@ To download and install the newest version `SPM12 <http://www.fil.ion.ucl.ac.uk/
 
     There are some interesting ways on how you can change the default behaviors of your SPM.
 
-    * **Example 1:** By default, SPM uses only 64MB of memory during GLM estimation. This can be changed by changing the ``defaults.stats.maxmem`` parameter. Change this value to ``2^29`` and use 512MB or to ``2^30`` and use 1GB of memory during GLM estimation. Another option only available in SPM12 is to set ``defaults.stats.resmem = true;``. Setting this parameter to true means that the temporary files during GLM estimation are kept in memory and not stored on disk (if value is set to false). For more information about increasing the speed of your SPM see the official `Faster SPM <http://en.wikibooks.org/wiki/SPM/Faster_SPM>`_ section.
+    * **Example 1:** By default, SPM uses only 64MB of memory during GLM estimation. This can be changed by changing the ``defaults.stats.maxmem`` parameter. Change this value to ``2^29`` and use 512MB or to ``2^30`` and use 1GB of memory during GLM estimation. Another option only available in SPM12 is to set ``defaults.stats.resmem = true;``. Setting this parameter to true means that the temporary files during GLM estimation are kept in memory and not stored on disk (if value is set to false). For more information about increasing the speed of your SPM see the official `Faster SPM <https://en.wikibooks.org/wiki/SPM/Faster_SPM>`_ section.
     * **Example 2**: One computational unimportant but nice parameter to change is ``defaults.ui.colour = [0.141 0 0.848];``. Change it to the recommended value and see the nice color change in your SPM GUI.
 
     **How to change those values:** SPM8 and SPM12 differ a bit in how those changes have to be implemented. In SPM8 you can change the default behavior by directly changing the parameters in the ``spm_defaults.m`` file, stored in the ``spm8`` folder. If you want to change default values in SPM12, you should create a new file called ``spm_my_defaults.m``, store it in your ``spm12`` folder. The first line of your ``spm_my_defaults.m`` file has to be ``global defaults``, followed by all the parameters you want to change, e.g. ``defaults.ui.colour = [0.141 0 0.848];``
@@ -501,7 +501,7 @@ AFNI
    :width: 70pt
    :align: left
 
-`AFNI <http://afni.nimh.nih.gov/afni>`_ is an open source software package specialized on the analysis of functional MRI. To see a list of all AFNI algorithms that can be used with Nipype go to `interfaces.afni.preprocess <http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.afni.preprocess.html>`_.
+`AFNI <https://afni.nimh.nih.gov/afni/>`_ is an open source software package specialized on the analysis of functional MRI. To see a list of all AFNI algorithms that can be used with Nipype go to `interfaces.afni.preprocess <http://nipy.org/nipype/interfaces/generated/nipype.interfaces.afni.preprocess.html>`_.
 
 If you've installed the NeuroDebian repository, just use the following command to install AFNI on your system: ``sudo apt-get install afni``
 
@@ -516,7 +516,7 @@ To be able to run AFNI make sure to add the following lines of code to your ``.b
 Additional interfaces
 =====================
 
-There are many additional interfaces, such as `Camino <http://cmic.cs.ucl.ac.uk/camino/>`_, `MRtrix <http://www.brain.org.au/software/mrtrix/index.html>`_, `Slicer <http://slicer.org/>`_, `ConnectomeViewer <http://www.connectomics.org/viewer/>`_, for which I haven't created an installation guide yet. This is also due to my lack of knowledge about them. Feel free to help me to complete this list.
+There are many additional interfaces, such as `Camino <http://camino.cs.ucl.ac.uk/>`_, `MRtrix <http://www.brain.org.au/software/mrtrix/index.html>`_, `Slicer <http://slicer.org/>`_, `ConnectomeViewer <http://www.connectomics.org/viewer/>`_, for which I haven't created an installation guide yet. This is also due to my lack of knowledge about them. Feel free to help me to complete this list.
 
 
 ====================

@@ -50,7 +50,7 @@ Welcome to Nipype Beginner's Guide!
     Downloads
     =========
 
-    Download Nipype here: `Nipype Homepage <http://nipy.sourceforge.net/nipype/users/install.html>`_.
+    Download Nipype here: `Nipype Homepage <http://nipy.org/nipype/users/install.html>`_.
 
     Download this beginner's guide as a PDF here: `Nipype Beginner's Guide <http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true>`_.
 
@@ -146,7 +146,7 @@ Welcome to Nipype Beginner's Guide!
     +----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     ||data|    |   Everything important to download can be found in this section.                                                                                                               |
     |          |                                                                                                                                                                                |
-    |          |   * Nipype can be downloaded here: `How to install Nipype <http://nipy.sourceforge.net/nipype/users/install.html>`_.                                                           |
+    |          |   * Nipype can be downloaded here: `How to install Nipype <http://nipy.org/nipype/users/install.html>`_.                                                                       |
     |          |   * All Scripts used in this Beginner's Guide can be found on the Beginner's Guide `Github homepage <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts>`_. |
     |          |   * The dataset `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ used as the tutorial dataset                                                    |
     |          |     for this beginner's guide can be directly downloaded here: `ds102_raw.tgz <http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz>`_.                                     |

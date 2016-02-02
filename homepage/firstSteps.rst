@@ -2,7 +2,7 @@
 How To Build A Pipeline
 =======================
 
-So, you've `installed Nipype <http://miykael.github.com/nipype-beginner-s-guide/installation.html>`_ on your system? And you've `prepared your dataset <http://miykael.github.com/nipype-beginner-s-guide/prepareData.html>`_ for the analysis? This means that you are ready to start this tutorial.
+So, you've `installed Nipype <http://miykael.github.io/nipype-beginner-s-guide/installation.html>`_ on your system? And you've `prepared your dataset <http://miykael.github.io/nipype-beginner-s-guide/prepareData.html>`_ for the analysis? This means that you are ready to start this tutorial.
 
 The following section is a general step by step introduction on how to build a pipeline. It will first introduce you to the building blocks of any pipeline, show you on an example how a basic pipeline is implemented, how to read the output and most importantly how to tackle problems. At the end you should understand what a pipeline is, how the key parts interact with each other and how to solve certain issues. Short, you should be able to build any kind of neuroimaging pipeline that you like. So let's get started!
 
@@ -91,7 +91,7 @@ A node is an object that represents a certain interface function, for example SP
 Input and Output Fields
 .......................
 
-Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go `here <http://nipy.sourceforge.net/nipype/interfaces/index.html>`_. So how do you know which input and output field a given node has? Don't worry. There's an easy way how you can figure out which input fields are **mandatory** or **optional** and which output fields you can use.
+Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go `here <http://nipy.org/nipype/interfaces/index.html>`_. So how do you know which input and output field a given node has? Don't worry. There's an easy way how you can figure out which input fields are **mandatory** or **optional** and which output fields you can use.
 
 Let's assume that we want to know more about FSL's function ``SmoothEstimate``. First, make sure that you've imported the spm module with the following python command ``import nipype.interfaces.fsl as fsl``.
 
@@ -166,7 +166,7 @@ The first few lines *(line 1-3)* give as a short explanation of the function, fo
 
 .. note::
 
-    If you want to brows through the different functions, or just want to view the help information in a nicer way, go to the official homepage and either navigate to `Interfaces and Algorithms <http://nipy.sourceforge.net/nipype/interfaces/index.html>`_ or `Documentation <http://nipy.sourceforge.net/nipype/documentation.html>`_.
+    If you want to brows through the different functions, or just want to view the help information in a nicer way, go to the official homepage and either navigate to `Interfaces and Algorithms <http://nipy.org/nipype/interfaces/index.html>`_ or `Documentation <http://nipy.org/nipype/documentation.html>`_.
 
 
 Default value of Inputs
@@ -335,7 +335,7 @@ The usage of Iterables causes the execution workflow to be splitted into as many
 
 Usually, Iterables are used to feed the different subject names into the workflow, causing your workflow to create as many execution workflows as subjects. And depending on your system, all of those workflows could be executed in parallel.
 
-For a more detailed explanation of Iterables go to the `Iterables section <http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#iterables>`_ on the official homepage.
+For a more detailed explanation of Iterables go to the `Iterables section <http://nipy.org/nipype/users/mapnode_and_iterables.html#iterables>`_ on the official homepage.
 
 
 MapNodes and Iterfields
@@ -349,7 +349,7 @@ The creation of a MapNode is only slightly different to the creation of a normal
 
    nodename = MapNode(interface_function(), name='label', iterfield=['in_file'])
 
-First, you have to use ``MapNode`` instead of ``Node``. Second, you also have to define which of the input fields can receive multiple parameters at once. An input field with this special properties is also called an ``iterfield``. For a more detailed explanation go to `MapNode and iterfield <http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield>`_ on the official homepage.
+First, you have to use ``MapNode`` instead of ``Node``. Second, you also have to define which of the input fields can receive multiple parameters at once. An input field with this special properties is also called an ``iterfield``. For a more detailed explanation go to `MapNode and iterfield <http://nipy.org/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield>`_ on the official homepage.
 
 
 Individual Nodes
@@ -395,7 +395,7 @@ Here is how it's done:
 
 .. note::
 
-    For more information about the function ``Function``, see `this section <http://nipy.sourceforge.net/nipype/users/function_interface.html>`_ on the official homepage.
+    For more information about the function ``Function``, see `this section <http://nipy.org/nipype/users/function_interface.html>`_ on the official homepage.
 
 
 Function Free Nodes
@@ -522,7 +522,7 @@ For example
 Modify Values between Connections
 .................................
 
-Sometimes you want to modify the output of one node before sending it on to the next node. This can be done in two ways. Either use an individual node as described `above <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes>`_, or plant a function directly between the output and input of two nodes. To do the second approach, do as follows:
+Sometimes you want to modify the output of one node before sending it on to the next node. This can be done in two ways. Either use an individual node as described `above <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#individual-nodes>`_, or plant a function directly between the output and input of two nodes. To do the second approach, do as follows:
 
 First, define your function that modifies the data as you want and returns the new output:
 
@@ -637,7 +637,7 @@ Now there are two different functions that you can use to specify the folder str
 
 .. note::
 
-    Go to the official homepage to read more about `DataGrabber <http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html#datagrabber>`_ and `SelectFiles <http://nipy.sourceforge.net/nipype/users/select_files.html>`_.
+    Go to the official homepage to read more about `DataGrabber <http://nipy.org/nipype/users/grabbing_and_sinking.html#datagrabber>`_ and `SelectFiles <http://nipy.org/nipype/users/select_files.html>`_.
 
 
 Output Stream
@@ -682,12 +682,12 @@ The output folder and files of the datasink node often have long and detailed na
 
 This substition will change ``'_subject_id_sub002/con_0001_warped_out.nii'`` into ``'sub002/con_0001_final.nii'``.
 
-The DataSink is really useful to keep control over your storage capacity. If you store all the important outputs of your workflow in this folder, you can delete the workflow working directory after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a working directory at all. For more information go to `Configuration File <http://nipy.sourceforge.net/nipype/users/config_file.html>`_.
+The DataSink is really useful to keep control over your storage capacity. If you store all the important outputs of your workflow in this folder, you can delete the workflow working directory after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a working directory at all. For more information go to `Configuration File <http://nipy.org/nipype/users/config_file.html>`_.
 
 
 .. note::
 
-    Go to the official homepage to read more about `DataSink <http://nipy.sourceforge.net/nipype/users/grabbing_and_sinking.html#datasink>`_.
+    Go to the official homepage to read more about `DataSink <http://nipy.org/nipype/users/grabbing_and_sinking.html#datasink>`_.
 
 .. important::
 
@@ -699,7 +699,7 @@ Run Workflow
 
 After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the ``run()`` method of the workflow.
 
-As already described in the `introduction section <http://miykael.github.com/nipype-beginner-s-guide/nipype.html#execution-plugins>`_, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.
+As already described in the `introduction section <http://miykael.github.io/nipype-beginner-s-guide/nipype.html#execution-plugins>`_, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.
 
 Here are just a few example how you can run your workflow:
 
@@ -723,7 +723,7 @@ But the nice thing about Nipype is that it will always check if a node has alrea
 
 .. note::
 
-    More about Plugins and how you can run your pipeline in a distributed system can be found on the official homepage under `Using Nipype Plugins <http://nipy.sourceforge.net/nipype/users/plugins.html>`_.
+    More about Plugins and how you can run your pipeline in a distributed system can be found on the official homepage under `Using Nipype Plugins <http://nipy.org/nipype/users/plugins.html>`_.
 
 
 Example Script
@@ -905,12 +905,12 @@ The running of the pipeline is a rather simple thing. Just use the ``.run()`` co
     preproc.write_graph(graph2use='flat')
     preproc.run('MultiProc', plugin_args={'n_procs': 8})
 
-As you see, we've executed the function ``write_graph()`` before we've run the pipeline. ``write_graph()`` is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, `How To Visualize A Pipeline <http://miykael.github.com/nipype-beginner-s-guide/visualizePipeline.html>`_.
+As you see, we've executed the function ``write_graph()`` before we've run the pipeline. ``write_graph()`` is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, `How To Visualize A Pipeline <http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html>`_.
 
 
 .. hint::
 
-    You can download the code for this preprocessing pipeline as a script here: `tutorial_3_first_steps.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_3_first_steps.py>`_
+    You can download the code for this preprocessing pipeline as a script here: `tutorial_3_first_steps.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_3_first_steps.py>`_
 
 
 Resulting Folder Structure
@@ -1174,7 +1174,7 @@ From this output you can see in the lower half the same error stack of the crash
 
 .. note::
 
-    Note that the information about the exact input values of a node can also be obtained from the ``report.rst`` file, stored in the nodes subfolder under the working directory. More about this later under `Working Directory <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#working-directory>`_.
+    Note that the information about the exact input values of a node can also be obtained from the ``report.rst`` file, stored in the nodes subfolder under the working directory. More about this later under `Working Directory <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#working-directory>`_.
 
 
 Interface Issues
@@ -1182,7 +1182,7 @@ Interface Issues
 
 Sometimes the most basic errors can occur because Nipype doesn't know where the correct files are. Two very common issues are for example that FreeSurfer can't find the subject folder or that MATLAB doesn't find SPM.
 
-Before you do anything else, please make sure again that you've installed FreeSurfer and SPM12 as described in the installation section, `How to install FreeSurfer <http://miykael.github.com/nipype-beginner-s-guide/installation.html#freesurfer>`_ and `How to install SPM <http://miykael.github.com/nipype-beginner-s-guide/installation.html#spm12>`_.
+Before you do anything else, please make sure again that you've installed FreeSurfer and SPM12 as described in the installation section, `How to install FreeSurfer <http://miykael.github.io/nipype-beginner-s-guide/installation.html#freesurfer>`_ and `How to install SPM <http://miykael.github.io/nipype-beginner-s-guide/installation.html#spm12>`_.
 
 But don't worry if the problem still exists. There are two nice ways how you can tell Nipype where FreeSurfer subject folders are stored at and where MATLAB can find SPM12. Just add the following code to the beginning of your script:
 
@@ -1282,4 +1282,4 @@ This error message doesn't tell you directly what is wrong. Unfortunately, Nipyp
 
 .. hint::
 
-    For more information about Errors go to the `Support section <http://miykael.github.com/nipype-beginner-s-guide/index.html#support>`_ of this beginner's guide.
+    For more information about Errors go to the `Support section <http://miykael.github.io/nipype-beginner-s-guide/index.html#support>`_ of this beginner's guide.

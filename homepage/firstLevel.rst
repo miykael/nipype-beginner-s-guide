@@ -34,13 +34,13 @@ Those are a lot of different parts and it is confusing to make sense of it witho
 
 .. note::
 
-   The normalization of the first level output into a common reference space (e.g. MNI-space) will not be done by this metaflow. This because I want to dedicate a whole section on different ways on `how to normalize your data <http://miykael.github.com/nipype-beginner-s-guide/normalize.html>`_. Normalizing your data is very important for the analysis on the group level and a good normalization can be the difference between super results or none at all.
+   The normalization of the first level output into a common reference space (e.g. MNI-space) will not be done by this metaflow. This because I want to dedicate a whole section on different ways on `how to normalize your data <http://miykael.github.io/nipype-beginner-s-guide/normalize.html>`_. Normalizing your data is very important for the analysis on the group level and a good normalization can be the difference between super results or none at all.
 
 
 Write your pipeline script
 ==========================
 
-Before we can start with writing a pipeline script, we first have to make sure that we have all necessary information. We know how the structure of the metaflow should look like from the previous section. But what are the experiment specific parameters? Lets assume that we use the `tutorial dataset <http://miykael.github.com/nipype-beginner-s-guide/prepareData.html>`_ with the ten subjects ``sub001`` to ``sub010``, each having two functional scans ``run001.nii.gz`` and ``run002.nii.gz``. We know from the openfmri homepage `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ that this experiment has a a TR of 2.0 seconds and that each volume of the functional data consists of 40 slices, acquired in an ascending interleaved slice order. And we know that we can find condition specific onset times for each subject in the subject folder in our data folder, e.g. ``~/nipype_tutorial/data/sub001/``. So let's start!
+Before we can start with writing a pipeline script, we first have to make sure that we have all necessary information. We know how the structure of the metaflow should look like from the previous section. But what are the experiment specific parameters? Lets assume that we use the `tutorial dataset <http://miykael.github.io/nipype-beginner-s-guide/prepareData.html>`_ with the ten subjects ``sub001`` to ``sub010``, each having two functional scans ``run001.nii.gz`` and ``run002.nii.gz``. We know from the openfmri homepage `DS102: Flanker task (event-related) <https://openfmri.org/dataset/ds000102>`_ that this experiment has a a TR of 2.0 seconds and that each volume of the functional data consists of 40 slices, acquired in an ascending interleaved slice order. And we know that we can find condition specific onset times for each subject in the subject folder in our data folder, e.g. ``~/nipype_tutorial/data/sub001/``. So let's start!
 
 
 Import modules
@@ -194,7 +194,7 @@ After implementing the nodes we can create the preprocessing subworkflow and add
                     ])
 
 
-If you are wondering how we know which parameters to specify and which connections to establish. It is simple: First, specify or connect all mandatory inputs of each node. Second, add the additional inputs that your data requires. For more informations about what is mandatory and what's not, go either to `Interfaces and Algorithms <http://nipy.org/nipype/interfaces/index.html>`_ or use the ``.help()`` method (e.g. ``realign.help()``), as shown `here <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#input-and-output-fields>`_.
+If you are wondering how we know which parameters to specify and which connections to establish. It is simple: First, specify or connect all mandatory inputs of each node. Second, add the additional inputs that your data requires. For more informations about what is mandatory and what's not, go either to `Interfaces and Algorithms <http://nipy.org/nipype/interfaces/index.html>`_ or use the ``.help()`` method (e.g. ``realign.help()``), as shown `here <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#input-and-output-fields>`_.
 
 
 Create first level analysis pipeline
@@ -382,9 +382,9 @@ So what does it do? **Line 3 to 34** are specific to the tutorial dataset and wi
                [10.0, 20.0, 30.0, 42.0, 102.0, 116.0, 164.0, 174.0, 208.0, 220.0, 232.0, 260.0],
                [0.0, 54.0, 64.0, 76.0, 88.0, 130.0, 144.0, 154.0, 184.0, 196.0, 246.0, 274.0]]
 
-**Line 36 to 50** is the part of the ``get_subject_info`` function that has to be included in almost all first level analysis workflows. For more information see `Model Specification for First Level fMRI Analysis <http://nipy.sourceforge.net/nipype/users/model_specification.html>`_. Important to know are the following things: The for loop ``for r in range(2)`` in line 40 is set to 2 because we have two runs per subject. The idea is to create an output variable ``subjectinfo`` that contains a ``Bunch`` object for each run. The content of this ``Bunch`` object depends on the subject and contains the name of the conditions, onsets of them, duration of each event, as well as possible amplitude modifications, temporal or polynomial derivatives or regressors. **Note:** The duration of all events per condition were set to ``[0]``, as this assumes that the events should be modeled as impulses.
+**Line 36 to 50** is the part of the ``get_subject_info`` function that has to be included in almost all first level analysis workflows. For more information see `Model Specification for First Level fMRI Analysis <http://nipy.org/nipype/users/model_specification.html>`_. Important to know are the following things: The for loop ``for r in range(2)`` in line 40 is set to 2 because we have two runs per subject. The idea is to create an output variable ``subjectinfo`` that contains a ``Bunch`` object for each run. The content of this ``Bunch`` object depends on the subject and contains the name of the conditions, onsets of them, duration of each event, as well as possible amplitude modifications, temporal or polynomial derivatives or regressors. **Note:** The duration of all events per condition were set to ``[0]``, as this assumes that the events should be modeled as impulses.
 
-Now that the tricky part is done, we only need to create an additional node that applies this function and has the value of the ``subjectinfo`` variable as an output field. This can be done with a function node (as shown in the `previous section <http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes>`_)
+Now that the tricky part is done, we only need to create an additional node that applies this function and has the value of the ``subjectinfo`` variable as an output field. This can be done with a function node (as shown in the `previous section <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#individual-nodes>`_)
 
 .. code-block:: py
    :linenos:
@@ -489,13 +489,13 @@ Finally, after everything is set up correctly we can run the pipeline and let it
 
 .. hint::
 
-   You can download the code for this first level pipeline as a script here: `example_fMRI_1_first_level.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_1_first_level.py>`_
+   You can download the code for this first level pipeline as a script here: `example_fMRI_1_first_level.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_1_first_level.py>`_
 
 
 Visualize your pipeline
 =======================
 
-The visualization of this graph can be seen in all different graph types under the section `How to visualize a pipeline <http://miykael.github.com/nipype-beginner-s-guide/visualizePipeline.html>`_ or as a colored graph at the beginning of this section.
+The visualization of this graph can be seen in all different graph types under the section `How to visualize a pipeline <http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html>`_ or as a colored graph at the beginning of this section.
 
 
 Resulting Folder Structure

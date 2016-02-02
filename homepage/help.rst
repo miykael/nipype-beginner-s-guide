@@ -5,11 +5,11 @@ Help & Support
 How Nipype Can Help You
 =======================
 
-Often times the first trouble with Nipype arise because of misunderstanding a node or its function. This can be because a mandatory input was forgotten, a input or output field is not what you thought it was or something similar. That's why the first step when running into a problem while building a pipeline should be to check out the description of the interface that causes the trouble. I've already described this `here <https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#nodes>`_ but to recap:
+Often times the first trouble with Nipype arise because of misunderstanding a node or its function. This can be because a mandatory input was forgotten, a input or output field is not what you thought it was or something similar. That's why the first step when running into a problem while building a pipeline should be to check out the description of the interface that causes the trouble. I've already described this `here <https://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#nodes>`_ but to recap:
 
 Let's assume that you've imported FreeSurfer's BBRegister with the command ``from nipype.interfaces.freesurfer import BBRegister``. Now, if you want to know what this module generally does, use the `?` character, i.e. ``BBRegister?``. This gives you a short description as well as an implementation example of this module. If you want to know a more detailed description of BBRegister, with all mandatory and possible inputs and outputs, use the ``help()`` function, i.e. ``BBRegister.help()``.
 
-Also, I highly recommend to check out Nipype's official `Documentation <http://nipy.sourceforge.net/nipype/documentation.html>`_ section, where you can browse through all possible interfaces, function and description of them.
+Also, I highly recommend to check out Nipype's official `Documentation <http://nipy.org/nipype/documentation.html>`_ section, where you can browse through all possible interfaces, function and description of them.
 
 
 How to Help Yourself
@@ -17,9 +17,9 @@ How to Help Yourself
 
 If you have any **questions about or comments to this beginner's guide**, don't hesitate to leave a comment on the bottom of the corresponding homepage (you don't need an account to do so) or contact me directly by e-mail under: `miykaelnotter@gmail.com <miykaelnotter@gmail.com>`_.
 
-If you have general **questions about what certain neuroimaging or nipype term** mean, check out the beginner's guide `Glossary <https://miykael.github.com/nipype-beginner-s-guide/glossary.html>`_ section.
+If you have general **questions about what certain neuroimaging or nipype term** mean, check out the beginner's guide `Glossary <https://miykael.github.io/nipype-beginner-s-guide/glossary.html>`_ section.
 
-If you have any **questions about Nipype or neuroimaging** itself please go directly to `neurostars.org <https://neurostars.org/>`_ or the beginner's guide `FAQ <https://miykael.github.com/nipype-beginner-s-guide/faq.html>`_ section. `Neurostars.org <https://neurostars.org/>`_ is a community driven Q&A platform that will help you to answer any nipype or neuroimaging related question that you possibly could have.
+If you have any **questions about Nipype or neuroimaging** itself please go directly to `neurostars.org <https://neurostars.org/>`_ or the beginner's guide `FAQ <https://miykael.github.io/nipype-beginner-s-guide/faq.html>`_ section. `Neurostars.org <https://neurostars.org/>`_ is a community driven Q&A platform that will help you to answer any nipype or neuroimaging related question that you possibly could have.
 
 
 How to Help Me
@@ -29,13 +29,13 @@ The list of interfaces Nipype supports grows everyday more and more and the best
 
 So, if you found any mistakes, want to point out some alternative ways to do something or have any scripts or tutorials to share, your input is highly appreciated!
 
-The best way to help me is to fork my repo on github (`http://github.com/miykael/nipype-beginner-s-guide/blob/master/homepage <http://github.com/miykael/nipype-beginner-s-guide/blob/master/homepage>`_) and send me a pull request. Alternatively you can also contact me with your ideas or feedback under `miykaelnotter@gmail.com <miykaelnotter@gmail.com>`_.
+The best way to help me is to fork my repo on github (`https://github.com/miykael/nipype-beginner-s-guide/tree/master/homepage <https://github.com/miykael/nipype-beginner-s-guide/tree/master/homepage>`_) and send me a pull request. Alternatively you can also contact me with your ideas or feedback under `miykaelnotter@gmail.com <miykaelnotter@gmail.com>`_.
 
 
 How to Read Crash Files
 =======================
 
-Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see `this section <https://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes>`_. In this example the name of the crash file is ``crash-20141018-140440-mnotter-art.b0.pklz``.
+Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see `this section <https://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes>`_. In this example the name of the crash file is ``crash-20141018-140440-mnotter-art.b0.pklz``.
 
 The name of the file gives you already an information about when it crashed (``20141018-140440``) and which node crashed (``art.b0``). If you want to read the node you can use the terminal command ``nipype_display_crash``. In our example the command to read the crash file is:
 
@@ -107,4 +107,4 @@ Under certain circumstances it is possible and desired to rerun the crashed node
 
 .. note::
 
-   For more information about how to debug your code and handle crashes go to `this official Nipype section <http://nipy.sourceforge.net/nipype/users/debug.html>`_.
+   For more information about how to debug your code and handle crashes go to `this official Nipype section <http://nipy.org/nipype/users/debug.html>`_.

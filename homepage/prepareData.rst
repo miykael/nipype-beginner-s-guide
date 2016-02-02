@@ -12,7 +12,7 @@ Download the tutorial dataset
    :width: 120pt
    :align: left
 
-`OpenfMRI <https://openfmri.org/>`_ is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found on `openfmri.org <https://openfmri.org/data-sets>`_.
+`OpenfMRI <https://openfmri.org/>`_ is an awesome new online database where you can upload ans share your fMRI dataset or download datasets from other researchers. Such an open approach to science allows you and other researchers to profit from each other and helps the field as a whole to progress faster. A list of all datasets available on OpenfMRI can be found on `openfmri.org <https://openfmri.org/dataset/>`_.
 
 
 Download the dataset from OpenfMRI
@@ -112,7 +112,7 @@ This can either be done manually or with the following code:
 
 .. hint:: 
 
-    You can download this code as a script here: `tutorial_1_create_dataset.sh <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh>`_
+    You can download this code as a script here: `tutorial_1_create_dataset.sh <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh>`_
 
 
 Acquire scan and experiment parameters
@@ -211,7 +211,7 @@ This output tells us that this functional scan consists of 146 volumes, of which
 
     Just as a side note: The `data_type` of a NIfTI file tells you the amount of bits used to store the value of each voxel. **INT16** stands for *signed short* (16 bits/voxel), **INT32** stands for *signed int* (32 bits/voxel) and **FLOAT64** stands for *float* (64 bits/voxel). The more bits used for storing a voxel value the bigger the whole NIfTI file.
 
-    If you want to change the data type of your image, either use Nipype's function ``ChangeDataType`` found in the ``nipype.interfaces.fsl.maths`` package (read more `here <http://nipy.sourceforge.net/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype>`_) or use ``fslmaths`` directly to change the data_type to INT32 with the following command:
+    If you want to change the data type of your image, either use Nipype's function ``ChangeDataType`` found in the ``nipype.interfaces.fsl.maths`` package (read more `here <http://nipy.org/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype>`_) or use ``fslmaths`` directly to change the data_type to INT32 with the following command:
 
     .. code-block:: sh
 
@@ -334,7 +334,7 @@ This code will run the subjects in sequential order. If you want to process the 
 
 .. hint:: 
 
-    You can download this code as a script here: `tutorial_2_recon_shell.sh <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh>`_
+    You can download this code as a script here: `tutorial_2_recon_shell.sh <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh>`_
 
 
 Run recon-all on the tutorial dataset (Nipype version)
@@ -419,7 +419,7 @@ After this script has run, all important outputs will be stored directly under `
 
 .. hint:: 
 
-    You can download this code as a script here: `tutorial_2_recon_python.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py>`_
+    You can download this code as a script here: `tutorial_2_recon_python.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py>`_
 
 
 Resulting Folder Structure

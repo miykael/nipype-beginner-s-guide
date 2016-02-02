@@ -63,7 +63,7 @@ To illustrate, on the left you can see a simple graph of the visualization type 
 Examples of each visualization type
 ===================================
 
-The graphs shown below are visualizations of the **first level analysis pipeline** or ``metaflow`` from the section: `How To Build A First Level Pipeline <http://miykael.github.com/nipype-beginner-s-guide/firstLevel.html>`_
+The graphs shown below are visualizations of the **first level analysis pipeline** or ``metaflow`` from the section: `How To Build A First Level Pipeline <http://miykael.github.io/nipype-beginner-s-guide/firstLevel.html>`_
 
 
 ``orig`` - simple graph

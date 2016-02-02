@@ -221,7 +221,7 @@ Run the pipeline and generate the graph
 
 .. hint::
 
-   You can download the code for this 2nd level pipeline as a script here: `example_fMRI_3_second_level.py <http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_3_second_level.py>`_
+   You can download the code for this 2nd level pipeline as a script here: `example_fMRI_3_second_level.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_3_second_level.py>`_
 
 
 Visualize your pipeline
