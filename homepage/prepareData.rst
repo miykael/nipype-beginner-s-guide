@@ -39,28 +39,28 @@ What we want is an experiment folder called ``nipype_tutorial`` that contains a 
 .. code-block:: sh
 
     nipype_tutorial
-    └── data
-        ├── demographics.txt
-        ├── sub001
-        │   ├── behavdata_run001.txt
-        │   ├── behavdata_run002.txt
-        │   ├── onset_run001_cond001.txt
-        │   ├── onset_run001_cond002.txt
-        │   ├── onset_run001_cond003.txt
-        │   ├── onset_run001_cond004.txt
-        │   ├── onset_run002_cond001.txt
-        │   ├── onset_run002_cond002.txt
-        │   ├── onset_run002_cond003.txt
-        │   ├── onset_run002_cond004.txt
-        │   ├── run001.nii.gz
-        │   ├── run002.nii.gz
-        │   └── struct.nii.gz
-        ├── sub0..
-        └── sub010
-            ├── behav...
-            ├── onset_...
-            ├── run...
-            └── struct.nii.gz
+    |-- data
+        |-- demographics.txt
+        |-- sub001
+        |   |-- behavdata_run001.txt
+        |   |-- behavdata_run002.txt
+        |   |-- onset_run001_cond001.txt
+        |   |-- onset_run001_cond002.txt
+        |   |-- onset_run001_cond003.txt
+        |   |-- onset_run001_cond004.txt
+        |   |-- onset_run002_cond001.txt
+        |   |-- onset_run002_cond002.txt
+        |   |-- onset_run002_cond003.txt
+        |   |-- onset_run002_cond004.txt
+        |   |-- run001.nii.gz
+        |   |-- run002.nii.gz
+        |   |-- struct.nii.gz
+        |-- sub0..
+        |-- sub010
+            |-- behav...
+            |-- onset_...
+            |-- run...
+            |-- struct.nii.gz
 
 
 This can either be done manually or with the following code:
@@ -246,19 +246,19 @@ But first, as always, be aware of your folder structure. So let's assume that we
 .. code-block:: none
 
     raw_dicom
-    ├── sub001
-    │   ├── t1w_3d_MPRAGE
-    │   │   ├── 00001.dcm
-    │   │   ├── ...
-    │   │   └── 00176.dcm
-    │   ├── fmri_run1_long
-    │   │   ├── 00001.dcm
-    │   │   ├── ...
-    │   │   └── 00240.dcm
-    │   └── fmri_run2_long
-    │       └── ...
-    ├── sub0..
-    └── sub010
+    |-- sub001
+    |   |-- t1w_3d_MPRAGE
+    |   |   |-- 00001.dcm
+    |   |   |-- ...
+    |   |   |-- 00176.dcm
+    |   |-- fmri_run1_long
+    |   |   |-- 00001.dcm
+    |   |   |-- ...
+    |   |   |-- 00240.dcm
+    |   |-- fmri_run2_long
+    |       |-- ...
+    |-- sub0..
+    |-- sub010
 
 This means, that we have one folder per subject with each containing another folder, one for the structural T1 weighted image and 2 for the functional T2 weighted images. The conversion of the dicom files in those folders is rather easy. If you use FreeSurfer's ``mri_convert`` function, the command is as as follows: ``mri_convert <in volume> <out volume>``. You have to replace ``<in volume>`` by the actual path to any one dicom file in the folder and ``<out volume>`` with the name for your outputfile.
 
@@ -430,13 +430,13 @@ After we've prepared our data and run the ``recon-all`` process the folder struc
 .. code-block:: sh
 
     nipype_tutorial
-    ├── rawdata (optional)
-    ├── data
-    │   ├── sub001
-    │   ├── sub0..
-    │   └── sub010
-    └── freesurfer
-        ├── sub001
-        ├── sub0..
-        └── sub010
+    |-- rawdata (optional)
+    |-- data
+    |   |-- sub001
+    |   |-- sub0..
+    |   |-- sub010
+    |-- freesurfer
+        |-- sub001
+        |-- sub0..
+        |-- sub010
 

@@ -508,54 +508,54 @@ After we’ve executed the first level workflow we have two new folders under ``
 .. code-block:: sh
 
     output_fMRI_example_1st
-    ├── bbregister
-    │   ├── sub001
-    │   │   ├── meanarun001_bbreg_sub001.dat
-    │   │   └── meanarun001_bbreg_sub001.mat
-    │   ├── sub0..
-    │   └── sub010
-    ├── contrasts
-    │   ├── sub001
-    │   │   ├── con_0001.nii
-    │   │   ├── con_0002.nii
-    │   │   ├── con_0003.nii
-    │   │   ├── con_0004.nii
-    │   │   ├── con_0005.nii
-    │   │   ├── ess_0005.nii
-    │   │   ├── ess_0006.nii
-    │   │   ├── _mriconvert0
-    │   │   │   └── con_0001_out.nii.gz
-    │   │   ├── _mriconvert1
-    │   │   │   └── con_0002_out.nii.gz
-    │   │   ├── _mriconvert2
-    │   │   │   └── con_0003_out.nii.gz
-    │   │   ├── _mriconvert3
-    │   │   │   └── con_0004_out.nii.gz
-    │   │   ├── _mriconvert4
-    │   │   │   └── ess_0005_out.nii.gz
-    │   │   ├── _mriconvert5
-    │   │   │   └── ess_0006_out.nii.gz
-    │   │   ├── spmF_0005.nii
-    │   │   ├── spmF_0006.nii
-    │   │   ├── SPM.mat
-    │   │   ├── spmT_0001.nii
-    │   │   ├── spmT_0002.nii
-    │   │   ├── spmT_0003.nii
-    │   │   └── spmT_0004.nii
-    │   ├── sub0..
-    │   └── sub010
-    └── preprocout
-        ├── sub001
-        │   ├── art.rarun001_outliers.txt
-        │   ├── art.rarun002_outliers.txt
-        │   ├── brainmask_thresh.nii
-        │   ├── meanarun001.nii
-        │   ├── plot.rarun001.png
-        │   ├── plot.rarun002.png
-        │   ├── rp_arun001.txt
-        │   └── rp_arun002.txt
-        ├── sub0..
-        └── sub010
+    |-- bbregister
+    |   |-- sub001
+    |   |   |-- meanarun001_bbreg_sub001.dat
+    |   |   |-- meanarun001_bbreg_sub001.mat
+    |   |-- sub0..
+    |   |-- sub010
+    |-- contrasts
+    |   |-- sub001
+    |   |   |-- con_0001.nii
+    |   |   |-- con_0002.nii
+    |   |   |-- con_0003.nii
+    |   |   |-- con_0004.nii
+    |   |   |-- con_0005.nii
+    |   |   |-- ess_0005.nii
+    |   |   |-- ess_0006.nii
+    |   |   |-- _mriconvert0
+    |   |   |   |-- con_0001_out.nii.gz
+    |   |   |-- _mriconvert1
+    |   |   |   |-- con_0002_out.nii.gz
+    |   |   |-- _mriconvert2
+    |   |   |   |-- con_0003_out.nii.gz
+    |   |   |-- _mriconvert3
+    |   |   |   |-- con_0004_out.nii.gz
+    |   |   |-- _mriconvert4
+    |   |   |   |-- ess_0005_out.nii.gz
+    |   |   |-- _mriconvert5
+    |   |   |   |-- ess_0006_out.nii.gz
+    |   |   |-- spmF_0005.nii
+    |   |   |-- spmF_0006.nii
+    |   |   |-- SPM.mat
+    |   |   |-- spmT_0001.nii
+    |   |   |-- spmT_0002.nii
+    |   |   |-- spmT_0003.nii
+    |   |   |-- spmT_0004.nii
+    |   |-- sub0..
+    |   |-- sub010
+    |-- preprocout
+        |-- sub001
+        |   |-- art.rarun001_outliers.txt
+        |   |-- art.rarun002_outliers.txt
+        |   |-- brainmask_thresh.nii
+        |   |-- meanarun001.nii
+        |   |-- plot.rarun001.png
+        |   |-- plot.rarun002.png
+        |   |-- rp_arun001.txt
+        |   |-- rp_arun002.txt
+        |-- sub0..
+        |-- sub010
 
 The ``bbregister`` folder contains two files that both contain the registration information between the functional mean image and the anatomical image. The ``.dat`` file is the registration matrix in FreeSurfer and the ``.mat`` file in FSL format.
 

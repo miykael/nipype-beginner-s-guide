@@ -447,48 +447,48 @@ The resulting folder structure looks for the **partial** and **complete** approa
 .. code-block:: sh
 
     output_fMRI_example_norm_ants/
-    ├── antsreg
-    │   ├── sub001
-    │   │   ├── transformComposite.h5
-    │   │   ├── transformInverseComposite.h5
-    │   │   ├── transform_InverseWarped.nii.gz
-    │   │   └── transform_Warped.nii.gz
-    │   ├── sub0..
-    │   └── sub010
-    ├── warp_partial
-    │   ├── sub001
-    │   │   ├── apply2con0
-    │   │   │   └── con_0001_out_trans.nii.gz
-    │   │   ├── apply2con1
-    │   │   │   └── con_0002_out_trans.nii.gz
-    │   │   ├── apply2con2
-    │   │   │   └── con_0003_out_trans.nii.gz
-    │   │   ├── apply2con3
-    │   │   │   └── con_0004_out_trans.nii.gz
-    │   │   ├── apply2con4
-    │   │   │   └── ess_0005_out_trans.nii.gz
-    │   │   ├── apply2con5
-    │   │   │   └── ess_0006_out_trans.nii.gz
-    │   │   └── meanarun001_trans.nii
-    │   ├── sub0..
-    │   └── sub010
-    └── warp_complete
-        ├── sub001
-        │   ├── meanarun001_trans.nii
-        │   ├── warpall0
-        │   │   └── con_0001_trans.nii
-        │   ├── warpall1
-        │   │   └── con_0002_trans.nii
-        │   ├── warpall2
-        │   │   └── con_0003_trans.nii
-        │   ├── warpall3
-        │   │   └── con_0004_trans.nii
-        │   ├── warpall4
-        │   │   └── ess_0005_trans.nii
-        │   └── warpall5
-        │       └── ess_0006_trans.nii
-        ├── sub0..
-        └── sub010
+    |-- antsreg
+    |   |-- sub001
+    |   |   |-- transformComposite.h5
+    |   |   |-- transformInverseComposite.h5
+    |   |   |-- transform_InverseWarped.nii.gz
+    |   |   |-- transform_Warped.nii.gz
+    |   |-- sub0..
+    |   |-- sub010
+    |-- warp_partial
+    |   |-- sub001
+    |   |   |-- apply2con0
+    |   |   |   |-- con_0001_out_trans.nii.gz
+    |   |   |-- apply2con1
+    |   |   |   |-- con_0002_out_trans.nii.gz
+    |   |   |-- apply2con2
+    |   |   |   |-- con_0003_out_trans.nii.gz
+    |   |   |-- apply2con3
+    |   |   |   |-- con_0004_out_trans.nii.gz
+    |   |   |-- apply2con4
+    |   |   |   |-- ess_0005_out_trans.nii.gz
+    |   |   |-- apply2con5
+    |   |   |   |-- ess_0006_out_trans.nii.gz
+    |   |   |-- meanarun001_trans.nii
+    |   |-- sub0..
+    |   |-- sub010
+    |-- warp_complete
+        |-- sub001
+        |   |-- meanarun001_trans.nii
+        |   |-- warpall0
+        |   |   |-- con_0001_trans.nii
+        |   |-- warpall1
+        |   |   |-- con_0002_trans.nii
+        |   |-- warpall2
+        |   |   |-- con_0003_trans.nii
+        |   |-- warpall3
+        |   |   |-- con_0004_trans.nii
+        |   |-- warpall4
+        |   |   |-- ess_0005_trans.nii
+        |   |-- warpall5
+        |       |-- ess_0006_trans.nii
+        |-- sub0..
+        |-- sub010
 
 
 Normalize Your Data with SPM12
@@ -668,15 +668,15 @@ The resulting folder structure looks as follows:
 .. code-block:: sh
 
     output_fMRI_example_norm_spm/
-    └── normalized
-        ├── sub001
-        │   ├── wcon_0001_out.nii
-        │   ├── wcon_0002_out.nii
-        │   ├── wcon_0003_out.nii
-        │   ├── wcon_0004_out.nii
-        │   ├── wess_0005_out.nii
-        │   ├── wess_0006_out.nii
-        │   ├── wstruct.nii
-        │   └── y_struct.nii
-        ├── sub0..
-        └── sub010
+    |-- normalized
+        |-- sub001
+        |   |-- wcon_0001_out.nii
+        |   |-- wcon_0002_out.nii
+        |   |-- wcon_0003_out.nii
+        |   |-- wcon_0004_out.nii
+        |   |-- wess_0005_out.nii
+        |   |-- wess_0006_out.nii
+        |   |-- wstruct.nii
+        |   |-- y_struct.nii
+        |-- sub0..
+        |-- sub010

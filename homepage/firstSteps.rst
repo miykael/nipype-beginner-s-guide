@@ -593,18 +593,18 @@ Before you can tell your computer where it can find your data, you yourself have
 .. code-block:: none
 
     nipype_tutorial
-    ├── data
-    │   ├── sub001
-    │   │   ├── ...
-    │   │   ├── run001.nii.gz
-    │   │   ├── run002.nii.gz
-    │   │   └── struct.nii.gz
-    │   ├── sub002
-    │   └── sub003
-    └── freesurfer
-        ├── sub001
-        ├── sub002
-        └── sub003
+    |-- data
+    |   |-- sub001
+    |   |   |-- ...
+    |   |   |-- run001.nii.gz
+    |   |   |-- run002.nii.gz
+    |   |   |-- struct.nii.gz
+    |   |-- sub002
+    |   |-- sub003
+    |-- freesurfer
+        |-- sub001
+        |-- sub002
+        |-- sub003
 
 So this means that your scans are stored in a zipped NIfTI format (i.e. ``nii.gz``) and that you can find them as follows: ``~/nipype_tutorial/data/subjectname/scanimage.nii.gz``
 
@@ -929,20 +929,20 @@ The following folder structure represents the working directory of the above pre
 .. code-block:: sh
 
     workingdir_firstSteps
-    └── preproc
-        ├── _session_id_run001_subject_id_sub001
-        │   ├── art
-        │   ├── datasink
-        │   ├── gunzip
-        │   ├── realign
-        │   ├── selectfiles
-        │   ├── sliceTiming
-        │   └── smooth
-        ├── _session_id_run001_subject_id_sub002
-        ├── _session_id_run001_subject_id_sub003
-        ├── _session_id_run002_subject_id_sub001
-        ├── _session_id_run002_subject_id_sub002
-        └── _session_id_run002_subject_id_sub003
+    |-- preproc
+        |-- _session_id_run001_subject_id_sub001
+        |   |-- art
+        |   |-- datasink
+        |   |-- gunzip
+        |   |-- realign
+        |   |-- selectfiles
+        |   |-- sliceTiming
+        |   |-- smooth
+        |-- _session_id_run001_subject_id_sub002
+        |-- _session_id_run001_subject_id_sub003
+        |-- _session_id_run002_subject_id_sub001
+        |-- _session_id_run002_subject_id_sub002
+        |-- _session_id_run002_subject_id_sub003
 
 
 Even though the working directory is most often only temporary, it contains many relevant files to be found and explore. Following are some of the highlights:
@@ -959,32 +959,32 @@ The output folder contains exactly the files that we sent to the DataSink. Each 
 .. code-block:: sh
 
     output_firstSteps
-    ├── art
-    │   ├── run001_sub001
-    │   │   ├── art.rarun001_outliers.txt
-    │   │   └── plot.rarun001.png
-    │   ├── run001_sub002
-    │   ├── run001_sub003
-    │   ├── run002_sub001
-    │   ├── run002_sub002
-    │   └── run002_sub003
-    ├── realign
-    │   ├── run001_sub001
-    │   │   ├── meanarun001.nii
-    │   │   └── rp_arun001.txt
-    │   ├── run001_sub002
-    │   ├── run001_sub003
-    │   ├── run002_sub001
-    │   ├── run002_sub002
-    │   └── run002_sub003
-    └── smooth
-        ├── run001_sub001
-        │   └── srarun001.nii
-        ├── run001_sub002
-        ├── run001_sub003
-        ├── run002_sub001
-        ├── run002_sub002
-        └── run002_sub003
+    |-- art
+    |   |-- run001_sub001
+    |   |   |-- art.rarun001_outliers.txt
+    |   |   |-- plot.rarun001.png
+    |   |-- run001_sub002
+    |   |-- run001_sub003
+    |   |-- run002_sub001
+    |   |-- run002_sub002
+    |   |-- run002_sub003
+    |-- realign
+    |   |-- run001_sub001
+    |   |   |-- meanarun001.nii
+    |   |   |-- rp_arun001.txt
+    |   |-- run001_sub002
+    |   |-- run001_sub003
+    |   |-- run002_sub001
+    |   |-- run002_sub002
+    |   |-- run002_sub003
+    |-- smooth
+        |-- run001_sub001
+        |   |-- srarun001.nii
+        |-- run001_sub002
+        |-- run001_sub003
+        |-- run002_sub001
+        |-- run002_sub002
+        |-- run002_sub003
 
 
 The goal of this output folder is to store all important outputs in this folder. This allows you to delete the working directory and get rid of its many unnecessary temporary files.

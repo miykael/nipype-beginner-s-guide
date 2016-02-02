@@ -252,16 +252,16 @@ The resulting folder structure looks as follows:
 .. code-block:: sh
 
     output_fMRI_example_2nd
-    └── contrasts
-        ├── con_0001
-        │   ├── con_0001.nii
-        │   ├── SPM.mat
-        │   └── spmT_0001.nii
-        ├── con_0002
-        ├── con_0003
-        ├── con_0004
-        ├── ess_0005
-        │   ├── ess_0005.nii
-        │   ├── SPM.mat
-        │   └── spmF_0005.nii
-        └── ess_0006
+    |-- contrasts
+        |-- con_0001
+        |   |-- con_0001.nii
+        |   |-- SPM.mat
+        |   |-- spmT_0001.nii
+        |-- con_0002
+        |-- con_0003
+        |-- con_0004
+        |-- ess_0005
+        |   |-- ess_0005.nii
+        |   |-- SPM.mat
+        |   |-- spmF_0005.nii
+        |-- ess_0006
