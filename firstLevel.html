@@ -103,7 +103,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="normalize.html"
                         title="next chapter">How To Normalize Your Data</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -116,11 +116,13 @@
     </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/firstLevel.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/firstLevel.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
         </div>
       </div>
     <div class="document">
@@ -136,9 +138,9 @@
 <div class="section" id="define-the-structure-of-your-pipeline">
 <h2>Define the structure of your pipeline<a class="headerlink" href="#define-the-structure-of-your-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>A typical first level fMRI workflow can be divided into two sections: <strong>preprocessing</strong> and <strong>first level analysis</strong>. The first one deals with removing noise and confounding factors such as movement from your data and the second one deals with fitting the model of your experiment to the data. The best way to build a pipeline from scratch is to think about the steps the data has to go through:</p>
-<p>In the <strong>preprocessing</strong> part of the pipeline we first want to <tt class="docutils literal"><span class="pre">Despike</span></tt> the data. This is a process that removes local and short timeline &#8216;spikes&#8217; from the functional data. After that we want to correct for the slice wise acquisition of the data with <tt class="docutils literal"><span class="pre">SliceTiming</span></tt> and get rid of the movement in the scanner with <tt class="docutils literal"><span class="pre">Realign</span></tt>. We want to detrend our data by removing polynomial to the 2nd order with <tt class="docutils literal"><span class="pre">TSNR</span></tt>. Additional to that, we also want to check the realignment parameters for extreme movements, i.e. artifacts, with <tt class="docutils literal"><span class="pre">ArtifactDetect</span></tt> and prepare an inclusion mask for the first level model with <tt class="docutils literal"><span class="pre">DilateImage</span></tt>. This inclusion mask is created by taking the <tt class="docutils literal"><span class="pre">aseg.mgz</span></tt> segmentation file from FreeSurfer (with the node <tt class="docutils literal"><span class="pre">FreeSurferSource</span></tt>), binarizing the values with <tt class="docutils literal"><span class="pre">Binarize</span></tt> (values above 0.5 become 1 and below become 0) and than dilating this binarized mask by a smoothing kernel with <tt class="docutils literal"><span class="pre">DilateImage</span></tt>. After all this is done we are ready to smooth our data with <tt class="docutils literal"><span class="pre">Smooth</span></tt>.</p>
-<p>In the <strong>first level analysis</strong> part of the pipeline we first want to specify our model with <tt class="docutils literal"><span class="pre">SpecifyModel</span></tt>, than create the first level design with <tt class="docutils literal"><span class="pre">Level1Design</span></tt>. After that we are able to estimate the model with <tt class="docutils literal"><span class="pre">EstimateModel</span></tt> and estimate the contrasts with <tt class="docutils literal"><span class="pre">EstimateContrast</span></tt>. Before we&#8217;re done we want to coregister our contrasts to the subject specific anatomy with <tt class="docutils literal"><span class="pre">BBRegister</span></tt> and <tt class="docutils literal"><span class="pre">ApplyVolTransform</span></tt> and convert the final output to zipped NIfTI files with <tt class="docutils literal"><span class="pre">MRIConvert</span></tt>.</p>
-<p>As with every workflow, we also need some input and output nodes which handle the data and an additional node that provides subject specific information. For that we need an <tt class="docutils literal"><span class="pre">Infosource</span></tt> node that knows on which subjects to run, a <tt class="docutils literal"><span class="pre">SelectFiles</span></tt> node that knows where to get the data, a <tt class="docutils literal"><span class="pre">getsubjectinfo</span></tt> node that knows subject specific information (e.g. onset times and duration of conditions, subject specific regressors, etc.) and a <tt class="docutils literal"><span class="pre">DataSink</span></tt> node that knows which files to store and where to store them.</p>
+<p>In the <strong>preprocessing</strong> part of the pipeline we first want to <code class="docutils literal"><span class="pre">Despike</span></code> the data. This is a process that removes local and short timeline &#8216;spikes&#8217; from the functional data. After that we want to correct for the slice wise acquisition of the data with <code class="docutils literal"><span class="pre">SliceTiming</span></code> and get rid of the movement in the scanner with <code class="docutils literal"><span class="pre">Realign</span></code>. We want to detrend our data by removing polynomial to the 2nd order with <code class="docutils literal"><span class="pre">TSNR</span></code>. Additional to that, we also want to check the realignment parameters for extreme movements, i.e. artifacts, with <code class="docutils literal"><span class="pre">ArtifactDetect</span></code> and prepare an inclusion mask for the first level model with <code class="docutils literal"><span class="pre">DilateImage</span></code>. This inclusion mask is created by taking the <code class="docutils literal"><span class="pre">aseg.mgz</span></code> segmentation file from FreeSurfer (with the node <code class="docutils literal"><span class="pre">FreeSurferSource</span></code>), binarizing the values with <code class="docutils literal"><span class="pre">Binarize</span></code> (values above 0.5 become 1 and below become 0) and than dilating this binarized mask by a smoothing kernel with <code class="docutils literal"><span class="pre">DilateImage</span></code>. After all this is done we are ready to smooth our data with <code class="docutils literal"><span class="pre">Smooth</span></code>.</p>
+<p>In the <strong>first level analysis</strong> part of the pipeline we first want to specify our model with <code class="docutils literal"><span class="pre">SpecifyModel</span></code>, than create the first level design with <code class="docutils literal"><span class="pre">Level1Design</span></code>. After that we are able to estimate the model with <code class="docutils literal"><span class="pre">EstimateModel</span></code> and estimate the contrasts with <code class="docutils literal"><span class="pre">EstimateContrast</span></code>. Before we&#8217;re done we want to coregister our contrasts to the subject specific anatomy with <code class="docutils literal"><span class="pre">BBRegister</span></code> and <code class="docutils literal"><span class="pre">ApplyVolTransform</span></code> and convert the final output to zipped NIfTI files with <code class="docutils literal"><span class="pre">MRIConvert</span></code>.</p>
+<p>As with every workflow, we also need some input and output nodes which handle the data and an additional node that provides subject specific information. For that we need an <code class="docutils literal"><span class="pre">Infosource</span></code> node that knows on which subjects to run, a <code class="docutils literal"><span class="pre">SelectFiles</span></code> node that knows where to get the data, a <code class="docutils literal"><span class="pre">getsubjectinfo</span></code> node that knows subject specific information (e.g. onset times and duration of conditions, subject specific regressors, etc.) and a <code class="docutils literal"><span class="pre">DataSink</span></code> node that knows which files to store and where to store them.</p>
 <p>To run all this we need some structure. Therefore, we will put the <strong>preprocessing</strong> and the <strong>first level analysis</strong> part in its own subworkflow and create a hierarchically higher workflow that contains those two subworkflows as well as the input and output nodes. I&#8217;d like to call this top workflow <strong>metaflow</strong>.</p>
 <p>Those are a lot of different parts and it is confusing to make sense of it without actually seeing what we try to build. Here is how the metaflow should look like in the end:</p>
 <a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img src="_images/graph_colored.svg" width="700pt" /></div>
@@ -150,7 +152,7 @@
 </div>
 <div class="section" id="write-your-pipeline-script">
 <h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">¶</a></h2>
-<p>Before we can start with writing a pipeline script, we first have to make sure that we have all necessary information. We know how the structure of the metaflow should look like from the previous section. But what are the experiment specific parameters? Lets assume that we use the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/prepareData.html">tutorial dataset</a> with the ten subjects <tt class="docutils literal"><span class="pre">sub001</span></tt> to <tt class="docutils literal"><span class="pre">sub010</span></tt>, each having two functional scans <tt class="docutils literal"><span class="pre">run001.nii.gz</span></tt> and <tt class="docutils literal"><span class="pre">run002.nii.gz</span></tt>. We know from the openfmri homepage <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> that this experiment has a a TR of 2.0 seconds and that each volume of the functional data consists of 40 slices, acquired in an ascending interleaved slice order. And we know that we can find condition specific onset times for each subject in the subject folder in our data folder, e.g. <tt class="docutils literal"><span class="pre">~/nipype_tutorial/data/sub001/</span></tt>. So let&#8217;s start!</p>
+<p>Before we can start with writing a pipeline script, we first have to make sure that we have all necessary information. We know how the structure of the metaflow should look like from the previous section. But what are the experiment specific parameters? Lets assume that we use the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/prepareData.html">tutorial dataset</a> with the ten subjects <code class="docutils literal"><span class="pre">sub001</span></code> to <code class="docutils literal"><span class="pre">sub010</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>. We know from the openfmri homepage <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> that this experiment has a a TR of 2.0 seconds and that each volume of the functional data consists of 40 slices, acquired in an ascending interleaved slice order. And we know that we can find condition specific onset times for each subject in the subject folder in our data folder, e.g. <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/sub001/</span></code>. So let&#8217;s start!</p>
 <div class="section" id="import-modules">
 <h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
 <p>First we have to import all necessary modules. Which modules you have to import becomes clear while you’re adding specific nodes.</p>
@@ -190,13 +192,13 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># MATLAB - Specify path to current SPM and the MATLAB&#39;s default mode</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># MATLAB - Specify path to current SPM and the MATLAB&#39;s default mode</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.matlab</span> <span class="kn">import</span> <span class="n">MatlabCommand</span>
-<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12&#39;</span><span class="p">)</span>
-<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_matlab_cmd</span><span class="p">(</span><span class="s">&quot;matlab -nodesktop -nosplash&quot;</span><span class="p">)</span>
+<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s1">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12&#39;</span><span class="p">)</span>
+<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_matlab_cmd</span><span class="p">(</span><span class="s2">&quot;matlab -nodesktop -nosplash&quot;</span><span class="p">)</span>
 
-<span class="c"># FreeSurfer - Specify the location of the freesurfer folder</span>
-<span class="n">fs_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/freesurfer&#39;</span>
+<span class="c1"># FreeSurfer - Specify the location of the freesurfer folder</span>
+<span class="n">fs_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/freesurfer&#39;</span>
 <span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">fs_dir</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
@@ -214,17 +216,17 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial&#39;</span>          <span class="c"># location of experiment folder</span>
-<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sub001&#39;</span><span class="p">,</span> <span class="s">&#39;sub002&#39;</span><span class="p">,</span> <span class="s">&#39;sub003&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub004&#39;</span><span class="p">,</span> <span class="s">&#39;sub005&#39;</span><span class="p">,</span> <span class="s">&#39;sub006&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub007&#39;</span><span class="p">,</span> <span class="s">&#39;sub008&#39;</span><span class="p">,</span> <span class="s">&#39;sub009&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub010&#39;</span><span class="p">]</span>                     <span class="c"># list of subject identifiers</span>
-<span class="n">output_dir</span> <span class="o">=</span> <span class="s">&#39;output_fMRI_example_1st&#39;</span>        <span class="c"># name of 1st-level output folder</span>
-<span class="n">working_dir</span> <span class="o">=</span> <span class="s">&#39;workingdir_fMRI_example_1st&#39;</span>   <span class="c"># name of 1st-level working directory</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>          <span class="c1"># location of experiment folder</span>
+<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sub001&#39;</span><span class="p">,</span> <span class="s1">&#39;sub002&#39;</span><span class="p">,</span> <span class="s1">&#39;sub003&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub004&#39;</span><span class="p">,</span> <span class="s1">&#39;sub005&#39;</span><span class="p">,</span> <span class="s1">&#39;sub006&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub007&#39;</span><span class="p">,</span> <span class="s1">&#39;sub008&#39;</span><span class="p">,</span> <span class="s1">&#39;sub009&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub010&#39;</span><span class="p">]</span>                     <span class="c1"># list of subject identifiers</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="s1">&#39;output_fMRI_example_1st&#39;</span>        <span class="c1"># name of 1st-level output folder</span>
+<span class="n">working_dir</span> <span class="o">=</span> <span class="s1">&#39;workingdir_fMRI_example_1st&#39;</span>   <span class="c1"># name of 1st-level working directory</span>
 
-<span class="n">number_of_slices</span> <span class="o">=</span> <span class="mi">40</span>                         <span class="c"># number of slices in volume</span>
-<span class="n">TR</span> <span class="o">=</span> <span class="mf">2.0</span>                                      <span class="c"># time repetition of volume</span>
-<span class="n">fwhm_size</span> <span class="o">=</span> <span class="mi">6</span>                                 <span class="c"># size of FWHM in mm</span>
+<span class="n">number_of_slices</span> <span class="o">=</span> <span class="mi">40</span>                         <span class="c1"># number of slices in volume</span>
+<span class="n">TR</span> <span class="o">=</span> <span class="mf">2.0</span>                                      <span class="c1"># time repetition of volume</span>
+<span class="n">fwhm_size</span> <span class="o">=</span> <span class="mi">6</span>                                 <span class="c1"># size of FWHM in mm</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -284,60 +286,60 @@
 51
 52
 53
-54</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
-<span class="n">despike</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Despike</span><span class="p">(</span><span class="n">outputtype</span><span class="o">=</span><span class="s">&#39;NIFTI&#39;</span><span class="p">),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&quot;despike&quot;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
+54</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
+<span class="n">despike</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Despike</span><span class="p">(</span><span class="n">outputtype</span><span class="o">=</span><span class="s1">&#39;NIFTI&#39;</span><span class="p">),</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;despike&quot;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 
-<span class="c"># Slicetiming - correct for slice wise acquisition</span>
+<span class="c1"># Slicetiming - correct for slice wise acquisition</span>
 <span class="n">interleaved_order</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">number_of_slices</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">number_of_slices</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sliceTiming</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SliceTiming</span><span class="p">(</span><span class="n">num_slices</span><span class="o">=</span><span class="n">number_of_slices</span><span class="p">,</span>
                                <span class="n">time_repetition</span><span class="o">=</span><span class="n">TR</span><span class="p">,</span>
                                <span class="n">time_acquisition</span><span class="o">=</span><span class="n">TR</span><span class="o">-</span><span class="n">TR</span><span class="o">/</span><span class="n">number_of_slices</span><span class="p">,</span>
                                <span class="n">slice_order</span><span class="o">=</span><span class="n">interleaved_order</span><span class="p">,</span>
                                <span class="n">ref_slice</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-                   <span class="n">name</span><span class="o">=</span><span class="s">&quot;sliceTiming&quot;</span><span class="p">)</span>
+                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;sliceTiming&quot;</span><span class="p">)</span>
 
-<span class="c"># Realign - correct for motion</span>
+<span class="c1"># Realign - correct for motion</span>
 <span class="n">realign</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Realign</span><span class="p">(</span><span class="n">register_to_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-               <span class="n">name</span><span class="o">=</span><span class="s">&quot;realign&quot;</span><span class="p">)</span>
+               <span class="n">name</span><span class="o">=</span><span class="s2">&quot;realign&quot;</span><span class="p">)</span>
 
-<span class="c"># TSNR - remove polynomials 2nd order</span>
+<span class="c1"># TSNR - remove polynomials 2nd order</span>
 <span class="n">tsnr</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">TSNR</span><span class="p">(</span><span class="n">regress_poly</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-               <span class="n">name</span><span class="o">=</span><span class="s">&#39;tsnr&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
+               <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tsnr&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 
-<span class="c"># Artifact Detection - determine which of the images in the functional series</span>
-<span class="c">#   are outliers. This is based on deviation in intensity or movement.</span>
+<span class="c1"># Artifact Detection - determine which of the images in the functional series</span>
+<span class="c1">#   are outliers. This is based on deviation in intensity or movement.</span>
 <span class="n">art</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ArtifactDetect</span><span class="p">(</span><span class="n">norm_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                           <span class="n">zintensity_threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                          <span class="n">mask_type</span><span class="o">=</span><span class="s">&#39;file&#39;</span><span class="p">,</span>
-                          <span class="n">parameter_source</span><span class="o">=</span><span class="s">&#39;SPM&#39;</span><span class="p">,</span>
+                          <span class="n">mask_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span>
+                          <span class="n">parameter_source</span><span class="o">=</span><span class="s1">&#39;SPM&#39;</span><span class="p">,</span>
                           <span class="n">use_differences</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">]),</span>
-           <span class="n">name</span><span class="o">=</span><span class="s">&quot;art&quot;</span><span class="p">)</span>
+           <span class="n">name</span><span class="o">=</span><span class="s2">&quot;art&quot;</span><span class="p">)</span>
 
-<span class="c"># Smooth - to smooth the images with a given kernel</span>
+<span class="c1"># Smooth - to smooth the images with a given kernel</span>
 <span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Smooth</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm_size</span><span class="p">),</span>
-              <span class="n">name</span><span class="o">=</span><span class="s">&quot;smooth&quot;</span><span class="p">)</span>
+              <span class="n">name</span><span class="o">=</span><span class="s2">&quot;smooth&quot;</span><span class="p">)</span>
 
-<span class="c"># FreeSurferSource - Data grabber specific for FreeSurfer data</span>
+<span class="c1"># FreeSurferSource - Data grabber specific for FreeSurfer data</span>
 <span class="n">fssource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">FreeSurferSource</span><span class="p">(</span><span class="n">subjects_dir</span><span class="o">=</span><span class="n">fs_dir</span><span class="p">),</span>
                 <span class="n">run_without_submitting</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&#39;fssource&#39;</span><span class="p">)</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fssource&#39;</span><span class="p">)</span>
 
-<span class="c"># BBRegister - coregister a volume to the Freesurfer anatomical</span>
-<span class="n">bbregister</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">BBRegister</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s">&#39;header&#39;</span><span class="p">,</span>
-                             <span class="n">contrast_type</span><span class="o">=</span><span class="s">&#39;t2&#39;</span><span class="p">,</span>
+<span class="c1"># BBRegister - coregister a volume to the Freesurfer anatomical</span>
+<span class="n">bbregister</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">BBRegister</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">&#39;header&#39;</span><span class="p">,</span>
+                             <span class="n">contrast_type</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">,</span>
                              <span class="n">out_fsl_file</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&#39;bbregister&#39;</span><span class="p">)</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bbregister&#39;</span><span class="p">)</span>
 
-<span class="c"># Volume Transformation - transform the brainmask into functional space</span>
+<span class="c1"># Volume Transformation - transform the brainmask into functional space</span>
 <span class="n">applyVolTrans</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ApplyVolTransform</span><span class="p">(</span><span class="n">inverse</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;applyVolTrans&#39;</span><span class="p">)</span>
+                     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;applyVolTrans&#39;</span><span class="p">)</span>
 
-<span class="c"># Binarize -  binarize and dilate an image to create a brainmask</span>
+<span class="c1"># Binarize -  binarize and dilate an image to create a brainmask</span>
 <span class="n">binarize</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Binarize</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                          <span class="n">dilate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                         <span class="n">out_type</span><span class="o">=</span><span class="s">&#39;nii&#39;</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&#39;binarize&#39;</span><span class="p">)</span>
+                         <span class="n">out_type</span><span class="o">=</span><span class="s1">&#39;nii&#39;</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;binarize&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <p>After implementing the nodes we can create the preprocessing subworkflow and add all those nodes to it and connect them to each other.</p>
@@ -358,27 +360,27 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Create a preprocessing workflow</span>
-<span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;preproc&#39;</span><span class="p">)</span>
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Create a preprocessing workflow</span>
+<span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;preproc&#39;</span><span class="p">)</span>
 
-<span class="c"># Connect all components of the preprocessing workflow</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">despike</span><span class="p">,</span> <span class="n">sliceTiming</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">sliceTiming</span><span class="p">,</span> <span class="n">realign</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;timecorrected_files&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">tsnr</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s">&#39;realigned_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;mask_file&#39;</span><span class="p">),</span>
-                                 <span class="p">(</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">,</span>
-                                  <span class="s">&#39;realignment_parameters&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">bbregister</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;brainmask&#39;</span><span class="p">,</span> <span class="s">&#39;target_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">bbregister</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;out_reg_file&#39;</span><span class="p">,</span> <span class="s">&#39;reg_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">applyVolTrans</span><span class="p">,</span> <span class="n">binarize</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+<span class="c1"># Connect all components of the preprocessing workflow</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">despike</span><span class="p">,</span> <span class="n">sliceTiming</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">sliceTiming</span><span class="p">,</span> <span class="n">realign</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;timecorrected_files&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">tsnr</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s1">&#39;realigned_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask_file&#39;</span><span class="p">),</span>
+                                 <span class="p">(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;realignment_parameters&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">bbregister</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;brainmask&#39;</span><span class="p">,</span> <span class="s1">&#39;target_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">bbregister</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_reg_file&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">applyVolTrans</span><span class="p">,</span> <span class="n">binarize</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
                  <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
-<p>If you are wondering how we know which parameters to specify and which connections to establish. It is simple: First, specify or connect all mandatory inputs of each node. Second, add the additional inputs that your data requires. For more informations about what is mandatory and what&#8217;s not, go either to <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">Interfaces and Algorithms</a> or use the <tt class="docutils literal"><span class="pre">.help()</span></tt> method (e.g. <tt class="docutils literal"><span class="pre">realign.help()</span></tt>), as shown <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#input-and-output-fields">here</a>.</p>
+<p>If you are wondering how we know which parameters to specify and which connections to establish. It is simple: First, specify or connect all mandatory inputs of each node. Second, add the additional inputs that your data requires. For more informations about what is mandatory and what&#8217;s not, go either to <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">Interfaces and Algorithms</a> or use the <code class="docutils literal"><span class="pre">.help()</span></code> method (e.g. <code class="docutils literal"><span class="pre">realign.help()</span></code>), as shown <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#input-and-output-fields">here</a>.</p>
 </div>
 <div class="section" id="create-first-level-analysis-pipeline">
 <h3>Create first level analysis pipeline<a class="headerlink" href="#create-first-level-analysis-pipeline" title="Permalink to this headline">¶</a></h3>
@@ -413,37 +415,37 @@
 28
 29
 30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># SpecifyModel - Generates SPM-specific Model</span>
+31</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># SpecifyModel - Generates SPM-specific Model</span>
 <span class="n">modelspec</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SpecifySPMModel</span><span class="p">(</span><span class="n">concatenate_runs</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                 <span class="n">input_units</span><span class="o">=</span><span class="s">&#39;secs&#39;</span><span class="p">,</span>
-                                 <span class="n">output_units</span><span class="o">=</span><span class="s">&#39;secs&#39;</span><span class="p">,</span>
+                                 <span class="n">input_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
+                                 <span class="n">output_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
                                  <span class="n">time_repetition</span><span class="o">=</span><span class="n">TR</span><span class="p">,</span>
                                  <span class="n">high_pass_filter_cutoff</span><span class="o">=</span><span class="mi">128</span><span class="p">),</span>
-                 <span class="n">name</span><span class="o">=</span><span class="s">&quot;modelspec&quot;</span><span class="p">)</span>
+                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;modelspec&quot;</span><span class="p">)</span>
 
-<span class="c"># Level1Design - Generates an SPM design matrix</span>
-<span class="n">level1design</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Level1Design</span><span class="p">(</span><span class="n">bases</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;hrf&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;derivs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}},</span>
-                                 <span class="n">timing_units</span><span class="o">=</span><span class="s">&#39;secs&#39;</span><span class="p">,</span>
+<span class="c1"># Level1Design - Generates an SPM design matrix</span>
+<span class="n">level1design</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Level1Design</span><span class="p">(</span><span class="n">bases</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;hrf&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;derivs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}},</span>
+                                 <span class="n">timing_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
                                  <span class="n">interscan_interval</span><span class="o">=</span><span class="n">TR</span><span class="p">,</span>
-                                 <span class="n">model_serial_correlations</span><span class="o">=</span><span class="s">&#39;AR(1)&#39;</span><span class="p">),</span>
-                    <span class="n">name</span><span class="o">=</span><span class="s">&quot;level1design&quot;</span><span class="p">)</span>
+                                 <span class="n">model_serial_correlations</span><span class="o">=</span><span class="s1">&#39;AR(1)&#39;</span><span class="p">),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;level1design&quot;</span><span class="p">)</span>
 
-<span class="c"># EstimateModel - estimate the parameters of the model</span>
-<span class="n">level1estimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateModel</span><span class="p">(</span><span class="n">estimation_method</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Classical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}),</span>
-                      <span class="n">name</span><span class="o">=</span><span class="s">&quot;level1estimate&quot;</span><span class="p">)</span>
+<span class="c1"># EstimateModel - estimate the parameters of the model</span>
+<span class="n">level1estimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateModel</span><span class="p">(</span><span class="n">estimation_method</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Classical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}),</span>
+                      <span class="n">name</span><span class="o">=</span><span class="s2">&quot;level1estimate&quot;</span><span class="p">)</span>
 
-<span class="c"># EstimateContrast - estimates contrasts</span>
-<span class="n">conestimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateContrast</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;conestimate&quot;</span><span class="p">)</span>
+<span class="c1"># EstimateContrast - estimates contrasts</span>
+<span class="n">conestimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateContrast</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;conestimate&quot;</span><span class="p">)</span>
 
-<span class="c"># Volume Transformation - transform contrasts into anatomical space</span>
+<span class="c1"># Volume Transformation - transform contrasts into anatomical space</span>
 <span class="n">applyVolReg</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">ApplyVolTransform</span><span class="p">(</span><span class="n">fs_target</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                      <span class="n">name</span><span class="o">=</span><span class="s">&#39;applyVolReg&#39;</span><span class="p">,</span>
-                      <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;source_file&#39;</span><span class="p">])</span>
+                      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;applyVolReg&#39;</span><span class="p">,</span>
+                      <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_file&#39;</span><span class="p">])</span>
 
-<span class="c"># MRIConvert - to gzip output files</span>
-<span class="n">mriconvert</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">MRIConvert</span><span class="p">(</span><span class="n">out_type</span><span class="o">=</span><span class="s">&#39;niigz&#39;</span><span class="p">),</span>
-                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;mriconvert&#39;</span><span class="p">,</span>
-                     <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
+<span class="c1"># MRIConvert - to gzip output files</span>
+<span class="n">mriconvert</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">MRIConvert</span><span class="p">(</span><span class="n">out_type</span><span class="o">=</span><span class="s1">&#39;niigz&#39;</span><span class="p">),</span>
+                     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mriconvert&#39;</span><span class="p">,</span>
+                     <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 <p>Now that this is done, we create the first level analysis subworkflow and add all the nodes to it and connect them to each other.</p>
@@ -465,31 +467,31 @@
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Initiation of the 1st-level analysis workflow</span>
-<span class="n">l1analysis</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;l1analysis&#39;</span><span class="p">)</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Initiation of the 1st-level analysis workflow</span>
+<span class="n">l1analysis</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;l1analysis&#39;</span><span class="p">)</span>
 
-<span class="c"># Connect up the 1st-level analysis components</span>
-<span class="n">l1analysis</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">modelspec</span><span class="p">,</span> <span class="n">level1design</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;session_info&#39;</span><span class="p">,</span>
-                                                <span class="s">&#39;session_info&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">level1design</span><span class="p">,</span> <span class="n">level1estimate</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span>
-                                                     <span class="s">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">level1estimate</span><span class="p">,</span> <span class="n">conestimate</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span>
-                                                    <span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
-                                                   <span class="p">(</span><span class="s">&#39;beta_images&#39;</span><span class="p">,</span>
-                                                    <span class="s">&#39;beta_images&#39;</span><span class="p">),</span>
-                                                   <span class="p">(</span><span class="s">&#39;residual_image&#39;</span><span class="p">,</span>
-                                                    <span class="s">&#39;residual_image&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">conestimate</span><span class="p">,</span> <span class="n">applyVolReg</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;con_images&#39;</span><span class="p">,</span>
-                                                 <span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">applyVolReg</span><span class="p">,</span> <span class="n">mriconvert</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;transformed_file&#39;</span><span class="p">,</span>
-                                                <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+<span class="c1"># Connect up the 1st-level analysis components</span>
+<span class="n">l1analysis</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">modelspec</span><span class="p">,</span> <span class="n">level1design</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;session_info&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;session_info&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">level1design</span><span class="p">,</span> <span class="n">level1estimate</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;spm_mat_file&#39;</span><span class="p">,</span>
+                                                     <span class="s1">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">level1estimate</span><span class="p">,</span> <span class="n">conestimate</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;spm_mat_file&#39;</span><span class="p">,</span>
+                                                    <span class="s1">&#39;spm_mat_file&#39;</span><span class="p">),</span>
+                                                   <span class="p">(</span><span class="s1">&#39;beta_images&#39;</span><span class="p">,</span>
+                                                    <span class="s1">&#39;beta_images&#39;</span><span class="p">),</span>
+                                                   <span class="p">(</span><span class="s1">&#39;residual_image&#39;</span><span class="p">,</span>
+                                                    <span class="s1">&#39;residual_image&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">conestimate</span><span class="p">,</span> <span class="n">applyVolReg</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;con_images&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">applyVolReg</span><span class="p">,</span> <span class="n">mriconvert</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;transformed_file&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
                     <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 </div>
 <div class="section" id="define-meta-workflow-and-connect-subworkflows">
 <h3>Define meta workflow and connect subworkflows<a class="headerlink" href="#define-meta-workflow-and-connect-subworkflows" title="Permalink to this headline">¶</a></h3>
-<p>After we&#8217;ve created the subworkflows <tt class="docutils literal"><span class="pre">preproc</span></tt> and <tt class="docutils literal"><span class="pre">l1analysis</span></tt> we are ready to create the meta workflow <tt class="docutils literal"><span class="pre">metaflow</span></tt> and establish the connections between the two subworkflows.</p>
+<p>After we&#8217;ve created the subworkflows <code class="docutils literal"><span class="pre">preproc</span></code> and <code class="docutils literal"><span class="pre">l1analysis</span></code> we are ready to create the meta workflow <code class="docutils literal"><span class="pre">metaflow</span></code> and establish the connections between the two subworkflows.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -504,19 +506,19 @@
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;metaflow&#39;</span><span class="p">)</span>
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;metaflow&#39;</span><span class="p">)</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">)</span>
 
-<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;modelspec.realignment_parameters&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;smooth.smoothed_files&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;modelspec.functional_runs&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;art.outlier_files&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;modelspec.outlier_files&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;level1design.mask_image&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;applyVolReg.reg_file&#39;</span><span class="p">),</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;modelspec.realignment_parameters&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;smooth.smoothed_files&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;modelspec.functional_runs&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;art.outlier_files&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;modelspec.outlier_files&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;level1design.mask_image&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;applyVolReg.reg_file&#39;</span><span class="p">),</span>
                                          <span class="p">]),</span>
                   <span class="p">])</span>
 </pre></div>
@@ -524,7 +526,7 @@
 </div>
 <div class="section" id="define-model-specific-parameters">
 <h3>Define model specific parameters<a class="headerlink" href="#define-model-specific-parameters" title="Permalink to this headline">¶</a></h3>
-<p>The procedure of how we get subject specific parameters into our metaflow is a bit tricky but can be done as shown below. First, we have to specify the conditions of our paradigm and what contrasts we want to compute from them. In our case, the names of the condition are <tt class="docutils literal"><span class="pre">'congruent'</span></tt> and <tt class="docutils literal"><span class="pre">'incongruent'</span></tt>. The original condition of the tutorial dataset also include a subdivision into correct and incorrect trials (see <tt class="docutils literal"><span class="pre">~/nipype_tutorial/data/condition_key.txt</span></tt>). This example will not consider this subdivision, as there are very few or no occurrences of incorrect responses per subject.</p>
+<p>The procedure of how we get subject specific parameters into our metaflow is a bit tricky but can be done as shown below. First, we have to specify the conditions of our paradigm and what contrasts we want to compute from them. In our case, the names of the condition are <code class="docutils literal"><span class="pre">'congruent'</span></code> and <code class="docutils literal"><span class="pre">'incongruent'</span></code>. The original condition of the tutorial dataset also include a subdivision into correct and incorrect trials (see <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/condition_key.txt</span></code>). This example will not consider this subdivision, as there are very few or no occurrences of incorrect responses per subject.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -536,22 +538,22 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Condition names</span>
-<span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent&#39;</span><span class="p">,</span> <span class="s">&#39;incongruent&#39;</span><span class="p">]</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Condition names</span>
+<span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent&#39;</span><span class="p">,</span> <span class="s1">&#39;incongruent&#39;</span><span class="p">]</span>
 
-<span class="c"># Contrasts</span>
-<span class="n">cont01</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent&#39;</span><span class="p">,</span>   <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">cont02</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;incongruent&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-<span class="n">cont03</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent vs incongruent&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-<span class="n">cont04</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;incongruent vs congruent&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-<span class="n">cont05</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Cond vs zero&#39;</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont01</span><span class="p">,</span> <span class="n">cont02</span><span class="p">]]</span>
-<span class="n">cont06</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Diff vs zero&#39;</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont03</span><span class="p">,</span> <span class="n">cont04</span><span class="p">]]</span>
+<span class="c1"># Contrasts</span>
+<span class="n">cont01</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent&#39;</span><span class="p">,</span>   <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">cont02</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;incongruent&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">cont03</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent vs incongruent&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">cont04</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;incongruent vs congruent&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">cont05</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cond vs zero&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont01</span><span class="p">,</span> <span class="n">cont02</span><span class="p">]]</span>
+<span class="n">cont06</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Diff vs zero&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont03</span><span class="p">,</span> <span class="n">cont04</span><span class="p">]]</span>
 
 <span class="n">contrast_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">cont01</span><span class="p">,</span> <span class="n">cont02</span><span class="p">,</span> <span class="n">cont03</span><span class="p">,</span> <span class="n">cont04</span><span class="p">,</span> <span class="n">cont05</span><span class="p">,</span> <span class="n">cont06</span><span class="p">]</span>
 </pre></div>
 </td></tr></table></div>
 <p>The definition of contrasts is rather straight forward. For a T-contrast, just specify the name of the contrast, the type, the name of all conditions and the weights to those conditions. The implementation of an F-contrast only needs a name for the contrast, the type of the contrast, followed by a list of T-contrasts to use in the F-contrast. One important addition: If you want to have run specific contrasts add an additional list to the end of the contrast, which specifies for which run the contrast should be used. For example, if you want the 3rd contrast only computed in the 2nd run, use the following code:</p>
-<p><tt class="docutils literal"><span class="pre">cont03</span> <span class="pre">=</span> <span class="pre">['congruent',</span> <span class="pre">'T',</span> <span class="pre">condition_names,</span> <span class="pre">[1,</span> <span class="pre">0],</span> <span class="pre">[0,</span> <span class="pre">1]]</span></tt></p>
+<p><code class="docutils literal"><span class="pre">cont03</span> <span class="pre">=</span> <span class="pre">['congruent',</span> <span class="pre">'T',</span> <span class="pre">condition_names,</span> <span class="pre">[1,</span> <span class="pre">0],</span> <span class="pre">[0,</span> <span class="pre">1]]</span></code></p>
 <p>Now let&#8217;s get to the more tricky part: How do we get the subject and run specific onset times for the &#8216;congruent&#8217; and the &#8216;incongruent&#8217; condition into our pipeline? Well, with the following function:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -603,20 +605,20 @@
 48
 49
 50
-51</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Function to get Subject specific condition information</span>
+51</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Function to get Subject specific condition information</span>
 <span class="k">def</span> <span class="nf">get_subject_info</span><span class="p">(</span><span class="n">subject_id</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/data/</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">subject_id</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/data/</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">subject_id</span>
     <span class="n">onset_info</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span> <span class="s">&#39;02&#39;</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span> <span class="s">&#39;02&#39;</span><span class="p">,</span> <span class="s">&#39;03&#39;</span><span class="p">,</span> <span class="s">&#39;04&#39;</span><span class="p">]:</span>
-            <span class="n">onset_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;onset_run0</span><span class="si">%s</span><span class="s">_cond0</span><span class="si">%s</span><span class="s">.txt&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">cond</span><span class="p">))</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">onset_file</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">,</span> <span class="s1">&#39;04&#39;</span><span class="p">]:</span>
+            <span class="n">onset_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;onset_run0</span><span class="si">%s</span><span class="s1">_cond0</span><span class="si">%s</span><span class="s1">.txt&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">cond</span><span class="p">))</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">onset_file</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">info</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;0.00&#39;</span><span class="p">:</span>
-                        <span class="n">onset_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;cond0</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">cond</span><span class="p">,</span>
-                                           <span class="s">&#39;run0</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">run</span><span class="p">,</span>
+                    <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;0.00&#39;</span><span class="p">:</span>
+                        <span class="n">onset_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;cond0</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">cond</span><span class="p">,</span>
+                                           <span class="s1">&#39;run0</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">run</span><span class="p">,</span>
                                            <span class="nb">float</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
     <span class="n">onset_run1_congruent</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">onset_run1_incongruent</span> <span class="o">=</span> <span class="p">[]</span>
@@ -624,22 +626,22 @@
     <span class="n">onset_run2_incongruent</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">onset_info</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;run001&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond002&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;run001&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond002&#39;</span><span class="p">:</span>
                 <span class="n">onset_run1_congruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond004&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond004&#39;</span><span class="p">:</span>
                 <span class="n">onset_run1_incongruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;run002&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond002&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;run002&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond002&#39;</span><span class="p">:</span>
                 <span class="n">onset_run2_congruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond004&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond004&#39;</span><span class="p">:</span>
                 <span class="n">onset_run2_incongruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
     <span class="n">onset_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run1_congruent</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run1_incongruent</span><span class="p">),</span>
                   <span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run2_congruent</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run2_incongruent</span><span class="p">)]</span>
 
     <span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">Bunch</span>
-    <span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent&#39;</span><span class="p">,</span> <span class="s">&#39;incongruent&#39;</span><span class="p">]</span>
+    <span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent&#39;</span><span class="p">,</span> <span class="s1">&#39;incongruent&#39;</span><span class="p">]</span>
 
     <span class="n">subjectinfo</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
@@ -656,24 +658,24 @@
     <span class="k">return</span> <span class="n">subjectinfo</span>
 </pre></div>
 </td></tr></table></div>
-<p>So what does it do? <strong>Line 3 to 34</strong> are specific to the tutorial dataset and will most certainly not apply for any other study, which are not from the <a class="reference external" href="https://openfmri.org/">openfmri.org</a>. This part of the function goes through the subject folder under <tt class="docutils literal"><span class="pre">~/nipype_tutorial/data/</span></tt> and reads out the values in the files <tt class="docutils literal"><span class="pre">onset_run00?_cond00?.txt</span></tt>. The result of line 3 to 34 is an array called <tt class="docutils literal"><span class="pre">onset_list</span></tt> with four arrays, containing the onset for the condition <tt class="docutils literal"><span class="pre">congruent_run1</span></tt>, <tt class="docutils literal"><span class="pre">incongruent_run1</span></tt>, <tt class="docutils literal"><span class="pre">congruent_run2</span></tt> and <tt class="docutils literal"><span class="pre">incongruent_run2</span></tt>. In the case of <tt class="docutils literal"><span class="pre">sub001</span></tt> this looks like this:</p>
+<p>So what does it do? <strong>Line 3 to 34</strong> are specific to the tutorial dataset and will most certainly not apply for any other study, which are not from the <a class="reference external" href="https://openfmri.org/">openfmri.org</a>. This part of the function goes through the subject folder under <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/</span></code> and reads out the values in the files <code class="docutils literal"><span class="pre">onset_run00?_cond00?.txt</span></code>. The result of line 3 to 34 is an array called <code class="docutils literal"><span class="pre">onset_list</span></code> with four arrays, containing the onset for the condition <code class="docutils literal"><span class="pre">congruent_run1</span></code>, <code class="docutils literal"><span class="pre">incongruent_run1</span></code>, <code class="docutils literal"><span class="pre">congruent_run2</span></code> and <code class="docutils literal"><span class="pre">incongruent_run2</span></code>. In the case of <code class="docutils literal"><span class="pre">sub001</span></code> this looks like this:</p>
 <div class="highlight-py"><div class="highlight"><pre><span class="n">onset_list</span><span class="o">=</span><span class="p">[[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">140.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">,</span> <span class="mf">76.0</span><span class="p">,</span> <span class="mf">102.0</span><span class="p">,</span> <span class="mf">150.0</span><span class="p">,</span> <span class="mf">164.0</span><span class="p">,</span> <span class="mf">174.0</span><span class="p">,</span> <span class="mf">208.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">232.0</span><span class="p">,</span> <span class="mf">260.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">,</span> <span class="mf">102.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">164.0</span><span class="p">,</span> <span class="mf">174.0</span><span class="p">,</span> <span class="mf">208.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">232.0</span><span class="p">,</span> <span class="mf">260.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">54.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">76.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">144.0</span><span class="p">,</span> <span class="mf">154.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p><strong>Line 36 to 50</strong> is the part of the <tt class="docutils literal"><span class="pre">get_subject_info</span></tt> function that has to be included in almost all first level analysis workflows. For more information see <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/model_specification.html">Model Specification for First Level fMRI Analysis</a>. Important to know are the following things: The for loop <tt class="docutils literal"><span class="pre">for</span> <span class="pre">r</span> <span class="pre">in</span> <span class="pre">range(2)</span></tt> in line 40 is set to 2 because we have two runs per subject. The idea is to create an output variable <tt class="docutils literal"><span class="pre">subjectinfo</span></tt> that contains a <tt class="docutils literal"><span class="pre">Bunch</span></tt> object for each run. The content of this <tt class="docutils literal"><span class="pre">Bunch</span></tt> object depends on the subject and contains the name of the conditions, onsets of them, duration of each event, as well as possible amplitude modifications, temporal or polynomial derivatives or regressors. <strong>Note:</strong> The duration of all events per condition were set to <tt class="docutils literal"><span class="pre">[0]</span></tt>, as this assumes that the events should be modeled as impulses.</p>
-<p>Now that the tricky part is done, we only need to create an additional node that applies this function and has the value of the <tt class="docutils literal"><span class="pre">subjectinfo</span></tt> variable as an output field. This can be done with a function node (as shown in the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes">previous section</a>)</p>
+<p><strong>Line 36 to 50</strong> is the part of the <code class="docutils literal"><span class="pre">get_subject_info</span></code> function that has to be included in almost all first level analysis workflows. For more information see <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/model_specification.html">Model Specification for First Level fMRI Analysis</a>. Important to know are the following things: The for loop <code class="docutils literal"><span class="pre">for</span> <span class="pre">r</span> <span class="pre">in</span> <span class="pre">range(2)</span></code> in line 40 is set to 2 because we have two runs per subject. The idea is to create an output variable <code class="docutils literal"><span class="pre">subjectinfo</span></code> that contains a <code class="docutils literal"><span class="pre">Bunch</span></code> object for each run. The content of this <code class="docutils literal"><span class="pre">Bunch</span></code> object depends on the subject and contains the name of the conditions, onsets of them, duration of each event, as well as possible amplitude modifications, temporal or polynomial derivatives or regressors. <strong>Note:</strong> The duration of all events per condition were set to <code class="docutils literal"><span class="pre">[0]</span></code>, as this assumes that the events should be modeled as impulses.</p>
+<p>Now that the tricky part is done, we only need to create an additional node that applies this function and has the value of the <code class="docutils literal"><span class="pre">subjectinfo</span></code> variable as an output field. This can be done with a function node (as shown in the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#individual-nodes">previous section</a>)</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Get Subject Info - get subject specific condition information</span>
-<span class="n">getsubjectinfo</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Function</span><span class="p">(</span><span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">],</span>
-                               <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_info&#39;</span><span class="p">],</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Get Subject Info - get subject specific condition information</span>
+<span class="n">getsubjectinfo</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Function</span><span class="p">(</span><span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">],</span>
+                               <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_info&#39;</span><span class="p">],</span>
                                <span class="n">function</span><span class="o">=</span><span class="n">get_subject_info</span><span class="p">),</span>
-                      <span class="n">name</span><span class="o">=</span><span class="s">&#39;getsubjectinfo&#39;</span><span class="p">)</span>
+                      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;getsubjectinfo&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -681,9 +683,9 @@
 <h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">¶</a></h3>
 <p>As always, our metaflow needs an input stream to have data to work and an output stream to know where to store the computed output. This can be done with the following three nodes:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">infosource</span></tt>: This node will iterate over the <tt class="docutils literal"><span class="pre">subject_list</span></tt> and feed the <tt class="docutils literal"><span class="pre">contrast_list</span></tt> to the first level analysis.</li>
-<li><tt class="docutils literal"><span class="pre">selectfiles</span></tt>: This node will grab the functional files from the subject folder and feed them to the preprocessing pipeline, specifically the <tt class="docutils literal"><span class="pre">Despike</span></tt> node.</li>
-<li><tt class="docutils literal"><span class="pre">datasink</span></tt>: This node will store the metaflow output in an output folder and rename or delete unwanted post- or prefixes.</li>
+<li><code class="docutils literal"><span class="pre">infosource</span></code>: This node will iterate over the <code class="docutils literal"><span class="pre">subject_list</span></code> and feed the <code class="docutils literal"><span class="pre">contrast_list</span></code> to the first level analysis.</li>
+<li><code class="docutils literal"><span class="pre">selectfiles</span></code>: This node will grab the functional files from the subject folder and feed them to the preprocessing pipeline, specifically the <code class="docutils literal"><span class="pre">Despike</span></code> node.</li>
+<li><code class="docutils literal"><span class="pre">datasink</span></code>: This node will store the metaflow output in an output folder and rename or delete unwanted post- or prefixes.</li>
 </ul>
 <p>And here&#8217;s the code to do this:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -749,68 +751,68 @@
 61
 62
 63
-64</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Infosource - a function free node to iterate over the list of subject names</span>
-<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
-                                            <span class="s">&#39;contrasts&#39;</span><span class="p">],</span>
+64</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Infosource - a function free node to iterate over the list of subject names</span>
+<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;contrasts&#39;</span><span class="p">],</span>
                                     <span class="n">contrasts</span><span class="o">=</span><span class="n">contrast_list</span><span class="p">),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource&quot;</span><span class="p">)</span>
-<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)]</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;infosource&quot;</span><span class="p">)</span>
+<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)]</span>
 
-<span class="c"># SelectFiles - to grab the data (alternativ to DataGrabber)</span>
-<span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;func&#39;</span><span class="p">:</span> <span class="s">&#39;data/{subject_id}/run*.nii.gz&#39;</span><span class="p">}</span>
+<span class="c1"># SelectFiles - to grab the data (alternativ to DataGrabber)</span>
+<span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="s1">&#39;data/{subject_id}/run*.nii.gz&#39;</span><span class="p">}</span>
 <span class="n">selectfiles</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SelectFiles</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span>
                                <span class="n">base_directory</span><span class="o">=</span><span class="n">experiment_dir</span><span class="p">),</span>
-                   <span class="n">name</span><span class="o">=</span><span class="s">&quot;selectfiles&quot;</span><span class="p">)</span>
+                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;selectfiles&quot;</span><span class="p">)</span>
 
-<span class="c"># Datasink - creates output folder for important outputs</span>
+<span class="c1"># Datasink - creates output folder for important outputs</span>
 <span class="n">datasink</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">DataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">experiment_dir</span><span class="p">,</span>
                          <span class="n">container</span><span class="o">=</span><span class="n">output_dir</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;datasink&quot;</span><span class="p">)</span>
 
-<span class="c"># Use the following DataSink output substitutions</span>
-<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;_subject_id_&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;_despike&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;_detrended&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;_warped&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)]</span>
+<span class="c1"># Use the following DataSink output substitutions</span>
+<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;_subject_id_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;_despike&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;_detrended&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;_warped&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)]</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">substitutions</span> <span class="o">=</span> <span class="n">substitutions</span>
 
-<span class="c"># Connect Infosource, SelectFiles and DataSink to the main workflow</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">selectfiles</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;bbregister.subject_id&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;fssource.subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">selectfiles</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;func&#39;</span><span class="p">,</span> <span class="s">&#39;despike.in_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">getsubjectinfo</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">getsubjectinfo</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_info&#39;</span><span class="p">,</span>
-                                                 <span class="s">&#39;modelspec.subject_info&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span>
-                                             <span class="s">&#39;conestimate.contrasts&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realign.mean_image&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@mean&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@parameters&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;art.outlier_files&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@outliers&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;art.plot_files&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@plot&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@brainmask&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;bbregister.@out_reg_file&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;bbregister.out_fsl_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;bbregister.@out_fsl_file&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;bbregister.registered_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;bbregister.@registered_file&#39;</span><span class="p">),</span>
+<span class="c1"># Connect Infosource, SelectFiles and DataSink to the main workflow</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">selectfiles</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;bbregister.subject_id&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;fssource.subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">selectfiles</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;func&#39;</span><span class="p">,</span> <span class="s1">&#39;despike.in_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">getsubjectinfo</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">getsubjectinfo</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_info&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;modelspec.subject_info&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;contrasts&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;conestimate.contrasts&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realign.mean_image&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@mean&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@parameters&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;art.outlier_files&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@outliers&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;art.plot_files&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@plot&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@brainmask&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;bbregister.@out_reg_file&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;bbregister.out_fsl_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;bbregister.@out_fsl_file&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;bbregister.registered_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;bbregister.@registered_file&#39;</span><span class="p">),</span>
                                        <span class="p">]),</span>
-                  <span class="p">(</span><span class="n">l1analysis</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mriconvert.out_file&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@contrasts&#39;</span><span class="p">),</span>
-                                          <span class="p">(</span><span class="s">&#39;conestimate.spm_mat_file&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@spm_mat&#39;</span><span class="p">),</span>
-                                          <span class="p">(</span><span class="s">&#39;conestimate.spmT_images&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@T&#39;</span><span class="p">),</span>
-                                          <span class="p">(</span><span class="s">&#39;conestimate.con_images&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@con&#39;</span><span class="p">),</span>
+                  <span class="p">(</span><span class="n">l1analysis</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mriconvert.out_file&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@contrasts&#39;</span><span class="p">),</span>
+                                          <span class="p">(</span><span class="s1">&#39;conestimate.spm_mat_file&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@spm_mat&#39;</span><span class="p">),</span>
+                                          <span class="p">(</span><span class="s1">&#39;conestimate.spmT_images&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@T&#39;</span><span class="p">),</span>
+                                          <span class="p">(</span><span class="s1">&#39;conestimate.con_images&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@con&#39;</span><span class="p">),</span>
                                           <span class="p">]),</span>
                   <span class="p">])</span>
 </pre></div>
@@ -820,8 +822,8 @@
 <h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <p>Finally, after everything is set up correctly we can run the pipeline and let it draw the graph of the workflow.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;colored&#39;</span><span class="p">)</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
@@ -837,7 +839,7 @@
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> our folder structure should look like this:</p>
-<p>After we’ve executed the first level workflow we have two new folders under <tt class="docutils literal"><span class="pre">~/nipype_tutorial</span></tt>. The working directory <tt class="docutils literal"><span class="pre">workingdir_fMRI_example_1st</span></tt> which contains all files created during the execution of the metaflow, and the output folder <tt class="docutils literal"><span class="pre">output_fMRI_example_1st</span></tt> which contains all the files that we sent to the DataSink. Let’s take a closer look at the DataSink folder:</p>
+<p>After we’ve executed the first level workflow we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_fMRI_example_1st</span></code> which contains all files created during the execution of the metaflow, and the output folder <code class="docutils literal"><span class="pre">output_fMRI_example_1st</span></code> which contains all the files that we sent to the DataSink. Let’s take a closer look at the DataSink folder:</p>
 <div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_1st
 ├── bbregister
 │   ├── sub001
@@ -889,15 +891,15 @@
     └── sub010
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">bbregister</span></tt> folder contains two files that both contain the registration information between the functional mean image and the anatomical image. The <tt class="docutils literal"><span class="pre">.dat</span></tt> file is the registration matrix in FreeSurfer and the <tt class="docutils literal"><span class="pre">.mat</span></tt> file in FSL format.</p>
-<p>The <tt class="docutils literal"><span class="pre">contrast</span></tt> folder contains the estimated beta (<tt class="docutils literal"><span class="pre">con</span></tt> and <tt class="docutils literal"><span class="pre">ess</span></tt> files) and statistical spm (<tt class="docutils literal"><span class="pre">spmT</span></tt> and <tt class="docutils literal"><span class="pre">spmF</span></tt> files) contrasts. It also contains the <tt class="docutils literal"><span class="pre">SPM.mat</span></tt> file as well as 5 folders (<tt class="docutils literal"><span class="pre">_mriconvert0</span></tt> to <tt class="docutils literal"><span class="pre">_mriconvert4</span></tt>) which contain the coregistered and converted <tt class="docutils literal"><span class="pre">con*_out.nii.gz</span></tt> files.</p>
-<p>The <tt class="docutils literal"><span class="pre">preprocout</span></tt> folder contains different informative and necessary output from the preprocess workflow:</p>
+<p>The <code class="docutils literal"><span class="pre">bbregister</span></code> folder contains two files that both contain the registration information between the functional mean image and the anatomical image. The <code class="docutils literal"><span class="pre">.dat</span></code> file is the registration matrix in FreeSurfer and the <code class="docutils literal"><span class="pre">.mat</span></code> file in FSL format.</p>
+<p>The <code class="docutils literal"><span class="pre">contrast</span></code> folder contains the estimated beta (<code class="docutils literal"><span class="pre">con</span></code> and <code class="docutils literal"><span class="pre">ess</span></code> files) and statistical spm (<code class="docutils literal"><span class="pre">spmT</span></code> and <code class="docutils literal"><span class="pre">spmF</span></code> files) contrasts. It also contains the <code class="docutils literal"><span class="pre">SPM.mat</span></code> file as well as 5 folders (<code class="docutils literal"><span class="pre">_mriconvert0</span></code> to <code class="docutils literal"><span class="pre">_mriconvert4</span></code>) which contain the coregistered and converted <code class="docutils literal"><span class="pre">con*_out.nii.gz</span></code> files.</p>
+<p>The <code class="docutils literal"><span class="pre">preprocout</span></code> folder contains different informative and necessary output from the preprocess workflow:</p>
 <ul class="simple">
-<li>The <tt class="docutils literal"><span class="pre">art.rarun00?_outliers.txt</span></tt> files contain the number of outlier volumes, detected by the <tt class="docutils literal"><span class="pre">ArtifactDetection</span></tt> node.</li>
-<li>The <tt class="docutils literal"><span class="pre">plot.rarun00?.png</span></tt> images show the volume to volume change in intensity or movement, plotted by the <tt class="docutils literal"><span class="pre">ArtifactDetection</span></tt> node. Red vertical lines mean that the specified volume was detected as an outlier.</li>
-<li>The <tt class="docutils literal"><span class="pre">rp_arun00?.txt</span></tt> files contain the movement regressors calculated by the <tt class="docutils literal"><span class="pre">Realign</span></tt> node.</li>
-<li>The <tt class="docutils literal"><span class="pre">brainmask_thresh.nii</span></tt> file is the computed binary mask used in the <tt class="docutils literal"><span class="pre">Level1Design</span></tt> node.</li>
-<li>The file <tt class="docutils literal"><span class="pre">meanarun001.nii</span></tt> is the functional mean file computed by the <tt class="docutils literal"><span class="pre">Realign</span></tt> node.</li>
+<li>The <code class="docutils literal"><span class="pre">art.rarun00?_outliers.txt</span></code> files contain the number of outlier volumes, detected by the <code class="docutils literal"><span class="pre">ArtifactDetection</span></code> node.</li>
+<li>The <code class="docutils literal"><span class="pre">plot.rarun00?.png</span></code> images show the volume to volume change in intensity or movement, plotted by the <code class="docutils literal"><span class="pre">ArtifactDetection</span></code> node. Red vertical lines mean that the specified volume was detected as an outlier.</li>
+<li>The <code class="docutils literal"><span class="pre">rp_arun00?.txt</span></code> files contain the movement regressors calculated by the <code class="docutils literal"><span class="pre">Realign</span></code> node.</li>
+<li>The <code class="docutils literal"><span class="pre">brainmask_thresh.nii</span></code> file is the computed binary mask used in the <code class="docutils literal"><span class="pre">Level1Design</span></code> node.</li>
+<li>The file <code class="docutils literal"><span class="pre">meanarun001.nii</span></code> is the functional mean file computed by the <code class="docutils literal"><span class="pre">Realign</span></code> node.</li>
 </ul>
 </div>
 </div>
@@ -945,8 +947,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2015, Michael Notter.
-      Last updated on October 14, 2015.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.
+      Last updated on February 02, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

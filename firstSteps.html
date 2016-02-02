@@ -149,7 +149,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="visualizePipeline.html"
                         title="next chapter">How To Visualize A Pipeline</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -162,11 +162,13 @@
     </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/firstSteps.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/firstSteps.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
         </div>
       </div>
     <div class="document">
@@ -191,22 +193,22 @@
 <li><strong>Input &amp; Output Stream</strong>: Your computer needs to know the structure of your folders, where it can get the data from and where it should store the output data at.</li>
 <li><strong>Run Workflow</strong>: If everything else is done, you can run your pipeline.</li>
 </ul>
-<p>So, make yourself ready, start an IPython environment (type <tt class="docutils literal"><span class="pre">ipython</span></tt> into the terminal) and have fun.</p>
+<p>So, make yourself ready, start an IPython environment (type <code class="docutils literal"><span class="pre">ipython</span></code> into the terminal) and have fun.</p>
 <div class="section" id="import-modules">
 <h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
-<p>The first thing you should do in any script is to import the modules you want to use in your script. In our case, most modules are actually interfaces to other software packages (e.g. FSL, FreeSurfer or SPM) and can be found in the <tt class="docutils literal"><span class="pre">nipype</span></tt> module.</p>
-<p>If you want to import a module as a whole use the command structure <tt class="docutils literal"><span class="pre">import</span> <span class="pre">&lt;module&gt;</span> <span class="pre">as</span> <span class="pre">&lt;name&gt;</span></tt>. For example:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c"># Import the SPM interface under the name spm</span>
+<p>The first thing you should do in any script is to import the modules you want to use in your script. In our case, most modules are actually interfaces to other software packages (e.g. FSL, FreeSurfer or SPM) and can be found in the <code class="docutils literal"><span class="pre">nipype</span></code> module.</p>
+<p>If you want to import a module as a whole use the command structure <code class="docutils literal"><span class="pre">import</span> <span class="pre">&lt;module&gt;</span> <span class="pre">as</span> <span class="pre">&lt;name&gt;</span></code>. For example:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c1"># Import the SPM interface under the name spm</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>
 </pre></div>
 </div>
-<p>If you only want to import a certain function of a module use the command structure <tt class="docutils literal"><span class="pre">from</span> <span class="pre">&lt;module&gt;</span> <span class="pre">import</span> <span class="pre">&lt;function&gt;</span></tt>. For example:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c"># Import the function &#39;maths&#39; from the FSL interface</span>
+<p>If you only want to import a certain function of a module use the command structure <code class="docutils literal"><span class="pre">from</span> <span class="pre">&lt;module&gt;</span> <span class="pre">import</span> <span class="pre">&lt;function&gt;</span></code>. For example:</p>
+<div class="highlight-py"><div class="highlight"><pre><span class="c1"># Import the function &#39;maths&#39; from the FSL interface</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.fsl</span> <span class="kn">import</span> <span class="n">maths</span>
 </pre></div>
 </div>
 <p>And if you want to import multiple functions or classes from a module use the following structure:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c"># Import nipype Workflow, Node and MapNode objects</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="c1"># Import nipype Workflow, Node and MapNode objects</span>
 <span class="kn">from</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">import</span> <span class="n">Workflow</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">MapNode</span>
 </pre></div>
 </div>
@@ -229,17 +231,17 @@
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># What is the location of your experiment folder</span>
-<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial&#39;</span>
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># What is the location of your experiment folder</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>
 
-<span class="c"># What are the names of your subjects</span>
-<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sub001&#39;</span><span class="p">,</span><span class="s">&#39;sub002&#39;</span><span class="p">,</span><span class="s">&#39;sub003&#39;</span><span class="p">]</span>
+<span class="c1"># What are the names of your subjects</span>
+<span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sub001&#39;</span><span class="p">,</span><span class="s1">&#39;sub002&#39;</span><span class="p">,</span><span class="s1">&#39;sub003&#39;</span><span class="p">]</span>
 
-<span class="c"># What is the name of your working directory and output folder</span>
-<span class="n">output_dir</span> <span class="o">=</span>  <span class="s">&#39;output_firstSteps&#39;</span>
-<span class="n">working_dir</span> <span class="o">=</span> <span class="s">&#39;workingdir_firstSteps&#39;</span>
+<span class="c1"># What is the name of your working directory and output folder</span>
+<span class="n">output_dir</span> <span class="o">=</span>  <span class="s1">&#39;output_firstSteps&#39;</span>
+<span class="n">working_dir</span> <span class="o">=</span> <span class="s1">&#39;workingdir_firstSteps&#39;</span>
 
-<span class="c"># What are experiment specific parameters</span>
+<span class="c1"># What are experiment specific parameters</span>
 <span class="n">number_of_slices</span> <span class="o">=</span> <span class="mi">40</span>
 <span class="n">time_repetition</span> <span class="o">=</span> <span class="mf">2.0</span>
 <span class="n">fwhm</span> <span class="o">=</span> <span class="mi">8</span>
@@ -248,15 +250,15 @@
 </div>
 <div class="section" id="specify-nodes">
 <h3>Specify Nodes<a class="headerlink" href="#specify-nodes" title="Permalink to this headline">¶</a></h3>
-<p>It is impossible to build a pipeline without any scaffold or objects to build with. Therefore, we first have to create those scaffolds (i.e. <tt class="docutils literal"><span class="pre">workflows</span></tt>) and objects (i.e. <tt class="docutils literal"><span class="pre">nodes</span></tt> or other <tt class="docutils literal"><span class="pre">workflows</span></tt>).</p>
+<p>It is impossible to build a pipeline without any scaffold or objects to build with. Therefore, we first have to create those scaffolds (i.e. <code class="docutils literal"><span class="pre">workflows</span></code>) and objects (i.e. <code class="docutils literal"><span class="pre">nodes</span></code> or other <code class="docutils literal"><span class="pre">workflows</span></code>).</p>
 <div class="section" id="nodes">
 <h4>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h4>
-<p>A node is an object that represents a certain interface function, for example SPM&#8217;s <tt class="docutils literal"><span class="pre">Realign</span></tt> method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes.</p>
+<p>A node is an object that represents a certain interface function, for example SPM&#8217;s <code class="docutils literal"><span class="pre">Realign</span></code> method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes.</p>
 <div class="section" id="input-and-output-fields">
 <h5>Input and Output Fields<a class="headerlink" href="#input-and-output-fields" title="Permalink to this headline">¶</a></h5>
 <p>Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go <a class="reference external" href="http://nipy.sourceforge.net/nipype/interfaces/index.html">here</a>. So how do you know which input and output field a given node has? Don&#8217;t worry. There&#8217;s an easy way how you can figure out which input fields are <strong>mandatory</strong> or <strong>optional</strong> and which output fields you can use.</p>
-<p>Let&#8217;s assume that we want to know more about FSL&#8217;s function <tt class="docutils literal"><span class="pre">SmoothEstimate</span></tt>. First, make sure that you&#8217;ve imported the spm module with the following python command <tt class="docutils literal"><span class="pre">import</span> <span class="pre">nipype.interfaces.fsl</span> <span class="pre">as</span> <span class="pre">fsl</span></tt>.</p>
-<p>Now that we have access to FSL, we simply can run <tt class="docutils literal"><span class="pre">fsl.SmoothEstimate.help()</span></tt>. This will give us the following output:</p>
+<p>Let&#8217;s assume that we want to know more about FSL&#8217;s function <code class="docutils literal"><span class="pre">SmoothEstimate</span></code>. First, make sure that you&#8217;ve imported the spm module with the following python command <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype.interfaces.fsl</span> <span class="pre">as</span> <span class="pre">fsl</span></code>.</p>
+<p>Now that we have access to FSL, we simply can run <code class="docutils literal"><span class="pre">fsl.SmoothEstimate.help()</span></code>. This will give us the following output:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -318,10 +320,10 @@
 <span class="o">--------</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">est</span> <span class="o">=</span> <span class="n">SmoothEstimate</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">est</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">zstat_file</span> <span class="o">=</span> <span class="s">&#39;zstat1.nii.gz&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">est</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mask_file</span> <span class="o">=</span> <span class="s">&#39;mask.nii&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">est</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">zstat_file</span> <span class="o">=</span> <span class="s1">&#39;zstat1.nii.gz&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">est</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mask_file</span> <span class="o">=</span> <span class="s1">&#39;mask.nii&#39;</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">est</span><span class="o">.</span><span class="n">cmdline</span>
-<span class="s">&#39;smoothest --mask=mask.nii --zstat=zstat1.nii.gz&#39;</span>
+<span class="s1">&#39;smoothest --mask=mask.nii --zstat=zstat1.nii.gz&#39;</span>
 
 <span class="n">Inputs</span><span class="p">::</span>
 
@@ -338,14 +340,14 @@
     <span class="n">args</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span> <span class="n">string</span><span class="p">)</span>
         <span class="n">Additional</span> <span class="n">parameters</span> <span class="n">to</span> <span class="n">the</span> <span class="n">command</span>
         <span class="n">flag</span><span class="p">:</span> <span class="o">%</span><span class="n">s</span>
-    <span class="n">environ</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span> <span class="n">dictionary</span> <span class="k">with</span> <span class="n">keys</span> <span class="n">which</span> <span class="n">are</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="nb">type</span> <span class="s">&#39;str&#39;</span> <span class="ow">and</span>
-         <span class="k">with</span> <span class="n">values</span> <span class="n">which</span> <span class="n">are</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="nb">type</span> <span class="s">&#39;str&#39;</span><span class="p">,</span> <span class="n">nipype</span> <span class="n">default</span> <span class="n">value</span><span class="p">:</span> <span class="p">{})</span>
+    <span class="n">environ</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span> <span class="n">dictionary</span> <span class="k">with</span> <span class="n">keys</span> <span class="n">which</span> <span class="n">are</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;str&#39;</span> <span class="ow">and</span>
+         <span class="k">with</span> <span class="n">values</span> <span class="n">which</span> <span class="n">are</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="n">nipype</span> <span class="n">default</span> <span class="n">value</span><span class="p">:</span> <span class="p">{})</span>
         <span class="n">Environment</span> <span class="n">variables</span>
     <span class="n">ignore_exception</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span> <span class="n">boolean</span><span class="p">,</span> <span class="n">nipype</span> <span class="n">default</span> <span class="n">value</span><span class="p">:</span> <span class="bp">False</span><span class="p">)</span>
         <span class="n">Print</span> <span class="n">an</span> <span class="n">error</span> <span class="n">message</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">throwing</span> <span class="n">an</span> <span class="n">exception</span> <span class="ow">in</span> <span class="n">case</span> <span class="n">the</span>
         <span class="n">interface</span> <span class="n">fails</span> <span class="n">to</span> <span class="n">run</span>
-    <span class="n">output_type</span><span class="p">:</span> <span class="p">(</span><span class="s">&#39;NIFTI_PAIR&#39;</span> <span class="ow">or</span> <span class="s">&#39;NIFTI_PAIR_GZ&#39;</span> <span class="ow">or</span> <span class="s">&#39;NIFTI_GZ&#39;</span> <span class="ow">or</span>
-         <span class="s">&#39;NIFTI&#39;</span><span class="p">)</span>
+    <span class="n">output_type</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;NIFTI_PAIR&#39;</span> <span class="ow">or</span> <span class="s1">&#39;NIFTI_PAIR_GZ&#39;</span> <span class="ow">or</span> <span class="s1">&#39;NIFTI_GZ&#39;</span> <span class="ow">or</span>
+         <span class="s1">&#39;NIFTI&#39;</span><span class="p">)</span>
         <span class="n">FSL</span> <span class="n">output</span> <span class="nb">type</span>
     <span class="n">residual_fit_file</span><span class="p">:</span> <span class="p">(</span><span class="n">an</span> <span class="n">existing</span> <span class="nb">file</span> <span class="n">name</span><span class="p">)</span>
         <span class="n">residual</span><span class="o">-</span><span class="n">fit</span> <span class="n">image</span> <span class="nb">file</span>
@@ -366,11 +368,11 @@
         <span class="n">number</span> <span class="n">of</span> <span class="n">voxels</span> <span class="ow">in</span> <span class="n">mask</span>
 </pre></div>
 </td></tr></table></div>
-<p>The first few lines <em>(line 1-3)</em> give as a short explanation of the function, followed by a short example on how to implement the function <em>(line 5-12)</em>. After the example come information about <tt class="docutils literal"><span class="pre">Inputs</span></tt> <em>(line 14-45)</em> and <tt class="docutils literal"><span class="pre">Outputs</span></tt> <em>(line 47-54)</em>. There are always some inputs that are <strong>mandatory</strong> and some that are <strong>optional</strong>. Which is not the case for outputs, as they are always optional. It&#8217;s important to note that some of the inputs are mutually exclusive <em>(see line 19)</em>, which means that if one input is specified, another one can&#8217;t be set and will result in an error if it is defined nonetheless.</p>
+<p>The first few lines <em>(line 1-3)</em> give as a short explanation of the function, followed by a short example on how to implement the function <em>(line 5-12)</em>. After the example come information about <code class="docutils literal"><span class="pre">Inputs</span></code> <em>(line 14-45)</em> and <code class="docutils literal"><span class="pre">Outputs</span></code> <em>(line 47-54)</em>. There are always some inputs that are <strong>mandatory</strong> and some that are <strong>optional</strong>. Which is not the case for outputs, as they are always optional. It&#8217;s important to note that some of the inputs are mutually exclusive <em>(see line 19)</em>, which means that if one input is specified, another one can&#8217;t be set and will result in an error if it is defined nonetheless.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p>If you only want to see the <strong>example</strong> part of the information view, without the details about the input and output fields, use the command <tt class="docutils literal"><span class="pre">fsl.SmoothEstimate?</span></tt>.</p>
-<p class="last">If you want to find the location of the actual Nipype script that serves as an interface to the external software package, use also the command <tt class="docutils literal"><span class="pre">fsl.SmoothEstimate?</span></tt> and check out the 3rd line, called <strong>File:</strong>.</p>
+<p>If you only want to see the <strong>example</strong> part of the information view, without the details about the input and output fields, use the command <code class="docutils literal"><span class="pre">fsl.SmoothEstimate?</span></code>.</p>
+<p class="last">If you want to find the location of the actual Nipype script that serves as an interface to the external software package, use also the command <code class="docutils literal"><span class="pre">fsl.SmoothEstimate?</span></code> and check out the 3rd line, called <strong>File:</strong>.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -379,7 +381,7 @@
 </div>
 <div class="section" id="default-value-of-inputs">
 <h5>Default value of Inputs<a class="headerlink" href="#default-value-of-inputs" title="Permalink to this headline">¶</a></h5>
-<p>As you&#8217;ve might seen in the example above <em>(line 32)</em>, some input fields have Nipype specific default values. To figure out which default values are used for which functions, use the method <tt class="docutils literal"><span class="pre">input_spec()</span></tt>.</p>
+<p>As you&#8217;ve might seen in the example above <em>(line 32)</em>, some input fields have Nipype specific default values. To figure out which default values are used for which functions, use the method <code class="docutils literal"><span class="pre">input_spec()</span></code>.</p>
 <p>For example, if you want to know that the default values for SPM&#8217;s Threshold function are, use the following command:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>
@@ -425,7 +427,7 @@
 <div class="section" id="stand-alone-nodes">
 <h4>Stand-alone nodes<a class="headerlink" href="#stand-alone-nodes" title="Permalink to this headline">¶</a></h4>
 <p>Nodes are most of the time used inside a pipeline. But it is also possible to use one just by itself. Such a &#8220;stand-alone&#8221; node is often times very convenient when you run a python script and want to use just one function of a given dependency package, e.g. FSL, and are not really interested in creating an elaborate workflow.</p>
-<p>Such a &#8220;stand-alone&#8221; node is also a good opportunity to introduce the implementation of nodes. Because there are many ways how you can create a node. Let&#8217;s assume that you want to create a single node that runs FSL&#8217;s Brain Extraction Tool function <tt class="docutils literal"><span class="pre">BET</span></tt> on the anatomical scan of our tutorial subject <tt class="docutils literal"><span class="pre">sub001</span></tt>. This can be achieved in the following three ways:</p>
+<p>Such a &#8220;stand-alone&#8221; node is also a good opportunity to introduce the implementation of nodes. Because there are many ways how you can create a node. Let&#8217;s assume that you want to create a single node that runs FSL&#8217;s Brain Extraction Tool function <code class="docutils literal"><span class="pre">BET</span></code> on the anatomical scan of our tutorial subject <code class="docutils literal"><span class="pre">sub001</span></code>. This can be achieved in the following three ways:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -443,24 +445,24 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># First, make sure to import the FSL interface</span>
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># First, make sure to import the FSL interface</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.fsl</span> <span class="kn">as</span> <span class="nn">fsl</span>
 
-<span class="c"># Method 1: specify parameters during node creation</span>
-<span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;~/nipype_tutorial/data/sub001/struct.nii.gz&#39;</span><span class="p">,</span>
-                <span class="n">out_file</span><span class="o">=</span><span class="s">&#39;~/nipype_tutorial/data/sub001/struct_bet.nii.gz&#39;</span><span class="p">)</span>
+<span class="c1"># Method 1: specify parameters during node creation</span>
+<span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s1">&#39;~/nipype_tutorial/data/sub001/struct.nii.gz&#39;</span><span class="p">,</span>
+                <span class="n">out_file</span><span class="o">=</span><span class="s1">&#39;~/nipype_tutorial/data/sub001/struct_bet.nii.gz&#39;</span><span class="p">)</span>
 <span class="n">mybet</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="c"># Method 2: specify parameters after node creation</span>
+<span class="c1"># Method 2: specify parameters after node creation</span>
 <span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">()</span>
-<span class="n">mybet</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/data/sub001/struct.nii.gz&#39;</span>
-<span class="n">mybet</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/data/sub001/struct_bet.nii.gz&#39;</span>
+<span class="n">mybet</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/data/sub001/struct.nii.gz&#39;</span>
+<span class="n">mybet</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/data/sub001/struct_bet.nii.gz&#39;</span>
 <span class="n">mybet</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="c"># Method 3: specify parameters when the node is executed</span>
+<span class="c1"># Method 3: specify parameters when the node is executed</span>
 <span class="n">mybet</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">BET</span><span class="p">()</span>
-<span class="n">mybet</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s">&#39;~/nipype_tutorial/data/sub001/struct.nii.gz&#39;</span><span class="p">,</span>
-          <span class="n">out_file</span><span class="o">=</span><span class="s">&#39;~/nipype_tutorial/data/sub001/struct_bet.nii.gz&#39;</span><span class="p">)</span>
+<span class="n">mybet</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="s1">&#39;~/nipype_tutorial/data/sub001/struct.nii.gz&#39;</span><span class="p">,</span>
+          <span class="n">out_file</span><span class="o">=</span><span class="s1">&#39;~/nipype_tutorial/data/sub001/struct_bet.nii.gz&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
@@ -475,16 +477,16 @@
 <div class="section" id="workflow-nodes">
 <h4>Workflow Nodes<a class="headerlink" href="#workflow-nodes" title="Permalink to this headline">¶</a></h4>
 <p>Most of the times when you create a node you want to use it later on in a workflow. The creation of such a &#8220;workflow&#8221; node is only partly different from the creation of &#8220;stand-alone&#8221; nodes. The implementation of a &#8220;workflow&#8221; node has always the following structure:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;label&#39;</span><span class="p">)</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><strong>nodename</strong>: This is the name of the object that will be created.</li>
-<li><strong>Node</strong>: This is the type of the object that will be created. In this case it is a <tt class="docutils literal"><span class="pre">Node</span></tt>. It can also be defined as a <tt class="docutils literal"><span class="pre">MapNode</span></tt> or a <tt class="docutils literal"><span class="pre">Workflow</span></tt>.</li>
-<li><strong>interface_function</strong>: This is the name of the function this node should represent. Most of the times this function name is preceded by an interface name, e.g. <tt class="docutils literal"><span class="pre">fsl.BET</span></tt>.</li>
+<li><strong>Node</strong>: This is the type of the object that will be created. In this case it is a <code class="docutils literal"><span class="pre">Node</span></code>. It can also be defined as a <code class="docutils literal"><span class="pre">MapNode</span></code> or a <code class="docutils literal"><span class="pre">Workflow</span></code>.</li>
+<li><strong>interface_function</strong>: This is the name of the function this node should represent. Most of the times this function name is preceded by an interface name, e.g. <code class="docutils literal"><span class="pre">fsl.BET</span></code>.</li>
 <li><strong>label</strong>: This is the name, that this node uses to create its working directory or to label itself in the visualized graph.</li>
 </ul>
-<p>For example: If you want to create a node called <tt class="docutils literal"><span class="pre">realign</span></tt> that runs SPM&#8217;s <tt class="docutils literal"><span class="pre">Realign</span></tt> function on a functional data <tt class="docutils literal"><span class="pre">func.nii</span></tt>, use the following code:</p>
+<p>For example: If you want to create a node called <code class="docutils literal"><span class="pre">realign</span></code> that runs SPM&#8217;s <code class="docutils literal"><span class="pre">Realign</span></code> function on a functional data <code class="docutils literal"><span class="pre">func.nii</span></code>, use the following code:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -501,29 +503,29 @@
 14
 15
 16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Make sure to import required modules</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>    <span class="c"># import spm</span>
-<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>    <span class="c"># import pypeline engine</span>
+17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Make sure to import required modules</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>    <span class="c1"># import spm</span>
+<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>    <span class="c1"># import pypeline engine</span>
 
-<span class="c"># Create a realign node - Method 1: Specify inputs during node creation</span>
-<span class="n">realign</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Realign</span><span class="p">(</span><span class="n">in_files</span><span class="o">=</span><span class="s">&#39;~/nipype_tutorial/data/sub001/func.nii&#39;</span><span class="p">),</span>
-               <span class="n">name</span><span class="o">=</span><span class="s">&#39;realignnode&#39;</span><span class="p">)</span>
+<span class="c1"># Create a realign node - Method 1: Specify inputs during node creation</span>
+<span class="n">realign</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Realign</span><span class="p">(</span><span class="n">in_files</span><span class="o">=</span><span class="s1">&#39;~/nipype_tutorial/data/sub001/func.nii&#39;</span><span class="p">),</span>
+               <span class="n">name</span><span class="o">=</span><span class="s1">&#39;realignnode&#39;</span><span class="p">)</span>
 
-<span class="c"># Create a realign node - Method 2: Specify inputs after node creation</span>
-<span class="n">realign</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Realign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;realignnode&#39;</span><span class="p">)</span>
-<span class="n">realign</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_files</span><span class="o">=</span><span class="s">&#39;~/nipype_tutorial/data/sub001/func.nii&#39;</span>
+<span class="c1"># Create a realign node - Method 2: Specify inputs after node creation</span>
+<span class="n">realign</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Realign</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;realignnode&#39;</span><span class="p">)</span>
+<span class="n">realign</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_files</span><span class="o">=</span><span class="s1">&#39;~/nipype_tutorial/data/sub001/func.nii&#39;</span>
 
-<span class="c"># Specify the working directory of this node (only needed for this specific example)</span>
-<span class="n">realign</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/tmp&#39;</span>
+<span class="c1"># Specify the working directory of this node (only needed for this specific example)</span>
+<span class="n">realign</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/tmp&#39;</span>
 
-<span class="c"># Execute the node</span>
+<span class="c1"># Execute the node</span>
 <span class="n">realign</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>This will create a working directory at <tt class="docutils literal"><span class="pre">~/nipype_tutorial/tmp</span></tt>, containing one folder called <tt class="docutils literal"><span class="pre">realignnode</span></tt> containing all temporary and final output files of SPM&#8217;s <tt class="docutils literal"><span class="pre">realign</span></tt> function.</p>
-<p>If you&#8217;re curious what the realign function just calculated, use the following python commands to plot the estimated translation and rotation parameters of the functional scan <tt class="docutils literal"><span class="pre">func.nii</span></tt>:</p>
+<p>This will create a working directory at <code class="docutils literal"><span class="pre">~/nipype_tutorial/tmp</span></code>, containing one folder called <code class="docutils literal"><span class="pre">realignnode</span></code> containing all temporary and final output files of SPM&#8217;s <code class="docutils literal"><span class="pre">realign</span></code> function.</p>
+<p>If you&#8217;re curious what the realign function just calculated, use the following python commands to plot the estimated translation and rotation parameters of the functional scan <code class="docutils literal"><span class="pre">func.nii</span></code>:</p>
 <div class="last highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -540,20 +542,20 @@
 14
 15
 16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Import necessary modules</span>
+17</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Import necessary modules</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
-<span class="c"># Load the estimated parameters</span>
-<span class="n">movement</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;~/nipype_tutorial/tmp/realignnode/rp_func.txt&#39;</span><span class="p">)</span>
+<span class="c1"># Load the estimated parameters</span>
+<span class="n">movement</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;~/nipype_tutorial/tmp/realignnode/rp_func.txt&#39;</span><span class="p">)</span>
 
-<span class="c"># Create the plots with matplotlib</span>
+<span class="c1"># Create the plots with matplotlib</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;translation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;translation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">movement</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;rotation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;rotation&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">movement</span><span class="p">[:,</span><span class="mi">3</span><span class="p">:])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -574,17 +576,17 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Import necessary modules</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>    <span class="c"># import spm</span>
-<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>    <span class="c"># import pypeline engine</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Import necessary modules</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>    <span class="c1"># import spm</span>
+<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>    <span class="c1"># import pypeline engine</span>
 
-<span class="c"># Create a realign node - normal method</span>
-<span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Smooth</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;smooth&quot;</span><span class="p">)</span>
+<span class="c1"># Create a realign node - normal method</span>
+<span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Smooth</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;smooth&quot;</span><span class="p">)</span>
 <span class="n">smooth</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="mi">6</span>
 
-<span class="c"># Create a realign node - iterable method</span>
-<span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Smooth</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;smooth&quot;</span><span class="p">)</span>
-<span class="n">smooth</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;fwhm&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="c1"># Create a realign node - iterable method</span>
+<span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">spm</span><span class="o">.</span><span class="n">Smooth</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;smooth&quot;</span><span class="p">)</span>
+<span class="n">smooth</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;fwhm&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 <p>The usage of Iterables causes the execution workflow to be splitted into as many different clones of itself as needed. In this case, three execution workflows would be created, where only the FWHM smoothing kernel would be different. The advantage of this is that all three workflows can be executed in parallel.</p>
@@ -596,15 +598,15 @@
 <h4>MapNodes and Iterfields<a class="headerlink" href="#mapnodes-and-iterfields" title="Permalink to this headline">¶</a></h4>
 <p>A MapNode is a sub-class of a Node. It therefore has exactly the same properties as a normal Node. The only difference is that a MapNode can put multiple input parameters into one input field, where a normal Node only can take one.</p>
 <p>The creation of a MapNode is only slightly different to the creation of a normal Node.</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;label&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">nodename</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>First, you have to use <tt class="docutils literal"><span class="pre">MapNode</span></tt> instead of <tt class="docutils literal"><span class="pre">Node</span></tt>. Second, you also have to define which of the input fields can receive multiple parameters at once. An input field with this special properties is also called an <tt class="docutils literal"><span class="pre">iterfield</span></tt>. For a more detailed explanation go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield">MapNode and iterfield</a> on the official homepage.</p>
+<p>First, you have to use <code class="docutils literal"><span class="pre">MapNode</span></code> instead of <code class="docutils literal"><span class="pre">Node</span></code>. Second, you also have to define which of the input fields can receive multiple parameters at once. An input field with this special properties is also called an <code class="docutils literal"><span class="pre">iterfield</span></code>. For a more detailed explanation go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/mapnode_and_iterables.html#mapnode-and-iterfield">MapNode and iterfield</a> on the official homepage.</p>
 </div>
 <div class="section" id="individual-nodes">
 <h4>Individual Nodes<a class="headerlink" href="#individual-nodes" title="Permalink to this headline">¶</a></h4>
-<p>There are situations where you need to create your own Node that is independent from any other interface or function provided by Nipype. You need a Node with your specific input and output fields, that does what you want. Well, this can be achieved with Nipype&#8217;s <tt class="docutils literal"><span class="pre">Function</span></tt> function from the <tt class="docutils literal"><span class="pre">utility</span></tt> interface.</p>
-<p>Let&#8217;s assume that you want to have a node that takes as an input a NIfTI file and returns the voxel dimension and the TR of this file. We will read the voxel dimension and the TR value of the NIfTI file with <tt class="docutils literal"><span class="pre">nibabel</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">get_header()</span></tt> function.</p>
+<p>There are situations where you need to create your own Node that is independent from any other interface or function provided by Nipype. You need a Node with your specific input and output fields, that does what you want. Well, this can be achieved with Nipype&#8217;s <code class="docutils literal"><span class="pre">Function</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface.</p>
+<p>Let&#8217;s assume that you want to have a node that takes as an input a NIfTI file and returns the voxel dimension and the TR of this file. We will read the voxel dimension and the TR value of the NIfTI file with <code class="docutils literal"><span class="pre">nibabel</span></code>&#8216;s <code class="docutils literal"><span class="pre">get_header()</span></code> function.</p>
 <p>Here is how it&#8217;s done:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -633,45 +635,45 @@
 25
 26
 27
-28</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Import necessary modules</span>
+28</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Import necessary modules</span>
 <span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">import</span> <span class="n">Function</span>
 
-<span class="c"># Define the function that returns the voxel dimension and TR of the in_file</span>
+<span class="c1"># Define the function that returns the voxel dimension and TR of the in_file</span>
 <span class="k">def</span> <span class="nf">get_voxel_dimension_and_TR</span><span class="p">(</span><span class="n">in_file</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">nibabel</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">nibabel</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">get_header</span><span class="p">()[</span><span class="s">&#39;pixdim&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">f</span><span class="o">.</span><span class="n">get_header</span><span class="p">()[</span><span class="s">&#39;pixdim&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">get_header</span><span class="p">()[</span><span class="s1">&#39;pixdim&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">f</span><span class="o">.</span><span class="n">get_header</span><span class="p">()[</span><span class="s1">&#39;pixdim&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>
 
-<span class="c"># Create the function Node</span>
-<span class="n">voxeldim</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Function</span><span class="p">(</span><span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">],</span>
-                         <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;voxel_dim&#39;</span><span class="p">,</span> <span class="s">&#39;TR&#39;</span><span class="p">],</span>
+<span class="c1"># Create the function Node</span>
+<span class="n">voxeldim</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Function</span><span class="p">(</span><span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">],</span>
+                         <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;voxel_dim&#39;</span><span class="p">,</span> <span class="s1">&#39;TR&#39;</span><span class="p">],</span>
                          <span class="n">function</span><span class="o">=</span><span class="n">get_voxel_dimension_and_TR</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&#39;voxeldim&#39;</span><span class="p">)</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;voxeldim&#39;</span><span class="p">)</span>
 
-<span class="c"># To test this new node, feed the absolute path to the in_file as input</span>
-<span class="n">voxeldim</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/data/sub001/run001.nii.gz&#39;</span>
+<span class="c1"># To test this new node, feed the absolute path to the in_file as input</span>
+<span class="n">voxeldim</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/data/sub001/run001.nii.gz&#39;</span>
 
-<span class="c"># Run the node and save the executed node under red</span>
+<span class="c1"># Run the node and save the executed node under red</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">voxeldim</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="c"># Look at the outputs of the executed node</span>
+<span class="c1"># Look at the outputs of the executed node</span>
 <span class="n">res</span><span class="o">.</span><span class="n">outputs</span>
 
-<span class="c"># And this is the output you will see</span>
+<span class="c1"># And this is the output you will see</span>
 <span class="n">Out</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">TR</span> <span class="o">=</span> <span class="mf">2000.0</span>
         <span class="n">voxel_dim</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">For more information about the function <tt class="docutils literal"><span class="pre">Function</span></tt>, see <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/function_interface.html">this section</a> on the official homepage.</p>
+<p class="last">For more information about the function <code class="docutils literal"><span class="pre">Function</span></code>, see <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/function_interface.html">this section</a> on the official homepage.</p>
 </div>
 </div>
 <div class="section" id="function-free-nodes">
 <h4>Function Free Nodes<a class="headerlink" href="#function-free-nodes" title="Permalink to this headline">¶</a></h4>
-<p>Sometimes you need a Node without a specific interface function. A Node that just distributes values. For example, when you need to feed the voxel dimension and the different subject names into your pipeline. Don&#8217;t worry that you&#8217;ll need a complex node to do this. You only need a Node that can receive the input <tt class="docutils literal"><span class="pre">[3.0,</span> <span class="pre">3.0,</span> <span class="pre">4.0]</span></tt> and <tt class="docutils literal"><span class="pre">['sub001','sub002','sub003']</span></tt> and distribute those inputs to the workflow.</p>
-<p>Such a way of identity mapping input to output can be achieved with Nipype&#8217;s own <tt class="docutils literal"><span class="pre">IdentityInterface</span></tt> function from the <tt class="docutils literal"><span class="pre">utility</span></tt> interface:</p>
+<p>Sometimes you need a Node without a specific interface function. A Node that just distributes values. For example, when you need to feed the voxel dimension and the different subject names into your pipeline. Don&#8217;t worry that you&#8217;ll need a complex node to do this. You only need a Node that can receive the input <code class="docutils literal"><span class="pre">[3.0,</span> <span class="pre">3.0,</span> <span class="pre">4.0]</span></code> and <code class="docutils literal"><span class="pre">['sub001','sub002','sub003']</span></code> and distribute those inputs to the workflow.</p>
+<p>Such a way of identity mapping input to output can be achieved with Nipype&#8217;s own <code class="docutils literal"><span class="pre">IdentityInterface</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -685,20 +687,20 @@
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Import necessary modules</span>
-<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>      <span class="c"># import pypeline engine</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span> <span class="c"># import the utility interface</span>
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Import necessary modules</span>
+<span class="kn">import</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">as</span> <span class="nn">pe</span>      <span class="c1"># import pypeline engine</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">as</span> <span class="nn">util</span> <span class="c1"># import the utility interface</span>
 
-<span class="c"># Create the function free node with specific in- and output fields</span>
-<span class="n">identitynode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_name&#39;</span><span class="p">,</span>
-                                                   <span class="s">&#39;voxel_dimension&#39;</span><span class="p">]),</span>
-                    <span class="n">name</span><span class="o">=</span><span class="s">&#39;identitynode&#39;</span><span class="p">)</span>
+<span class="c1"># Create the function free node with specific in- and output fields</span>
+<span class="n">identitynode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_name&#39;</span><span class="p">,</span>
+                                                   <span class="s1">&#39;voxel_dimension&#39;</span><span class="p">]),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;identitynode&#39;</span><span class="p">)</span>
 
-<span class="c"># Specify certain values of those fields</span>
+<span class="c1"># Specify certain values of those fields</span>
 <span class="n">identitynode</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">voxel_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span>
 
-<span class="c"># Or use iterables to distribute certain values</span>
-<span class="n">identitynode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;sub001&#39;</span><span class="p">,</span><span class="s">&#39;sub002&#39;</span><span class="p">,</span><span class="s">&#39;sub003&#39;</span><span class="p">])</span>
+<span class="c1"># Or use iterables to distribute certain values</span>
+<span class="n">identitynode</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;subject_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sub001&#39;</span><span class="p">,</span><span class="s1">&#39;sub002&#39;</span><span class="p">,</span><span class="s1">&#39;sub003&#39;</span><span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -709,7 +711,7 @@
 <h4>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h4>
 <p>Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each either in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?</p>
 <p>Pipelines are implemented almost the same as Nodes are. Except that you don&#8217;t need to declare any interface or function:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">workflowname</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;label&#39;</span><span class="p">)</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">workflowname</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This is all you have to do.</p>
@@ -729,14 +731,14 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#basic way to connect two nodes</span>
-<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">nodename1</span><span class="p">,</span> <span class="s">&#39;out_files_node1&#39;</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,</span> <span class="s">&#39;in_files_node2&#39;</span><span class="p">)</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">#basic way to connect two nodes</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">nodename1</span><span class="p">,</span> <span class="s1">&#39;out_files_node1&#39;</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,</span> <span class="s1">&#39;in_files_node2&#39;</span><span class="p">)</span>
 
-<span class="c">#advanced way to connect multiple nodes</span>
-<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;output_node1&#39;</span><span class="p">,</span> <span class="s">&#39;input_node2&#39;</span><span class="p">)]),</span>
-                      <span class="p">(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename3</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;output_node1&#39;</span><span class="p">,</span> <span class="s">&#39;input1_node3&#39;</span><span class="p">)]),</span>
-                      <span class="p">(</span><span class="n">nodename2</span><span class="p">,</span> <span class="n">nodename3</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;output1_node2&#39;</span><span class="p">,</span> <span class="s">&#39;input1_node3&#39;</span><span class="p">),</span>
-                                              <span class="p">(</span><span class="s">&#39;output2_node2&#39;</span><span class="p">,</span> <span class="s">&#39;input2_node3&#39;</span><span class="p">)</span>
+<span class="c1">#advanced way to connect multiple nodes</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output_node1&#39;</span><span class="p">,</span> <span class="s1">&#39;input_node2&#39;</span><span class="p">)]),</span>
+                      <span class="p">(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename3</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output_node1&#39;</span><span class="p">,</span> <span class="s1">&#39;input1_node3&#39;</span><span class="p">)]),</span>
+                      <span class="p">(</span><span class="n">nodename2</span><span class="p">,</span> <span class="n">nodename3</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output1_node2&#39;</span><span class="p">,</span> <span class="s1">&#39;input1_node3&#39;</span><span class="p">),</span>
+                                              <span class="p">(</span><span class="s1">&#39;output2_node2&#39;</span><span class="p">,</span> <span class="s1">&#39;input2_node3&#39;</span><span class="p">)</span>
                                               <span class="p">])</span>
                       <span class="p">])</span>
 </pre></div>
@@ -748,14 +750,14 @@
 <div class="section" id="connect-workflows-to-workflows">
 <h5>Connect Workflows to Workflows<a class="headerlink" href="#connect-workflows-to-workflows" title="Permalink to this headline">¶</a></h5>
 <p>Sometimes you also want to connect a workflow to another workflow. For example a preprocessing pipeline to a analysis pipeline. This, so that you can execute the whole pipeline as one. To do this, you can&#8217;t just connect the nodes to each other. You have to additionally connect the workflows to themselves.</p>
-<p>Let&#8217;s assume that we have a node <tt class="docutils literal"><span class="pre">realign</span></tt> which is part of a preprocessing pipeline called <tt class="docutils literal"><span class="pre">preprocess</span></tt> and that we have a node called <tt class="docutils literal"><span class="pre">modelspec</span></tt> which is part of an analysis pipeline called <tt class="docutils literal"><span class="pre">modelestimation</span></tt>. To be able to connect those two pipelines at those particular points we need another workflow to serve as a connection scaffold:</p>
+<p>Let&#8217;s assume that we have a node <code class="docutils literal"><span class="pre">realign</span></code> which is part of a preprocessing pipeline called <code class="docutils literal"><span class="pre">preprocess</span></code> and that we have a node called <code class="docutils literal"><span class="pre">modelspec</span></code> which is part of an analysis pipeline called <code class="docutils literal"><span class="pre">modelestimation</span></code>. To be able to connect those two pipelines at those particular points we need another workflow to serve as a connection scaffold:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">scaffoldflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;scaffoldflow&#39;</span><span class="p">)</span>
-<span class="n">scaffoldflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preprocess</span><span class="p">,</span> <span class="n">modelestimation</span><span class="p">,[(</span><span class="s">&#39;realign.out_files&#39;</span><span class="p">,</span>
-                                                     <span class="s">&#39;modelspec.in_files&#39;</span><span class="p">)</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">scaffoldflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;scaffoldflow&#39;</span><span class="p">)</span>
+<span class="n">scaffoldflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preprocess</span><span class="p">,</span> <span class="n">modelestimation</span><span class="p">,[(</span><span class="s1">&#39;realign.out_files&#39;</span><span class="p">,</span>
+                                                     <span class="s1">&#39;modelspec.in_files&#39;</span><span class="p">)</span>
                                                     <span class="p">])</span>
                       <span class="p">])</span>
 </pre></div>
@@ -764,10 +766,10 @@
 </div>
 <div class="section" id="add-stand-alone-nodes-to-workflow">
 <h5>Add stand-alone Nodes to Workflow<a class="headerlink" href="#add-stand-alone-nodes-to-workflow" title="Permalink to this headline">¶</a></h5>
-<p>There is also the option to add nodes to a workflow without really connecting them to any other nodes or workflow. This can be done with the <tt class="docutils literal"><span class="pre">add_nodes</span></tt> function.</p>
+<p>There is also the option to add nodes to a workflow without really connecting them to any other nodes or workflow. This can be done with the <code class="docutils literal"><span class="pre">add_nodes</span></code> function.</p>
 <p>For example</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Add smooth and realign to the workflow</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">#Add smooth and realign to the workflow</span>
 <span class="n">workflow</span><span class="o">.</span><span class="n">add_nodes</span><span class="p">([</span><span class="n">smooth</span><span class="p">,</span> <span class="n">realign</span><span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
@@ -779,7 +781,7 @@
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Define your function that does something special</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Define your function that does something special</span>
 <span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">output_from_node1</span><span class="p">):</span>
     <span class="n">input_for_node2</span> <span class="o">=</span> <span class="n">output_from_node1</span> <span class="o">*</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">input_for_node2</span>
@@ -789,13 +791,13 @@
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Insert function between the connection of the two nodes</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,[((</span><span class="s">&#39;output_from_node1&#39;</span><span class="p">,</span> <span class="n">myfunction</span><span class="p">),</span>
-                                           <span class="s">&#39;input_for_node2&#39;</span><span class="p">)]),</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Insert function between the connection of the two nodes</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span> <span class="n">nodename2</span><span class="p">,[((</span><span class="s1">&#39;output_from_node1&#39;</span><span class="p">,</span> <span class="n">myfunction</span><span class="p">),</span>
+                                           <span class="s1">&#39;input_for_node2&#39;</span><span class="p">)]),</span>
                   <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
-<p>This will take the output of <tt class="docutils literal"><span class="pre">output_from_node1</span></tt> and give it as an argument to the function <tt class="docutils literal"><span class="pre">myfunction</span></tt>. The return value that will be returned by <tt class="docutils literal"><span class="pre">myfunction</span></tt> then will be forwarded as input to <tt class="docutils literal"><span class="pre">input_from_node2</span></tt>.</p>
+<p>This will take the output of <code class="docutils literal"><span class="pre">output_from_node1</span></code> and give it as an argument to the function <code class="docutils literal"><span class="pre">myfunction</span></code>. The return value that will be returned by <code class="docutils literal"><span class="pre">myfunction</span></code> then will be forwarded as input to <code class="docutils literal"><span class="pre">input_from_node2</span></code>.</p>
 <p>If you want to insert more than one parameter into the function do as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -806,15 +808,15 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Define your function that does something special</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Define your function that does something special</span>
 <span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">output_from_node1</span><span class="p">,</span> <span class="n">additional_input</span><span class="p">):</span>
     <span class="n">input_for_node2</span> <span class="o">=</span> <span class="n">output_from_node1</span> <span class="o">+</span> <span class="n">additional_input</span>
     <span class="k">return</span> <span class="n">input_for_node2</span>
 
-<span class="c"># Insert function with additional input between the connection of the two nodes</span>
-<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span><span class="n">nodename2</span><span class="p">,[((</span><span class="s">&#39;out_file_node1&#39;</span><span class="p">,</span> <span class="n">myfunction</span><span class="p">,</span>
+<span class="c1"># Insert function with additional input between the connection of the two nodes</span>
+<span class="n">workflowname</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">nodename1</span><span class="p">,</span><span class="n">nodename2</span><span class="p">,[((</span><span class="s1">&#39;out_file_node1&#39;</span><span class="p">,</span> <span class="n">myfunction</span><span class="p">,</span>
                                               <span class="n">additional_input</span><span class="p">),</span>
-                                             <span class="s">&#39;input_for_node2&#39;</span><span class="p">)]),</span>
+                                             <span class="s1">&#39;input_for_node2&#39;</span><span class="p">)]),</span>
                       <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
@@ -822,14 +824,14 @@
 </div>
 <div class="section" id="clone-existing-workflows">
 <h4>Clone Existing Workflows<a class="headerlink" href="#clone-existing-workflows" title="Permalink to this headline">¶</a></h4>
-<p>Sometimes you want to reuse a pipeline you&#8217;ve already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the <tt class="docutils literal"><span class="pre">clone</span></tt> command.</p>
+<p>Sometimes you want to reuse a pipeline you&#8217;ve already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the <code class="docutils literal"><span class="pre">clone</span></code> command.</p>
 <p>For example, if you&#8217;ve already created an analysis pipeline that analysis the data on the volume and now would love to reuse this pipeline to do the analysis of the surface, just do as follows:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;surfanalysis&#39;</span><span class="p">)</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;surfanalysis&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This is all you have to do to have the same connections and parameters in <tt class="docutils literal"><span class="pre">surfanalysis</span></tt> as you have in <tt class="docutils literal"><span class="pre">volanalysis</span></tt>. If you wouldn&#8217;t clone the workflow and keep continuing the same workflow, Nipype would assume that it still is the same execution flow and just rewrite all the output from the <tt class="docutils literal"><span class="pre">volanalysis</span></tt> workflow.</p>
+<p>This is all you have to do to have the same connections and parameters in <code class="docutils literal"><span class="pre">surfanalysis</span></code> as you have in <code class="docutils literal"><span class="pre">volanalysis</span></code>. If you wouldn&#8217;t clone the workflow and keep continuing the same workflow, Nipype would assume that it still is the same execution flow and just rewrite all the output from the <code class="docutils literal"><span class="pre">volanalysis</span></code> workflow.</p>
 <p>If you want to change some parameters of the pipeline after cloning, just  specify the name of the pipeline, node and parameter you want to change:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">level1design</span><span class="o">.</span><span class="n">timing_units</span> <span class="o">=</span> <span class="s">&#39;secs&#39;</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">surfanalysis</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">level1design</span><span class="o">.</span><span class="n">timing_units</span> <span class="o">=</span> <span class="s1">&#39;secs&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -853,10 +855,10 @@
     └── sub003
 </pre></div>
 </div>
-<p>So this means that your scans are stored in a zipped NIfTI format (i.e. <tt class="docutils literal"><span class="pre">nii.gz</span></tt>) and that you can find them as follows: <tt class="docutils literal"><span class="pre">~/nipype_tutorial/data/subjectname/scanimage.nii.gz</span></tt></p>
+<p>So this means that your scans are stored in a zipped NIfTI format (i.e. <code class="docutils literal"><span class="pre">nii.gz</span></code>) and that you can find them as follows: <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/subjectname/scanimage.nii.gz</span></code></p>
 <div class="section" id="input-stream">
 <h4>Input Stream<a class="headerlink" href="#input-stream" title="Permalink to this headline">¶</a></h4>
-<p>Now there are two different functions that you can use to specify the folder structure of the input stream. One of them is called <tt class="docutils literal"><span class="pre">SelectFiles</span></tt> and the other one is called <tt class="docutils literal"><span class="pre">DataGrabber</span></tt>. Both are string based and easy to use once understood. Nonetheless, I would recommend to use <tt class="docutils literal"><span class="pre">SelectFiles</span></tt>, as it is much more straight forward to use:</p>
+<p>Now there are two different functions that you can use to specify the folder structure of the input stream. One of them is called <code class="docutils literal"><span class="pre">SelectFiles</span></code> and the other one is called <code class="docutils literal"><span class="pre">DataGrabber</span></code>. Both are string based and easy to use once understood. Nonetheless, I would recommend to use <code class="docutils literal"><span class="pre">SelectFiles</span></code>, as it is much more straight forward to use:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -872,19 +874,19 @@
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre> <span class="c"># SelectFiles</span>
- <span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;anat&#39;</span><span class="p">:</span> <span class="s">&#39;data/{subject_id}/struct.nii.gz&#39;</span><span class="p">,</span>
-              <span class="s">&#39;func&#39;</span><span class="p">:</span> <span class="s">&#39;data/{subject_id}/run*.nii.gz&#39;</span><span class="p">}</span>
- <span class="n">selectfiles</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">SelectFiles</span><span class="p">(</span><span class="n">templates</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;selectfiles&quot;</span><span class="p">)</span>
+16</pre></div></td><td class="code"><div class="highlight"><pre> <span class="c1"># SelectFiles</span>
+ <span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;anat&#39;</span><span class="p">:</span> <span class="s1">&#39;data/{subject_id}/struct.nii.gz&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="s1">&#39;data/{subject_id}/run*.nii.gz&#39;</span><span class="p">}</span>
+ <span class="n">selectfiles</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">SelectFiles</span><span class="p">(</span><span class="n">templates</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;selectfiles&quot;</span><span class="p">)</span>
 
- <span class="c"># DataGrabber</span>
- <span class="n">datasource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">],</span>
-                                   <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;anat&#39;</span><span class="p">,</span> <span class="s">&#39;func&#39;</span><span class="p">],</span>
-                                   <span class="n">template</span> <span class="o">=</span> <span class="s">&#39;data/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">.nii&#39;</span><span class="p">),</span>
-                   <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;datasource&#39;</span><span class="p">)</span>
+ <span class="c1"># DataGrabber</span>
+ <span class="n">datasource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">(</span><span class="n">infields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">],</span>
+                                   <span class="n">outfields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;anat&#39;</span><span class="p">,</span> <span class="s1">&#39;func&#39;</span><span class="p">],</span>
+                                   <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;data/</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">.nii&#39;</span><span class="p">),</span>
+                   <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;datasource&#39;</span><span class="p">)</span>
 
- <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">anat</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;struct&#39;</span><span class="p">]],</span>
-             <span class="n">func</span><span class="o">=</span><span class="p">[[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;run001&#39;</span><span class="p">,</span><span class="s">&#39;run002&#39;</span><span class="p">]]])</span>
+ <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">anat</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;struct&#39;</span><span class="p">]],</span>
+             <span class="n">func</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;run001&#39;</span><span class="p">,</span><span class="s1">&#39;run002&#39;</span><span class="p">]]])</span>
 
  <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">template_args</span> <span class="o">=</span> <span class="n">info</span>
  <span class="n">datasource</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">sort_filelist</span> <span class="o">=</span> <span class="bp">True</span>
@@ -897,18 +899,18 @@
 </div>
 <div class="section" id="output-stream">
 <h4>Output Stream<a class="headerlink" href="#output-stream" title="Permalink to this headline">¶</a></h4>
-<p>In contrast to this, the definition of the output stream is rather simple. You only have to created a <tt class="docutils literal"><span class="pre">DataSink</span></tt>. A <tt class="docutils literal"><span class="pre">DataSink</span></tt> is a node that specifies in which output folder all the relevant results should be stored at.</p>
+<p>In contrast to this, the definition of the output stream is rather simple. You only have to created a <code class="docutils literal"><span class="pre">DataSink</span></code>. A <code class="docutils literal"><span class="pre">DataSink</span></code> is a node that specifies in which output folder all the relevant results should be stored at.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Datasink</span>
-<span class="n">datasink</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
-<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial&#39;</span>
-<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="s">&#39;datasink_folder&#39;</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Datasink</span>
+<span class="n">datasink</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">DataSink</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;datasink&quot;</span><span class="p">)</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>
+<span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="s1">&#39;datasink_folder&#39;</span>
 </pre></div>
 </td></tr></table></div>
-<p>To store an output of a certain node in this DataSink just connect the node to the DataSink. The output data will be saved in the just specified container <tt class="docutils literal"><span class="pre">datasink_folder</span></tt>. Nipype will than save this output in a folder under this container, depending on the name of the DataSink input field that you specify during the creation of connections.</p>
-<p>As an example, let&#8217;s assume that we want to use the output of SPM&#8217;s motion correction node, here called <tt class="docutils literal"><span class="pre">realign</span></tt>.</p>
+<p>To store an output of a certain node in this DataSink just connect the node to the DataSink. The output data will be saved in the just specified container <code class="docutils literal"><span class="pre">datasink_folder</span></code>. Nipype will than save this output in a folder under this container, depending on the name of the DataSink input field that you specify during the creation of connections.</p>
+<p>As an example, let&#8217;s assume that we want to use the output of SPM&#8217;s motion correction node, here called <code class="docutils literal"><span class="pre">realign</span></code>.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -916,27 +918,27 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Saves the realigned files into a subfolder called &#39;motion&#39;</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s">&#39;motion&#39;</span><span class="p">)])</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Saves the realigned files into a subfolder called &#39;motion&#39;</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s1">&#39;motion&#39;</span><span class="p">)])</span>
 
-<span class="c"># Saves the realignment_parameters also into the subfolder called &#39;motion&#39;</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">,</span> <span class="s">&#39;motion.@par&#39;</span><span class="p">)])</span>
+<span class="c1"># Saves the realignment_parameters also into the subfolder called &#39;motion&#39;</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span> <span class="s1">&#39;motion.@par&#39;</span><span class="p">)])</span>
 
-<span class="c"># Saves the realignment parameters in a subfolder &#39;par&#39;, under the folder &#39;motion&#39;</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">,</span> <span class="s">&#39;motion.par&#39;</span><span class="p">)])</span>
+<span class="c1"># Saves the realignment parameters in a subfolder &#39;par&#39;, under the folder &#39;motion&#39;</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span> <span class="s1">&#39;motion.par&#39;</span><span class="p">)])</span>
 </pre></div>
 </td></tr></table></div>
-<p>The output folder and files of the datasink node often have long and detailed names, such as <tt class="docutils literal"><span class="pre">'_subject_id_sub002/con_0001_warped_out.nii'</span></tt>. This is because many of the nodes used add their own pre- or postfix to a file or folder. You can use datasink&#8217;s substitutions function to change or delete unwanted strings:</p>
+<p>The output folder and files of the datasink node often have long and detailed names, such as <code class="docutils literal"><span class="pre">'_subject_id_sub002/con_0001_warped_out.nii'</span></code>. This is because many of the nodes used add their own pre- or postfix to a file or folder. You can use datasink&#8217;s substitutions function to change or delete unwanted strings:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Use the following DataSink output substitutions</span>
-<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;_subject_id_&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;warped_out&#39;</span><span class="p">,</span> <span class="s">&#39;final&#39;</span><span class="p">)]</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Use the following DataSink output substitutions</span>
+<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;_subject_id_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;warped_out&#39;</span><span class="p">,</span> <span class="s1">&#39;final&#39;</span><span class="p">)]</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">substitutions</span> <span class="o">=</span> <span class="n">substitutions</span>
 </pre></div>
 </td></tr></table></div>
-<p>This substition will change <tt class="docutils literal"><span class="pre">'_subject_id_sub002/con_0001_warped_out.nii'</span></tt> into <tt class="docutils literal"><span class="pre">'sub002/con_0001_final.nii'</span></tt>.</p>
+<p>This substition will change <code class="docutils literal"><span class="pre">'_subject_id_sub002/con_0001_warped_out.nii'</span></code> into <code class="docutils literal"><span class="pre">'sub002/con_0001_final.nii'</span></code>.</p>
 <p>The DataSink is really useful to keep control over your storage capacity. If you store all the important outputs of your workflow in this folder, you can delete the workflow working directory after executing and counteract storage shortage. You can even set up the configuration of the pipeline so that it will not create a working directory at all. For more information go to <a class="reference external" href="http://nipy.sourceforge.net/nipype/users/config_file.html">Configuration File</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -950,7 +952,7 @@
 </div>
 <div class="section" id="run-workflow">
 <h3>Run Workflow<a class="headerlink" href="#run-workflow" title="Permalink to this headline">¶</a></h3>
-<p>After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the <tt class="docutils literal"><span class="pre">run()</span></tt> method of the workflow.</p>
+<p>After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the <code class="docutils literal"><span class="pre">run()</span></code> method of the workflow.</p>
 <p>As already described in the <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/nipype.html#execution-plugins">introduction section</a>, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.</p>
 <p>Here are just a few example how you can run your workflow:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -961,15 +963,15 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Execute your workflow in sequential way</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Execute your workflow in sequential way</span>
 <span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="c"># Execute your workflow in parallel.</span>
-<span class="c">#   Use 4 cores on your local machine</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+<span class="c1"># Execute your workflow in parallel.</span>
+<span class="c1">#   Use 4 cores on your local machine</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
 
-<span class="c">#   Use a cluster environment to run your workflow</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;SGE&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s">&#39;-q many&#39;</span><span class="p">})</span>
+<span class="c1">#   Use a cluster environment to run your workflow</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;SGE&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s1">&#39;-q many&#39;</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <p>The computation time of your workflow depends on many different factors, such as which nodes you use, with which parameters, on how many subjects, if you use parallel execution and the power of your system. Therefore, no real prediction about the execution time can be made.</p>
@@ -982,7 +984,7 @@
 </div>
 <div class="section" id="example-script">
 <h2>Example Script<a class="headerlink" href="#example-script" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s try to summarize what we&#8217;ve learned by building a short preprocessing pipeline. The following script assumes that you&#8217;re using the tutorial dataset with the three subjects <tt class="docutils literal"><span class="pre">sub001</span></tt>, <tt class="docutils literal"><span class="pre">sub002</span></tt> and <tt class="docutils literal"><span class="pre">sub003</span></tt>, each having two functional scans <tt class="docutils literal"><span class="pre">run001.nii.gz</span></tt> and <tt class="docutils literal"><span class="pre">run002.nii.gz</span></tt>.</p>
+<p>Let&#8217;s try to summarize what we&#8217;ve learned by building a short preprocessing pipeline. The following script assumes that you&#8217;re using the tutorial dataset with the three subjects <code class="docutils literal"><span class="pre">sub001</span></code>, <code class="docutils literal"><span class="pre">sub002</span></code> and <code class="docutils literal"><span class="pre">sub003</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>.</p>
 <div class="section" id="id1">
 <h3>Import modules<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>First, import all necessary modules. Which modules you have to import becomes clear while you&#8217;re adding specific nodes.</p>
@@ -1017,19 +1019,19 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial&#39;</span>             <span class="c"># location of experiment folder</span>
-<span class="n">data_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">)</span>  <span class="c"># location of data folder</span>
-<span class="n">fs_folder</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;freesurfer&#39;</span><span class="p">)</span>  <span class="c"># location of freesurfer folder</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>             <span class="c1"># location of experiment folder</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>  <span class="c1"># location of data folder</span>
+<span class="n">fs_folder</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s1">&#39;freesurfer&#39;</span><span class="p">)</span>  <span class="c1"># location of freesurfer folder</span>
 
-<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sub001&#39;</span><span class="p">,</span> <span class="s">&#39;sub002&#39;</span><span class="p">,</span> <span class="s">&#39;sub003&#39;</span><span class="p">]</span>    <span class="c"># list of subject identifiers</span>
-<span class="n">session_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;run001&#39;</span><span class="p">,</span> <span class="s">&#39;run002&#39;</span><span class="p">]</span>              <span class="c"># list of session identifiers</span>
+<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sub001&#39;</span><span class="p">,</span> <span class="s1">&#39;sub002&#39;</span><span class="p">,</span> <span class="s1">&#39;sub003&#39;</span><span class="p">]</span>    <span class="c1"># list of subject identifiers</span>
+<span class="n">session_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;run001&#39;</span><span class="p">,</span> <span class="s1">&#39;run002&#39;</span><span class="p">]</span>              <span class="c1"># list of session identifiers</span>
 
-<span class="n">output_dir</span> <span class="o">=</span> <span class="s">&#39;output_firstSteps&#39;</span>          <span class="c"># name of output folder</span>
-<span class="n">working_dir</span> <span class="o">=</span> <span class="s">&#39;workingdir_firstSteps&#39;</span>     <span class="c"># name of working directory</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="s1">&#39;output_firstSteps&#39;</span>          <span class="c1"># name of output folder</span>
+<span class="n">working_dir</span> <span class="o">=</span> <span class="s1">&#39;workingdir_firstSteps&#39;</span>     <span class="c1"># name of working directory</span>
 
-<span class="n">number_of_slices</span> <span class="o">=</span> <span class="mi">40</span>                     <span class="c"># number of slices in volume</span>
-<span class="n">TR</span> <span class="o">=</span> <span class="mf">2.0</span>                                  <span class="c"># time repetition of volume</span>
-<span class="n">smoothing_size</span> <span class="o">=</span> <span class="mi">8</span>                        <span class="c"># size of FWHM in mm</span>
+<span class="n">number_of_slices</span> <span class="o">=</span> <span class="mi">40</span>                     <span class="c1"># number of slices in volume</span>
+<span class="n">TR</span> <span class="o">=</span> <span class="mf">2.0</span>                                  <span class="c1"># time repetition of volume</span>
+<span class="n">smoothing_size</span> <span class="o">=</span> <span class="mi">8</span>                        <span class="c1"># size of FWHM in mm</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -1037,7 +1039,7 @@
 <h3>Specify Nodes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Let&#8217;s now create all the nodes we need for this preprocessing workflow:</p>
 <ul class="simple">
-<li><strong>Gunzip</strong>: This node is needed to convert the NIfTI files from the zipped version <tt class="docutils literal"><span class="pre">.nii.gz</span></tt> to the unzipped version <tt class="docutils literal"><span class="pre">.nii</span></tt>. This step has to be done because SPM&#8217;s SliceTiming can not handle zipped files.</li>
+<li><strong>Gunzip</strong>: This node is needed to convert the NIfTI files from the zipped version <code class="docutils literal"><span class="pre">.nii.gz</span></code> to the unzipped version <code class="docutils literal"><span class="pre">.nii</span></code>. This step has to be done because SPM&#8217;s SliceTiming can not handle zipped files.</li>
 <li><strong>SliceTiming</strong>: This node executes SPM&#8217;s SliceTiming on each functional scan.</li>
 <li><strong>Realign</strong>: This node executes SPM&#8217;s Realign on each slice time corrected functional scan.</li>
 <li><strong>ArtifactDetect</strong>: This node executes <a class="reference external" href="http://www.nitrc.org/projects/artifact_detect/">ART</a>&#8216;s artifact detection on the functional scans.</li>
@@ -1069,38 +1071,38 @@
 24
 25
 26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Gunzip - unzip functional</span>
-<span class="n">gunzip</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Gunzip</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;gunzip&quot;</span><span class="p">)</span>
+27</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Gunzip - unzip functional</span>
+<span class="n">gunzip</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Gunzip</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gunzip&quot;</span><span class="p">)</span>
 
-<span class="c"># Slicetiming - correct for slice wise acquisition</span>
+<span class="c1"># Slicetiming - correct for slice wise acquisition</span>
 <span class="n">interleaved_order</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">number_of_slices</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">number_of_slices</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sliceTiming</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SliceTiming</span><span class="p">(</span><span class="n">num_slices</span><span class="o">=</span><span class="n">number_of_slices</span><span class="p">,</span>
                                <span class="n">time_repetition</span><span class="o">=</span><span class="n">TR</span><span class="p">,</span>
                                <span class="n">time_acquisition</span><span class="o">=</span><span class="n">TR</span><span class="o">-</span><span class="n">TR</span><span class="o">/</span><span class="n">number_of_slices</span><span class="p">,</span>
                                <span class="n">slice_order</span><span class="o">=</span><span class="n">interleaved_order</span><span class="p">,</span>
                                <span class="n">ref_slice</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-                   <span class="n">name</span><span class="o">=</span><span class="s">&quot;sliceTiming&quot;</span><span class="p">)</span>
+                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;sliceTiming&quot;</span><span class="p">)</span>
 
-<span class="c"># Realign - correct for motion</span>
+<span class="c1"># Realign - correct for motion</span>
 <span class="n">realign</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Realign</span><span class="p">(</span><span class="n">register_to_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-               <span class="n">name</span><span class="o">=</span><span class="s">&quot;realign&quot;</span><span class="p">)</span>
+               <span class="n">name</span><span class="o">=</span><span class="s2">&quot;realign&quot;</span><span class="p">)</span>
 
-<span class="c"># Artifact Detection - determine which of the images in the functional series</span>
-<span class="c">#   are outliers. This is based on deviation in intensity or movement.</span>
+<span class="c1"># Artifact Detection - determine which of the images in the functional series</span>
+<span class="c1">#   are outliers. This is based on deviation in intensity or movement.</span>
 <span class="n">art</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ArtifactDetect</span><span class="p">(</span><span class="n">norm_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                           <span class="n">zintensity_threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                          <span class="n">mask_type</span><span class="o">=</span><span class="s">&#39;spm_global&#39;</span><span class="p">,</span>
-                          <span class="n">parameter_source</span><span class="o">=</span><span class="s">&#39;SPM&#39;</span><span class="p">),</span>
-           <span class="n">name</span><span class="o">=</span><span class="s">&quot;art&quot;</span><span class="p">)</span>
+                          <span class="n">mask_type</span><span class="o">=</span><span class="s1">&#39;spm_global&#39;</span><span class="p">,</span>
+                          <span class="n">parameter_source</span><span class="o">=</span><span class="s1">&#39;SPM&#39;</span><span class="p">),</span>
+           <span class="n">name</span><span class="o">=</span><span class="s2">&quot;art&quot;</span><span class="p">)</span>
 
-<span class="c"># Smooth - to smooth the images with a given kernel</span>
+<span class="c1"># Smooth - to smooth the images with a given kernel</span>
 <span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Smooth</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="n">smoothing_size</span><span class="p">),</span>
-              <span class="n">name</span><span class="o">=</span><span class="s">&quot;smooth&quot;</span><span class="p">)</span>
+              <span class="n">name</span><span class="o">=</span><span class="s2">&quot;smooth&quot;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><strong>Line 5</strong> specifies the slice wise scan acquisition. In our case this was interleaved ascending. Use the following code if you just have ascending (<tt class="docutils literal"><span class="pre">range(1,number_of_slices+1)</span></tt>) or descending (<tt class="docutils literal"><span class="pre">range(number_of_slices,0,-1)</span></tt>).</p>
+<p class="last"><strong>Line 5</strong> specifies the slice wise scan acquisition. In our case this was interleaved ascending. Use the following code if you just have ascending (<code class="docutils literal"><span class="pre">range(1,number_of_slices+1)</span></code>) or descending (<code class="docutils literal"><span class="pre">range(number_of_slices,0,-1)</span></code>).</p>
 </div>
 </div>
 <div class="section" id="id4">
@@ -1118,29 +1120,29 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Create a preprocessing workflow</span>
-<span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;preproc&#39;</span><span class="p">)</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Create a preprocessing workflow</span>
+<span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;preproc&#39;</span><span class="p">)</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">)</span>
 
-<span class="c"># Connect all components of the preprocessing workflow</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">gunzip</span><span class="p">,</span> <span class="n">sliceTiming</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">sliceTiming</span><span class="p">,</span> <span class="n">realign</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;timecorrected_files&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s">&#39;realigned_files&#39;</span><span class="p">),</span>
-                                 <span class="p">(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;mask_file&#39;</span><span class="p">),</span>
-                                 <span class="p">(</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">,</span>
-                                  <span class="s">&#39;realignment_parameters&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
+<span class="c1"># Connect all components of the preprocessing workflow</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">gunzip</span><span class="p">,</span> <span class="n">sliceTiming</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">sliceTiming</span><span class="p">,</span> <span class="n">realign</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;timecorrected_files&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s1">&#39;realigned_files&#39;</span><span class="p">),</span>
+                                 <span class="p">(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask_file&#39;</span><span class="p">),</span>
+                                 <span class="p">(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;realignment_parameters&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
                  <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><strong>Line 3</strong> is needed to tell the workflow in which folder it should be run. You don&#8217;t have to do this for any subworkflows that you&#8217;re using. But the &#8220;main&#8221; workflow, the one which we execute with the <tt class="docutils literal"><span class="pre">.run()</span></tt> command, should always have a <tt class="docutils literal"><span class="pre">base_dir</span></tt> specified.</p>
+<p class="last"><strong>Line 3</strong> is needed to tell the workflow in which folder it should be run. You don&#8217;t have to do this for any subworkflows that you&#8217;re using. But the &#8220;main&#8221; workflow, the one which we execute with the <code class="docutils literal"><span class="pre">.run()</span></code> command, should always have a <code class="docutils literal"><span class="pre">base_dir</span></code> specified.</p>
 </div>
 </div>
 <div class="section" id="id5">
 <h3>Input &amp; Output Stream<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>Before we can run our preprocessing workflow, we first have to specify the input and output stream. To do this, we first have to create the distributor node <tt class="docutils literal"><span class="pre">Infosource</span></tt>, the input node <tt class="docutils literal"><span class="pre">SelectFiles</span></tt> and the output node <tt class="docutils literal"><span class="pre">DataSink</span></tt>. The purpose of <tt class="docutils literal"><span class="pre">Infosource</span></tt> is to tell <tt class="docutils literal"><span class="pre">SelectFiles</span></tt> over which elements of its input stream it should iterate over.</p>
+<p>Before we can run our preprocessing workflow, we first have to specify the input and output stream. To do this, we first have to create the distributor node <code class="docutils literal"><span class="pre">Infosource</span></code>, the input node <code class="docutils literal"><span class="pre">SelectFiles</span></code> and the output node <code class="docutils literal"><span class="pre">DataSink</span></code>. The purpose of <code class="docutils literal"><span class="pre">Infosource</span></code> is to tell <code class="docutils literal"><span class="pre">SelectFiles</span></code> over which elements of its input stream it should iterate over.</p>
 <p>To finish it all up, those three nodes now have to be connected to the rest of the pipeline.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1177,40 +1179,40 @@
 33
 34
 35
-36</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Infosource - a function free node to iterate over the list of subject names</span>
-<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
-                                            <span class="s">&#39;session_id&#39;</span><span class="p">]),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource&quot;</span><span class="p">)</span>
-<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">),</span>
-                        <span class="p">(</span><span class="s">&#39;session_id&#39;</span><span class="p">,</span> <span class="n">session_list</span><span class="p">)]</span>
+36</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Infosource - a function free node to iterate over the list of subject names</span>
+<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;session_id&#39;</span><span class="p">]),</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;infosource&quot;</span><span class="p">)</span>
+<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">,</span> <span class="n">session_list</span><span class="p">)]</span>
 
-<span class="c"># SelectFiles</span>
-<span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;func&#39;</span><span class="p">:</span> <span class="s">&#39;data/{subject_id}/{session_id}.nii.gz&#39;</span><span class="p">}</span>
+<span class="c1"># SelectFiles</span>
+<span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="s1">&#39;data/{subject_id}/{session_id}.nii.gz&#39;</span><span class="p">}</span>
 <span class="n">selectfiles</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SelectFiles</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span>
                                <span class="n">base_directory</span><span class="o">=</span><span class="n">experiment_dir</span><span class="p">),</span>
-                   <span class="n">name</span><span class="o">=</span><span class="s">&quot;selectfiles&quot;</span><span class="p">)</span>
+                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;selectfiles&quot;</span><span class="p">)</span>
 
-<span class="c"># Datasink</span>
+<span class="c1"># Datasink</span>
 <span class="n">datasink</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">DataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">experiment_dir</span><span class="p">,</span>
                          <span class="n">container</span><span class="o">=</span><span class="n">output_dir</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;datasink&quot;</span><span class="p">)</span>
 
-<span class="c"># Use the following DataSink output substitutions</span>
-<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;_subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;_session_id_&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)]</span>
+<span class="c1"># Use the following DataSink output substitutions</span>
+<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;_subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;_session_id_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)]</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">substitutions</span> <span class="o">=</span> <span class="n">substitutions</span>
 
-<span class="c"># Connect SelectFiles and DataSink to the workflow</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">selectfiles</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">),</span>
-                                            <span class="p">(</span><span class="s">&#39;session_id&#39;</span><span class="p">,</span> <span class="s">&#39;session_id&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">selectfiles</span><span class="p">,</span> <span class="n">gunzip</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;func&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;realign.@mean&#39;</span><span class="p">),</span>
-                                      <span class="p">(</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">,</span>
-                                       <span class="s">&#39;realign.@parameters&#39;</span><span class="p">),</span>
+<span class="c1"># Connect SelectFiles and DataSink to the workflow</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">selectfiles</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">),</span>
+                                            <span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">,</span> <span class="s1">&#39;session_id&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">selectfiles</span><span class="p">,</span> <span class="n">gunzip</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;func&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;realign.@mean&#39;</span><span class="p">),</span>
+                                      <span class="p">(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;realign.@parameters&#39;</span><span class="p">),</span>
                                       <span class="p">]),</span>
-                 <span class="p">(</span><span class="n">smooth</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;smoothed_files&#39;</span><span class="p">,</span> <span class="s">&#39;smooth&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">art</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;outlier_files&#39;</span><span class="p">,</span> <span class="s">&#39;art.@outliers&#39;</span><span class="p">),</span>
-                                  <span class="p">(</span><span class="s">&#39;plot_files&#39;</span><span class="p">,</span> <span class="s">&#39;art.@plot&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="n">smooth</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;smoothed_files&#39;</span><span class="p">,</span> <span class="s1">&#39;smooth&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">art</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outlier_files&#39;</span><span class="p">,</span> <span class="s1">&#39;art.@outliers&#39;</span><span class="p">),</span>
+                                  <span class="p">(</span><span class="s1">&#39;plot_files&#39;</span><span class="p">,</span> <span class="s1">&#39;art.@plot&#39;</span><span class="p">),</span>
                                   <span class="p">]),</span>
                  <span class="p">])</span>
 </pre></div>
@@ -1218,13 +1220,13 @@
 </div>
 <div class="section" id="id6">
 <h3>Run Workflow<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>The running of the pipeline is a rather simple thing. Just use the <tt class="docutils literal"><span class="pre">.run()</span></tt> command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.</p>
+<p>The running of the pipeline is a rather simple thing. Just use the <code class="docutils literal"><span class="pre">.run()</span></code> command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">preproc</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;flat&#39;</span><span class="p">)</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">preproc</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;flat&#39;</span><span class="p">)</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
-<p>As you see, we&#8217;ve executed the function <tt class="docutils literal"><span class="pre">write_graph()</span></tt> before we&#8217;ve run the pipeline. <tt class="docutils literal"><span class="pre">write_graph()</span></tt> is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/visualizePipeline.html">How To Visualize A Pipeline</a>.</p>
+<p>As you see, we&#8217;ve executed the function <code class="docutils literal"><span class="pre">write_graph()</span></code> before we&#8217;ve run the pipeline. <code class="docutils literal"><span class="pre">write_graph()</span></code> is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/visualizePipeline.html">How To Visualize A Pipeline</a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">You can download the code for this preprocessing pipeline as a script here: <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_3_first_steps.py">tutorial_3_first_steps.py</a></p>
@@ -1233,7 +1235,7 @@
 </div>
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
-<p>After we&#8217;ve executed the preprocessing pipeline we have two new folders under <tt class="docutils literal"><span class="pre">~/nipype_tutorial</span></tt>. The working directory <tt class="docutils literal"><span class="pre">workingdir_firstSteps</span></tt> which contains all files created during the execution of the workflow, and the output folder <tt class="docutils literal"><span class="pre">output_firstSteps</span></tt> which contains all the files that we sent to the DataSink. Let&#8217;s take a closer look at those two folders.</p>
+<p>After we&#8217;ve executed the preprocessing pipeline we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_firstSteps</span></code> which contains all files created during the execution of the workflow, and the output folder <code class="docutils literal"><span class="pre">output_firstSteps</span></code> which contains all the files that we sent to the DataSink. Let&#8217;s take a closer look at those two folders.</p>
 <div class="section" id="working-directory">
 <h3>Working Directory<a class="headerlink" href="#working-directory" title="Permalink to this headline">¶</a></h3>
 <p>The working directory contains many temporary files that might be not so important for your further analysis. That&#8217;s why I highly recommend to save all the important outputs of your workflow in a DataSink folder. So that everything important is at one place.</p>
@@ -1257,8 +1259,8 @@
 </div>
 <p>Even though the working directory is most often only temporary, it contains many relevant files to be found and explore. Following are some of the highlights:</p>
 <ul class="simple">
-<li><strong>Visualization</strong>: The main folder of the workflow contains the visualized graph files (if created with <tt class="docutils literal"><span class="pre">write_graph()</span></tt> and an interactive execution fiew (<tt class="docutils literal"><span class="pre">index.html</span></tt>).</li>
-<li><strong>Reports</strong>: Each node contains a subfolder called <tt class="docutils literal"><span class="pre">_report</span></tt> that contains a file called <tt class="docutils literal"><span class="pre">report.rst</span></tt>. This file contains all relevant node information. E.g. What&#8217;s the name of the node and what is its hierarchical place in the pipeline structure? What are the actual input and executed output parameters? How long did it take to execute the node and what were the values of the environment variables during the execution?</li>
+<li><strong>Visualization</strong>: The main folder of the workflow contains the visualized graph files (if created with <code class="docutils literal"><span class="pre">write_graph()</span></code> and an interactive execution fiew (<code class="docutils literal"><span class="pre">index.html</span></code>).</li>
+<li><strong>Reports</strong>: Each node contains a subfolder called <code class="docutils literal"><span class="pre">_report</span></code> that contains a file called <code class="docutils literal"><span class="pre">report.rst</span></code>. This file contains all relevant node information. E.g. What&#8217;s the name of the node and what is its hierarchical place in the pipeline structure? What are the actual input and executed output parameters? How long did it take to execute the node and what were the values of the environment variables during the execution?</li>
 </ul>
 </div>
 <div class="section" id="output-folder">
@@ -1365,12 +1367,12 @@ Executing node datasink.a2 in dir: ~/nipype_tutorial/workingdir_firstSteps/
 <span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a0 jobid: 20
 </pre></div>
 </td></tr></table></div>
-<p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node&#8217;s execution is accompanied by the working directory of this node. The output <tt class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></tt> than tells you when the execution of the node is done.</p>
+<p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node&#8217;s execution is accompanied by the working directory of this node. The output <code class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></code> than tells you when the execution of the node is done.</p>
 </div>
 <div class="section" id="it-crashes-but-where-is-the-problem">
 <h3>It Crashes, But Where is the Problem?<a class="headerlink" href="#it-crashes-but-where-is-the-problem" title="Permalink to this headline">¶</a></h3>
 <p>In the beginning when you&#8217;re not used to reading Nipype&#8217;s terminal output it can be tricky to find the actual error. But most of the time, Nipype tells you exactly what&#8217;s wrong.</p>
-<p>Let&#8217;s assume for example, that you want to create a preprocessing pipeline as shown above but forget to provide the mandatory input <tt class="docutils literal"><span class="pre">realigned_files</span></tt> for the artifact detection node <tt class="docutils literal"><span class="pre">art</span></tt>. The running of such a workflow will lead to the following terminal output:</p>
+<p>Let&#8217;s assume for example, that you want to create a preprocessing pipeline as shown above but forget to provide the mandatory input <code class="docutils literal"><span class="pre">realigned_files</span></code> for the artifact detection node <code class="docutils literal"><span class="pre">art</span></code>. The running of such a workflow will lead to the following terminal output:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1480,14 +1482,14 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
      ***********************************
 </pre></div>
 </td></tr></table></div>
-<p>Now, what happened? <strong>Line 26</strong> indicates you that there is an Error and <strong>line 29</strong> tells you where the crash report to this error was saved at. The last part of this crash file (i.e. <tt class="docutils literal"><span class="pre">art.b0.pklz</span></tt>) tells you that the error happened in the <tt class="docutils literal"><span class="pre">art</span></tt> node. <strong>Line 31-43</strong> show the exact error stack of the current crash. Those multiple lines starting with <tt class="docutils literal"><span class="pre">File</span></tt> are also always a good indicator to find the error in the terminal output.</p>
-<p>Now the important output is shown in <strong>line 44</strong>. Here it actually tells you what is wrong. <tt class="docutils literal"><span class="pre">ArtifactDetect</span> <span class="pre">requires</span> <span class="pre">a</span> <span class="pre">value</span> <span class="pre">for</span> <span class="pre">input</span> <span class="pre">'realigned_files'</span></tt>. Correct this issue and the workflow should execute cleanly.</p>
+<p>Now, what happened? <strong>Line 26</strong> indicates you that there is an Error and <strong>line 29</strong> tells you where the crash report to this error was saved at. The last part of this crash file (i.e. <code class="docutils literal"><span class="pre">art.b0.pklz</span></code>) tells you that the error happened in the <code class="docutils literal"><span class="pre">art</span></code> node. <strong>Line 31-43</strong> show the exact error stack of the current crash. Those multiple lines starting with <code class="docutils literal"><span class="pre">File</span></code> are also always a good indicator to find the error in the terminal output.</p>
+<p>Now the important output is shown in <strong>line 44</strong>. Here it actually tells you what is wrong. <code class="docutils literal"><span class="pre">ArtifactDetect</span> <span class="pre">requires</span> <span class="pre">a</span> <span class="pre">value</span> <span class="pre">for</span> <span class="pre">input</span> <span class="pre">'realigned_files'</span></code>. Correct this issue and the workflow should execute cleanly.</p>
 <p>Always at the end of the output is a section that summarizes the whole crash. In this case this is <strong>line 48-54</strong>. Here you can see again which nodes lead to the crash and where the crash file to the error is stored at.</p>
 </div>
 <div class="section" id="read-the-crash-file">
 <h3>Read the Crash File<a class="headerlink" href="#read-the-crash-file" title="Permalink to this headline">¶</a></h3>
 <p>But sometimes, just knowing where and because of what the crash happened is not enough. You also need to know what the actual values of the crashed nodes were, to see if perhaps some input values were not transmitted correctly.</p>
-<p>This can be done with the shell command <tt class="docutils literal"><span class="pre">nipype_display_crash</span></tt>. To read for example the above mentioned <tt class="docutils literal"><span class="pre">art</span></tt>-crash file, we have to open a new terminal and run the following command:</p>
+<p>This can be done with the shell command <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. To read for example the above mentioned <code class="docutils literal"><span class="pre">art</span></code>-crash file, we have to open a new terminal and run the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>nipype_display_crash ~/nipype_tutorial/crash-20141018-140857-mnotter-art.b0.pklz
 </pre></div>
 </div>
@@ -1580,7 +1582,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 <p>From this output you can see in the lower half the same error stack of the crash and the exact description of what is wrong, as we&#8217;ve seen in the terminal output. But in the first half you also have additional information of the nodes input, which might help to solve some problems.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Note that the information about the exact input values of a node can also be obtained from the <tt class="docutils literal"><span class="pre">report.rst</span></tt> file, stored in the nodes subfolder under the working directory. More about this <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#working-directory">here</a>.</p>
+<p class="last">Note that the information about the exact input values of a node can also be obtained from the <code class="docutils literal"><span class="pre">report.rst</span></code> file, stored in the nodes subfolder under the working directory. More about this <a class="reference external" href="http://miykael.github.com/nipype-beginner-s-guide/firstSteps.html#working-directory">here</a>.</p>
 </div>
 </div>
 <div class="section" id="interface-issues">
@@ -1594,20 +1596,20 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Import FreeSurfer and specify the path to the current subject directory</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Import FreeSurfer and specify the path to the current subject directory</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">as</span> <span class="nn">fs</span>
-<span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="s">&#39;~/nipype_tutorial/freesurfer&#39;</span><span class="p">)</span>
+<span class="n">fs</span><span class="o">.</span><span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="s1">&#39;~/nipype_tutorial/freesurfer&#39;</span><span class="p">)</span>
 
-<span class="c"># Import MATLAB command and specify the path to SPM12</span>
+<span class="c1"># Import MATLAB command and specify the path to SPM12</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.matlab</span> <span class="kn">import</span> <span class="n">MatlabCommand</span>
-<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12&#39;</span><span class="p">)</span>
+<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s1">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 </div>
 <div class="section" id="be-aware-of-your-data">
 <h3>Be Aware of Your Data<a class="headerlink" href="#be-aware-of-your-data" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes the biggest issue with your code is that you try to force things that can&#8217;t work.</p>
-<p>One common example is that you try to feed in two values (e.g. <tt class="docutils literal"><span class="pre">run001</span></tt> and <tt class="docutils literal"><span class="pre">run002</span></tt>) into an input field that only expects one value. An example output of such an Error would contain something like this:</p>
+<p>One common example is that you try to feed in two values (e.g. <code class="docutils literal"><span class="pre">run001</span></code> and <code class="docutils literal"><span class="pre">run002</span></code>) into an input field that only expects one value. An example output of such an Error would contain something like this:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre>TraitError: The <span class="s1">&#39;in_file&#39;</span> trait of a GunzipInputSpec instance must be an existing file
@@ -1615,9 +1617,9 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
             <span class="s1">&#39;~/nipype_tutorial/data/sub002/run002.nii.gz&#39;</span><span class="o">]</span> &lt;<span class="nb">type</span> <span class="s1">&#39;list&#39;</span>&gt; was specified.
 </pre></div>
 </td></tr></table></div>
-<p>This error tells you that it expects an <tt class="docutils literal"><span class="pre">'in_file'</span></tt> (i.e. singular) and that the file <tt class="docutils literal"><span class="pre">['run001',</span> <span class="pre">'run002']</span></tt> doesn&#8217;t exist. What makes sense, because a <cite>list</cite> isn&#8217;t a file. Such an error can often times be resolved by using a MapNode. Otherwise, find another way to reduce the number of input values per field.</p>
-<p>Another common mistake is the fact that your data is given as input to a node that can&#8217;t handle the format of this input. This error is most often encountered when your data type is zipped and the following node can&#8217;t unzip the file by itself. We included a <tt class="docutils literal"><span class="pre">Gunzip</span></tt> node exaclty for this reason in the example pipeline above.</p>
-<p>So what will the terminal output look like if we try to feed a zipped <tt class="docutils literal"><span class="pre">run001.nii.gz</span></tt> to a node that executes SPM&#8217;s SliceTiming?</p>
+<p>This error tells you that it expects an <code class="docutils literal"><span class="pre">'in_file'</span></code> (i.e. singular) and that the file <code class="docutils literal"><span class="pre">['run001',</span> <span class="pre">'run002']</span></code> doesn&#8217;t exist. What makes sense, because a <cite>list</cite> isn&#8217;t a file. Such an error can often times be resolved by using a MapNode. Otherwise, find another way to reduce the number of input values per field.</p>
+<p>Another common mistake is the fact that your data is given as input to a node that can&#8217;t handle the format of this input. This error is most often encountered when your data type is zipped and the following node can&#8217;t unzip the file by itself. We included a <code class="docutils literal"><span class="pre">Gunzip</span></code> node exaclty for this reason in the example pipeline above.</p>
+<p>So what will the terminal output look like if we try to feed a zipped <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> to a node that executes SPM&#8217;s SliceTiming?</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1781,8 +1783,8 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2015, Michael Notter.
-      Last updated on October 14, 2015.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.
+      Last updated on February 02, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
