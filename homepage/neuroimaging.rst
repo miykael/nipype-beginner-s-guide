@@ -2,11 +2,11 @@
 Introduction to Neuroimaging
 ============================
 
-With this part I want to introduce you to the basics of the analysis of neuroimaging data. I want to give you a brief explanation on how the neuroimaging data is acquired, how the data is prepared for the analysis (also called preprocessing) and eventually, how you can test your data on a model based on your hypothesis.
+With this part I want to introduce you to the basics of analyzing neuroimaging data. I want to give you a brief explanation of how the neuroimaging data is acquired, how the data is prepared for analysis (also called preprocessing) and, eventually, how you can test your data on a model based on your hypothesis.
 
 .. note::
 
-    This part serves as a brief introduction to neuroimaging. Further information on this topic can be found under the `Glossary <http://miykael.github.com/nipype-beginner-s-guide/glossary.html>`_ and `FAQ <http://miykael.github.com/nipype-beginner-s-guide/faq.html>`_ page of this beginner's guide.
+    This part serves as a brief introduction to neuroimaging. Further information on this topic can be found under the `Glossary <http://miykael.github.com/nipype-beginner-s-guide/glossary.html>`_ and `FAQ <http://miykael.github.com/nipype-beginner-s-guide/faq.html>`_ pages of this beginner's guide.
 
 
 Acquisition of MRI Data
@@ -18,7 +18,7 @@ Acquisition of MRI Data
        :width: 160pt
        :align: left
 
-The technology and physics behind a MRI scanner is quite astonishing. But I won't go into details on how this all works. Nonetheless you need to know some terms, concepts and parameters which are used during image acquisition.
+The technology and physics behind an MRI scanner is quite astonishing. But I won't go into details on how that all works. Nonetheless, you need to know some terms, concepts, and parameters which are used for the steps taken to acquire and MRI image.
 
 .. only:: latex
 
@@ -32,13 +32,13 @@ The volume data of a whole brain recorded at one single timepoint, as pictured o
    :width: 300pt
    :align: center
 
-As the scanner can't measure the whole volume at once it has to measure it sequentially. This is done by measuring one plain of the brain  (generally the horizontal one) after the other. Such a plain is also called a **slice**. The resolution of the measured volume data therefore depends on the in-plane resolution, the number of slices, their thickness and a possible gap between them.
+As the scanner can't measure the whole volume at once it has to measure it sequentially. This is done by measuring one plane of the brain  (generally the horizontal one) after the other. Such a plane is also called a **slice**. The resolution of the measured volume data therefore depends on the in-plane resolution, the number of slices, their thickness, and a possible gap between them.
 
-The quality of the measured data depends amongst the resolution and other things on the following parameters:
+The quality of the measured data depends on the resolution and the following parameters:
 
 * **repetition time (TR)**: time required to scan one volume
 * **acquisition time (TA)**: time required to scan one volume. TA = TR - (TR/number of slices)
-* **field of view (FOV)**: defines the extend of a slice, e.g. 256mm x 256mm
+* **field of view (FOV)**: defines the extent of a slice, e.g. 256mm x 256mm
 
 
 Modalities of MRI Data
@@ -56,7 +56,7 @@ sMRI (structural MRI)
        :width: 270pt
        :align: left
 
-Structural magnetic resonance imaging (**sMRI**) is a technique for measuring the anatomy of the brain. By measuring the amount of water at a given location, sMRI is capable of acquiring a detailed anatomical picture of our brain. This allows as to accurately distinguish between different types of tissue, such as gray and white matter. Structural images are used for multiple purposes, such as corregistration, normalization, segmentation and surface reconstruction.
+Structural magnetic resonance imaging (**sMRI**) is a technique for measuring the anatomy of the brain. By measuring the amount of water at a given location, sMRI is capable of acquiring a detailed anatomical picture of our brain. This allows as to accurately distinguish between different types of tissue, such as gray and white matter. Structural images are used for multiple purposes, such as corregistration, normalization, segmentation, and surface reconstruction.
 
 .. only:: latex
 
@@ -64,7 +64,7 @@ Structural magnetic resonance imaging (**sMRI**) is a technique for measuring th
        :width: 270pt
        :align: center
 
-As there is no time pressure during acquisition (the anatomy is not supposed to change whilst the person is in the scanner), a higher resolution of anatomy can be recorded with a voxel extend of 0.2 to 1.5mm, depending on the strength of the magnetic field in the scanner, e.g. 1.5T, 3T or 7T. Grey matter structures are seen in dark and the white matter structures in bright colors.
+As there is no time pressure during acquisition of anatomical images (the anatomy is not supposed to change while the person is in the scanner), a higher resolution can be used for recording anatomical images, with a voxel extent of 0.2 to 1.5mm, depending on the strength of the magnetic field in the scanner, e.g. 1.5T, 3T or 7T. Grey matter structures are seen in dark, and the white matter structures in bright colors.
 
 
 fMRI (functional MRI)
