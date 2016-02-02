@@ -28,7 +28,7 @@ Those are a lot of different parts and it is confusing to make sense of it witho
 
 .. only:: latex
 
-    .. image:: images/graph_colored.svg
+    .. image:: images/graph_colored.png
        :align: center
        :width: 500pt
 
