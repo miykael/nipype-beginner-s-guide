@@ -188,7 +188,7 @@ Nipype consists of many parts, but the most important ones are **Interfaces**, t
 Interfaces
 **********
 
-Interfaces in the context of Nipype are program wrappers that allow Nipype which runs in Python to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the `official homepage <http://nipy.org/nipype/users/interface_tutorial.html>`_. More practical examples will be given latter in this beginner's guide.
+Interfaces in the context of Nipype are program wrappers that enable Nipype, which runs in Python, to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the `official homepage <http://nipy.org/nipype/users/interface_tutorial.html>`_. More practical examples will be given later in this beginner's guide.
 
 For a full list of software interfaces supported by Nipype go `here <http://nipy.org/nipype/documentation.html>`_.
 
@@ -199,33 +199,37 @@ Workflow Engine
 The core of Nipype's architecture is the workflow engine. It consists of **Nodes**, **MapNodes** and **Workflows**, which can be interconnected in various ways.
 
 * **Node**: A node wraps an interface so that it can be used in a workflow (or as a standalone).
-* **MapNode**: A Mapnode is quite similar to a Node, but differs in the fact that it receives multiple inputs for the same input type. E.g. taking in multiple DICOM files to create one NIfTI file.
-* **Workflow**: A workflow (also called a pipeline), is a directed acyclic graph (DAG) or forest of graphs whose nodes are of type Node, MapNode or Workflow and whose edges represent data flow.
+* **MapNode**: A Mapnode is quite similar to a Node, but it differs because it takes multiple inputs of a single type to create a single output. For example, it might specify multiple DICOM files to create one NIfTI file.
+* **Workflow**: A workflow (also called a pipeline), is a directed acyclic graph (DAG) or forest of graphs whose nodes are of type Node, MapNode or Workflow and whose edges (lines connecting nodes) represent data flow.
 
-Each Node, MapNode or Workflow has (at least) one input field and (at least) one output field. Those fields specify the dataflow that goes into and out of a Node, MapNode or Workflow. The fields of MapNodes that take in multiple inputs at once are called iterfields and have to be labeled as such.
+Each Node, MapNode or Workflow has (at least) one input field and (at least) one output field. Those fields specify the dataflow into and out of a Node, MapNode or Workflow. MapNodes use fields to specify multiple inputs (basically a list of input items). There they are called *iterfields* because the interface will iterate over the list of input items, and they have to be labeled as such to distinguish them from single-item fields.
 
-A very cool feature of a Nipype workflow are so called **iterables**. Iterables allow you to run a given workflow or subgraph several times with changing input values. For example if you want to run a analysis pipeline on multiple subjects or with a FWHM smoothing kernel of 4mm, 6mm and 8mm. This can easily be achieved with iterables and additionally allows you to do this all in parallel, if requested.
+A very cool feature of a Nipype workflow are so called **iterables**. Iterables allow you to run a given workflow or subgraph several times with changing input values. For example, if you want to run an analysis pipeline on multiple subjects or with an FWHM smoothing kernel of 4mm, 6mm, and 8mm. This can easily be achieved with iterables and additionally allows you to do this all in parallel (simultaneous execution), if requested.
 
-Go to the documentation section of `Nipype's main homepage <http://nipy.org/nipype/>`_ to read more about `MapNode, iterfield, and iterables <http://nipy.org/nipype/users/mapnode_and_iterables.html>`_, `JoinNode, synchronize and itersource <http://nipy.org/nipype/users/joinnode_and_itersource.html>`_ and `much more <http://nipy.org/nipype/users/pipeline_tutorial.html>`_. Nonetheless, a more detailed explanation will be given in a `latter section <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#specify-workflows-connect-nodes>`_ of this beginner's guide.
+Go to the documentation section of `Nipype's main homepage <http://nipy.org/nipype/>`_ to read more about `MapNode, iterfield, and iterables <http://nipy.org/nipype/users/mapnode_and_iterables.html>`_, `JoinNode, synchronize and itersource <http://nipy.org/nipype/users/joinnode_and_itersource.html>`_ and `much more <http://nipy.org/nipype/users/pipeline_tutorial.html>`_. Nonetheless, a more detailed explanation will be given in a `later section <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#specify-workflows-connect-nodes>`_ of this beginner's guide.
 
 .. note::
-    For more practical example of Nipype concepts see `Michael Waskom <https://github.com/mwaskom>`_'s really cool Jupyter notebooks about `Interfaces <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb>`_, `Iteration <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb>`_ and `Workflows <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb>`_.
+    For more practical and extended examples of Nipype concepts see `Michael Waskom <https://github.com/mwaskom>`_'s really cool Jupyter notebooks about `Interfaces <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb>`_, `Iteration <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb>`_ and `Workflows <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb>`_.
 
 
 Execution Plugins
 *****************
 
-Plugins are components that describe how a workflow should be executed. They allow seamless execution across many architectures and make the usage of parallel computation look so easy.
+Plugins are components that describe how a workflow should be executed. They allow seamless execution across many architectures and make using parallel computation quite easy.
 
-On a local machine, you can use the plugin **Serial** for a linear or **Multicore** for a parallel execution of your workflow. On a cluster, you have the option of using plugins for:
+On a local machine, you can use the plugin **Serial** for a linear, or serial, execution of your workflow. If you machine has more than one core, you can use the **Multicore** plugin for parallel execution of your workflow. On a cluster, you have the option of using plugins for:
 
     * **HTCondor**
     * **PBS, Torque, SGE, LSF** (native and via IPython)
     * **SSH** (via IPython)
     * **Soma Workflow**
 
+.. note::
+    Cluster operation often needs a special setup.  You may wish to consult your cluster operators about which plugins are available.
 
-To show how easy this can be done, see the following code that shows how to run a given workflow with different plugins:
+
+
+To show how easily this can be done, the following code shows how to run a workflow with different plugins:
 
 .. code-block:: py
     :linenos:
