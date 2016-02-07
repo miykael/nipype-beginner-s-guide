@@ -198,7 +198,7 @@ Workflow Engine
 
 The core of Nipype's architecture is the workflow engine. It consists of **Nodes**, **MapNodes** and **Workflows**, which can be interconnected in various ways.
 
-* **Node**: A node wraps an interface so that it can be used in a workflow (or as a standalone).
+* **Node**: A node provides the information -- parameters, filenames, etc. -- that is needed by an interface to run the program properly for a particular job, whether as part of a workflow or separately.
 * **MapNode**: A Mapnode is quite similar to a Node, but it differs because it takes multiple inputs of a single type to create a single output. For example, it might specify multiple DICOM files to create one NIfTI file.
 * **Workflow**: A workflow (also called a pipeline), is a directed acyclic graph (DAG) or forest of graphs whose nodes are of type Node, MapNode or Workflow and whose edges (lines connecting nodes) represent data flow.
 
