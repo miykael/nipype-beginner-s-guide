@@ -2,11 +2,11 @@
 Introduction to Neuroimaging
 ============================
 
-With this part I want to introduce you to the basics of analyzing neuroimaging data. I want to give you a brief explanation of how the neuroimaging data is acquired, how the data is prepared for analysis (also called preprocessing) and, eventually, how you can test your data on a model based on your hypothesis.
+In this section, I will introduce you to the basics of analyzing neuroimaging data. I will give a brief explanation of how the neuroimaging data is acquired, how the data is prepared for analysis (also called preprocessing). Finally, I'll show how you can analyze your data using a model based on your hypothesis.
 
 .. note::
 
-    This part serves as a brief introduction to neuroimaging. Further information on this topic can be found under the `Glossary <http://miykael.github.io/nipype-beginner-s-guide/glossary.html>`_ and `FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html>`_ pages of this beginner's guide.
+    This part is only a brief introduction to neuroimaging. Further information on this topic can be found under the `Glossary <http://miykael.github.io/nipype-beginner-s-guide/glossary.html>`_ and `FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html>`_ pages of this beginner's guide.
 
 
 Acquisition of MRI Data
@@ -18,7 +18,7 @@ Acquisition of MRI Data
        :width: 160pt
        :align: left
 
-The technology and physics behind an MRI scanner is quite astonishing. But I won't go into details on how that all works. Nonetheless, you need to know some terms, concepts, and parameters which are used for the steps taken to acquire and MRI image.
+The technology and physics behind an MRI scanner is quite astonishing. But I won't go into the details of how it all works. You do need to know some terms, concepts, and parameters that are used to acquire MRI data in a scanning session and use that to construct useable images.
 
 .. only:: latex
 
@@ -26,19 +26,30 @@ The technology and physics behind an MRI scanner is quite astonishing. But I won
        :width: 160pt
        :align: center
 
-The volume data of a whole brain recorded at one single timepoint, as pictured on the left, is called a **volume** and consists of multiple voxels (pixels in 3D). Each **voxel** has a specific dimension, in this case it's an isotropic dimension of 1mm x 1mm x 1mm. Each voxel contains one value which stands for the average signal measured at the given location. A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a **3D matrix** of 256 x 256 x 256 voxels. The following picture describes a vertical slice through such a brain volume and depicts in general the grid like structure of this 3D Matrix, consisting of multiple voxels.
+The brain occupies space, so when we collect data on how it fills space, we call that volume data, and all the volume data needed to create the complete, 3D image of the brain, recorded at one single timepoint and as pictured on the left, is called a **volume**.  The data is measured in **voxels**, which are like the pixels used to display images on your screen, only in 3D. Each voxel has a specific dimension, in this case it is 1mm x 1mm x 1mm: a cube, so it is the same dimension from all sides (isotropic). Each voxel contains one value which stands for the average signal measured at the given location.
+
+A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a **3D matrix** of 256 x 256 x 256 voxels. The following picture shows a vertical slice -- one layer of the big, 3D grid looked at from the top -- through a brain volume, and the grid for the remaining two dimensions is superimposed on the picture of the brain.  The data is measured per box, and each of the boxes corresponds to a particular portion of the brain.
 
 .. image:: images/voxel.png
    :width: 300pt
    :align: center
 
-As the scanner can't measure the whole volume at once it has to measure it sequentially. This is done by measuring one plane of the brain  (generally the horizontal one) after the other. Such a plane is also called a **slice**. The resolution of the measured volume data therefore depends on the in-plane resolution, the number of slices, their thickness, and a possible gap between them.
+As the scanner can't measure the whole volume at once it has to measure portions of the brain sequentially in time. This is done by measuring one plane of the brain (generally the horizontal one) after the other. Such a plane is also called a **slice**. The **resolution** of the measured volume data, therefore, depends on the in-plane resolution (the size of the squares in the above image), the number of slices and their thickness (how many layers), and any possible gaps between the layers.
 
 The quality of the measured data depends on the resolution and the following parameters:
 
 * **repetition time (TR)**: time required to scan one volume
-* **acquisition time (TA)**: time required to scan one volume. TA = TR - (TR/number of slices)
+* **acquisition time (TA)**: time required to scan one slice. TA = TR - (TR/number of slices)
 * **field of view (FOV)**: defines the extent of a slice, e.g. 256mm x 256mm
+
+
+Specifics of MRI Data
+=====================
+
+MRI scanners output their neuroimaging data in a raw data format with which most analysis packages cannot work.  **DICOM** is a common, standardized, raw medical image format, but the format of your raw data may be something else; e.g., **PAR/REC** format from Philips scanners. Raw data is saved in `k-space <https://en.wikipedia.org/wiki/K-space_%28magnetic_resonance_imaging%29>`format, and it needs to be converted into a format that the analysis packages can use.  The most frequent format for newly generated data is called `NIfTI <http://nifti.nimh.nih.gov/>`_.  If you are working with older datasets, you may encounter data in **Analyze** format.  MRI data formats will have an **image** and a **header** part, and for NifTI format, they are in the same file, whereas in the older Analyze format, they are in separate files.
+
+* The **image** is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.
+* The **header** contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the **image** part in a 3D coordinate system, etc.
 
 
 Modalities of MRI Data
@@ -128,15 +139,6 @@ Diffusion imaging is done to get information about the brain's white matter conn
 There are many different diffusion measurements, such as **mean diffusivity** (MD), `fractional anisotropy <https://en.wikipedia.org/wiki/Fractional_anisotropy>`_ (FA) and `Tractography <https://en.wikipedia.org/wiki/Tractography>`_. Each measurement gives different insights into the brain's neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.
 
 Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance to reliably detect kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as **High-angular-resolution diffusion imaging** (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the `Diffusion MRI Wiki-homepage <https://en.wikipedia.org/wiki/Diffusion_MRI>`_.
-
-
-Specifics of MRI Data
-=====================
-
-Many MRI scanners output their neuroimaging data in **DICOM** format, a standardized medical image format. But depending on the scanner, the format of your raw data can also be something else, e.g. **PAR/REC** on Philips scanners. This raw data is saved in `k-space <https://en.wikipedia.org/wiki/K-space_(MRI)>`_ with which most analysis packages can't work with. Therefore the raw data has to be converted into another, more common format, called `NIfTI <http://nifti.nimh.nih.gov/>`_. As many other MRI dataformats, **NIfTI**-files (``.nii``-file) consist also of an **image** and a **header** part.
-
-* The **image** is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.
-* The **header** contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the **image** part in a 3D coordinate system, etc.
 
 
 Analysis Steps
