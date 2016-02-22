@@ -28,7 +28,7 @@ The technology and physics behind an MRI scanner is quite astonishing. But I won
 
 The brain occupies space, so when we collect data on how it fills space, we call that volume data, and all the volume data needed to create the complete, 3D image of the brain, recorded at one single timepoint and as pictured on the left, is called a **volume**.  The data is measured in **voxels**, which are like the pixels used to display images on your screen, only in 3D. Each voxel has a specific dimension, in this case it is 1mm x 1mm x 1mm: a cube, so it is the same dimension from all sides (isotropic). Each voxel contains one value which stands for the average signal measured at the given location.
 
-A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a **3D matrix** of 256 x 256 x 256 voxels. The following picture shows a slice -- one layer of the big, 3D matrix -- through a brain volume, and the superimposed grid shows the remaining two dimensions of the voxesl.
+A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a **3D matrix** of 256 x 256 x 256 voxels. The following picture shows a slice -- one layer of the big, 3D matrix -- through a brain volume, and the superimposed grid shows the remaining two dimensions of the voxels.
 
 .. image:: images/voxel.png
    :width: 300pt
