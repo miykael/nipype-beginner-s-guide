@@ -31,7 +31,7 @@ The brain occupies space, so when we collect data on how it fills space, we call
 A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a **3D matrix** of 256 x 256 x 256 voxels. The following picture shows a slice -- one layer of the big, 3D matrix -- through a brain volume, and the superimposed grid shows the remaining two dimensions of the voxels.
 
 .. image:: images/voxel.png
-   :width: 300pt
+   :width: 450pt
    :align: center
 
 As the scanner can't measure the whole volume at once it has to measure portions of the brain sequentially in time. This is done by measuring one plane of the brain (generally the horizontal one) after the other. Such a plane is also called a **slice**. The **resolution** of the measured volume data, therefore, depends on the in-plane resolution (the size of the squares in the above image), the number of slices and their thickness (how many layers), and any possible gaps between the layers.
