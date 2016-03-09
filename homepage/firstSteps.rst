@@ -643,7 +643,7 @@ Now there are two different functions that you can use to specify the folder str
 Output Stream
 -------------
 
-In contrast to this, the definition of the output stream is rather simple. You only have to created a ``DataSink``. A ``DataSink`` is a node that specifies in which output folder all the relevant results should be stored at.
+In contrast to this, the definition of the output stream is rather simple. You only have to create a ``DataSink``. A ``DataSink`` is a node that specifies in which output folder all the relevant results should be stored at.
 
 .. code-block:: py
     :linenos: 
@@ -897,13 +897,13 @@ To finish it all up, those three nodes now have to be connected to the rest of t
 Run Workflow
 ************
 
-The running of the pipeline is a rather simple thing. Just use the ``.run()`` command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.
+Running the pipeline is a rather simple thing. Just use the ``.run()`` command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.
 
 .. code-block:: py
     :linenos:
 
     preproc.write_graph(graph2use='flat')
-    preproc.run('MultiProc', plugin_args={'n_procs': 8})
+    preproc.run('MultiProc', plugin_args={'n_procs': 6})
 
 As you see, we've executed the function ``write_graph()`` before we've run the pipeline. ``write_graph()`` is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, `How To Visualize A Pipeline <http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html>`_.
 
