@@ -430,9 +430,9 @@ Specify Workflows & Connect Nodes
 Workflows
 ---------
 
-Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each either in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?
+Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each other in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?
 
-Pipelines are implemented almost the same as Nodes are. Except that you don't need to declare any interface or function:
+Workflows are implemented almost the same as Nodes are. Except that you don't need to declare any interface or function:
 
 .. code-block:: py
 
@@ -563,7 +563,7 @@ If you want to insert more than one parameter into the function do as follows:
                           ])
 
 
-Clone Existing Workflows
+Clone Existing Pipelines
 ------------------------
 
 Sometimes you want to reuse a pipeline you've already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the ``clone`` command.
@@ -574,7 +574,7 @@ For example, if you've already created an analysis pipeline that analysis the da
 
    surfanalysis = volanalysis.clone(name='surfanalysis')
 
-This is all you have to do to have the same connections and parameters in ``surfanalysis`` as you have in ``volanalysis``. If you wouldn't clone the workflow and keep continuing the same workflow, Nipype would assume that it still is the same execution flow and just rewrite all the output from the ``volanalysis`` workflow.
+This is all you have to do to have the same connections and parameters in ``surfanalysis`` as you have in ``volanalysis``. If you wouldn't clone the pipeline and keep continuing the same pipeline, Nipype would assume that it still is the same execution flow and just rewrite all the output from the ``volanalysis`` pipeline.
 
 If you want to change some parameters of the pipeline after cloning, just  specify the name of the pipeline, node and parameter you want to change:
 
