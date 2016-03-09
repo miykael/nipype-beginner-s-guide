@@ -93,7 +93,7 @@ Input and Output Fields
 
 Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go `here <http://nipy.org/nipype/interfaces/index.html>`_. So how do you know which input and output field a given node has? Don't worry. There's an easy way how you can figure out which input fields are **mandatory** or **optional** and which output fields you can use.
 
-Let's assume that we want to know more about FSL's function ``SmoothEstimate``. First, make sure that you've imported the spm module with the following python command ``import nipype.interfaces.fsl as fsl``.
+Let's assume that we want to know more about FSL's function ``SmoothEstimate``. First, make sure that you've imported the fsl module with the following python command ``import nipype.interfaces.fsl as fsl``.
 
 Now that we have access to FSL, we simply can run ``fsl.SmoothEstimate.help()``. This will give us the following output:
 
@@ -268,11 +268,11 @@ For example: If you want to create a node called ``realign`` that runs SPM's ``R
     import nipype.pipeline.engine as pe    # import pypeline engine
 
     # Create a realign node - Method 1: Specify inputs during node creation
-    realign = Node(spm.Realign(in_files='~/nipype_tutorial/data/sub001/func.nii'),
+    realign = pe.Node(spm.Realign(in_files='~/nipype_tutorial/data/sub001/func.nii'),
                    name='realignnode')
 
     # Create a realign node - Method 2: Specify inputs after node creation
-    realign = Node(spm.Realign(), name='realignnode')
+    realign = pe.Node(spm.Realign(), name='realignnode')
     realign.inputs.in_files='~/nipype_tutorial/data/sub001/func.nii'
 
     # Specify the working directory of this node (only needed for this specific example)
@@ -323,12 +323,12 @@ For example, let's assume that you have a preprocessing pipeline and on one step
     import nipype.interfaces.spm as spm    # import spm
     import nipype.pipeline.engine as pe    # import pypeline engine
 
-    # Create a realign node - normal method
-    smooth = Node(spm.Smooth(), name = "smooth")
+    # Create a smoothing node - normal method
+    smooth = pe.Node(spm.Smooth(), name = "smooth")
     smooth.inputs.fwhm = 6
 
-    # Create a realign node - iterable method
-    smooth = Node(spm.Smooth(), name = "smooth")
+    # Create a smoothing node - iterable method
+    smooth = pe.Node(spm.Smooth(), name = "smooth")
     smooth.iterables = ("fwhm", [4, 6, 8])
 
 The usage of Iterables causes the execution workflow to be splitted into as many different clones of itself as needed. In this case, three execution workflows would be created, where only the FWHM smoothing kernel would be different. The advantage of this is that all three workflows can be executed in parallel.
@@ -375,7 +375,7 @@ Here is how it's done:
         return f.get_header()['pixdim'][1:4].tolist(), f.get_header()['pixdim'][4]
 
     # Create the function Node
-    voxeldim = Node(Function(input_names=['in_file'],
+    voxeldim = pe.Node(Function(input_names=['in_file'],
                              output_names=['voxel_dim', 'TR'],
                              function=get_voxel_dimension_and_TR),
                     name='voxeldim')
@@ -413,7 +413,7 @@ Such a way of identity mapping input to output can be achieved with Nipype's own
     import nipype.interfaces.utility as util # import the utility interface
 
     # Create the function free node with specific in- and output fields
-    identitynode = Node(util.IdentityInterface(fields=['subject_name',
+    identitynode = pe.Node(util.IdentityInterface(fields=['subject_name',
                                                        'voxel_dimension']),
                         name='identitynode')
 
