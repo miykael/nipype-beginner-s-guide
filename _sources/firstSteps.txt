@@ -93,7 +93,7 @@ Input and Output Fields
 
 Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go `here <http://nipy.org/nipype/interfaces/index.html>`_. So how do you know which input and output field a given node has? Don't worry. There's an easy way how you can figure out which input fields are **mandatory** or **optional** and which output fields you can use.
 
-Let's assume that we want to know more about FSL's function ``SmoothEstimate``. First, make sure that you've imported the spm module with the following python command ``import nipype.interfaces.fsl as fsl``.
+Let's assume that we want to know more about FSL's function ``SmoothEstimate``. First, make sure that you've imported the fsl module with the following python command ``import nipype.interfaces.fsl as fsl``.
 
 Now that we have access to FSL, we simply can run ``fsl.SmoothEstimate.help()``. This will give us the following output:
 
@@ -268,11 +268,11 @@ For example: If you want to create a node called ``realign`` that runs SPM's ``R
     import nipype.pipeline.engine as pe    # import pypeline engine
 
     # Create a realign node - Method 1: Specify inputs during node creation
-    realign = Node(spm.Realign(in_files='~/nipype_tutorial/data/sub001/func.nii'),
+    realign = pe.Node(spm.Realign(in_files='~/nipype_tutorial/data/sub001/func.nii'),
                    name='realignnode')
 
     # Create a realign node - Method 2: Specify inputs after node creation
-    realign = Node(spm.Realign(), name='realignnode')
+    realign = pe.Node(spm.Realign(), name='realignnode')
     realign.inputs.in_files='~/nipype_tutorial/data/sub001/func.nii'
 
     # Specify the working directory of this node (only needed for this specific example)
@@ -323,12 +323,12 @@ For example, let's assume that you have a preprocessing pipeline and on one step
     import nipype.interfaces.spm as spm    # import spm
     import nipype.pipeline.engine as pe    # import pypeline engine
 
-    # Create a realign node - normal method
-    smooth = Node(spm.Smooth(), name = "smooth")
+    # Create a smoothing node - normal method
+    smooth = pe.Node(spm.Smooth(), name = "smooth")
     smooth.inputs.fwhm = 6
 
-    # Create a realign node - iterable method
-    smooth = Node(spm.Smooth(), name = "smooth")
+    # Create a smoothing node - iterable method
+    smooth = pe.Node(spm.Smooth(), name = "smooth")
     smooth.iterables = ("fwhm", [4, 6, 8])
 
 The usage of Iterables causes the execution workflow to be splitted into as many different clones of itself as needed. In this case, three execution workflows would be created, where only the FWHM smoothing kernel would be different. The advantage of this is that all three workflows can be executed in parallel.
@@ -375,7 +375,7 @@ Here is how it's done:
         return f.get_header()['pixdim'][1:4].tolist(), f.get_header()['pixdim'][4]
 
     # Create the function Node
-    voxeldim = Node(Function(input_names=['in_file'],
+    voxeldim = pe.Node(Function(input_names=['in_file'],
                              output_names=['voxel_dim', 'TR'],
                              function=get_voxel_dimension_and_TR),
                     name='voxeldim')
@@ -413,7 +413,7 @@ Such a way of identity mapping input to output can be achieved with Nipype's own
     import nipype.interfaces.utility as util # import the utility interface
 
     # Create the function free node with specific in- and output fields
-    identitynode = Node(util.IdentityInterface(fields=['subject_name',
+    identitynode = pe.Node(util.IdentityInterface(fields=['subject_name',
                                                        'voxel_dimension']),
                         name='identitynode')
 
@@ -430,9 +430,9 @@ Specify Workflows & Connect Nodes
 Workflows
 ---------
 
-Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each either in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?
+Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each other in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?
 
-Pipelines are implemented almost the same as Nodes are. Except that you don't need to declare any interface or function:
+Workflows are implemented almost the same as Nodes are. Except that you don't need to declare any interface or function:
 
 .. code-block:: py
 
@@ -563,7 +563,7 @@ If you want to insert more than one parameter into the function do as follows:
                           ])
 
 
-Clone Existing Workflows
+Clone Existing Pipelines
 ------------------------
 
 Sometimes you want to reuse a pipeline you've already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the ``clone`` command.
@@ -574,7 +574,7 @@ For example, if you've already created an analysis pipeline that analysis the da
 
    surfanalysis = volanalysis.clone(name='surfanalysis')
 
-This is all you have to do to have the same connections and parameters in ``surfanalysis`` as you have in ``volanalysis``. If you wouldn't clone the workflow and keep continuing the same workflow, Nipype would assume that it still is the same execution flow and just rewrite all the output from the ``volanalysis`` workflow.
+This is all you have to do to have the same connections and parameters in ``surfanalysis`` as you have in ``volanalysis``. If you wouldn't clone the pipeline and keep continuing the same pipeline, Nipype would assume that it still is the same execution flow and just rewrite all the output from the ``volanalysis`` pipeline.
 
 If you want to change some parameters of the pipeline after cloning, just  specify the name of the pipeline, node and parameter you want to change:
 
@@ -643,7 +643,7 @@ Now there are two different functions that you can use to specify the folder str
 Output Stream
 -------------
 
-In contrast to this, the definition of the output stream is rather simple. You only have to created a ``DataSink``. A ``DataSink`` is a node that specifies in which output folder all the relevant results should be stored at.
+In contrast to this, the definition of the output stream is rather simple. You only have to create a ``DataSink``. A ``DataSink`` is a node that specifies in which output folder all the relevant results should be stored at.
 
 .. code-block:: py
     :linenos: 
@@ -897,13 +897,13 @@ To finish it all up, those three nodes now have to be connected to the rest of t
 Run Workflow
 ************
 
-The running of the pipeline is a rather simple thing. Just use the ``.run()`` command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.
+Running the pipeline is a rather simple thing. Just use the ``.run()`` command with the plugin you want. In our case we want to preprocess the 6 functional scans on 6 cores at once.
 
 .. code-block:: py
     :linenos:
 
     preproc.write_graph(graph2use='flat')
-    preproc.run('MultiProc', plugin_args={'n_procs': 8})
+    preproc.run('MultiProc', plugin_args={'n_procs': 6})
 
 As you see, we've executed the function ``write_graph()`` before we've run the pipeline. ``write_graph()`` is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, `How To Visualize A Pipeline <http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html>`_.
 
