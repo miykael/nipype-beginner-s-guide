@@ -12,13 +12,14 @@ make html
 # Copy relevant html content into a temporary folder
 TMP_DIR=`mktemp -d`
 cp -r _build/html "$TMP_DIR"/.
+rm -rf _build
 
 # Switch to gh-pages branch
 cd ..
 git checkout gh-pages
 
 # Update content
-rm -rf 
+rm -rf *
 cp -r "$TMP_DIR"/html/* .
 
 # Submit changes with current timestamp
