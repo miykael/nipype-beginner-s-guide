@@ -67,7 +67,7 @@ sMRI (structural MRI)
        :width: 270pt
        :align: left
 
-Structural magnetic resonance imaging (**sMRI**) is a technique for measuring the anatomy of the brain. By measuring the amount of water at a given location, sMRI is capable of acquiring a detailed anatomical picture of our brain. This allows as to accurately distinguish between different types of tissue, such as gray and white matter. Structural images are used for multiple purposes, such as corregistration, normalization, segmentation, and surface reconstruction.
+Structural magnetic resonance imaging (**sMRI**) is a technique for measuring the anatomy of the brain. By measuring the amount of water at a given location, sMRI is capable of acquiring a detailed anatomical picture of our brain. This allows us to accurately distinguish between different types of tissue, such as gray and white matter. Structural images are high-resolution images of the brain that are used as reference images for multiple purposes, such as corregistration, normalization, segmentation, and surface reconstruction.
 
 .. only:: latex
 
@@ -87,7 +87,7 @@ fMRI (functional MRI)
        :width: 270pt
        :align: right
 
-Functional magnetic resonance imaging (**fMRI**) is a technique for measuring brain activity. It works by detecting the changes in blood oxygenation and blood flow that occur in response to neural activity. Our brain is capable of so many astonishing things. But as nothing comes from nothing, it needs a lot of energy to sustain its functionality and has to increase the energy locally if additional functions are needed. This neuronal activity requires energy in the form of O2 which is carried by the blood. Therefore, increased function results in increased blood flow towards the energy consuming location.
+Functional magnetic resonance imaging (**fMRI**) is a technique for measuring brain activity. It works by detecting the changes in blood oxygenation and blood flow that occur in response to neural activity. Our brain is capable of so many astonishing things. But as nothing comes from nothing, it needs a lot of energy to sustain its functionality, and increased activity at a location increases the local energy consumption in the form of oxygen (O2) which is carried by the blood. Therefore, increased function results in increased blood flow towards the energy consuming location.
 
 .. only:: latex
 
@@ -95,9 +95,9 @@ Functional magnetic resonance imaging (**fMRI**) is a technique for measuring br
        :width: 270pt
        :align: center
 
-Immediately after neural activity the blood oxygen level decreases, known as the *initial dip*, because of the local energy consumption. This is followed by the increased flow of new and oxygen rich blood towards the energy consuming region. After 4-6 seconds a peak of blood oxygen level is reached. After no further neuronal activation takes place the signal decreases again and goes through an undershoot, before it reaches the baseline again.
+Immediately after neural activity the blood oxygen level decreases, known as the *initial dip*, because of the local energy consumption. This is followed by increased flow of new and oxygen-rich blood towards the energy consuming region. After 4-6 seconds a peak of blood oxygen level is reached. After no further neuronal activation takes place the signal decreases again and typically undershoots, before rising again to the baseline level.
 
-This blood oxygen level is exactly what we measure with fMRI. The MRI-Scanner is able to measure the change in the magnetic field caused by the difference in the  magnetic susceptibility of oxygenated (diamagnetic) and deoxygenated (paramagnetic) blood. The signal is therefore called the **Blood Oxygen Level Dependent (BOLD) respond**.
+The blood oxygen level is exactly what we measure with fMRI. The MRI Scanner is able to measure the changes in the magnetic field caused by the difference in the  magnetic susceptibility of oxygenated (diamagnetic) and deoxygenated (paramagnetic) blood. The signal is therefore called the **Blood Oxygen Level Dependent (BOLD) response**.
 
 .. only:: html
 
@@ -111,13 +111,15 @@ This blood oxygen level is exactly what we measure with fMRI. The MRI-Scanner is
        :width: 270pt
        :align: center
 
-Because the BOLD signal has to be measured very fast, the resolution of functional images is normally lower (2-4mm) than the resolution in a structural images (0.5-1.5mm). But this depends strongly on the strength of the magnetic field in the scanner, e.g. 1.5T, 3T or 7T. In a functional image, the gray matter is seen as bright and the white matter as dark colors, which is the exact opposite to structural images.
+Because the BOLD signal has to be measured quickly, the resolution of functional images is normally lower (2-4mm) than the resolution of structural images (0.5-1.5mm). But this depends strongly on the strength of the magnetic field in the scanner, e.g. 1.5T, 3T or 7T. In a functional image, the gray matter is seen as bright and the white matter as dark colors, which is the exact opposite to structural images.
 
-Depending on the paradigmn, we talk from an **event-related**, **block** or **resting-state design**:
+Depending on the paradigm, we talk about **event-related**, **block** or **resting-state** designs.
 
-* **event-related design**: Event-releated means that the stimuli shown to the participants in the scanner, are only shown briefly and generally in random order. This means that the BOLD response consists of short bursts (peak) and look more or less like the line shown in the picture above.
-* **block design**: If multiple stimulation of similar nature are shown in a block or phase of 10-30 seconds, we talk about a block design. Such a design has the advantages that the peak in the BOLD signal is not just reach for a short period but stays on a plateau for a longer time. This makes it easier to detect an underlying activation increase in the brain.
-* **resting-state design**: Resting-state paradigms are acquisition in the absence of stimulation. Subjects are asked to lay still and rest in the scanner, without falling asleep. The goal of such a scan is to record brain activation in the absence of an external task. This is sometimes done to analyze the functional connectivity of the brain.
+* **event-related design**: Event-related means that stimuli are administered to the subjects in the scanner for a short period.  The stimuli are only administered briefly and generally in random order.  Stimuli are typically visual, but audible or or other sensible stimuli could also be used. This means that the BOLD response consists of short bursts of activity, which should manifest as peaks, and should look more or less like the line shown in the graph above.
+
+* **block design**: If multiple stimuli of a similar nature are shown in a block, or phase, of 10-30 seconds, that is a block design. Such a design has the advantages that the peak in the BOLD signal is not just attained for a short period but elevated for a longer time, creating a plateau in the graph. This makes it easier to detect an underlying activation increase.
+
+* **resting-state design**: Resting-state designs acquire data in the absence of stimulation. Subjects are asked to lay still and rest in the scanner without falling asleep. The goal of such a scan is to record brain activation in the absence of an external task. This is sometimes done to analyze the functional connectivity of the brain.
 
 
 dMRI (diffusion MRI)
@@ -128,7 +130,8 @@ dMRI (diffusion MRI)
     .. image:: images/tractography_small.gif
        :align: left
 
-Diffusion imaging is done to get information about the brain's white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make assumptions about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecule in this region will mostly diffuse (move) in a horizontal manner, as they can't move vertically because of this neural barrier. The diffusion itself is caused mostly by the `Brownian motion <https://en.wikipedia.org/wiki/Brownian_motion>`_.
+Diffusion imaging is done to obtain information about the brain's white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make inferences about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecules in this region will mostly diffuse (move) in a horizontal manner, as they can't move vertically because of this neural barrier. The diffusion itself is mostly a `Brownian motion <https://en.wikipedia.org/wiki/Brownian_motion>`_.
+
 
 .. only:: latex
 
@@ -136,9 +139,9 @@ Diffusion imaging is done to get information about the brain's white matter conn
        :width: 200pt
        :align: center
 
-There are many different diffusion measurements, such as **mean diffusivity** (MD), `fractional anisotropy <https://en.wikipedia.org/wiki/Fractional_anisotropy>`_ (FA) and `Tractography <https://en.wikipedia.org/wiki/Tractography>`_. Each measurement gives different insights into the brain's neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.
+There are many different `diffusion measurements <https://en.wikipedia.org/wiki/Diffusion_MRI#Measures_of_anisotropy_and_diffusivity>`_, such as **mean diffusivity** (MD), `fractional anisotropy <https://en.wikipedia.org/wiki/Fractional_anisotropy>`_ (FA) and `Tractography <https://en.wikipedia.org/wiki/Tractography>`_. Each measurement gives different insights into the brain's neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.
 
-Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance to reliably detect kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as **High-angular-resolution diffusion imaging** (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the `Diffusion MRI Wiki-homepage <https://en.wikipedia.org/wiki/Diffusion_MRI>`_.
+Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance of reliably detecting kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as **High-angular-resolution diffusion imaging** (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the `Diffusion MRI Wikipedia page <https://en.wikipedia.org/wiki/Diffusion_MRI>`_.
 
 
 Analysis Steps

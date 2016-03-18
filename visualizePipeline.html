@@ -137,7 +137,7 @@
 <div class="section" id="what-kind-of-graph-do-you-need">
 <h2>What kind of graph do you need?<a class="headerlink" href="#what-kind-of-graph-do-you-need" title="Permalink to this headline">¶</a></h2>
 <p>You can visualize your pipeline as soon as you have a workflow that contains any nodes and connections between them. To create a graph, simply use the function <code class="docutils literal"><span class="pre">write_graph()</span></code> on your workflow:</p>
-<div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;flat&#39;</span><span class="p">)</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">workflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;flat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Nipype can create five different kinds of graphs by setting the variable <code class="docutils literal"><span class="pre">graph2use</span></code> to the following parameters:</p>
@@ -158,7 +158,7 @@
 <div class="section" id="tweak-your-visualization">
 <h2>Tweak your visualization<a class="headerlink" href="#tweak-your-visualization" title="Permalink to this headline">¶</a></h2>
 <p>There are two additional parameters <code class="docutils literal"><span class="pre">format</span></code> and <code class="docutils literal"><span class="pre">simple_form</span></code> that you can use to change your output graph. <code class="docutils literal"><span class="pre">format</span></code> can be used to change the output format of the image file to either <code class="docutils literal"><span class="pre">png</span></code> or <code class="docutils literal"><span class="pre">svg</span></code>. <code class="docutils literal"><span class="pre">simple_form</span></code> determines if the node name shown in the visualization is either of the form <code class="docutils literal"><span class="pre">nodename</span> <span class="pre">(package)</span></code> when set to <code class="docutils literal"><span class="pre">True</span></code> or <code class="docutils literal"><span class="pre">nodename.Class.package</span></code> when set to <code class="docutils literal"><span class="pre">False</span></code>.</p>
-<div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="n">simple_form</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-py"><div class="highlight"><pre><span class="n">workflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="n">simple_form</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>To illustrate, on the left you can see a simple graph of the visualization type <strong>orig</strong> when <code class="docutils literal"><span class="pre">simple_form</span></code> is set to <code class="docutils literal"><span class="pre">True</span></code> and on the right if it is set to <code class="docutils literal"><span class="pre">False</span></code>.</p>
@@ -268,7 +268,7 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on March 09, 2016.
+      Last updated on March 18, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
     </p>
     <p>
