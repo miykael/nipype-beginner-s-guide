@@ -236,7 +236,7 @@ Almost no subjects lie perfectly still.  As we can see from the sharp spikes in 
        :align: center
 
 
-Motion correction tries to correct for smaller movements, but sometimes it's best to just remove the images aqcuired during extreme rapid movement. We use **Artifact Detection** to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses. 
+Motion correction tries to correct for smaller movements, but sometimes it's best to just remove the images acquired during extreme rapid movement. We use **Artifact Detection** to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses. 
 
 For example, checking the translation and rotation graphs for a session shown above for sudden movement greater than 2 standard deviations from the mean, or for movement greater than 1mm, artifact detection would show that images 16-19, 21, 22 and 169-172 should be excluded from further analysis.  The graph produced by artifact detection, with vertical lines corresponding to images with drastic variation is shown below.
 
@@ -247,9 +247,9 @@ For example, checking the translation and rotation graphs for a session shown ab
 Coregistration
 ^^^^^^^^^^^^^^
 
-As motion correction corrects for the motion during the acquisition of functional images, coregistration corrects for motion between the structural and the functional images. In other words, coregistration moves the functional image as such that it lies perfectly on the anatomical image. This allows further transformations on the anatomical image, such as normalization, to be directly applied to the functional image without any intermediate steps.
+Motion correction aligns all the images within a volume so they are 'aligned'.  Coregistration aligns the functional image with the reference structural image.  If you think of the functional image as having been printed on tracing paper, coregistration moves that image around on the reference image until the alignment is at its best.  In other words, coregistration trie to superimpose the functional image perfectly on the anatomical image. This allows further transformations of the anatomical image, such as normalization, to be directly applied to the functional image.
 
-The following picture shows an example of a good (top) and bad (bottom) coregistration between functional and anatomical images. Shown in red are the outline of the cortical folds of the anatomical image and in white and gray the functional image.
+The following picture shows an example of good (top) and bad (bottom) coregistration of functional images with the corresponding anatomical images. The red lines are the outline of the cortical folds of the anatomical image superimposed on the underlying greyscale functional image.
 
 .. only:: html
 
