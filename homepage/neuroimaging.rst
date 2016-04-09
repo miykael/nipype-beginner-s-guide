@@ -147,17 +147,18 @@ Diffusion MRI is a rather new field in MRI and still has some problems with its 
 Analysis Steps
 ==============
 
-There are many different steps involved in a neuroimaging analysis and there is not just one way to do it. Depending on the researcher, the paradigm at hand or the modality analyzed (sMRI, fMRI, dMRI), the order differs. Some steps might occur earlier or later than usual and other are left out entirely. None the less, the general fMRI analysis can be divided into the following three steps:
+There are many different steps involved in a neuroimaging analysis and there is not just one order in which to perform them. Depending on the researcher, the paradigm at hand, or the modality analyzed (sMRI, fMRI, dMRI), the order can differ. Some steps may occur earlier or later or may be left out entirely. Nonetheless, the general procedure for fMRI analysis can be divided into the following three steps:
 
-1. **Preprocessing**: Spatial and temporal pre processing of data with the intend of preparing it for the 1st and 2nd level analysis.
-2. **Model Specification and Estimation**: Specifying and estimating parameters of statistical model
-3. **Statistical Inference**: Making inferences about the estimated parameters with appropriate statistics
+1. **Preprocessing**: Spatial and temporal preprocessing of the data to prepare it for the 1st and 2nd level inferential analysis
+2. **Model Specification and Estimation**: Specifying and estimating parameters of the statistical model
+3. **Statistical Inference**: Making inferences about the estimated parameters using appropriate statistical methods
 
 
 Step 1: Preprocessing
 *********************
 
-With the preprocessing we correct our data for head movement in the scanner, check our data for artifacts, take into account that a volume is measured slice by slice, increase the signal-to-noise ratio by smoothing it and normalize it into a common reference space. All those steps are done to match all scans of an individual subject to itself and than to match this subject into a common standard space. Therefor, the preprocessing is done to improve our data and to prepare it for the statistical analysis.
+Preprocessing is the term used to for all the steps taken to improve our data and prepare it for statistical analysis.  We may correct or adjust our data for a number of things inherent in the experimental situation:  to take account of time differences between acquiring each image slice, to correct for head movement during scanning, to detect 'artifacts' -- anomalous measurements -- that should be excluded from subsequent analysis; to align the functional images with the reference structural image, and to normalize the data into a standard space so that data can be compared among several subjects; to apply filtering to the image to increase the signal-to-noise ratio; finally, if sMRI is intended, a segmentation step may be performed.  We will now look at each of those steps in more detail.
+
 
 .. only:: latex
 
@@ -175,7 +176,7 @@ Slice Timing Correction (fMRI only)
        :width: 499px
        :align: right
 
-Because most functional MRI measuring sequences don't acquire every slice in a volume at the same time we have to account for that. For example, if you acquire a volume with 37 slices in a ascending fashion and each slice would be acquired every 50ms, there still would be a difference of 1.8s between the first and the last slice. (Left: *ascending*, Right: *interleaved*)
+Because functional MRI measurement sequences don't acquire every slice in a volume at the same time we have to account for the time defferences among the slices. For example, if you acquire a volume with 37 slices in ascending order, and each slice is acquired every 50ms, there is a difference of 1.8s between the first and the last slice acquired.  You must know the order in which the slices were acquired to be able to apply the proper correction. Slices are typically acquired in one of three methods:  descending (top-down) order; ascending order (bottom-up); or interleaved (acquire every other slice in each direction), where the interleaving may start at the top or the bottom.  (Left: *ascending*, Right: *interleaved*)
 
 .. only:: latex
 
@@ -183,9 +184,8 @@ Because most functional MRI measuring sequences don't acquire every slice in a v
        :width: 200pt
        :align: center
 
-Slice Timing Correction is used to control for this time differences between the slice by temporally interpolating the slices so that it would be equivalent to acquiring the whole brain image at a single time point. This temporal factor of acquisition especially has to be accounted for in fMRI models where timing is an important factor (e.g. event related designs, where the type of stimulus can change from volume to volume).
+Slice Timing Correction is used to compensate for the time differences between the slice acquisitions by temporally interpolating the slices so that the resulting volume is cloes to equivalent to acquiring the whole brain image at a single time point. This temporal factor of acquisition especially has to be accounted for in fMRI models where timing is an important factor (e.g. for event related designs, where the type of stimulus changes from volume to volume).
 
-If you use Slice Timing it is also important to know the way the slices were acquired. You can acquire the slices in a descending (top-down), ascending (bottom-up) or interleaved (acquire every second slice on one direction and every other slice on the other direction; interleaved can start in a top-down or bottom-up fashion) way.
 
 
 Motion Correction (fMRI only)
