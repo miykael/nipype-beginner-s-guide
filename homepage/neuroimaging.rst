@@ -267,7 +267,7 @@ The following picture shows an example of good (top) and bad (bottom) coregistra
 Normalization
 ^^^^^^^^^^^^^
 
-Normalization is done to warp the data of a subject from the individual subject-space it was measured in into a standard reference-space. This step is done to control for individual morphological variations of the brain in each subject. Only after this step a group analysis or comparison to other data can be done. There are different ways to normalize your data but it always includes a template and a source image. 
+Every person's brain is slightly different from every other's.  Brains differ in size and shape.  To compare the images of one person's brain to another's, the images mus first be translated onto a common shape and size, which is called **normalization**  Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image. 
 
 .. only:: html
 
@@ -282,8 +282,9 @@ Normalization is done to warp the data of a subject from the individual subject-
        :align: left
 
 
-* The **template** image is the standard brain in reference-space that you want to warp your data into. This can be a Talairach-, MNI-, SPM-template or any other reference brain you want to use.
-* The **source** image (normally a structural image) is used to calculate the transformation matrix necessary to warp the source image onto the template image. This transformation matrix is than used to transform the rest of your images (functional and structural) into the reference-space.
+* The **template** image is the standard brain in reference-space onto which you want to map your data. This can be a Talairach-, MNI-, or SPM-template, or some other reference image you choose to use.
+
+* The **source** image (normally a higher resolution structural image) is used to calculate the transformation matrix necessary to map the source image onto the template image. This transformation matrix is then used to map the rest of your images (functional and structural) into the reference-space.
 
 
 
