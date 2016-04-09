@@ -197,11 +197,11 @@ Motion Correction (fMRI only)
        :align: right
        :width: 200pt
 
-Motion correction, also known as Realignment, is used to correct for head movement during the acquisition of functional data. Even small head movements lead to unwanted variance in voxels and minimize the quality of your data. Motion correction tries to minimize the influence of movement on your data by aligning your data to a reference time volume. This reference time volume is usually the mean image of all timepoints but can also be the first time point or which ever one you want to use.
+Motion correction, also known as Realignment, is used to correct for head movement during the acquisition of functional data. Even small head movements lead to unwanted variation in voxels and reduce the quality of your data. Motion correction tries to minimize the influence of movement on your data by aligning your data to a reference time volume. This reference time volume is usually the mean image of all timepoints, but it could also be the first, or some other, time point.
 
-The head movement can be divided into 6 parameters. 3 translation parameters which code the movements in the direction of the 3 dimensional axes (moving in X, Y, or Z direction) and 3 rotation parameters which code the rotation around those axes (rotation over the X, Y and Z axis).
+Head movement can be characterized by six parameters:  Three translation parameters which code movement in the directions of the three dimensional axes, movement along the X, Y, or Z axes; and three rotation parameters which code rotation about those axes, rotation centered on each of the X, Y, and Z axes).
 
-Realignment usually uses a affine rigid body transformation to manipulate the data in those 6 parameters. Below you see a plot of a "good" subject where the movement is minimal.
+Realignment usually uses an affine rigid body transformation to manipulate the data in those six parameters.  That is, each image can be moved but not distorted to best align with all the other images.  Below you see a plot of a "good" subject where the movement is minimal.
 
 .. only:: html
 
