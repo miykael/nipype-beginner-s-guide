@@ -220,7 +220,7 @@ Realignment usually uses an affine rigid body transformation to manipulate the d
 Artifact Detection (fMRI only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Not all subjects lie perfectly still and as we can see in the example below, some move quite a bit. This sudden movement can be very severe and really can contaminate your analysis. 
+Almost no subjects lie perfectly still.  As we can see from the sharp spikes in the graphs below, some move quite drastically. Severe, sudden movement can contaminate your analysis quite severely. 
 
 
 .. only:: html
@@ -236,9 +236,9 @@ Not all subjects lie perfectly still and as we can see in the example below, som
        :align: center
 
 
-The process of motion correction tries to correct for this movement but sometimes it's best to just take the scans with extreme rapid movement out. To do this, we use **Artifact Detection**. Artifact detection is used to declare the timepoints/scans of the functional image which vary so much in head movement that they should be excluded from further analysis. 
+Motion correction tries to correct for smaller movements, but sometimes it's best to just remove the images aqcuired during extreme rapid movement. We use **Artifact Detection** to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses. 
 
-So if I would check the session shown above for sudden movement greater than 2 standard deviation from the mean or for movement greater than 1mm, Artifact Detection would me show that the scans 16-19, 21, 22 and 169-172 (see image below) should be excluded from further analysis.
+For example, checking the translation and rotation graphs for a session shown above for sudden movement greater than 2 standard deviations from the mean, or for movement greater than 1mm, artifact detection would show that images 16-19, 21, 22 and 169-172 should be excluded from further analysis.  The graph produced by artifact detection, with vertical lines corresponding to images with drastic variation is shown below.
 
 .. image:: images/artifact_detection.png
    :align: center
