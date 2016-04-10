@@ -291,7 +291,7 @@ Every person's brain is slightly different from every other's.  Brains differ in
 Smoothing
 ^^^^^^^^^
 
-Structural as well as functional images are smoothed by applying a filter to the image. Smoothing increases the signal to noise ratio of your data. This step helps to reduce spatial differences between subject and therefore improve comparisons across subjects. The trade-off, however, is that you lose resolution by smoothing. Additionally you have to keep in mind that smoothing can cause regions that are functionally different to  combine with each other. In such cases a surface based analysis with smoothing on the surface might be a better choice.
+Structural as well as functional images are smoothed by applying a filter to the image. Smoothing increases the signal to noise ratio of your data by filtering the highest frequencies from the frequency domain; that is, removing the smallest scale changes among voxels. That helps to make the larger scale changes more appareent. There is some inherent variability in functional location among individuals, and smoothing helps to reduce spatial differences between subjects and therefore aids comparing multiple subjects. The trade-off, of course, is that you lose resolution by smoothing. Keep in mind, though, that smoothing can cause regions that are functionally different to combine with each other. In such cases a surface based analysis with smoothing on the surface might be a better choice.
 
 .. only:: html
 
@@ -309,7 +309,7 @@ Structural as well as functional images are smoothed by applying a filter to the
        :width: 400pt
        :align: center
 
-Smoothing is implemented by applying a 3D Gaussian kernel to the image, defined by its full width at half maximum (**FWHM**) parameter. As the name already says, FWHM specifies the width/diameter of the smoothing kernel on half of it's height. Each voxel becomes the result of applying this smoothing kernel as a weighted region of interest to its position.
+Smoothing is implemented by applying a 3D Gaussian kernel to the image, and the amount of smoothing is typically determined by its full width at half maximum (**FWHM**) parameter. As the name implies, FWHM is the width/diameter of the smoothing kernel at half of its height. Each voxel's value is changed to the result of applying this smoothing kernel to its original value.
 
 .. only:: latex
 
@@ -317,7 +317,7 @@ Smoothing is implemented by applying a 3D Gaussian kernel to the image, defined 
        :width: 200pt
        :align: center
 
-Choosing the size of the smoothing kernel also depends on the region you are interested in. If you want to study a very small region a big large kernel could eventually smooth your data too much. Thus, the amount of smoothing that you should use is determined partly by the question you want to answer.
+Choosing the size of the smoothing kernel also depends on your reason for smoothing. If you want to study a small region, a large kernel might smooth your data too much. The filter shouldn't generally be larger than the activation you're trying to detect. Thus, the amount of smoothing that you should use is determined partly by the question you want to answer. Some authors suggest using twice the voxel dimensions as a reasonable starting point.
 
 
 Segmentation (sMRI only)
@@ -329,7 +329,7 @@ Segmentation (sMRI only)
        :align: right
        :width: 200pt
 
-Segmentation stands for the process in which a brain is divided into neurological sections according to a given template segmentation. This can be rather general, by segmenting the brain into gray matter, white matter and cerebrospinal fluid (like it is done with SPM's Segmentation) or quite detailed into specific regions and their subregions like it is done during FreeSurfer's ``recon-all`` process. This is is also the segmentation you see in this picture.
+Segmentation is the process by which a brain is divided into neurological sections according to a given template specification. This can be rather general, for example, segmenting the brain into gray matter, white matter and cerebrospinal fluid, as is done with SPM's Segmentationr, or quite detailed, segmenting into specific functional regions and their subregions, as is done with FreeSurfer's ``recon-all``, and that is illustrated in the figure.
 
 .. only:: latex
 
@@ -337,7 +337,7 @@ Segmentation stands for the process in which a brain is divided into neurologica
        :align: center
        :width: 150pt
 
-The Segmentation can be used for different things. You can use the segmentation to aid the normalization process or use it to aid further analysis by using a specific segmentation as a mask or as a definition of a specific region of interest (ROI).
+Segmentation can be used for different things. You can use the segmentation to aid the normalization process or use it to aid further analysis by using a specific segmentation as a mask or as the definition of a specific region of interest (ROI).
 
 
 Step 2: Model Specification and Estimation
