@@ -46,7 +46,7 @@ The quality of the measured data depends on the resolution and the following par
 Specifics of MRI Data
 =====================
 
-MRI scanners output their neuroimaging data in a raw data format with which most analysis packages cannot work.  **DICOM** is a common, standardized, raw medical image format, but the format of your raw data may be something else; e.g., **PAR/REC** format from Philips scanners. Raw data is saved in `k-space <https://en.wikipedia.org/wiki/K-space_%28magnetic_resonance_imaging%29>`_format, and it needs to be converted into a format that the analysis packages can use.  The most frequent format for newly generated data is called `NIfTI <http://nifti.nimh.nih.gov/>`_.  If you are working with older datasets, you may encounter data in **Analyze** format.  MRI data formats will have an **image** and a **header** part.  For NifTI format, they are in the same file (.nii-file), whereas in the older Analyze format, they are in separate files (.img and .hdr-file).
+MRI scanners output their neuroimaging data in a raw data format with which most analysis packages cannot work.  **DICOM** is a common, standardized, raw medical image format, but the format of your raw data may be something else; e.g., **PAR/REC** format from Philips scanners. Raw data is saved in `k-space <https://en.wikipedia.org/wiki/K-space_%28magnetic_resonance_imaging%29>`_ format, and it needs to be converted into a format that the analysis packages can use.  The most frequent format for newly generated data is called `NIfTI <http://nifti.nimh.nih.gov/>`_.  If you are working with older datasets, you may encounter data in **Analyze** format.  MRI data formats will have an **image** and a **header** part.  For NifTI format, they are in the same file (.nii-file), whereas in the older Analyze format, they are in separate files (.img and .hdr-file).
 
 * The **image** is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.
 * The **header** contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the **image** part in a 3D coordinate system, etc.
@@ -176,7 +176,7 @@ Slice Timing Correction (fMRI only)
        :width: 499px
        :align: right
 
-Because functional MRI measurement sequences don't acquire every slice in a volume at the same time we have to account for the time defferences among the slices. For example, if you acquire a volume with 37 slices in ascending order, and each slice is acquired every 50ms, there is a difference of 1.8s between the first and the last slice acquired.  You must know the order in which the slices were acquired to be able to apply the proper correction. Slices are typically acquired in one of three methods:  descending (top-down) order; ascending order (bottom-up); or interleaved (acquire every other slice in each direction), where the interleaving may start at the top or the bottom.  (Left: *ascending*, Right: *interleaved*)
+Because functional MRI measurement sequences don't acquire every slice in a volume at the same time we have to account for the time differences among the slices. For example, if you acquire a volume with 37 slices in ascending order, and each slice is acquired every 50ms, there is a difference of 1.8s between the first and the last slice acquired.  You must know the order in which the slices were acquired to be able to apply the proper correction. Slices are typically acquired in one of three methods:  descending order (top-down); ascending order (bottom-up); or interleaved (acquire every other slice in each direction), where the interleaving may start at the top or the bottom.  (Left: *ascending*, Right: *interleaved*)
 
 .. only:: latex
 
@@ -184,7 +184,7 @@ Because functional MRI measurement sequences don't acquire every slice in a volu
        :width: 200pt
        :align: center
 
-Slice Timing Correction is used to compensate for the time differences between the slice acquisitions by temporally interpolating the slices so that the resulting volume is cloes to equivalent to acquiring the whole brain image at a single time point. This temporal factor of acquisition especially has to be accounted for in fMRI models where timing is an important factor (e.g. for event related designs, where the type of stimulus changes from volume to volume).
+Slice Timing Correction is used to compensate for the time differences between the slice acquisitions by temporally interpolating the slices so that the resulting volume is close to equivalent to acquiring the whole brain image at a single time point. This temporal factor of acquisition especially has to be accounted for in fMRI models where timing is an important factor (e.g. for event related designs, where the type of stimulus changes from volume to volume).
 
 
 
@@ -247,7 +247,7 @@ For example, checking the translation and rotation graphs for a session shown ab
 Coregistration
 ^^^^^^^^^^^^^^
 
-Motion correction aligns all the images within a volume so they are 'aligned'.  Coregistration aligns the functional image with the reference structural image.  If you think of the functional image as having been printed on tracing paper, coregistration moves that image around on the reference image until the alignment is at its best.  In other words, coregistration trie to superimpose the functional image perfectly on the anatomical image. This allows further transformations of the anatomical image, such as normalization, to be directly applied to the functional image.
+Motion correction aligns all the images within a volume so they are 'aligned'.  Coregistration aligns the functional image with the reference structural image.  If you think of the functional image as having been printed on tracing paper, coregistration moves that image around on the reference image until the alignment is at its best.  In other words, coregistration tries to superimpose the functional image perfectly on the anatomical image. This allows further transformations of the anatomical image, such as normalization, to be directly applied to the functional image.
 
 The following picture shows an example of good (top) and bad (bottom) coregistration of functional images with the corresponding anatomical images. The red lines are the outline of the cortical folds of the anatomical image superimposed on the underlying greyscale functional image.
 
@@ -267,7 +267,7 @@ The following picture shows an example of good (top) and bad (bottom) coregistra
 Normalization
 ^^^^^^^^^^^^^
 
-Every person's brain is slightly different from every other's.  Brains differ in size and shape.  To compare the images of one person's brain to another's, the images mus first be translated onto a common shape and size, which is called **normalization**  Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image. 
+Every person's brain is slightly different from every other's.  Brains differ in size and shape.  To compare the images of one person's brain to another's, the images mus first be translated onto a common shape and size, which is called **normalization**.  Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image. 
 
 .. only:: html
 
@@ -291,7 +291,7 @@ Every person's brain is slightly different from every other's.  Brains differ in
 Smoothing
 ^^^^^^^^^
 
-Structural as well as functional images are smoothed by applying a filter to the image. Smoothing increases the signal to noise ratio of your data by filtering the highest frequencies from the frequency domain; that is, removing the smallest scale changes among voxels. That helps to make the larger scale changes more appareent. There is some inherent variability in functional location among individuals, and smoothing helps to reduce spatial differences between subjects and therefore aids comparing multiple subjects. The trade-off, of course, is that you lose resolution by smoothing. Keep in mind, though, that smoothing can cause regions that are functionally different to combine with each other. In such cases a surface based analysis with smoothing on the surface might be a better choice.
+Structural as well as functional images are smoothed by applying a filter to the image. Smoothing increases the signal to noise ratio of your data by filtering the highest frequencies from the frequency domain; that is, removing the smallest scale changes among voxels. That helps to make the larger scale changes more apparent. There is some inherent variability in functional location among individuals, and smoothing helps to reduce spatial differences between subjects and therefore aids comparing multiple subjects. The trade-off, of course, is that you lose resolution by smoothing. Keep in mind, though, that smoothing can cause regions that are functionally different to combine with each other. In such cases a surface based analysis with smoothing on the surface might be a better choice.
 
 .. only:: html
 
