@@ -192,7 +192,7 @@ A term introduced by `Karl Friston <https://en.wikipedia.org/wiki/Karl_J._Fristo
 
 efficiency
 **********
-A statistical concept in experimental design, used to describe how accurately one can model the shape of a response. It's at the other end of a tradeoff with power_, which is used to describe how well you can detect any effect at all. Block experiments are very low in efficiency; because the trials come on top of each other, it's difficult to tell how much signal comes from one trial and how much from another, so the shape is muddled. Fully-randomized event-related experiments have high efficiency; you can sample many different points of the HRF and know exactly which HRF you're getting. Experiments that have very high power must necessarily have lower efficiency - you can't be perfect at both.  Check `Design FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#design>`_ our for more on the efficiency/power tradeoff. Also check out `Jitter FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#jitter>`_ for how to maximize efficiency in your experiment.
+A statistical concept in experimental design, used to describe how accurately one can model the shape of a response. It's at the other end of a tradeoff with power_, which is used to describe how well you can detect any effect at all. Block experiments are very low in efficiency; because the trials come on top of each other, it's difficult to tell how much signal comes from one trial and how much from another, so the shape is muddled. Fully-randomized event-related experiments have high efficiency; you can sample many different points of the HRF and know exactly which HRF you're getting. Experiments that have very high power must necessarily have lower efficiency - you can't be perfect at both. Check `Design FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#design>`_ our for more on the efficiency/power tradeoff. Also check out `Jitter FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#jitter>`_ for how to maximize efficiency in your experiment.
 
 Event-related Potential (ERP)
 *****************************
@@ -507,7 +507,7 @@ A type of fMRI imaging which doesn't look at BOLD contrast. Instead, blood is ma
 
 permutation test
 ****************
-A type of statistical test, like a T-test or F-test, but one which assumes much less about the distribution of the random variable in question. This is a type of nonparametric test related to bootstrapping_. It has significant advantages over standard parametric tests under certain conditions, like low degrees of freedom, as in a group analysis.  `P threshold FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#p-threshold>`_ delves into more detail about this.
+A type of statistical test, like a T-test or F-test, but one which assumes much less about the distribution of the random variable in question. This is a type of nonparametric test related to bootstrapping_. It has significant advantages over standard parametric tests under certain conditions, like low degrees of freedom, as in a group analysis. `P threshold FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#p-threshold>`_ delves into more detail about this.
 
 phantom
 *******
@@ -543,7 +543,7 @@ A form of realignment_ that is performed within the scanner, while the subject i
 
 psychophysiological interaction (PPI)
 *************************************
-A term invented by `Karl Friston`_ and the SPM group to describe a certain type of analysis for `functional connectivity`_. They have argued that looking at simple correlations of signal between two regions may not be as interesting as looking at how those correlations change due to the experiment; i.e., does condition A induce a closer connection between two regions than condition B does? If so, these regions have a psychophysiological interaction (or PPI) - an interaction influenced both by psychological factors (the experimental condition) and physiological factors (the brain signal from another region).  Check out `Connectivity FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#connectivity>`_ for more.
+A term invented by `Karl Friston`_ and the SPM group to describe a certain type of analysis for `functional connectivity`_. They have argued that looking at simple correlations of signal between two regions may not be as interesting as looking at how those correlations change due to the experiment; i.e., does condition A induce a closer connection between two regions than condition B does? If so, these regions have a psychophysiological interaction (or PPI) - an interaction influenced both by psychological factors (the experimental condition) and physiological factors (the brain signal from another region). Check out `Connectivity FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#connectivity>`_ for more.
 
 pulsatility
 ***********

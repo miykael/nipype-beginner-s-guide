@@ -9,7 +9,7 @@ What is Nipype?
 
 Nipype allows you to easily combine all those heterogeneous software packages whithin a single workflow. This procedure gives you the opportunity to pick the best algorithm there is for the problem at hand and therefore allows you to profit from the advantages of any software package you like.
 
-Nipype is written in `Python <https://www.python.org/>`_, an easy to learn and very intuitive programming language. This means that your whole neuroimaging analysis can be easily specified using python scripts.  It won't even take as many lines of code as you might fear. Nipype is very straightforward and easy to learn. As you will see, it is quite simple to combine processing steps using different software packages. Steps from previous analyses can be reused effortlessly and new approaches can be applied much faster.
+Nipype is written in `Python <https://www.python.org/>`_, an easy to learn and very intuitive programming language. This means that your whole neuroimaging analysis can be easily specified using python scripts. It won't even take as many lines of code as you might fear. Nipype is very straightforward and easy to learn. As you will see, it is quite simple to combine processing steps using different software packages. Steps from previous analyses can be reused effortlessly and new approaches can be applied much faster.
 
 You're still concerned because you want to combine your own **bash**, **MATLAB**, **R** or **Python** scripts with Nipype? No problem! Even the creation of your own interface to your own software solution is straightforward and can be done in a rather short time. Thanks to `Github <https://github.com/nipy/nipype>`_, there's also always a community standing behind you.
 
@@ -225,7 +225,7 @@ On a local machine, you can use the plugin **Serial** for a linear, or serial, e
     * **Soma Workflow**
 
 .. note::
-    Cluster operation often needs a special setup.  You may wish to consult your cluster operators about which plugins are available.
+    Cluster operation often needs a special setup. You may wish to consult your cluster operators about which plugins are available.
 
 
 

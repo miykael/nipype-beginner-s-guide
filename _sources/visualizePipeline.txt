@@ -69,7 +69,7 @@ The graphs shown below are visualizations of the **first level analysis pipeline
 ``orig`` - simple graph
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The simple graph of the visualization type ``orig`` shows only the top layer, i.e. hierarchical highest workflows and nodes, of your workflow. In this case this is the ``metaflow``.  Subworkflows such as ``preproc`` and ``l1analysis1`` are represented by a single node.
+The simple graph of the visualization type ``orig`` shows only the top layer, i.e. hierarchical highest workflows and nodes, of your workflow. In this case this is the ``metaflow``. Subworkflows such as ``preproc`` and ``l1analysis1`` are represented by a single node.
 
 .. only:: html
 
