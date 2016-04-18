@@ -26,7 +26,7 @@ The technology and physics behind an MRI scanner is quite astonishing. But I won
        :width: 160pt
        :align: center
 
-The brain occupies space, so when we collect data on how it fills space, we call that volume data, and all the volume data needed to create the complete, 3D image of the brain, recorded at one single timepoint and as pictured on the left, is called a **volume**.  The data is measured in **voxels**, which are like the pixels used to display images on your screen, only in 3D. Each voxel has a specific dimension, in this case it is 1mm x 1mm x 1mm: a cube, so it is the same dimension from all sides (isotropic). Each voxel contains one value which stands for the average signal measured at the given location.
+The brain occupies space, so when we collect data on how it fills space, we call that volume data, and all the volume data needed to create the complete, 3D image of the brain, recorded at one single timepoint and as pictured on the left, is called a **volume**. The data is measured in **voxels**, which are like the pixels used to display images on your screen, only in 3D. Each voxel has a specific dimension, in this case it is 1mm x 1mm x 1mm: a cube, so it is the same dimension from all sides (isotropic). Each voxel contains one value which stands for the average signal measured at the given location.
 
 A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a **3D matrix** of 256 x 256 x 256 voxels. The following picture shows a slice -- one layer of the big, 3D matrix -- through a brain volume, and the superimposed grid shows the remaining two dimensions of the voxels.
 
@@ -46,7 +46,7 @@ The quality of the measured data depends on the resolution and the following par
 Specifics of MRI Data
 =====================
 
-MRI scanners output their neuroimaging data in a raw data format with which most analysis packages cannot work.  **DICOM** is a common, standardized, raw medical image format, but the format of your raw data may be something else; e.g., **PAR/REC** format from Philips scanners. Raw data is saved in `k-space <https://en.wikipedia.org/wiki/K-space_%28magnetic_resonance_imaging%29>`_ format, and it needs to be converted into a format that the analysis packages can use.  The most frequent format for newly generated data is called `NIfTI <http://nifti.nimh.nih.gov/>`_.  If you are working with older datasets, you may encounter data in **Analyze** format.  MRI data formats will have an **image** and a **header** part.  For NifTI format, they are in the same file (.nii-file), whereas in the older Analyze format, they are in separate files (.img and .hdr-file).
+MRI scanners output their neuroimaging data in a raw data format with which most analysis packages cannot work. **DICOM** is a common, standardized, raw medical image format, but the format of your raw data may be something else; e.g., **PAR/REC** format from Philips scanners. Raw data is saved in `k-space <https://en.wikipedia.org/wiki/K-space_%28magnetic_resonance_imaging%29>`_ format, and it needs to be converted into a format that the analysis packages can use. The most frequent format for newly generated data is called `NIfTI <http://nifti.nimh.nih.gov/>`_. If you are working with older datasets, you may encounter data in **Analyze** format. MRI data formats will have an **image** and a **header** part. For NifTI format, they are in the same file (.nii-file), whereas in the older Analyze format, they are in separate files (.img and .hdr-file).
 
 * The **image** is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.
 * The **header** contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the **image** part in a 3D coordinate system, etc.
@@ -115,7 +115,7 @@ Because the BOLD signal has to be measured quickly, the resolution of functional
 
 Depending on the paradigm, we talk about **event-related**, **block** or **resting-state** designs.
 
-* **event-related design**: Event-related means that stimuli are administered to the subjects in the scanner for a short period.  The stimuli are only administered briefly and generally in random order.  Stimuli are typically visual, but audible or or other sensible stimuli could also be used. This means that the BOLD response consists of short bursts of activity, which should manifest as peaks, and should look more or less like the line shown in the graph above.
+* **event-related design**: Event-related means that stimuli are administered to the subjects in the scanner for a short period. The stimuli are only administered briefly and generally in random order. Stimuli are typically visual, but audible or or other sensible stimuli could also be used. This means that the BOLD response consists of short bursts of activity, which should manifest as peaks, and should look more or less like the line shown in the graph above.
 
 * **block design**: If multiple stimuli of a similar nature are shown in a block, or phase, of 10-30 seconds, that is a block design. Such a design has the advantages that the peak in the BOLD signal is not just attained for a short period but elevated for a longer time, creating a plateau in the graph. This makes it easier to detect an underlying activation increase.
 
@@ -157,7 +157,7 @@ There are many different steps involved in a neuroimaging analysis and there is 
 Step 1: Preprocessing
 *********************
 
-Preprocessing is the term used to for all the steps taken to improve our data and prepare it for statistical analysis.  We may correct or adjust our data for a number of things inherent in the experimental situation:  to take account of time differences between acquiring each image slice, to correct for head movement during scanning, to detect 'artifacts' -- anomalous measurements -- that should be excluded from subsequent analysis; to align the functional images with the reference structural image, and to normalize the data into a standard space so that data can be compared among several subjects; to apply filtering to the image to increase the signal-to-noise ratio; finally, if sMRI is intended, a segmentation step may be performed.  We will now look at each of those steps in more detail.
+Preprocessing is the term used to for all the steps taken to improve our data and prepare it for statistical analysis. We may correct or adjust our data for a number of things inherent in the experimental situation:  to take account of time differences between acquiring each image slice, to correct for head movement during scanning, to detect 'artifacts' -- anomalous measurements -- that should be excluded from subsequent analysis; to align the functional images with the reference structural image, and to normalize the data into a standard space so that data can be compared among several subjects; to apply filtering to the image to increase the signal-to-noise ratio; finally, if sMRI is intended, a segmentation step may be performed. We will now look at each of those steps in more detail.
 
 
 .. only:: latex
@@ -176,7 +176,7 @@ Slice Timing Correction (fMRI only)
        :width: 499px
        :align: right
 
-Because functional MRI measurement sequences don't acquire every slice in a volume at the same time we have to account for the time differences among the slices. For example, if you acquire a volume with 37 slices in ascending order, and each slice is acquired every 50ms, there is a difference of 1.8s between the first and the last slice acquired.  You must know the order in which the slices were acquired to be able to apply the proper correction. Slices are typically acquired in one of three methods:  descending order (top-down); ascending order (bottom-up); or interleaved (acquire every other slice in each direction), where the interleaving may start at the top or the bottom.  (Left: *ascending*, Right: *interleaved*)
+Because functional MRI measurement sequences don't acquire every slice in a volume at the same time we have to account for the time differences among the slices. For example, if you acquire a volume with 37 slices in ascending order, and each slice is acquired every 50ms, there is a difference of 1.8s between the first and the last slice acquired. You must know the order in which the slices were acquired to be able to apply the proper correction. Slices are typically acquired in one of three methods:  descending order (top-down); ascending order (bottom-up); or interleaved (acquire every other slice in each direction), where the interleaving may start at the top or the bottom. (Left: *ascending*, Right: *interleaved*)
 
 .. only:: latex
 
@@ -201,7 +201,7 @@ Motion correction, also known as Realignment, is used to correct for head moveme
 
 Head movement can be characterized by six parameters:  Three translation parameters which code movement in the directions of the three dimensional axes, movement along the X, Y, or Z axes; and three rotation parameters which code rotation about those axes, rotation centered on each of the X, Y, and Z axes).
 
-Realignment usually uses an affine rigid body transformation to manipulate the data in those six parameters.  That is, each image can be moved but not distorted to best align with all the other images.  Below you see a plot of a "good" subject where the movement is minimal.
+Realignment usually uses an affine rigid body transformation to manipulate the data in those six parameters. That is, each image can be moved but not distorted to best align with all the other images. Below you see a plot of a "good" subject where the movement is minimal.
 
 .. only:: html
 
@@ -220,7 +220,7 @@ Realignment usually uses an affine rigid body transformation to manipulate the d
 Artifact Detection (fMRI only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Almost no subjects lie perfectly still.  As we can see from the sharp spikes in the graphs below, some move quite drastically. Severe, sudden movement can contaminate your analysis quite severely. 
+Almost no subjects lie perfectly still. As we can see from the sharp spikes in the graphs below, some move quite drastically. Severe, sudden movement can contaminate your analysis quite severely. 
 
 
 .. only:: html
@@ -238,7 +238,7 @@ Almost no subjects lie perfectly still.  As we can see from the sharp spikes in 
 
 Motion correction tries to correct for smaller movements, but sometimes it's best to just remove the images acquired during extreme rapid movement. We use **Artifact Detection** to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses. 
 
-For example, checking the translation and rotation graphs for a session shown above for sudden movement greater than 2 standard deviations from the mean, or for movement greater than 1mm, artifact detection would show that images 16-19, 21, 22 and 169-172 should be excluded from further analysis.  The graph produced by artifact detection, with vertical lines corresponding to images with drastic variation is shown below.
+For example, checking the translation and rotation graphs for a session shown above for sudden movement greater than 2 standard deviations from the mean, or for movement greater than 1mm, artifact detection would show that images 16-19, 21, 22 and 169-172 should be excluded from further analysis. The graph produced by artifact detection, with vertical lines corresponding to images with drastic variation is shown below.
 
 .. image:: images/artifact_detection.png
    :align: center
@@ -247,7 +247,7 @@ For example, checking the translation and rotation graphs for a session shown ab
 Coregistration
 ^^^^^^^^^^^^^^
 
-Motion correction aligns all the images within a volume so they are 'aligned'.  Coregistration aligns the functional image with the reference structural image.  If you think of the functional image as having been printed on tracing paper, coregistration moves that image around on the reference image until the alignment is at its best.  In other words, coregistration tries to superimpose the functional image perfectly on the anatomical image. This allows further transformations of the anatomical image, such as normalization, to be directly applied to the functional image.
+Motion correction aligns all the images within a volume so they are 'aligned'. Coregistration aligns the functional image with the reference structural image. If you think of the functional image as having been printed on tracing paper, coregistration moves that image around on the reference image until the alignment is at its best. In other words, coregistration tries to superimpose the functional image perfectly on the anatomical image. This allows further transformations of the anatomical image, such as normalization, to be directly applied to the functional image.
 
 The following picture shows an example of good (top) and bad (bottom) coregistration of functional images with the corresponding anatomical images. The red lines are the outline of the cortical folds of the anatomical image superimposed on the underlying greyscale functional image.
 
@@ -267,7 +267,7 @@ The following picture shows an example of good (top) and bad (bottom) coregistra
 Normalization
 ^^^^^^^^^^^^^
 
-Every person's brain is slightly different from every other's.  Brains differ in size and shape.  To compare the images of one person's brain to another's, the images mus first be translated onto a common shape and size, which is called **normalization**.  Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image. 
+Every person's brain is slightly different from every other's. Brains differ in size and shape. To compare the images of one person's brain to another's, the images mus first be translated onto a common shape and size, which is called **normalization**. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image. 
 
 .. only:: html
 
