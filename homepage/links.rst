@@ -14,7 +14,13 @@ Nipype
 Programming: Python, Git & more
 ===============================
 
-I highly recommend to use `Sublime Text 3 <http://www.sublimetext.com/3>`_ to write and edit your scripts. It's a really good and cool looking text editor with many helpful plugins, like the `Anaconda Plugion <http://damnwidget.github.io/anaconda/>`_ for example.
+I highly recommend to use `Sublime Text 3 <http://www.sublimetext.com/3>`_ to write and edit your scripts. It's a really good and cool looking text editor with many helpful things, like the `Anaconda Plugion <http://damnwidget.github.io/anaconda/>`_ for example.
+
+
+Learn Programming
+-----------------
+
+A very good articles that outlines what programming languages are in general and where they are comming from can be found on `IT Hare's Beginners Guide to Programming Languages <http://ithare.com/a-beginners-guide-to-programming-languages/>`_. A big thank you to to Sarah and the class of Mrs. Lowe from Colorado for recommending this site to me!
 
 
 Learn Python
