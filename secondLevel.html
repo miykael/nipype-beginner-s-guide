@@ -108,9 +108,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
@@ -151,7 +148,7 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">import</span> <span class="n">SelectFiles</span><span class="p">,</span> <span class="n">DataSink</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">import</span> <span class="p">(</span><span class="n">OneSampleTTestDesign</span><span class="p">,</span> <span class="n">EstimateModel</span><span class="p">,</span>
                                    <span class="n">EstimateContrast</span><span class="p">,</span> <span class="n">Threshold</span><span class="p">)</span>
@@ -176,7 +173,7 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>            <span class="c1"># location of experiment folder</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>            <span class="c1"># location of experiment folder</span>
 <span class="n">output_dir</span> <span class="o">=</span> <span class="s1">&#39;output_fMRI_example_2nd_ants&#39;</span>     <span class="c1"># name of 2nd-level output folder</span>
 <span class="n">input_dir_norm</span> <span class="o">=</span> <span class="s1">&#39;output_fMRI_example_norm_ants&#39;</span><span class="c1"># name of norm output folder</span>
 <span class="n">working_dir</span> <span class="o">=</span> <span class="s1">&#39;workingdir_fMRI_example_2nd_ants&#39;</span><span class="c1"># name of working directory</span>
@@ -208,7 +205,7 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># One Sample T-Test Design - creates one sample T-Test Design</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># One Sample T-Test Design - creates one sample T-Test Design</span>
 <span class="n">onesamplettestdes</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">OneSampleTTestDesign</span><span class="p">(),</span>
                          <span class="n">name</span><span class="o">=</span><span class="s2">&quot;onesampttestdes&quot;</span><span class="p">)</span>
 
@@ -239,7 +236,7 @@
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Specify 2nd-Level Analysis Workflow &amp; Connect Nodes</span>
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Specify 2nd-Level Analysis Workflow &amp; Connect Nodes</span>
 <span class="n">l2analysis</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;l2analysis&#39;</span><span class="p">)</span>
 <span class="n">l2analysis</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">)</span>
 
@@ -269,7 +266,7 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># contrast template for ANTs normalization (complete)</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># contrast template for ANTs normalization (complete)</span>
 <span class="n">con_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_norm</span><span class="p">,</span> <span class="s1">&#39;warp_complete&#39;</span><span class="p">,</span> <span class="s1">&#39;sub*&#39;</span><span class="p">,</span> <span class="s1">&#39;warpall*&#39;</span><span class="p">,</span>
                <span class="s1">&#39;{contrast_id}_trans.nii&#39;</span><span class="p">)</span>
 
@@ -320,7 +317,7 @@
 31
 32
 33
-34</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Infosource - a function free node to iterate over the list of subject names</span>
+34</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Infosource - a function free node to iterate over the list of subject names</span>
 <span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;contrast_id&#39;</span><span class="p">]),</span>
                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;infosource&quot;</span><span class="p">)</span>
 <span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;contrast_id&#39;</span><span class="p">,</span> <span class="n">contrast_list</span><span class="p">)]</span>
@@ -364,7 +361,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">Item</span> <span class="s">&#39;Scans&#39;</span><span class="p">,</span> <span class="n">field</span> <span class="s">&#39;val&#39;</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">matching</span> <span class="n">files</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">less</span> <span class="n">than</span> <span class="n">required</span> <span class="p">(</span><span class="mi">1</span><span class="p">).</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Item</span> <span class="s">&#39;Scans&#39;</span><span class="p">,</span> <span class="n">field</span> <span class="s">&#39;val&#39;</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">matching</span> <span class="n">files</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">less</span> <span class="n">than</span> <span class="n">required</span> <span class="p">(</span><span class="mi">1</span><span class="p">).</span>
 
 <span class="n">Standard</span> <span class="n">error</span><span class="p">:</span>
 <span class="n">MATLAB</span> <span class="n">code</span> <span class="n">threw</span> <span class="n">an</span> <span class="n">exception</span><span class="p">:</span>
@@ -393,7 +390,7 @@
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Gunzip - unzip the contrast image</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Gunzip - unzip the contrast image</span>
 <span class="kn">from</span> <span class="nn">nipype.algorithms.misc</span> <span class="kn">import</span> <span class="n">Gunzip</span>
 <span class="kn">from</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">import</span> <span class="n">MapNode</span>
 <span class="n">gunzip_con</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Gunzip</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gunzip_con&quot;</span><span class="p">,</span>
@@ -418,7 +415,7 @@
 <div class="section" id="run-the-pipeline-and-generate-the-graph">
 <h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">l2analysis</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">l2analysis</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">l2analysis</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
@@ -436,7 +433,7 @@
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>The resulting folder structure looks as follows:</p>
-<div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_2nd
+<div class="highlight-sh"><div class="highlight"><pre><span></span>output_fMRI_example_2nd
 <span class="p">|</span>-- contrasts
     <span class="p">|</span>-- con_0001
     <span class="p">|</span>   <span class="p">|</span>-- con_0001.nii
@@ -499,8 +496,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on April 18, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Last updated on May 25, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

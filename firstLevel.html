@@ -112,9 +112,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
@@ -168,7 +165,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.afni</span> <span class="kn">import</span> <span class="n">Despike</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BBRegister</span><span class="p">,</span> <span class="n">ApplyVolTransform</span><span class="p">,</span>
                                           <span class="n">Binarize</span><span class="p">,</span> <span class="n">MRIConvert</span><span class="p">,</span> <span class="n">FSCommand</span><span class="p">)</span>
@@ -193,7 +190,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># MATLAB - Specify path to current SPM and the MATLAB&#39;s default mode</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># MATLAB - Specify path to current SPM and the MATLAB&#39;s default mode</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.matlab</span> <span class="kn">import</span> <span class="n">MatlabCommand</span>
 <span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s1">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12&#39;</span><span class="p">)</span>
 <span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_matlab_cmd</span><span class="p">(</span><span class="s2">&quot;matlab -nodesktop -nosplash&quot;</span><span class="p">)</span>
@@ -217,7 +214,7 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>          <span class="c1"># location of experiment folder</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>          <span class="c1"># location of experiment folder</span>
 <span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sub001&#39;</span><span class="p">,</span> <span class="s1">&#39;sub002&#39;</span><span class="p">,</span> <span class="s1">&#39;sub003&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;sub004&#39;</span><span class="p">,</span> <span class="s1">&#39;sub005&#39;</span><span class="p">,</span> <span class="s1">&#39;sub006&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;sub007&#39;</span><span class="p">,</span> <span class="s1">&#39;sub008&#39;</span><span class="p">,</span> <span class="s1">&#39;sub009&#39;</span><span class="p">,</span>
@@ -287,7 +284,7 @@
 51
 52
 53
-54</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
+54</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
 <span class="n">despike</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Despike</span><span class="p">(</span><span class="n">outputtype</span><span class="o">=</span><span class="s1">&#39;NIFTI&#39;</span><span class="p">),</span>
                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;despike&quot;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 
@@ -361,7 +358,7 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Create a preprocessing workflow</span>
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Create a preprocessing workflow</span>
 <span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;preproc&#39;</span><span class="p">)</span>
 
 <span class="c1"># Connect all components of the preprocessing workflow</span>
@@ -416,7 +413,7 @@
 28
 29
 30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># SpecifyModel - Generates SPM-specific Model</span>
+31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># SpecifyModel - Generates SPM-specific Model</span>
 <span class="n">modelspec</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SpecifySPMModel</span><span class="p">(</span><span class="n">concatenate_runs</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                                  <span class="n">input_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
                                  <span class="n">output_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
@@ -468,7 +465,7 @@
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Initiation of the 1st-level analysis workflow</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Initiation of the 1st-level analysis workflow</span>
 <span class="n">l1analysis</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;l1analysis&#39;</span><span class="p">)</span>
 
 <span class="c1"># Connect up the 1st-level analysis components</span>
@@ -507,7 +504,7 @@
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;metaflow&#39;</span><span class="p">)</span>
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">metaflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;metaflow&#39;</span><span class="p">)</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">)</span>
 
 <span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
@@ -539,7 +536,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Condition names</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Condition names</span>
 <span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent&#39;</span><span class="p">,</span> <span class="s1">&#39;incongruent&#39;</span><span class="p">]</span>
 
 <span class="c1"># Contrasts</span>
@@ -606,7 +603,7 @@
 48
 49
 50
-51</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Function to get Subject specific condition information</span>
+51</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Function to get Subject specific condition information</span>
 <span class="k">def</span> <span class="nf">get_subject_info</span><span class="p">(</span><span class="n">subject_id</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/data/</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">subject_id</span>
@@ -660,7 +657,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>So what does it do? <strong>Line 3 to 34</strong> are specific to the tutorial dataset and will most certainly not apply for any other study, which are not from the <a class="reference external" href="https://openfmri.org/">openfmri.org</a>. This part of the function goes through the subject folder under <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/</span></code> and reads out the values in the files <code class="docutils literal"><span class="pre">onset_run00?_cond00?.txt</span></code>. The result of line 3 to 34 is an array called <code class="docutils literal"><span class="pre">onset_list</span></code> with four arrays, containing the onset for the condition <code class="docutils literal"><span class="pre">congruent_run1</span></code>, <code class="docutils literal"><span class="pre">incongruent_run1</span></code>, <code class="docutils literal"><span class="pre">congruent_run2</span></code> and <code class="docutils literal"><span class="pre">incongruent_run2</span></code>. In the case of <code class="docutils literal"><span class="pre">sub001</span></code> this looks like this:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">onset_list</span><span class="o">=</span><span class="p">[[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">140.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">],</span>
+<div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">onset_list</span><span class="o">=</span><span class="p">[[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">140.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">,</span> <span class="mf">76.0</span><span class="p">,</span> <span class="mf">102.0</span><span class="p">,</span> <span class="mf">150.0</span><span class="p">,</span> <span class="mf">164.0</span><span class="p">,</span> <span class="mf">174.0</span><span class="p">,</span> <span class="mf">208.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">232.0</span><span class="p">,</span> <span class="mf">260.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">,</span> <span class="mf">102.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">164.0</span><span class="p">,</span> <span class="mf">174.0</span><span class="p">,</span> <span class="mf">208.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">232.0</span><span class="p">,</span> <span class="mf">260.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">54.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">76.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">144.0</span><span class="p">,</span> <span class="mf">154.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">]]</span>
@@ -672,7 +669,7 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Get Subject Info - get subject specific condition information</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Get Subject Info - get subject specific condition information</span>
 <span class="n">getsubjectinfo</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Function</span><span class="p">(</span><span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">],</span>
                                <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_info&#39;</span><span class="p">],</span>
                                <span class="n">function</span><span class="o">=</span><span class="n">get_subject_info</span><span class="p">),</span>
@@ -752,7 +749,7 @@
 61
 62
 63
-64</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Infosource - a function free node to iterate over the list of subject names</span>
+64</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Infosource - a function free node to iterate over the list of subject names</span>
 <span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
                                             <span class="s1">&#39;contrasts&#39;</span><span class="p">],</span>
                                     <span class="n">contrasts</span><span class="o">=</span><span class="n">contrast_list</span><span class="p">),</span>
@@ -823,7 +820,7 @@
 <h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <p>Finally, after everything is set up correctly we can run the pipeline and let it draw the graph of the workflow.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
@@ -841,7 +838,7 @@
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> our folder structure should look like this:</p>
 <p>After we’ve executed the first level workflow we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_fMRI_example_1st</span></code> which contains all files created during the execution of the metaflow, and the output folder <code class="docutils literal"><span class="pre">output_fMRI_example_1st</span></code> which contains all the files that we sent to the DataSink. Let’s take a closer look at the DataSink folder:</p>
-<div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_1st
+<div class="highlight-sh"><div class="highlight"><pre><span></span>output_fMRI_example_1st
 <span class="p">|</span>-- bbregister
 <span class="p">|</span>   <span class="p">|</span>-- sub001
 <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meanarun001_bbreg_sub001.dat
@@ -949,8 +946,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on April 18, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Last updated on May 25, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
