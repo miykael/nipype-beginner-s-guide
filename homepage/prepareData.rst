@@ -211,7 +211,7 @@ This output tells us that this functional scan consists of 146 volumes, of which
 
     Just as a side note: The `data_type` of a NIfTI file tells you the amount of bits used to store the value of each voxel. **INT16** stands for *signed short* (16 bits/voxel), **INT32** stands for *signed int* (32 bits/voxel) and **FLOAT64** stands for *float* (64 bits/voxel). The more bits used for storing a voxel value the bigger the whole NIfTI file.
 
-    If you want to change the data type of your image, either use Nipype's function ``ChangeDataType`` found in the ``nipype.interfaces.fsl.maths`` package (read more `here <http://nipy.org/nipype/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype>`_) or use ``fslmaths`` directly to change the data_type to INT32 with the following command:
+    If you want to change the data type of your image, either use Nipype's function ``ChangeDataType`` found in the ``nipype.interfaces.fsl.maths`` package (read more `here <http://nipype.readthedocs.io/en/latest/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype>`_) or use ``fslmaths`` directly to change the data_type to INT32 with the following command:
 
     .. code-block:: sh
 

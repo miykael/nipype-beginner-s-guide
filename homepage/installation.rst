@@ -2,7 +2,7 @@
 Download and Install Nipype
 ===========================
 
-All you need to know to download and install Nipype can be found on the official homepage under `Download and Install <http://nipy.org/nipype/users/install.html>`_. There you find a link to the newest version and more information about which dependencies are necessary or recommended.
+All you need to know to download and install Nipype can be found on the official homepage under `Download and Install <http://nipype.readthedocs.io/en/latest/users/install.html>`_. There you find a link to the newest version and more information about which dependencies are necessary or recommended.
 
 Installing Nipype as described on the official homepage should be rather easy for most users. There are some tricky steps that sometimes seem to be less straight forward. But don't worry, I've written my own installation guide to help and assist users with less UNIX experience. The following instructions hopefully help everybody to install and run Nipype on their system. Note that some steps strongly depend on the system you are using and it might be possible that some dependencies are already installed on your system. Also, 
 
@@ -33,7 +33,7 @@ Anaconda
    :width: 90pt
    :align: left
 
-As you can see under `Dependencies <http://nipy.org/nipype/users/install.html#dependencies>`_, there are a lot of software packages that have to be installed on your system to run Nipype. For example: `python`, `ipython`, `matplotlib`, `networkx`, `numpy`, `scipy`, `sphinx` etc. Luckily, most of the those required dependencies, most importantly a working Python environment, can be set up by installing `Anaconda <https://www.continuum.io/downloads>`_.
+As you can see under `Dependencies <http://nipype.readthedocs.io/en/latest/users/install.html#recommended-software>`_, there are a lot of software packages that have to be installed on your system to run Nipype. For example: `python`, `ipython`, `matplotlib`, `networkx`, `numpy`, `scipy`, `sphinx` etc. Luckily, most of the those required dependencies, most importantly a working Python environment, can be set up by installing `Anaconda <https://www.continuum.io/downloads>`_.
 
 
 Install Anaconda
@@ -507,7 +507,7 @@ AFNI
    :width: 70pt
    :align: left
 
-`AFNI <https://afni.nimh.nih.gov/afni/>`_ is an open source software package specialized on the analysis of functional MRI. To see a list of all AFNI algorithms that can be used with Nipype go to `interfaces.afni.preprocess <http://nipy.org/nipype/interfaces/generated/nipype.interfaces.afni.preprocess.html>`_.
+`AFNI <https://afni.nimh.nih.gov/afni/>`_ is an open source software package specialized on the analysis of functional MRI. To see a list of all AFNI algorithms that can be used with Nipype go to `interfaces.afni.preprocess <http://nipype.readthedocs.io/en/latest/interfaces/generated/nipype.interfaces.afni.preprocess.html>`_.
 
 If you've installed the NeuroDebian repository, just use the following command to install AFNI on your system: ``sudo apt-get install afni``
 
