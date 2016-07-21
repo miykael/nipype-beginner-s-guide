@@ -129,27 +129,33 @@ Now you are read to install Nipype, FSL, AFNI and more.
 Nipype
 ======
 
-Install Nipype (and other python dependencies)
-----------------------------------------------
+Install Nipype
+--------------
 
 .. image:: _static/logo/logoNipype.png
    :width: 100pt
-   :align: left
+   :align: right
 
-Finally, it's time to install Nipype. And while doing so, let's also install additional python dependencies, such as: nibabel, rdflib, nipy, dipy and graphviz. Some of those packages might already be installed on your system when you've installed Anaconda.
+Finally, it's time to install Nipype. There are multiple ways how you can install Nipype, but assuming that you installed anaconda beforehand, the easiest way to install Nipype is by using conda. To do this you need to add the channel ``conda-forge`` to your channels:
 
-So what do you have to do to install Nipype? It's simple, just use either ``pip install nipype`` or ``easy_install nipype``. More information about the installation of Nipype on a Mac or from sourcecode, go to the `main page <http://nipy.org/nipype/users/install.html>`_.
+    ``conda config --add channels conda-forge``
 
-If you also want to install other python based dependencies use the following commands:
+Once the conda-forge channel has been enabled, nipype can be installed with:
+
+    ``conda install nipype``
+
+As an alternative, you could also install Nipype with either ``pip install -e git+https://github.com/nipy/nipype#egg=nipype`` or ``easy_install nipype``. For more information about the installation from sourcecode, go to the `main page <http://nipype.readthedocs.io/en/latest/users/install.html>`_.
+
+
+Install Pyhon Dependencies
+--------------------------
+
+There are a few additional python dependencies that you cannot install via anaconda, such as: nibabel, rdflib, nipy, dipy and graphviz. To install those, use the following command:
 
 .. code-block:: sh
 
     #Install packages with pip
-    pip install nipype
-    pip install nibabel
-    pip install rdflib
-    pip install nipy
-    pip install dipy
+    pip install nibabel rdflib nipy dipy
 
     #Install graphviz and pygraphviz separately
     sudo apt-get install graphviz libgraphviz-dev
@@ -169,7 +175,7 @@ If you want to be sure that you have the newest version or update a certain pack
 
 .. code-block:: sh
 
-    pip install --upgrade nipype 
+    pip install --upgrade nipype
 
 If you want to upgrade all other required python dependencies as well use the following command:
 
@@ -186,7 +192,7 @@ If you want or have to upgrade Nipype to the developer version us the following 
 The most current developer version of Nipype can be found on `GitHub <https://github.com/>`_ under `Nipype @ GitHub <https://github.com/nipy/nipype>`_. The following steps assume assume that you've already set up your own GitHub account and are ready to download the Nipype repository:
 
 1. First, open a terminal and download the Nipype repository at the current location with ``git clone https://github.com/nipy/nipype.git``, or download the repository directly by using `this link <https://codeload.github.com/nipy/nipype/zip/master>`_.
-2. The just downloaded nipype folder contains another folder called `nipype``. This is the folder that contains the newest version of Nipype.
+2. The just downloaded nipype folder contains another folder called ``nipype``. This is the folder that contains the newest version of Nipype.
 3. Now, either add the path to this folder to the ``PYTHONPATH`` list (make sure that ``PYTHONPATH`` only contains one Nipype folder) or delete the current nipype folder and move the new github ``nipype`` folder to this location. This can be done with the following command:
 
     .. code-block:: sh
