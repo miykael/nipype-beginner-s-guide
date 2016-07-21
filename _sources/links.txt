@@ -6,7 +6,7 @@ Links to Nipype, Programming and Neuroimaging
 Nipype
 ======
 
-- `Nipype <http://nipy.org/nipype/>`_: The official homepage contains all about Nipype that you want to know.
+- `Nipype <http://nipype.readthedocs.io/en/latest/>`_: The official homepage contains all about Nipype that you want to know.
 - `Michael Waskom <https://github.com/mwaskom/nipype_concepts>`_ has written very nice introductions about `Workflows <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb>`_, `Interfaces <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb>`_ and `Iteration <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb>`_.
 - A short and very nice introduction to Nipype, written by by Satra Ghosh, can be found `here <http://nbviewer.jupyter.org/github/nipy/nipype/blob/master/examples/nipype_tutorial.ipynb>`_.
 

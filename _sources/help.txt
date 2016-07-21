@@ -9,7 +9,7 @@ Often times the first trouble with Nipype arise because of misunderstanding a no
 
 Let's assume that you've imported FreeSurfer's BBRegister with the command ``from nipype.interfaces.freesurfer import BBRegister``. Now, if you want to know what this module generally does, use the `?` character, i.e. ``BBRegister?``. This gives you a short description as well as an implementation example of this module. If you want to know a more detailed description of BBRegister, with all mandatory and possible inputs and outputs, use the ``help()`` function, i.e. ``BBRegister.help()``.
 
-Also, I highly recommend to check out Nipype's official `Documentation <http://nipy.org/nipype/documentation.html>`_ section, where you can browse through all possible interfaces, function and description of them.
+Also, I highly recommend to check out Nipype's official `Documentation <http://nipype.readthedocs.io/en/latest/documentation.html>`_ section, where you can browse through all possible interfaces, function and description of them.
 
 
 How to Help Yourself
@@ -107,4 +107,4 @@ Under certain circumstances it is possible and desired to rerun the crashed node
 
 .. note::
 
-   For more information about how to debug your code and handle crashes go to `this official Nipype section <http://nipy.org/nipype/users/debug.html>`_.
+   For more information about how to debug your code and handle crashes go to `this official Nipype section <http://nipype.readthedocs.io/en/latest/users/debug.html>`_.

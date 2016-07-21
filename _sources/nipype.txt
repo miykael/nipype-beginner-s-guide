@@ -5,7 +5,7 @@ Introduction to Nipype
 What is Nipype?
 ===============
 
-`Nipype <http://nipy.org/nipype/>`_ (Neuroimaging in Python - Pipelines and Interfaces) is an open-source, user-friendly, community-developed software package under the umbrella of `NiPy <http://nipy.org/>`_. Nipype allows you to pipeline your neuroimaging workflow in an intuitive way and enables you to use the software packages and algorithms you want to use, regardless their programing language. This is possible because Nipype provides an uniform interface to many existing neuroimaging processing and analysis packages like `SPM <http://www.fil.ion.ucl.ac.uk/spm>`_, `FreeSurfer <http://surfer.nmr.mgh.harvard.edu/>`_, `FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/>`_, `AFNI <https://afni.nimh.nih.gov/afni/>`_, `ANTS <http://stnava.github.io/ANTs/>`_, `Camino <http://camino.cs.ucl.ac.uk/>`_, `MRtrix <http://www.brain.org.au/software/mrtrix/index.html>`_, `Slicer <http://slicer.org/>`_, `MNE <https://martinos.org/mne/stable/index.html>`_ and many more.
+`Nipype <http://nipype.readthedocs.io/en/latest/>`_ (Neuroimaging in Python - Pipelines and Interfaces) is an open-source, user-friendly, community-developed software package under the umbrella of `NiPy <http://nipy.org/>`_. Nipype allows you to pipeline your neuroimaging workflow in an intuitive way and enables you to use the software packages and algorithms you want to use, regardless their programing language. This is possible because Nipype provides an uniform interface to many existing neuroimaging processing and analysis packages like `SPM <http://www.fil.ion.ucl.ac.uk/spm>`_, `FreeSurfer <http://surfer.nmr.mgh.harvard.edu/>`_, `FSL <http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/>`_, `AFNI <https://afni.nimh.nih.gov/afni/>`_, `ANTS <http://stnava.github.io/ANTs/>`_, `Camino <http://camino.cs.ucl.ac.uk/>`_, `MRtrix <http://www.brain.org.au/software/mrtrix/index.html>`_, `Slicer <http://slicer.org/>`_, `MNE <https://martinos.org/mne/stable/index.html>`_ and many more.
 
 Nipype allows you to easily combine all those heterogeneous software packages whithin a single workflow. This procedure gives you the opportunity to pick the best algorithm there is for the problem at hand and therefore allows you to profit from the advantages of any software package you like.
 
@@ -182,15 +182,15 @@ Nipype consists of many parts, but the most important ones are **Interfaces**, t
    :align: center
 
 .. note::
-    For a deeper understanding of Nipype go either to `Nipype's main homepage <http://nipy.org/nipype/>`_ or read the official paper: Gorgolewski K, Burns CD, Madison C, Clark D, Halchenko YO, Waskom ML, Ghosh SS (2011) **Nipype: a flexible, lightweight and extensible neuroimaging data processing framework in Python.** *Front. Neuroinform. 5:13*. `http://dx.doi.org/10.3389/fninf.2011.00013 <http://journal.frontiersin.org/article/10.3389/fninf.2011.00013/abstract>`_
+    For a deeper understanding of Nipype go either to `Nipype's main homepage <http://nipype.readthedocs.io/en/latest/>`_ or read the official paper: Gorgolewski K, Burns CD, Madison C, Clark D, Halchenko YO, Waskom ML, Ghosh SS (2011) **Nipype: a flexible, lightweight and extensible neuroimaging data processing framework in Python.** *Front. Neuroinform. 5:13*. `http://dx.doi.org/10.3389/fninf.2011.00013 <http://journal.frontiersin.org/article/10.3389/fninf.2011.00013/abstract>`_
 
 
 Interfaces
 **********
 
-Interfaces in the context of Nipype are program wrappers that enable Nipype, which runs in Python, to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the `official homepage <http://nipy.org/nipype/users/interface_tutorial.html>`_. More practical examples will be given later in this beginner's guide.
+Interfaces in the context of Nipype are program wrappers that enable Nipype, which runs in Python, to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the `official homepage <http://nipype.readthedocs.io/en/latest/users/interface_tutorial.html>`_. More practical examples will be given later in this beginner's guide.
 
-For a full list of software interfaces supported by Nipype go `here <http://nipy.org/nipype/documentation.html>`_.
+For a full list of software interfaces supported by Nipype go `here <http://nipype.readthedocs.io/en/latest/documentation.html>`_.
 
 
 Workflow Engine
@@ -206,7 +206,7 @@ Each Node, MapNode or Workflow has (at least) one input field and (at least) one
 
 A very cool feature of a Nipype workflow are so called **iterables**. Iterables allow you to run a given workflow or subgraph several times with changing input values. For example, if you want to run an analysis pipeline on multiple subjects or with an FWHM smoothing kernel of 4mm, 6mm, and 8mm. This can easily be achieved with iterables and additionally allows you to do this all in parallel (simultaneous execution), if requested.
 
-Go to the documentation section of `Nipype's main homepage <http://nipy.org/nipype/>`_ to read more about `MapNode, iterfield, and iterables <http://nipy.org/nipype/users/mapnode_and_iterables.html>`_, `JoinNode, synchronize and itersource <http://nipy.org/nipype/users/joinnode_and_itersource.html>`_ and `much more <http://nipy.org/nipype/users/pipeline_tutorial.html>`_. Nonetheless, a more detailed explanation will be given in a `later section <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#specify-workflows-connect-nodes>`_ of this beginner's guide.
+Go to the documentation section of `Nipype's main homepage <http://nipype.readthedocs.io/en/latest/>`_ to read more about `MapNode, iterfield, and iterables <http://nipype.readthedocs.io/en/latest/users/mapnode_and_iterables.html>`_, `JoinNode, synchronize and itersource <http://nipype.readthedocs.io/en/latest/users/joinnode_and_itersource.html>`_ and `much more <http://nipype.readthedocs.io/en/latest/users/pipeline_tutorial.html>`_. Nonetheless, a more detailed explanation will be given in a `later section <http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#specify-workflows-connect-nodes>`_ of this beginner's guide.
 
 .. note::
     For more practical and extended examples of Nipype concepts see `Michael Waskom <https://github.com/mwaskom>`_'s really cool Jupyter notebooks about `Interfaces <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb>`_, `Iteration <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb>`_ and `Workflows <http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb>`_.
@@ -254,5 +254,5 @@ To show how easily this can be done, the following code shows how to run a workf
     workflow.run('CondorDAGMan')
 
 
-More about Plugins can be found on Nipype's main homepage under `Using Nipype Plugins <http://nipy.org/nipype/users/plugins.html>`_.
+More about Plugins can be found on Nipype's main homepage under `Using Nipype Plugins <http://nipype.readthedocs.io/en/latest/users/plugins.html>`_.
 

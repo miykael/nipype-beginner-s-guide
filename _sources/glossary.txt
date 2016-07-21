@@ -333,7 +333,7 @@ Related to flattening_. A downer about superimposing activation results on the b
 
 Interfaces
 **********
-Interfaces in the context of Nipype are program wrappers that allow Nipype which runs in Python_ to run a program or function in any other programming language. As a result, Python_ becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. For a full list of software interfaces supported by Nipype go `here <http://nipy.org/nipype/documentation.html>`_. For more see the `introduction section of this beginner's guide <http://miykael.github.io/nipype-beginner-s-guide/nipype.html#interfaces>`_.
+Interfaces in the context of Nipype are program wrappers that allow Nipype which runs in Python_ to run a program or function in any other programming language. As a result, Python_ becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. For a full list of software interfaces supported by Nipype go `here <http://nipype.readthedocs.io/en/latest/documentation.html>`_. For more see the `introduction section of this beginner's guide <http://miykael.github.io/nipype-beginner-s-guide/nipype.html#interfaces>`_.
 
 Inter-stimulus Interval (ISI)
 *****************************

@@ -127,7 +127,7 @@
 <h1>Introduction to Nipype<a class="headerlink" href="#introduction-to-nipype" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-nipype">
 <h2>What is Nipype?<a class="headerlink" href="#what-is-nipype" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://nipy.org/nipype/">Nipype</a> (Neuroimaging in Python - Pipelines and Interfaces) is an open-source, user-friendly, community-developed software package under the umbrella of <a class="reference external" href="http://nipy.org/">NiPy</a>. Nipype allows you to pipeline your neuroimaging workflow in an intuitive way and enables you to use the software packages and algorithms you want to use, regardless their programing language. This is possible because Nipype provides an uniform interface to many existing neuroimaging processing and analysis packages like <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm">SPM</a>, <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a>, <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/">FSL</a>, <a class="reference external" href="https://afni.nimh.nih.gov/afni/">AFNI</a>, <a class="reference external" href="http://stnava.github.io/ANTs/">ANTS</a>, <a class="reference external" href="http://camino.cs.ucl.ac.uk/">Camino</a>, <a class="reference external" href="http://www.brain.org.au/software/mrtrix/index.html">MRtrix</a>, <a class="reference external" href="http://slicer.org/">Slicer</a>, <a class="reference external" href="https://martinos.org/mne/stable/index.html">MNE</a> and many more.</p>
+<p><a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype</a> (Neuroimaging in Python - Pipelines and Interfaces) is an open-source, user-friendly, community-developed software package under the umbrella of <a class="reference external" href="http://nipy.org/">NiPy</a>. Nipype allows you to pipeline your neuroimaging workflow in an intuitive way and enables you to use the software packages and algorithms you want to use, regardless their programing language. This is possible because Nipype provides an uniform interface to many existing neuroimaging processing and analysis packages like <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm">SPM</a>, <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a>, <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/">FSL</a>, <a class="reference external" href="https://afni.nimh.nih.gov/afni/">AFNI</a>, <a class="reference external" href="http://stnava.github.io/ANTs/">ANTS</a>, <a class="reference external" href="http://camino.cs.ucl.ac.uk/">Camino</a>, <a class="reference external" href="http://www.brain.org.au/software/mrtrix/index.html">MRtrix</a>, <a class="reference external" href="http://slicer.org/">Slicer</a>, <a class="reference external" href="https://martinos.org/mne/stable/index.html">MNE</a> and many more.</p>
 <p>Nipype allows you to easily combine all those heterogeneous software packages whithin a single workflow. This procedure gives you the opportunity to pick the best algorithm there is for the problem at hand and therefore allows you to profit from the advantages of any software package you like.</p>
 <p>Nipype is written in <a class="reference external" href="https://www.python.org/">Python</a>, an easy to learn and very intuitive programming language. This means that your whole neuroimaging analysis can be easily specified using python scripts. It won&#8217;t even take as many lines of code as you might fear. Nipype is very straightforward and easy to learn. As you will see, it is quite simple to combine processing steps using different software packages. Steps from previous analyses can be reused effortlessly and new approaches can be applied much faster.</p>
 <p>You&#8217;re still concerned because you want to combine your own <strong>bash</strong>, <strong>MATLAB</strong>, <strong>R</strong> or <strong>Python</strong> scripts with Nipype? No problem! Even the creation of your own interface to your own software solution is straightforward and can be done in a rather short time. Thanks to <a class="reference external" href="https://github.com/nipy/nipype">Github</a>, there&#8217;s also always a community standing behind you.</p>
@@ -270,7 +270,7 @@
 74
 75
 76
-77</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#Import modules</span>
+77</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#Import modules</span>
 <span class="kn">import</span> <span class="nn">nipype</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.afni</span>        <span class="kn">as</span> <span class="nn">afni</span>
 <span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span>  <span class="kn">as</span> <span class="nn">fs</span>
@@ -280,60 +280,60 @@
 <span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span>         <span class="kn">as</span> <span class="nn">spm</span>
 
 
-<span class="c1">#Specify experiment specifc parameters</span>
-<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/experiment_folder&#39;</span>
-<span class="n">nameofsubjects</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;subject1&#39;</span><span class="p">,</span><span class="s1">&#39;subject2&#39;</span><span class="p">,</span><span class="s1">&#39;subject3&#39;</span><span class="p">]</span>
+<span class="c">#Specify experiment specifc parameters</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~/experiment_folder&#39;</span>
+<span class="n">nameofsubjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subject1&#39;</span><span class="p">,</span><span class="s">&#39;subject2&#39;</span><span class="p">,</span><span class="s">&#39;subject3&#39;</span><span class="p">]</span>
 
-<span class="c1">#Where can the raw data be found?</span>
+<span class="c">#Where can the raw data be found?</span>
 <span class="n">grabber</span> <span class="o">=</span> <span class="n">nipype</span><span class="o">.</span><span class="n">DataGrabber</span><span class="p">()</span>
-<span class="n">grabber</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s1">&#39;/data&#39;</span>
+<span class="n">grabber</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/data&#39;</span>
 <span class="n">grabber</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">subject_id</span> <span class="o">=</span> <span class="n">nameofsubjects</span>
 
-<span class="c1">#Where should the output data be stored at?</span>
+<span class="c">#Where should the output data be stored at?</span>
 <span class="n">sink</span> <span class="o">=</span> <span class="n">nipype</span><span class="o">.</span><span class="n">DataSink</span><span class="p">()</span>
-<span class="n">sink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s1">&#39;/output_folder&#39;</span>
+<span class="n">sink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">base_directory</span> <span class="o">=</span> <span class="n">experiment_dir</span> <span class="o">+</span> <span class="s">&#39;/output_folder&#39;</span>
 
 
-<span class="c1">#Create a node for each step of the analysis</span>
+<span class="c">#Create a node for each step of the analysis</span>
 
-<span class="c1">#Motion Correction (AFNI)</span>
+<span class="c">#Motion Correction (AFNI)</span>
 <span class="n">realign</span> <span class="o">=</span> <span class="n">afni</span><span class="o">.</span><span class="n">Retroicor</span><span class="p">()</span>
 
-<span class="c1">#Coregistration (FreeSurfer)</span>
+<span class="c">#Coregistration (FreeSurfer)</span>
 <span class="n">coreg</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">BBRegister</span><span class="p">()</span>
 
-<span class="c1">#Normalization (ANTS)</span>
+<span class="c">#Normalization (ANTS)</span>
 <span class="n">normalize</span> <span class="o">=</span> <span class="n">ants</span><span class="o">.</span><span class="n">WarpTimeSeriesImageMultiTransform</span><span class="p">()</span>
 
-<span class="c1">#Smoothing (FSL)</span>
+<span class="c">#Smoothing (FSL)</span>
 <span class="n">smooth</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">SUSAN</span><span class="p">()</span>
 <span class="n">smooth</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="mf">6.0</span>
 
-<span class="c1">#Model Specification (Nipype)</span>
+<span class="c">#Model Specification (Nipype)</span>
 <span class="n">modelspec</span> <span class="o">=</span> <span class="n">nipype</span><span class="o">.</span><span class="n">SpecifyModel</span><span class="p">()</span>
-<span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_units</span> <span class="o">=</span> <span class="s1">&#39;secs&#39;</span>
+<span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_units</span> <span class="o">=</span> <span class="s">&#39;secs&#39;</span>
 <span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">time_repetition</span> <span class="o">=</span> <span class="mf">2.5</span>
 <span class="n">modelspec</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">high_pass_filter_cutoff</span> <span class="o">=</span> <span class="mf">128.</span>
 
-<span class="c1">#Model Estimation (SPM)</span>
+<span class="c">#Model Estimation (SPM)</span>
 <span class="n">modelest</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">EstimateModel</span><span class="p">()</span>
 
-<span class="c1">#Contrast Estimation (SPM)</span>
+<span class="c">#Contrast Estimation (SPM)</span>
 <span class="n">contrastest</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">EstimateContrast</span><span class="p">()</span>
-<span class="n">cont1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;human_faces&#39;</span><span class="p">,</span>  <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">cont2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;animal_faces&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">cont1</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;human_faces&#39;</span><span class="p">,</span>  <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">cont2</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;animal_faces&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">]]</span>
 <span class="n">contrastest</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="n">cont1</span><span class="p">,</span> <span class="n">cont2</span><span class="p">]</span>
 
-<span class="c1">#Statistical Inference (SPM)</span>
+<span class="c">#Statistical Inference (SPM)</span>
 <span class="n">threshold</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Threshold</span><span class="p">()</span>
 <span class="n">threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_fwe_correction</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_fdr_p_threshold</span> <span class="o">=</span> <span class="mf">0.05</span>
 
 
-<span class="c1">#Create a workflow to connect all those nodes</span>
+<span class="c">#Create a workflow to connect all those nodes</span>
 <span class="n">analysisflow</span> <span class="o">=</span> <span class="n">nipype</span><span class="o">.</span><span class="n">Workflow</span><span class="p">()</span>
 
-<span class="c1">#Connect the nodes to each other</span>
+<span class="c">#Connect the nodes to each other</span>
 <span class="n">analysisflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">grabber</span>     <span class="o">-&gt;</span>  <span class="n">realign</span>    <span class="p">),</span>
                       <span class="p">(</span><span class="n">realign</span>     <span class="o">-&gt;</span>  <span class="n">coreg</span>      <span class="p">),</span>
                       <span class="p">(</span><span class="n">coreg</span>       <span class="o">-&gt;</span>  <span class="n">normalize</span>  <span class="p">),</span>
@@ -345,8 +345,8 @@
                       <span class="p">(</span><span class="n">threshold</span>   <span class="o">-&gt;</span>  <span class="n">sink</span>       <span class="p">)</span>
                       <span class="p">])</span>
 
-<span class="c1">#Run the workflow in parallel</span>
-<span class="n">analysisflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;parallel&#39;</span><span class="p">)</span>
+<span class="c">#Run the workflow in parallel</span>
+<span class="n">analysisflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;parallel&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <p>By using <em>multicore processing</em>, <em>SGE</em>, <em>PBS</em>, <em>Torque</em>, <em>HTCondor</em>, <em>LSF</em> or other plugins for parallel execution you will be able to reduce your computation time considerably. This means, that an analysis of 24 subjects where each takes one hour to process would normally take about one day, but it could be done on a single machine with eight processors in under about three hours.</p>
@@ -361,12 +361,12 @@
 <img alt="_images/architecture.png" class="align-center" src="_images/architecture.png" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">For a deeper understanding of Nipype go either to <a class="reference external" href="http://nipy.org/nipype/">Nipype&#8217;s main homepage</a> or read the official paper: Gorgolewski K, Burns CD, Madison C, Clark D, Halchenko YO, Waskom ML, Ghosh SS (2011) <strong>Nipype: a flexible, lightweight and extensible neuroimaging data processing framework in Python.</strong> <em>Front. Neuroinform. 5:13</em>. <a class="reference external" href="http://journal.frontiersin.org/article/10.3389/fninf.2011.00013/abstract">http://dx.doi.org/10.3389/fninf.2011.00013</a></p>
+<p class="last">For a deeper understanding of Nipype go either to <a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype&#8217;s main homepage</a> or read the official paper: Gorgolewski K, Burns CD, Madison C, Clark D, Halchenko YO, Waskom ML, Ghosh SS (2011) <strong>Nipype: a flexible, lightweight and extensible neuroimaging data processing framework in Python.</strong> <em>Front. Neuroinform. 5:13</em>. <a class="reference external" href="http://journal.frontiersin.org/article/10.3389/fninf.2011.00013/abstract">http://dx.doi.org/10.3389/fninf.2011.00013</a></p>
 </div>
 <div class="section" id="interfaces">
 <h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h3>
-<p>Interfaces in the context of Nipype are program wrappers that enable Nipype, which runs in Python, to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the <a class="reference external" href="http://nipy.org/nipype/users/interface_tutorial.html">official homepage</a>. More practical examples will be given later in this beginner&#8217;s guide.</p>
-<p>For a full list of software interfaces supported by Nipype go <a class="reference external" href="http://nipy.org/nipype/documentation.html">here</a>.</p>
+<p>Interfaces in the context of Nipype are program wrappers that enable Nipype, which runs in Python, to run a program or function in any other programming language. As a result, Python becomes the common denominator of all neuroimaging software packages and allows Nipype to easily connect them to each other. A short tutorial about interfaces can be found on the <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/interface_tutorial.html">official homepage</a>. More practical examples will be given later in this beginner&#8217;s guide.</p>
+<p>For a full list of software interfaces supported by Nipype go <a class="reference external" href="http://nipype.readthedocs.io/en/latest/documentation.html">here</a>.</p>
 </div>
 <div class="section" id="workflow-engine">
 <h3>Workflow Engine<a class="headerlink" href="#workflow-engine" title="Permalink to this headline">¶</a></h3>
@@ -378,7 +378,7 @@
 </ul>
 <p>Each Node, MapNode or Workflow has (at least) one input field and (at least) one output field. Those fields specify the dataflow into and out of a Node, MapNode or Workflow. MapNodes use fields to specify multiple inputs (basically a list of input items). There they are called <em>iterfields</em> because the interface will iterate over the list of input items, and they have to be labeled as such to distinguish them from single-item fields.</p>
 <p>A very cool feature of a Nipype workflow are so called <strong>iterables</strong>. Iterables allow you to run a given workflow or subgraph several times with changing input values. For example, if you want to run an analysis pipeline on multiple subjects or with an FWHM smoothing kernel of 4mm, 6mm, and 8mm. This can easily be achieved with iterables and additionally allows you to do this all in parallel (simultaneous execution), if requested.</p>
-<p>Go to the documentation section of <a class="reference external" href="http://nipy.org/nipype/">Nipype&#8217;s main homepage</a> to read more about <a class="reference external" href="http://nipy.org/nipype/users/mapnode_and_iterables.html">MapNode, iterfield, and iterables</a>, <a class="reference external" href="http://nipy.org/nipype/users/joinnode_and_itersource.html">JoinNode, synchronize and itersource</a> and <a class="reference external" href="http://nipy.org/nipype/users/pipeline_tutorial.html">much more</a>. Nonetheless, a more detailed explanation will be given in a <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#specify-workflows-connect-nodes">later section</a> of this beginner&#8217;s guide.</p>
+<p>Go to the documentation section of <a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype&#8217;s main homepage</a> to read more about <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/mapnode_and_iterables.html">MapNode, iterfield, and iterables</a>, <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/joinnode_and_itersource.html">JoinNode, synchronize and itersource</a> and <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/pipeline_tutorial.html">much more</a>. Nonetheless, a more detailed explanation will be given in a <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#specify-workflows-connect-nodes">later section</a> of this beginner&#8217;s guide.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">For more practical and extended examples of Nipype concepts see <a class="reference external" href="https://github.com/mwaskom">Michael Waskom</a>&#8216;s really cool Jupyter notebooks about <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb">Interfaces</a>, <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb">Iteration</a> and <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb">Workflows</a>.</p>
@@ -418,27 +418,27 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Normally calling run executes the workflow in series</span>
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Normally calling run executes the workflow in series</span>
 <span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="c1"># But you can scale to parallel very easily.</span>
-<span class="c1"># For example, to use multiple cores on your local machine</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+<span class="c"># But you can scale to parallel very easily.</span>
+<span class="c"># For example, to use multiple cores on your local machine</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
 
-<span class="c1"># or to other job managers</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;PBS&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s1">&#39;-q many&#39;</span><span class="p">})</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;SGE&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s1">&#39;-q many&#39;</span><span class="p">})</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;LSF&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s1">&#39;-q many&#39;</span><span class="p">})</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;Condor&#39;</span><span class="p">)</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;IPython&#39;</span><span class="p">)</span>
+<span class="c"># or to other job managers</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;PBS&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s">&#39;-q many&#39;</span><span class="p">})</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;SGE&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s">&#39;-q many&#39;</span><span class="p">})</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;LSF&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s">&#39;-q many&#39;</span><span class="p">})</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;Condor&#39;</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;IPython&#39;</span><span class="p">)</span>
 
-<span class="c1"># or submit graphs as a whole</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;PBSGraph&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s1">&#39;-q many&#39;</span><span class="p">})</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;SGEGraph&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s1">&#39;-q many&#39;</span><span class="p">})</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;CondorDAGMan&#39;</span><span class="p">)</span>
+<span class="c"># or submit graphs as a whole</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;PBSGraph&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s">&#39;-q many&#39;</span><span class="p">})</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;SGEGraph&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;qsub_args&#39;</span><span class="p">:</span> <span class="s">&#39;-q many&#39;</span><span class="p">})</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;CondorDAGMan&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>More about Plugins can be found on Nipype&#8217;s main homepage under <a class="reference external" href="http://nipy.org/nipype/users/plugins.html">Using Nipype Plugins</a>.</p>
+<p>More about Plugins can be found on Nipype&#8217;s main homepage under <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/plugins.html">Using Nipype Plugins</a>.</p>
 </div>
 </div>
 </div>
@@ -487,7 +487,7 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on May 25, 2016.
+      Last updated on July 21, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>

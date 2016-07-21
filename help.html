@@ -125,7 +125,7 @@
 <h2>How Nipype Can Help You<a class="headerlink" href="#how-nipype-can-help-you" title="Permalink to this headline">¶</a></h2>
 <p>Often times the first trouble with Nipype arise because of misunderstanding a node or its function. This can be because a mandatory input was forgotten, a input or output field is not what you thought it was or something similar. That&#8217;s why the first step when running into a problem while building a pipeline should be to check out the description of the interface that causes the trouble. I&#8217;ve already described this <a class="reference external" href="https://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#nodes">here</a> but to recap:</p>
 <p>Let&#8217;s assume that you&#8217;ve imported FreeSurfer&#8217;s BBRegister with the command <code class="docutils literal"><span class="pre">from</span> <span class="pre">nipype.interfaces.freesurfer</span> <span class="pre">import</span> <span class="pre">BBRegister</span></code>. Now, if you want to know what this module generally does, use the <cite>?</cite> character, i.e. <code class="docutils literal"><span class="pre">BBRegister?</span></code>. This gives you a short description as well as an implementation example of this module. If you want to know a more detailed description of BBRegister, with all mandatory and possible inputs and outputs, use the <code class="docutils literal"><span class="pre">help()</span></code> function, i.e. <code class="docutils literal"><span class="pre">BBRegister.help()</span></code>.</p>
-<p>Also, I highly recommend to check out Nipype&#8217;s official <a class="reference external" href="http://nipy.org/nipype/documentation.html">Documentation</a> section, where you can browse through all possible interfaces, function and description of them.</p>
+<p>Also, I highly recommend to check out Nipype&#8217;s official <a class="reference external" href="http://nipype.readthedocs.io/en/latest/documentation.html">Documentation</a> section, where you can browse through all possible interfaces, function and description of them.</p>
 </div>
 <div class="section" id="how-to-help-yourself">
 <h2>How to Help Yourself<a class="headerlink" href="#how-to-help-yourself" title="Permalink to this headline">¶</a></h2>
@@ -143,7 +143,7 @@
 <h2>How to Read Crash Files<a class="headerlink" href="#how-to-read-crash-files" title="Permalink to this headline">¶</a></h2>
 <p>Everytime Nipype crashes, it creates a nice crash file containing all necessary information. For a specific example see <a class="reference external" href="https://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#common-issues-problems-and-crashes">this section</a>. In this example the name of the crash file is <code class="docutils literal"><span class="pre">crash-20141018-140440-mnotter-art.b0.pklz</span></code>.</p>
 <p>The name of the file gives you already an information about when it crashed (<code class="docutils literal"><span class="pre">20141018-140440</span></code>) and which node crashed (<code class="docutils literal"><span class="pre">art.b0</span></code>). If you want to read the node you can use the terminal command <code class="docutils literal"><span class="pre">nipype_display_crash</span></code>. In our example the command to read the crash file is:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>nipype_display_crash ~/nipype_tutorial/crash-20141018-140857-mnotter-art.b0.pklz
+<div class="highlight-sh"><div class="highlight"><pre>nipype_display_crash ~/nipype_tutorial/crash-20141018-140857-mnotter-art.b0.pklz
 </pre></div>
 </div>
 <p>This leads to the following output:</p>
@@ -188,7 +188,7 @@
 39
 40
 41
-42</pre></div></td><td class="code"><div class="highlight"><pre><span></span>File: crash-20141018-140857-mnotter-art.b0.pklz
+42</pre></div></td><td class="code"><div class="highlight"><pre>File: crash-20141018-140857-mnotter-art.b0.pklz
 Node: preproc.art.b0
 Working directory: ~/nipype_tutorial/workingdir_firstSteps/
                      preproc/_subject_id_sub001/art
@@ -238,16 +238,16 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>-h, --help       show this <span class="nb">help</span> message and <span class="nb">exit</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre>-h, --help       show this <span class="nb">help </span>message and <span class="nb">exit</span>
 -r, --rerun      rerun crashed node <span class="o">(</span>default False<span class="o">)</span>
--d, --debug      <span class="nb">enable</span> python debugger when re-executing <span class="o">(</span>default False<span class="o">)</span>
--i, --ipydebug   <span class="nb">enable</span> ipython debugger when re-executing <span class="o">(</span>default False<span class="o">)</span>
+-d, --debug      <span class="nb">enable </span>python debugger when re-executing <span class="o">(</span>default False<span class="o">)</span>
+-i, --ipydebug   <span class="nb">enable </span>ipython debugger when re-executing <span class="o">(</span>default False<span class="o">)</span>
 --dir DIRECTORY  Directory to run the node in <span class="o">(</span>default None<span class="o">)</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">For more information about how to debug your code and handle crashes go to <a class="reference external" href="http://nipy.org/nipype/users/debug.html">this official Nipype section</a>.</p>
+<p class="last">For more information about how to debug your code and handle crashes go to <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/debug.html">this official Nipype section</a>.</p>
 </div>
 </div>
 </div>
@@ -296,7 +296,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on May 25, 2016.
+      Last updated on July 21, 2016.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>
