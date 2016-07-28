@@ -23,9 +23,8 @@ rm -rf *
 cp -r "$TMP_DIR"/html/* .
 
 # Submit changes with current timestamp
-git add *
 TIMESTAMP=`date +'%Y-%m-%d %H:%M:%S'`
-git commit -m "Homepage update ${TIMESTAMP}"
+git commit -a -m "Homepage update ${TIMESTAMP}"
 git push origin gh-pages
 
 # Remove temporary folder
