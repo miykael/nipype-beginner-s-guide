@@ -5,7 +5,7 @@ export TUTORIAL_DIR=~/nipype_tutorial         #location of experiment folder
 export DATA_DIR=$TUTORIAL_DIR/data            #location of data folder
 export SUBJECTS_DIR=$TUTORIAL_DIR/freesurfer  #location of freesurfer folder
 
-for id in {01..10}
+for id in $(seq -w 1 10)
 do
     echo "working on sub0$id"
     mkdir -p $SUBJECTS_DIR/sub0$id/mri/orig

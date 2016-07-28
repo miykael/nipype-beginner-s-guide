@@ -79,7 +79,7 @@ This can either be done manually or with the following code:
     tar -zxvf $ZIP_FILE -C $TMP_DIR
 
     # Copy data of first ten subjects into DATA_DIR
-    for id in {01..10}
+    for id in $(seq -w 1 10)
     do
         echo "Creating dataset for subject: sub0$id"
         mkdir -p $DATA_DIR/sub0$id
@@ -274,7 +274,7 @@ So, to accomplish this with some few terminal command, we first have to tell the
     FUNC_FOLDER2=fmri_run2_long        # dicom folder containing 2nd functional scan
     DATA_DIR=$TUTORIAL_DIR/data        # location of output folder
 
-    for id in {01..10}
+    for id in $(seq -w 1 10)
     do
         mkdir -p $DATA_DIR/sub0$id
         mri_convert $RAW_DIR/sub0$id/$T1_FOLDER/00001.dcm    $DATA_DIR/sub0$id/struct.nii.gz
@@ -307,7 +307,7 @@ To run ``recon-all`` on the 10 subjects of the tutorial dataset you can run the 
     export DATA_DIR=$TUTORIAL_DIR/data            #location of data folder
     export SUBJECTS_DIR=$TUTORIAL_DIR/freesurfer  #location of freesurfer folder
 
-    for id in {01..10}
+    for id in $(seq -w 1 10)
     do
         echo "working on sub0$id"
         mkdir -p $SUBJECTS_DIR/sub0$id/mri/orig

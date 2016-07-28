@@ -14,7 +14,7 @@ mkdir -p $TMP_DIR
 tar -zxvf $ZIP_FILE -C $TMP_DIR
 
 # Copy data of first ten subjects into DATA_DIR
-for id in {01..10}
+for id in $(seq -w 1 10)
 do
     echo "Creating dataset for subject: sub0$id"
     mkdir -p $DATA_DIR/sub0$id
