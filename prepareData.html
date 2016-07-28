@@ -120,6 +120,9 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
@@ -151,7 +154,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>If you are on a Linux system, you can also download the tutorial dataset directly to your <code class="docutils literal"><span class="pre">Downloads</span></code> folder with the following command:</p>
-<div class="last highlight-sh"><div class="highlight"><pre>wget https://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz ~/Downloads
+<div class="last highlight-sh"><div class="highlight"><pre><span></span>wget https://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz ~/Downloads
 </pre></div>
 </div>
 </div>
@@ -160,7 +163,7 @@
 <h3>Unpack and prepare the folder structure<a class="headerlink" href="#unpack-and-prepare-the-folder-structure" title="Permalink to this headline">¶</a></h3>
 <p>The file you&#8217;ve just downloaded contains amongst others one anatomical and two functional MRI scans and the behavioral response and onsets of stimuli during those functional scans. The whole dataset consists of 26 subjects. Information about gender and age of each subject is stored in the <cite>demographics.txt</cite> file, also found in downloaded file. To reduce the total time of computation, this tutorial will only analyze the first 10 subjects of the whole dataset. Now let&#8217;s get ready.</p>
 <p>What we want is an experiment folder called <code class="docutils literal"><span class="pre">nipype_tutorial</span></code> that contains a folder called <code class="docutils literal"><span class="pre">data</span></code> where we save the raw data of the first 10 subjects into. In the end, the structure should be something like this</p>
-<div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
+<div class="highlight-sh"><div class="highlight"><pre><span></span>nipype_tutorial
 <span class="p">|</span>-- data
     <span class="p">|</span>-- demographics.txt
     <span class="p">|</span>-- sub001
@@ -226,18 +229,18 @@
 38
 39
 40
-41</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Specify important variables</span>
-<span class="nv">ZIP_FILE</span><span class="o">=</span>~/Downloads/ds102_raw.tgz   <span class="c">#location of download file</span>
-<span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial       <span class="c">#location of experiment folder</span>
-<span class="nv">TMP_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/tmp            <span class="c">#location of temporary folder</span>
-<span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data          <span class="c">#location of data folder</span>
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Specify important variables</span>
+<span class="nv">ZIP_FILE</span><span class="o">=</span>~/Downloads/ds102_raw.tgz   <span class="c1">#location of download file</span>
+<span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial       <span class="c1">#location of experiment folder</span>
+<span class="nv">TMP_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/tmp            <span class="c1">#location of temporary folder</span>
+<span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data          <span class="c1">#location of data folder</span>
 
-<span class="c"># Unzip ds102 dataset into TMP_DIR</span>
+<span class="c1"># Unzip ds102 dataset into TMP_DIR</span>
 mkdir -p <span class="nv">$TMP_DIR</span>
 tar -zxvf <span class="nv">$ZIP_FILE</span> -C <span class="nv">$TMP_DIR</span>
 
-<span class="c"># Copy data of first ten subjects into DATA_DIR</span>
-<span class="k">for</span> id in <span class="o">{</span>01..10<span class="o">}</span>
+<span class="c1"># Copy data of first ten subjects into DATA_DIR</span>
+<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> 10<span class="k">)</span>
 <span class="k">do</span>
     <span class="nb">echo</span> <span class="s2">&quot;Creating dataset for subject: sub0</span><span class="nv">$id</span><span class="s2">&quot;</span>
     mkdir -p <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>
@@ -261,11 +264,11 @@ tar -zxvf <span class="nv">$ZIP_FILE</span> -C <span class="nv">$TMP_DIR</span>
     <span class="nb">echo</span> <span class="s2">&quot;sub0</span><span class="nv">$id</span><span class="s2"> done.&quot;</span>
 <span class="k">done</span>
 
-<span class="c"># Copy information about demographics, conditions and tasks into DATA_DIR</span>
+<span class="c1"># Copy information about demographics, conditions and tasks into DATA_DIR</span>
 cp <span class="nv">$TMP_DIR</span>/ds102/demographics.txt <span class="nv">$DATA_DIR</span>/demographics.txt
 cp <span class="nv">$TMP_DIR</span>/ds102/models/model001/* <span class="nv">$DATA_DIR</span>/.
 
-<span class="c"># Delete the temporary folder</span>
+<span class="c1"># Delete the temporary folder</span>
 rm -rf <span class="nv">$TMP_DIR</span>
 </pre></div>
 </td></tr></table></div>
@@ -339,11 +342,11 @@ rm -rf <span class="nv">$TMP_DIR</span>
 <div class="section" id="check-the-data">
 <h3>Check the data<a class="headerlink" href="#check-the-data" title="Permalink to this headline">¶</a></h3>
 <p>It is always important to look at your data and verify that it actually is recorded the way it should be. To take a look at the data, I usually use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">freeview</span></code>. For example, if you want to load the anatomical scan of all ten subjects use the following code:</p>
-<div class="highlight-sh"><div class="highlight"><pre>freeview -v ~/nipype_tutorial/data/sub00*/struct.nii.gz
+<div class="highlight-sh"><div class="highlight"><pre><span></span>freeview -v ~/nipype_tutorial/data/sub00*/struct.nii.gz
 </pre></div>
 </div>
 <p>To verify the information about the scan parameters we can use <code class="docutils literal"><span class="pre">fslinfo</span></code>. <code class="docutils literal"><span class="pre">fslinfo</span></code> allows us to read the header information of a NIfTI file and therefore get information about voxel resolution and TR. For example, reading the header of the anatomical scan of subject2 with the command <code class="docutils literal"><span class="pre">fslinfo</span> <span class="pre">~/nipype_tutorial/data/sub002/struct.nii.gz</span></code> gives us following output:</p>
-<div class="highlight-sh"><div class="highlight"><pre>data_type      INT16
+<div class="highlight-sh"><div class="highlight"><pre><span></span>data_type      INT16
 dim1           176
 dim2           256
 dim3           256
@@ -360,7 +363,7 @@ file_type      NIFTI-1+
 </div>
 <p>This output tells us, that the anatomical volume consists of 256x256x176 voxels with each having 1x1x1mm resolution.</p>
 <p>Using the same command on a functional scan of subject 2 gives as following output:</p>
-<div class="highlight-sh"><div class="highlight"><pre>data_type      INT16
+<div class="highlight-sh"><div class="highlight"><pre><span></span>data_type      INT16
 dim1           64
 dim2           64
 dim3           40
@@ -380,7 +383,7 @@ file_type      NIFTI-1+
 <p class="first admonition-title">Note</p>
 <p>Just as a side note: The <cite>data_type</cite> of a NIfTI file tells you the amount of bits used to store the value of each voxel. <strong>INT16</strong> stands for <em>signed short</em> (16 bits/voxel), <strong>INT32</strong> stands for <em>signed int</em> (32 bits/voxel) and <strong>FLOAT64</strong> stands for <em>float</em> (64 bits/voxel). The more bits used for storing a voxel value the bigger the whole NIfTI file.</p>
 <p>If you want to change the data type of your image, either use Nipype&#8217;s function <code class="docutils literal"><span class="pre">ChangeDataType</span></code> found in the <code class="docutils literal"><span class="pre">nipype.interfaces.fsl.maths</span></code> package (read more <a class="reference external" href="http://nipype.readthedocs.io/en/latest/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype">here</a>) or use <code class="docutils literal"><span class="pre">fslmaths</span></code> directly to change the data_type to INT32 with the following command:</p>
-<div class="last highlight-sh"><div class="highlight"><pre>fslmaths input.nii output.nii -odt int
+<div class="last highlight-sh"><div class="highlight"><pre><span></span>fslmaths input.nii output.nii -odt int
 </pre></div>
 </div>
 </div>
@@ -407,7 +410,7 @@ file_type      NIFTI-1+
 <p>You don&#8217;t have to do this step if you&#8217;re using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common <code class="docutils literal"><span class="pre">NIfTI</span></code> format, but rather in a scanner specific format (e.g. <code class="docutils literal"><span class="pre">DICOM</span></code>, <code class="docutils literal"><span class="pre">PAR/REC</span></code>, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.</p>
 <p>Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use <a class="reference external" href="http://www.mccauslandcenter.sc.edu/mricro/mricron/">MRICron</a>&#8216;s <a class="reference external" href="http://lcni.uoregon.edu/~jolinda/MRIConvert/">MRIConvert</a>. But for this Beginner&#8217;s Guide we will use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, as it is rather easy to use and doesn&#8217;t require many steps.</p>
 <p>But first, as always, be aware of your folder structure. So let&#8217;s assume that we&#8217;ve stored our dicoms in a folder called <code class="docutils literal"><span class="pre">raw_data</span></code> and that the folder structure looks something like this:</p>
-<div class="highlight-none"><div class="highlight"><pre>raw_dicom
+<div class="highlight-none"><div class="highlight"><pre><span></span>raw_dicom
 |-- sub001
 |   |-- t1w_3d_MPRAGE
 |   |   |-- 00001.dcm
@@ -438,14 +441,14 @@ file_type      NIFTI-1+
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial     <span class="c"># location of experiment folder</span>
-<span class="nv">RAW_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/raw_dicom    <span class="c"># location of raw data folder</span>
-<span class="nv">T1_FOLDER</span><span class="o">=</span>t1w_3d_MPRAGE            <span class="c"># dicom folder containing anatomical scan</span>
-<span class="nv">FUNC_FOLDER1</span><span class="o">=</span>fmri_run1_long        <span class="c"># dicom folder containing 1st     functional scan</span>
-<span class="nv">FUNC_FOLDER2</span><span class="o">=</span>fmri_run2_long        <span class="c"># dicom folder containing 2nd functional scan</span>
-<span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data        <span class="c"># location of output folder</span>
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial     <span class="c1"># location of experiment folder</span>
+<span class="nv">RAW_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/raw_dicom    <span class="c1"># location of raw data folder</span>
+<span class="nv">T1_FOLDER</span><span class="o">=</span>t1w_3d_MPRAGE            <span class="c1"># dicom folder containing anatomical scan</span>
+<span class="nv">FUNC_FOLDER1</span><span class="o">=</span>fmri_run1_long        <span class="c1"># dicom folder containing 1st     functional scan</span>
+<span class="nv">FUNC_FOLDER2</span><span class="o">=</span>fmri_run2_long        <span class="c1"># dicom folder containing 2nd functional scan</span>
+<span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data        <span class="c1"># location of output folder</span>
 
-<span class="k">for</span> id in <span class="o">{</span>01..10<span class="o">}</span>
+<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> 10<span class="k">)</span>
 <span class="k">do</span>
     mkdir -p <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>
     mri_convert <span class="nv">$RAW_DIR</span>/sub0<span class="nv">$id</span>/<span class="nv">$T1_FOLDER</span>/00001.dcm    <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/struct.nii.gz
@@ -476,12 +479,12 @@ file_type      NIFTI-1+
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Specify important variables</span>
-<span class="nb">export </span><span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial         <span class="c">#location of experiment folder</span>
-<span class="nb">export </span><span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data            <span class="c">#location of data folder</span>
-<span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/freesurfer  <span class="c">#location of freesurfer folder</span>
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Specify important variables</span>
+<span class="nb">export</span> <span class="nv">TUTORIAL_DIR</span><span class="o">=</span>~/nipype_tutorial         <span class="c1">#location of experiment folder</span>
+<span class="nb">export</span> <span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data            <span class="c1">#location of data folder</span>
+<span class="nb">export</span> <span class="nv">SUBJECTS_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/freesurfer  <span class="c1">#location of freesurfer folder</span>
 
-<span class="k">for</span> id in <span class="o">{</span>01..10<span class="o">}</span>
+<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> 10<span class="k">)</span>
 <span class="k">do</span>
     <span class="nb">echo</span> <span class="s2">&quot;working on sub0</span><span class="nv">$id</span><span class="s2">&quot;</span>
     mkdir -p <span class="nv">$SUBJECTS_DIR</span>/sub0<span class="nv">$id</span>/mri/orig
@@ -494,10 +497,10 @@ file_type      NIFTI-1+
 </td></tr></table></div>
 <p>This code will run the subjects in sequential order. If you want to process the 10 subjects in (manual) parallel order, delete line 12 - <code class="docutils literal"><span class="pre">recon-all</span> <span class="pre">-all</span> <span class="pre">-subjid</span> <span class="pre">sub0$id</span></code> - from the code above, run it and than run the following code, each line in its own terminal:</p>
 <blockquote>
-<div><div class="highlight-sh"><div class="highlight"><pre><span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub001
-<span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub002
+<div><div class="highlight-sh"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub001
+<span class="nb">export</span> <span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub002
 ...
-<span class="nb">export </span><span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub010
+<span class="nb">export</span> <span class="nv">SUBJECTS_DIR</span><span class="o">=</span>~/nipype_tutorial/freesurfer<span class="p">;</span> recon-all -all -subjid sub010
 </pre></div>
 </div>
 </div></blockquote>
@@ -563,68 +566,68 @@ file_type      NIFTI-1+
 47
 48
 49
-50</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Import modules</span>
+50</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">import</span> <span class="n">ReconAll</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">import</span> <span class="n">IdentityInterface</span>
 <span class="kn">from</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">import</span> <span class="n">Workflow</span><span class="p">,</span> <span class="n">Node</span>
 
-<span class="c"># Specify important variables</span>
-<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial&#39;</span>             <span class="c"># location of experiment folder</span>
-<span class="n">data_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">)</span>  <span class="c"># location of data folder</span>
-<span class="n">fs_folder</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;freesurfer&#39;</span><span class="p">)</span>  <span class="c"># location of freesurfer folder</span>
-<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sub001&#39;</span><span class="p">,</span> <span class="s">&#39;sub002&#39;</span><span class="p">,</span> <span class="s">&#39;sub003&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub004&#39;</span><span class="p">,</span> <span class="s">&#39;sub005&#39;</span><span class="p">,</span> <span class="s">&#39;sub006&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub007&#39;</span><span class="p">,</span> <span class="s">&#39;sub008&#39;</span><span class="p">,</span> <span class="s">&#39;sub009&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub010&#39;</span><span class="p">]</span>                        <span class="c"># subject identifier</span>
-<span class="n">T1_identifier</span> <span class="o">=</span> <span class="s">&#39;struct.nii.gz&#39;</span>                  <span class="c"># Name of T1-weighted image</span>
+<span class="c1"># Specify important variables</span>
+<span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>             <span class="c1"># location of experiment folder</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>  <span class="c1"># location of data folder</span>
+<span class="n">fs_folder</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s1">&#39;freesurfer&#39;</span><span class="p">)</span>  <span class="c1"># location of freesurfer folder</span>
+<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sub001&#39;</span><span class="p">,</span> <span class="s1">&#39;sub002&#39;</span><span class="p">,</span> <span class="s1">&#39;sub003&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub004&#39;</span><span class="p">,</span> <span class="s1">&#39;sub005&#39;</span><span class="p">,</span> <span class="s1">&#39;sub006&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub007&#39;</span><span class="p">,</span> <span class="s1">&#39;sub008&#39;</span><span class="p">,</span> <span class="s1">&#39;sub009&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub010&#39;</span><span class="p">]</span>                        <span class="c1"># subject identifier</span>
+<span class="n">T1_identifier</span> <span class="o">=</span> <span class="s1">&#39;struct.nii.gz&#39;</span>                  <span class="c1"># Name of T1-weighted image</span>
 
-<span class="c"># Create the output folder - FreeSurfer can only run if this folder exists</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;mkdir -p </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">fs_folder</span><span class="p">)</span>
+<span class="c1"># Create the output folder - FreeSurfer can only run if this folder exists</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;mkdir -p </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">fs_folder</span><span class="p">)</span>
 
-<span class="c"># Create the pipeline that runs the recon-all command</span>
-<span class="n">reconflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;reconflow&quot;</span><span class="p">)</span>
-<span class="n">reconflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s">&#39;workingdir_reconflow&#39;</span><span class="p">)</span>
+<span class="c1"># Create the pipeline that runs the recon-all command</span>
+<span class="n">reconflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;reconflow&quot;</span><span class="p">)</span>
+<span class="n">reconflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="s1">&#39;workingdir_reconflow&#39;</span><span class="p">)</span>
 
-<span class="c"># Some magical stuff happens here (not important for now)</span>
-<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">]),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource&quot;</span><span class="p">)</span>
-<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)</span>
+<span class="c1"># Some magical stuff happens here (not important for now)</span>
+<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">]),</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;infosource&quot;</span><span class="p">)</span>
+<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)</span>
 
-<span class="c"># This node represents the actual recon-all command</span>
-<span class="n">reconall</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ReconAll</span><span class="p">(</span><span class="n">directive</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">,</span>
-                         <span class="c">#flags=&#39;-nuintensitycor-3T&#39;,</span>
+<span class="c1"># This node represents the actual recon-all command</span>
+<span class="n">reconall</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ReconAll</span><span class="p">(</span><span class="n">directive</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+                         <span class="c1">#flags=&#39;-nuintensitycor-3T&#39;,</span>
                          <span class="n">subjects_dir</span><span class="o">=</span><span class="n">fs_folder</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&quot;reconall&quot;</span><span class="p">)</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;reconall&quot;</span><span class="p">)</span>
 
-<span class="c"># This function returns for each subject the path to struct.nii.gz</span>
+<span class="c1"># This function returns for each subject the path to struct.nii.gz</span>
 <span class="k">def</span> <span class="nf">pathfinder</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">foldername</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
     <span class="n">struct_path</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">struct_path</span>
 
-<span class="c"># This section connects all the nodes of the pipeline to each other</span>
-<span class="n">reconflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">reconall</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                   <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">reconall</span><span class="p">,</span> <span class="p">[((</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span>
+<span class="c1"># This section connects all the nodes of the pipeline to each other</span>
+<span class="n">reconflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">reconall</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                   <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">reconall</span><span class="p">,</span> <span class="p">[((</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">pathfinder</span><span class="p">,</span>
                                              <span class="n">data_dir</span><span class="p">,</span> <span class="n">T1_identifier</span><span class="p">),</span>
-                                            <span class="s">&#39;T1_files&#39;</span><span class="p">)]),</span>
+                                            <span class="s1">&#39;T1_files&#39;</span><span class="p">)]),</span>
                    <span class="p">])</span>
 
-<span class="c"># This command runs the recon-all pipeline in parallel (using 8 cores)</span>
-<span class="n">reconflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
+<span class="c1"># This command runs the recon-all pipeline in parallel (using 8 cores)</span>
+<span class="n">reconflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <p>After this script has run, all important outputs will be stored directly under <code class="docutils literal"><span class="pre">~/nipype_tutorial/freesurfer</span></code>. But the running of the <code class="docutils literal"><span class="pre">reconflow</span></code> pipeline also created some temporary files. As defined by the script above, those files were stored under <code class="docutils literal"><span class="pre">~/nipype_tutorial/workingdir_reconflow</span></code>. Now that the script has run you can delete this folder again. Either do this manually, use the shell command <code class="docutils literal"><span class="pre">rm</span> <span class="pre">-rf</span> <span class="pre">~/nipype_tutorial/workingdir_reconflow</span></code> or add the following lines to the end of the python script above:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="c"># Delete all temporary files stored under the &#39;workingdir_reconflow&#39; folder</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;rm -rf </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">reconflow</span><span class="o">.</span><span class="n">base_dir</span><span class="p">)</span>
+<div class="highlight-py"><div class="highlight"><pre><span></span><span class="c1"># Delete all temporary files stored under the &#39;workingdir_reconflow&#39; folder</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm -rf </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">reconflow</span><span class="o">.</span><span class="n">base_dir</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>In the code above, if we don&#8217;t create the <code class="docutils literal"><span class="pre">freesurfer</span></code> output folder on line 15, we would get following error:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">TraitError</span><span class="p">:</span> <span class="n">The</span> <span class="s">&#39;subjects_dir&#39;</span> <span class="n">trait</span> <span class="n">of</span> <span class="n">a</span> <span class="n">ReconAllInputSpec</span> <span class="n">instance</span> <span class="n">must</span> <span class="n">be</span> <span class="n">an</span> <span class="n">existing</span>
-<span class="n">directory</span> <span class="n">name</span><span class="p">,</span> <span class="n">but</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="s">&#39;~/nipype_tutorial/freesurfer&#39;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;str&#39;</span><span class="o">&gt;</span> <span class="n">was</span> <span class="n">specified</span><span class="o">.</span>
+<div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">TraitError</span><span class="p">:</span> <span class="n">The</span> <span class="s1">&#39;subjects_dir&#39;</span> <span class="n">trait</span> <span class="n">of</span> <span class="n">a</span> <span class="n">ReconAllInputSpec</span> <span class="n">instance</span> <span class="n">must</span> <span class="n">be</span> <span class="n">an</span> <span class="n">existing</span>
+<span class="n">directory</span> <span class="n">name</span><span class="p">,</span> <span class="n">but</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="s1">&#39;~/nipype_tutorial/freesurfer&#39;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;str&#39;</span><span class="o">&gt;</span> <span class="n">was</span> <span class="n">specified</span><span class="o">.</span>
 </pre></div>
 </div>
 <p class="last">Also, if your data was recorded on a 3T scanner and you want to use the mentioned <code class="docutils literal"><span class="pre">-nuintensitycor-3T</span></code> flag, just uncomment line 28, i.e. delete the <code class="docutils literal"><span class="pre">#</span></code> sign before <code class="docutils literal"><span class="pre">flags='-nuintensitycor-3T'</span></code> on line 28.</p>
@@ -639,7 +642,7 @@ file_type      NIFTI-1+
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve prepared our data and run the <code class="docutils literal"><span class="pre">recon-all</span></code> process the folder structure of our experiment folder should look as follows:</p>
-<div class="highlight-sh"><div class="highlight"><pre>nipype_tutorial
+<div class="highlight-sh"><div class="highlight"><pre><span></span>nipype_tutorial
 <span class="p">|</span>-- rawdata <span class="o">(</span>optional<span class="o">)</span>
 <span class="p">|</span>-- data
 <span class="p">|</span>   <span class="p">|</span>-- sub001
@@ -698,8 +701,8 @@ file_type      NIFTI-1+
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 21, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
+      Last updated on July 28, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

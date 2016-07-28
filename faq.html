@@ -326,6 +326,9 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
@@ -723,7 +726,7 @@ As well, if you type help command into MATLAB, where command is some MATLAB func
 <p>SPM errors can happen in terribly uninformative fashion. Everyone who&#8217;s used SPM has seen the infamous &#8220;Error during uicontrol callback,&#8221; which is a generic MATLAB error that means &#8220;Something went wrong in the function called by pushing whatever button you just pushed.&#8221; Fortunately, MATLAB has relatively well-designed error-detection and bug-tracking facilities. You can learn a great deal about your error just by interpreting your error message.</p>
 <p>Sometimes in SPM you&#8217;ll get a full error message of several lines, but oftentimes you&#8217;ll get the one-line &#8220;uicontrol callback&#8221; error. However, if you close the panel that&#8217;s home to the button that generated the error, you can often get the full underlying error message. So if you hit &#8220;volume&#8221; in the results section and get a uicontrol callback error, closing the results panel will usually generate further information about the error. You may also be able to generate more information simply by going to the MATLAB window and hitting return a couple of times. Always try and get a full error message when you have an error! Even if you can&#8217;t figure out the problem, it&#8217;s almost totally useless to another troubleshooter if you come to them and say, &#8220;I have an error!&#8221; or &#8220;I have a uicontrol callback error!&#8221; without any more information about the problem. Gather as much information about the error as you can - the MATLAB window is your friend.</p>
 <p>MATLAB error messages are of varying helpfulness, but they all follow the same structure, so let&#8217;s take a look at one:</p>
-<div class="highlight-none"><div class="highlight"><pre>??? Error using ==&gt; spm_input_ui Input window cleared whilst waiting for response: Bailing out!
+<div class="highlight-none"><div class="highlight"><pre><span></span>??? Error using ==&gt; spm_input_ui Input window cleared whilst waiting for response: Bailing out!
 Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_input.m
     On line 77 ==&gt; [varargout{:}] = spm_input_ui(varargin{1:ib-1});
 Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_get_ons.m
@@ -1476,8 +1479,8 @@ Finally, you could apply combinations of these filters to try and restrict the s
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 21, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
+      Last updated on July 28, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

@@ -112,6 +112,9 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
@@ -165,7 +168,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.afni</span> <span class="kn">import</span> <span class="n">Despike</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.freesurfer</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BBRegister</span><span class="p">,</span> <span class="n">ApplyVolTransform</span><span class="p">,</span>
                                           <span class="n">Binarize</span><span class="p">,</span> <span class="n">MRIConvert</span><span class="p">,</span> <span class="n">FSCommand</span><span class="p">)</span>
@@ -190,13 +193,13 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># MATLAB - Specify path to current SPM and the MATLAB&#39;s default mode</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># MATLAB - Specify path to current SPM and the MATLAB&#39;s default mode</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.matlab</span> <span class="kn">import</span> <span class="n">MatlabCommand</span>
-<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12&#39;</span><span class="p">)</span>
-<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_matlab_cmd</span><span class="p">(</span><span class="s">&quot;matlab -nodesktop -nosplash&quot;</span><span class="p">)</span>
+<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s1">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12&#39;</span><span class="p">)</span>
+<span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_matlab_cmd</span><span class="p">(</span><span class="s2">&quot;matlab -nodesktop -nosplash&quot;</span><span class="p">)</span>
 
-<span class="c"># FreeSurfer - Specify the location of the freesurfer folder</span>
-<span class="n">fs_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/freesurfer&#39;</span>
+<span class="c1"># FreeSurfer - Specify the location of the freesurfer folder</span>
+<span class="n">fs_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/freesurfer&#39;</span>
 <span class="n">FSCommand</span><span class="o">.</span><span class="n">set_default_subjects_dir</span><span class="p">(</span><span class="n">fs_dir</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
@@ -214,17 +217,17 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial&#39;</span>          <span class="c"># location of experiment folder</span>
-<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sub001&#39;</span><span class="p">,</span> <span class="s">&#39;sub002&#39;</span><span class="p">,</span> <span class="s">&#39;sub003&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub004&#39;</span><span class="p">,</span> <span class="s">&#39;sub005&#39;</span><span class="p">,</span> <span class="s">&#39;sub006&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub007&#39;</span><span class="p">,</span> <span class="s">&#39;sub008&#39;</span><span class="p">,</span> <span class="s">&#39;sub009&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sub010&#39;</span><span class="p">]</span>                     <span class="c"># list of subject identifiers</span>
-<span class="n">output_dir</span> <span class="o">=</span> <span class="s">&#39;output_fMRI_example_1st&#39;</span>        <span class="c"># name of 1st-level output folder</span>
-<span class="n">working_dir</span> <span class="o">=</span> <span class="s">&#39;workingdir_fMRI_example_1st&#39;</span>   <span class="c"># name of 1st-level working directory</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">experiment_dir</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial&#39;</span>          <span class="c1"># location of experiment folder</span>
+<span class="n">subject_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sub001&#39;</span><span class="p">,</span> <span class="s1">&#39;sub002&#39;</span><span class="p">,</span> <span class="s1">&#39;sub003&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub004&#39;</span><span class="p">,</span> <span class="s1">&#39;sub005&#39;</span><span class="p">,</span> <span class="s1">&#39;sub006&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub007&#39;</span><span class="p">,</span> <span class="s1">&#39;sub008&#39;</span><span class="p">,</span> <span class="s1">&#39;sub009&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;sub010&#39;</span><span class="p">]</span>                     <span class="c1"># list of subject identifiers</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="s1">&#39;output_fMRI_example_1st&#39;</span>        <span class="c1"># name of 1st-level output folder</span>
+<span class="n">working_dir</span> <span class="o">=</span> <span class="s1">&#39;workingdir_fMRI_example_1st&#39;</span>   <span class="c1"># name of 1st-level working directory</span>
 
-<span class="n">number_of_slices</span> <span class="o">=</span> <span class="mi">40</span>                         <span class="c"># number of slices in volume</span>
-<span class="n">TR</span> <span class="o">=</span> <span class="mf">2.0</span>                                      <span class="c"># time repetition of volume</span>
-<span class="n">fwhm_size</span> <span class="o">=</span> <span class="mi">6</span>                                 <span class="c"># size of FWHM in mm</span>
+<span class="n">number_of_slices</span> <span class="o">=</span> <span class="mi">40</span>                         <span class="c1"># number of slices in volume</span>
+<span class="n">TR</span> <span class="o">=</span> <span class="mf">2.0</span>                                      <span class="c1"># time repetition of volume</span>
+<span class="n">fwhm_size</span> <span class="o">=</span> <span class="mi">6</span>                                 <span class="c1"># size of FWHM in mm</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -284,60 +287,60 @@
 51
 52
 53
-54</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
-<span class="n">despike</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Despike</span><span class="p">(</span><span class="n">outputtype</span><span class="o">=</span><span class="s">&#39;NIFTI&#39;</span><span class="p">),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&quot;despike&quot;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
+54</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
+<span class="n">despike</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Despike</span><span class="p">(</span><span class="n">outputtype</span><span class="o">=</span><span class="s1">&#39;NIFTI&#39;</span><span class="p">),</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;despike&quot;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 
-<span class="c"># Slicetiming - correct for slice wise acquisition</span>
+<span class="c1"># Slicetiming - correct for slice wise acquisition</span>
 <span class="n">interleaved_order</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">number_of_slices</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">number_of_slices</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sliceTiming</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SliceTiming</span><span class="p">(</span><span class="n">num_slices</span><span class="o">=</span><span class="n">number_of_slices</span><span class="p">,</span>
                                <span class="n">time_repetition</span><span class="o">=</span><span class="n">TR</span><span class="p">,</span>
                                <span class="n">time_acquisition</span><span class="o">=</span><span class="n">TR</span><span class="o">-</span><span class="n">TR</span><span class="o">/</span><span class="n">number_of_slices</span><span class="p">,</span>
                                <span class="n">slice_order</span><span class="o">=</span><span class="n">interleaved_order</span><span class="p">,</span>
                                <span class="n">ref_slice</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-                   <span class="n">name</span><span class="o">=</span><span class="s">&quot;sliceTiming&quot;</span><span class="p">)</span>
+                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;sliceTiming&quot;</span><span class="p">)</span>
 
-<span class="c"># Realign - correct for motion</span>
+<span class="c1"># Realign - correct for motion</span>
 <span class="n">realign</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Realign</span><span class="p">(</span><span class="n">register_to_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-               <span class="n">name</span><span class="o">=</span><span class="s">&quot;realign&quot;</span><span class="p">)</span>
+               <span class="n">name</span><span class="o">=</span><span class="s2">&quot;realign&quot;</span><span class="p">)</span>
 
-<span class="c"># TSNR - remove polynomials 2nd order</span>
+<span class="c1"># TSNR - remove polynomials 2nd order</span>
 <span class="n">tsnr</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">TSNR</span><span class="p">(</span><span class="n">regress_poly</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-               <span class="n">name</span><span class="o">=</span><span class="s">&#39;tsnr&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
+               <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tsnr&#39;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 
-<span class="c"># Artifact Detection - determine which of the images in the functional series</span>
-<span class="c">#   are outliers. This is based on deviation in intensity or movement.</span>
+<span class="c1"># Artifact Detection - determine which of the images in the functional series</span>
+<span class="c1">#   are outliers. This is based on deviation in intensity or movement.</span>
 <span class="n">art</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ArtifactDetect</span><span class="p">(</span><span class="n">norm_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                           <span class="n">zintensity_threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                          <span class="n">mask_type</span><span class="o">=</span><span class="s">&#39;file&#39;</span><span class="p">,</span>
-                          <span class="n">parameter_source</span><span class="o">=</span><span class="s">&#39;SPM&#39;</span><span class="p">,</span>
+                          <span class="n">mask_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span>
+                          <span class="n">parameter_source</span><span class="o">=</span><span class="s1">&#39;SPM&#39;</span><span class="p">,</span>
                           <span class="n">use_differences</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">]),</span>
-           <span class="n">name</span><span class="o">=</span><span class="s">&quot;art&quot;</span><span class="p">)</span>
+           <span class="n">name</span><span class="o">=</span><span class="s2">&quot;art&quot;</span><span class="p">)</span>
 
-<span class="c"># Smooth - to smooth the images with a given kernel</span>
+<span class="c1"># Smooth - to smooth the images with a given kernel</span>
 <span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Smooth</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm_size</span><span class="p">),</span>
-              <span class="n">name</span><span class="o">=</span><span class="s">&quot;smooth&quot;</span><span class="p">)</span>
+              <span class="n">name</span><span class="o">=</span><span class="s2">&quot;smooth&quot;</span><span class="p">)</span>
 
-<span class="c"># FreeSurferSource - Data grabber specific for FreeSurfer data</span>
+<span class="c1"># FreeSurferSource - Data grabber specific for FreeSurfer data</span>
 <span class="n">fssource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">FreeSurferSource</span><span class="p">(</span><span class="n">subjects_dir</span><span class="o">=</span><span class="n">fs_dir</span><span class="p">),</span>
                 <span class="n">run_without_submitting</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&#39;fssource&#39;</span><span class="p">)</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fssource&#39;</span><span class="p">)</span>
 
-<span class="c"># BBRegister - coregister a volume to the Freesurfer anatomical</span>
-<span class="n">bbregister</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">BBRegister</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s">&#39;header&#39;</span><span class="p">,</span>
-                             <span class="n">contrast_type</span><span class="o">=</span><span class="s">&#39;t2&#39;</span><span class="p">,</span>
+<span class="c1"># BBRegister - coregister a volume to the Freesurfer anatomical</span>
+<span class="n">bbregister</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">BBRegister</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">&#39;header&#39;</span><span class="p">,</span>
+                             <span class="n">contrast_type</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">,</span>
                              <span class="n">out_fsl_file</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&#39;bbregister&#39;</span><span class="p">)</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bbregister&#39;</span><span class="p">)</span>
 
-<span class="c"># Volume Transformation - transform the brainmask into functional space</span>
+<span class="c1"># Volume Transformation - transform the brainmask into functional space</span>
 <span class="n">applyVolTrans</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ApplyVolTransform</span><span class="p">(</span><span class="n">inverse</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;applyVolTrans&#39;</span><span class="p">)</span>
+                     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;applyVolTrans&#39;</span><span class="p">)</span>
 
-<span class="c"># Binarize -  binarize and dilate an image to create a brainmask</span>
+<span class="c1"># Binarize -  binarize and dilate an image to create a brainmask</span>
 <span class="n">binarize</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Binarize</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                          <span class="n">dilate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                         <span class="n">out_type</span><span class="o">=</span><span class="s">&#39;nii&#39;</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&#39;binarize&#39;</span><span class="p">)</span>
+                         <span class="n">out_type</span><span class="o">=</span><span class="s1">&#39;nii&#39;</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;binarize&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <p>After implementing the nodes we can create the preprocessing subworkflow and add all those nodes to it and connect them to each other.</p>
@@ -358,23 +361,23 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Create a preprocessing workflow</span>
-<span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;preproc&#39;</span><span class="p">)</span>
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Create a preprocessing workflow</span>
+<span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;preproc&#39;</span><span class="p">)</span>
 
-<span class="c"># Connect all components of the preprocessing workflow</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">despike</span><span class="p">,</span> <span class="n">sliceTiming</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;out_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">sliceTiming</span><span class="p">,</span> <span class="n">realign</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;timecorrected_files&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">tsnr</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s">&#39;realigned_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;mask_file&#39;</span><span class="p">),</span>
-                                 <span class="p">(</span><span class="s">&#39;realignment_parameters&#39;</span><span class="p">,</span>
-                                  <span class="s">&#39;realignment_parameters&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_files&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">bbregister</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;brainmask&#39;</span><span class="p">,</span> <span class="s">&#39;target_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">bbregister</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;out_reg_file&#39;</span><span class="p">,</span> <span class="s">&#39;reg_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">applyVolTrans</span><span class="p">,</span> <span class="n">binarize</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+<span class="c1"># Connect all components of the preprocessing workflow</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">despike</span><span class="p">,</span> <span class="n">sliceTiming</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">sliceTiming</span><span class="p">,</span> <span class="n">realign</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;timecorrected_files&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">tsnr</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realigned_files&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s1">&#39;realigned_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask_file&#39;</span><span class="p">),</span>
+                                 <span class="p">(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;realignment_parameters&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">bbregister</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;brainmask&#39;</span><span class="p">,</span> <span class="s1">&#39;target_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">bbregister</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_reg_file&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">applyVolTrans</span><span class="p">,</span> <span class="n">binarize</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
                  <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
@@ -413,37 +416,37 @@
 28
 29
 30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># SpecifyModel - Generates SPM-specific Model</span>
+31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># SpecifyModel - Generates SPM-specific Model</span>
 <span class="n">modelspec</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SpecifySPMModel</span><span class="p">(</span><span class="n">concatenate_runs</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                 <span class="n">input_units</span><span class="o">=</span><span class="s">&#39;secs&#39;</span><span class="p">,</span>
-                                 <span class="n">output_units</span><span class="o">=</span><span class="s">&#39;secs&#39;</span><span class="p">,</span>
+                                 <span class="n">input_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
+                                 <span class="n">output_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
                                  <span class="n">time_repetition</span><span class="o">=</span><span class="n">TR</span><span class="p">,</span>
                                  <span class="n">high_pass_filter_cutoff</span><span class="o">=</span><span class="mi">128</span><span class="p">),</span>
-                 <span class="n">name</span><span class="o">=</span><span class="s">&quot;modelspec&quot;</span><span class="p">)</span>
+                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;modelspec&quot;</span><span class="p">)</span>
 
-<span class="c"># Level1Design - Generates an SPM design matrix</span>
-<span class="n">level1design</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Level1Design</span><span class="p">(</span><span class="n">bases</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;hrf&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;derivs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}},</span>
-                                 <span class="n">timing_units</span><span class="o">=</span><span class="s">&#39;secs&#39;</span><span class="p">,</span>
+<span class="c1"># Level1Design - Generates an SPM design matrix</span>
+<span class="n">level1design</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Level1Design</span><span class="p">(</span><span class="n">bases</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;hrf&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;derivs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}},</span>
+                                 <span class="n">timing_units</span><span class="o">=</span><span class="s1">&#39;secs&#39;</span><span class="p">,</span>
                                  <span class="n">interscan_interval</span><span class="o">=</span><span class="n">TR</span><span class="p">,</span>
-                                 <span class="n">model_serial_correlations</span><span class="o">=</span><span class="s">&#39;AR(1)&#39;</span><span class="p">),</span>
-                    <span class="n">name</span><span class="o">=</span><span class="s">&quot;level1design&quot;</span><span class="p">)</span>
+                                 <span class="n">model_serial_correlations</span><span class="o">=</span><span class="s1">&#39;AR(1)&#39;</span><span class="p">),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;level1design&quot;</span><span class="p">)</span>
 
-<span class="c"># EstimateModel - estimate the parameters of the model</span>
-<span class="n">level1estimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateModel</span><span class="p">(</span><span class="n">estimation_method</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Classical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}),</span>
-                      <span class="n">name</span><span class="o">=</span><span class="s">&quot;level1estimate&quot;</span><span class="p">)</span>
+<span class="c1"># EstimateModel - estimate the parameters of the model</span>
+<span class="n">level1estimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateModel</span><span class="p">(</span><span class="n">estimation_method</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Classical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}),</span>
+                      <span class="n">name</span><span class="o">=</span><span class="s2">&quot;level1estimate&quot;</span><span class="p">)</span>
 
-<span class="c"># EstimateContrast - estimates contrasts</span>
-<span class="n">conestimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateContrast</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;conestimate&quot;</span><span class="p">)</span>
+<span class="c1"># EstimateContrast - estimates contrasts</span>
+<span class="n">conestimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateContrast</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;conestimate&quot;</span><span class="p">)</span>
 
-<span class="c"># Volume Transformation - transform contrasts into anatomical space</span>
+<span class="c1"># Volume Transformation - transform contrasts into anatomical space</span>
 <span class="n">applyVolReg</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">ApplyVolTransform</span><span class="p">(</span><span class="n">fs_target</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                      <span class="n">name</span><span class="o">=</span><span class="s">&#39;applyVolReg&#39;</span><span class="p">,</span>
-                      <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;source_file&#39;</span><span class="p">])</span>
+                      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;applyVolReg&#39;</span><span class="p">,</span>
+                      <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_file&#39;</span><span class="p">])</span>
 
-<span class="c"># MRIConvert - to gzip output files</span>
-<span class="n">mriconvert</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">MRIConvert</span><span class="p">(</span><span class="n">out_type</span><span class="o">=</span><span class="s">&#39;niigz&#39;</span><span class="p">),</span>
-                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;mriconvert&#39;</span><span class="p">,</span>
-                     <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;in_file&#39;</span><span class="p">])</span>
+<span class="c1"># MRIConvert - to gzip output files</span>
+<span class="n">mriconvert</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">MRIConvert</span><span class="p">(</span><span class="n">out_type</span><span class="o">=</span><span class="s1">&#39;niigz&#39;</span><span class="p">),</span>
+                     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mriconvert&#39;</span><span class="p">,</span>
+                     <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
 <p>Now that this is done, we create the first level analysis subworkflow and add all the nodes to it and connect them to each other.</p>
@@ -465,24 +468,24 @@
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Initiation of the 1st-level analysis workflow</span>
-<span class="n">l1analysis</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;l1analysis&#39;</span><span class="p">)</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Initiation of the 1st-level analysis workflow</span>
+<span class="n">l1analysis</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;l1analysis&#39;</span><span class="p">)</span>
 
-<span class="c"># Connect up the 1st-level analysis components</span>
-<span class="n">l1analysis</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">modelspec</span><span class="p">,</span> <span class="n">level1design</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;session_info&#39;</span><span class="p">,</span>
-                                                <span class="s">&#39;session_info&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">level1design</span><span class="p">,</span> <span class="n">level1estimate</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span>
-                                                     <span class="s">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">level1estimate</span><span class="p">,</span> <span class="n">conestimate</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;spm_mat_file&#39;</span><span class="p">,</span>
-                                                    <span class="s">&#39;spm_mat_file&#39;</span><span class="p">),</span>
-                                                   <span class="p">(</span><span class="s">&#39;beta_images&#39;</span><span class="p">,</span>
-                                                    <span class="s">&#39;beta_images&#39;</span><span class="p">),</span>
-                                                   <span class="p">(</span><span class="s">&#39;residual_image&#39;</span><span class="p">,</span>
-                                                    <span class="s">&#39;residual_image&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">conestimate</span><span class="p">,</span> <span class="n">applyVolReg</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;con_images&#39;</span><span class="p">,</span>
-                                                 <span class="s">&#39;source_file&#39;</span><span class="p">)]),</span>
-                    <span class="p">(</span><span class="n">applyVolReg</span><span class="p">,</span> <span class="n">mriconvert</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;transformed_file&#39;</span><span class="p">,</span>
-                                                <span class="s">&#39;in_file&#39;</span><span class="p">)]),</span>
+<span class="c1"># Connect up the 1st-level analysis components</span>
+<span class="n">l1analysis</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">modelspec</span><span class="p">,</span> <span class="n">level1design</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;session_info&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;session_info&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">level1design</span><span class="p">,</span> <span class="n">level1estimate</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;spm_mat_file&#39;</span><span class="p">,</span>
+                                                     <span class="s1">&#39;spm_mat_file&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">level1estimate</span><span class="p">,</span> <span class="n">conestimate</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;spm_mat_file&#39;</span><span class="p">,</span>
+                                                    <span class="s1">&#39;spm_mat_file&#39;</span><span class="p">),</span>
+                                                   <span class="p">(</span><span class="s1">&#39;beta_images&#39;</span><span class="p">,</span>
+                                                    <span class="s1">&#39;beta_images&#39;</span><span class="p">),</span>
+                                                   <span class="p">(</span><span class="s1">&#39;residual_image&#39;</span><span class="p">,</span>
+                                                    <span class="s1">&#39;residual_image&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">conestimate</span><span class="p">,</span> <span class="n">applyVolReg</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;con_images&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
+                    <span class="p">(</span><span class="n">applyVolReg</span><span class="p">,</span> <span class="n">mriconvert</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;transformed_file&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
                     <span class="p">])</span>
 </pre></div>
 </td></tr></table></div>
@@ -504,19 +507,19 @@
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;metaflow&#39;</span><span class="p">)</span>
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">metaflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;metaflow&#39;</span><span class="p">)</span>
 <span class="n">metaflow</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">experiment_dir</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">)</span>
 
-<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;modelspec.realignment_parameters&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;smooth.smoothed_files&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;modelspec.functional_runs&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;art.outlier_files&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;modelspec.outlier_files&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;level1design.mask_image&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;applyVolReg.reg_file&#39;</span><span class="p">),</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;modelspec.realignment_parameters&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;smooth.smoothed_files&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;modelspec.functional_runs&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;art.outlier_files&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;modelspec.outlier_files&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;level1design.mask_image&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;applyVolReg.reg_file&#39;</span><span class="p">),</span>
                                          <span class="p">]),</span>
                   <span class="p">])</span>
 </pre></div>
@@ -536,16 +539,16 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Condition names</span>
-<span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent&#39;</span><span class="p">,</span> <span class="s">&#39;incongruent&#39;</span><span class="p">]</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Condition names</span>
+<span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent&#39;</span><span class="p">,</span> <span class="s1">&#39;incongruent&#39;</span><span class="p">]</span>
 
-<span class="c"># Contrasts</span>
-<span class="n">cont01</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent&#39;</span><span class="p">,</span>   <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="n">cont02</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;incongruent&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-<span class="n">cont03</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent vs incongruent&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-<span class="n">cont04</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;incongruent vs congruent&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
-<span class="n">cont05</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Cond vs zero&#39;</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont01</span><span class="p">,</span> <span class="n">cont02</span><span class="p">]]</span>
-<span class="n">cont06</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Diff vs zero&#39;</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont03</span><span class="p">,</span> <span class="n">cont04</span><span class="p">]]</span>
+<span class="c1"># Contrasts</span>
+<span class="n">cont01</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent&#39;</span><span class="p">,</span>   <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">cont02</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;incongruent&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">cont03</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent vs incongruent&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">cont04</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;incongruent vs congruent&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">condition_names</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">cont05</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cond vs zero&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont01</span><span class="p">,</span> <span class="n">cont02</span><span class="p">]]</span>
+<span class="n">cont06</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Diff vs zero&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">cont03</span><span class="p">,</span> <span class="n">cont04</span><span class="p">]]</span>
 
 <span class="n">contrast_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">cont01</span><span class="p">,</span> <span class="n">cont02</span><span class="p">,</span> <span class="n">cont03</span><span class="p">,</span> <span class="n">cont04</span><span class="p">,</span> <span class="n">cont05</span><span class="p">,</span> <span class="n">cont06</span><span class="p">]</span>
 </pre></div>
@@ -603,20 +606,20 @@
 48
 49
 50
-51</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Function to get Subject specific condition information</span>
+51</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Function to get Subject specific condition information</span>
 <span class="k">def</span> <span class="nf">get_subject_info</span><span class="p">(</span><span class="n">subject_id</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">opj</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;~/nipype_tutorial/data/</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">subject_id</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;~/nipype_tutorial/data/</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">subject_id</span>
     <span class="n">onset_info</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span> <span class="s">&#39;02&#39;</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;01&#39;</span><span class="p">,</span> <span class="s">&#39;02&#39;</span><span class="p">,</span> <span class="s">&#39;03&#39;</span><span class="p">,</span> <span class="s">&#39;04&#39;</span><span class="p">]:</span>
-            <span class="n">onset_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;onset_run0</span><span class="si">%s</span><span class="s">_cond0</span><span class="si">%s</span><span class="s">.txt&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">cond</span><span class="p">))</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">onset_file</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">,</span> <span class="s1">&#39;04&#39;</span><span class="p">]:</span>
+            <span class="n">onset_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;onset_run0</span><span class="si">%s</span><span class="s1">_cond0</span><span class="si">%s</span><span class="s1">.txt&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">cond</span><span class="p">))</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">onset_file</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">info</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;0.00&#39;</span><span class="p">:</span>
-                        <span class="n">onset_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s">&#39;cond0</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">cond</span><span class="p">,</span>
-                                           <span class="s">&#39;run0</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">run</span><span class="p">,</span>
+                    <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;0.00&#39;</span><span class="p">:</span>
+                        <span class="n">onset_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;cond0</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">cond</span><span class="p">,</span>
+                                           <span class="s1">&#39;run0</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">run</span><span class="p">,</span>
                                            <span class="nb">float</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
     <span class="n">onset_run1_congruent</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">onset_run1_incongruent</span> <span class="o">=</span> <span class="p">[]</span>
@@ -624,22 +627,22 @@
     <span class="n">onset_run2_incongruent</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">onset_info</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;run001&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond002&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;run001&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond002&#39;</span><span class="p">:</span>
                 <span class="n">onset_run1_congruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond004&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond004&#39;</span><span class="p">:</span>
                 <span class="n">onset_run1_incongruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;run002&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond002&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;run002&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond001&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond002&#39;</span><span class="p">:</span>
                 <span class="n">onset_run2_congruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;cond004&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond003&#39;</span> <span class="ow">or</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cond004&#39;</span><span class="p">:</span>
                 <span class="n">onset_run2_incongruent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
     <span class="n">onset_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run1_congruent</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run1_incongruent</span><span class="p">),</span>
                   <span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run2_congruent</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">onset_run2_incongruent</span><span class="p">)]</span>
 
     <span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">Bunch</span>
-    <span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;congruent&#39;</span><span class="p">,</span> <span class="s">&#39;incongruent&#39;</span><span class="p">]</span>
+    <span class="n">condition_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;congruent&#39;</span><span class="p">,</span> <span class="s1">&#39;incongruent&#39;</span><span class="p">]</span>
 
     <span class="n">subjectinfo</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
@@ -657,7 +660,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>So what does it do? <strong>Line 3 to 34</strong> are specific to the tutorial dataset and will most certainly not apply for any other study, which are not from the <a class="reference external" href="https://openfmri.org/">openfmri.org</a>. This part of the function goes through the subject folder under <code class="docutils literal"><span class="pre">~/nipype_tutorial/data/</span></code> and reads out the values in the files <code class="docutils literal"><span class="pre">onset_run00?_cond00?.txt</span></code>. The result of line 3 to 34 is an array called <code class="docutils literal"><span class="pre">onset_list</span></code> with four arrays, containing the onset for the condition <code class="docutils literal"><span class="pre">congruent_run1</span></code>, <code class="docutils literal"><span class="pre">incongruent_run1</span></code>, <code class="docutils literal"><span class="pre">congruent_run2</span></code> and <code class="docutils literal"><span class="pre">incongruent_run2</span></code>. In the case of <code class="docutils literal"><span class="pre">sub001</span></code> this looks like this:</p>
-<div class="highlight-py"><div class="highlight"><pre><span class="n">onset_list</span><span class="o">=</span><span class="p">[[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">140.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">],</span>
+<div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">onset_list</span><span class="o">=</span><span class="p">[[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">140.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">,</span> <span class="mf">76.0</span><span class="p">,</span> <span class="mf">102.0</span><span class="p">,</span> <span class="mf">150.0</span><span class="p">,</span> <span class="mf">164.0</span><span class="p">,</span> <span class="mf">174.0</span><span class="p">,</span> <span class="mf">208.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">232.0</span><span class="p">,</span> <span class="mf">260.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">,</span> <span class="mf">102.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">164.0</span><span class="p">,</span> <span class="mf">174.0</span><span class="p">,</span> <span class="mf">208.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">232.0</span><span class="p">,</span> <span class="mf">260.0</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">54.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">76.0</span><span class="p">,</span> <span class="mf">88.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">144.0</span><span class="p">,</span> <span class="mf">154.0</span><span class="p">,</span> <span class="mf">184.0</span><span class="p">,</span> <span class="mf">196.0</span><span class="p">,</span> <span class="mf">246.0</span><span class="p">,</span> <span class="mf">274.0</span><span class="p">]]</span>
@@ -669,11 +672,11 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Get Subject Info - get subject specific condition information</span>
-<span class="n">getsubjectinfo</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Function</span><span class="p">(</span><span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">],</span>
-                               <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_info&#39;</span><span class="p">],</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Get Subject Info - get subject specific condition information</span>
+<span class="n">getsubjectinfo</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Function</span><span class="p">(</span><span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">],</span>
+                               <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_info&#39;</span><span class="p">],</span>
                                <span class="n">function</span><span class="o">=</span><span class="n">get_subject_info</span><span class="p">),</span>
-                      <span class="n">name</span><span class="o">=</span><span class="s">&#39;getsubjectinfo&#39;</span><span class="p">)</span>
+                      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;getsubjectinfo&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -749,68 +752,68 @@
 61
 62
 63
-64</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Infosource - a function free node to iterate over the list of subject names</span>
-<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
-                                            <span class="s">&#39;contrasts&#39;</span><span class="p">],</span>
+64</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Infosource - a function free node to iterate over the list of subject names</span>
+<span class="n">infosource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;contrasts&#39;</span><span class="p">],</span>
                                     <span class="n">contrasts</span><span class="o">=</span><span class="n">contrast_list</span><span class="p">),</span>
-                  <span class="n">name</span><span class="o">=</span><span class="s">&quot;infosource&quot;</span><span class="p">)</span>
-<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)]</span>
+                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;infosource&quot;</span><span class="p">)</span>
+<span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)]</span>
 
-<span class="c"># SelectFiles - to grab the data (alternativ to DataGrabber)</span>
-<span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;func&#39;</span><span class="p">:</span> <span class="s">&#39;data/{subject_id}/run*.nii.gz&#39;</span><span class="p">}</span>
+<span class="c1"># SelectFiles - to grab the data (alternativ to DataGrabber)</span>
+<span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="s1">&#39;data/{subject_id}/run*.nii.gz&#39;</span><span class="p">}</span>
 <span class="n">selectfiles</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SelectFiles</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span>
                                <span class="n">base_directory</span><span class="o">=</span><span class="n">experiment_dir</span><span class="p">),</span>
-                   <span class="n">name</span><span class="o">=</span><span class="s">&quot;selectfiles&quot;</span><span class="p">)</span>
+                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;selectfiles&quot;</span><span class="p">)</span>
 
-<span class="c"># Datasink - creates output folder for important outputs</span>
+<span class="c1"># Datasink - creates output folder for important outputs</span>
 <span class="n">datasink</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">DataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">experiment_dir</span><span class="p">,</span>
                          <span class="n">container</span><span class="o">=</span><span class="n">output_dir</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&quot;datasink&quot;</span><span class="p">)</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;datasink&quot;</span><span class="p">)</span>
 
-<span class="c"># Use the following DataSink output substitutions</span>
-<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;_subject_id_&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;_despike&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;_detrended&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
-                 <span class="p">(</span><span class="s">&#39;_warped&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)]</span>
+<span class="c1"># Use the following DataSink output substitutions</span>
+<span class="n">substitutions</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;_subject_id_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;_despike&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;_detrended&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;_warped&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)]</span>
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">substitutions</span> <span class="o">=</span> <span class="n">substitutions</span>
 
-<span class="c"># Connect Infosource, SelectFiles and DataSink to the main workflow</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">selectfiles</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;bbregister.subject_id&#39;</span><span class="p">),</span>
-                                         <span class="p">(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span>
-                                          <span class="s">&#39;fssource.subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">selectfiles</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;func&#39;</span><span class="p">,</span> <span class="s">&#39;despike.in_file&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">getsubjectinfo</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s">&#39;subject_id&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">getsubjectinfo</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;subject_info&#39;</span><span class="p">,</span>
-                                                 <span class="s">&#39;modelspec.subject_info&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;contrasts&#39;</span><span class="p">,</span>
-                                             <span class="s">&#39;conestimate.contrasts&#39;</span><span class="p">)]),</span>
-                  <span class="p">(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;realign.mean_image&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@mean&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@parameters&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;art.outlier_files&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@outliers&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;art.plot_files&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@plot&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;preprocout.@brainmask&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;bbregister.@out_reg_file&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;bbregister.out_fsl_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;bbregister.@out_fsl_file&#39;</span><span class="p">),</span>
-                                       <span class="p">(</span><span class="s">&#39;bbregister.registered_file&#39;</span><span class="p">,</span>
-                                        <span class="s">&#39;bbregister.@registered_file&#39;</span><span class="p">),</span>
+<span class="c1"># Connect Infosource, SelectFiles and DataSink to the main workflow</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">selectfiles</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;bbregister.subject_id&#39;</span><span class="p">),</span>
+                                         <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;fssource.subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">selectfiles</span><span class="p">,</span> <span class="n">preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;func&#39;</span><span class="p">,</span> <span class="s1">&#39;despike.in_file&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">getsubjectinfo</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">getsubjectinfo</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subject_info&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;modelspec.subject_info&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">infosource</span><span class="p">,</span> <span class="n">l1analysis</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;contrasts&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;conestimate.contrasts&#39;</span><span class="p">)]),</span>
+                  <span class="p">(</span><span class="n">preproc</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realign.mean_image&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@mean&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;realign.realignment_parameters&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@parameters&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;art.outlier_files&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@outliers&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;art.plot_files&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@plot&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;binarize.binary_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;preprocout.@brainmask&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;bbregister.out_reg_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;bbregister.@out_reg_file&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;bbregister.out_fsl_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;bbregister.@out_fsl_file&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;bbregister.registered_file&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;bbregister.@registered_file&#39;</span><span class="p">),</span>
                                        <span class="p">]),</span>
-                  <span class="p">(</span><span class="n">l1analysis</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;mriconvert.out_file&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@contrasts&#39;</span><span class="p">),</span>
-                                          <span class="p">(</span><span class="s">&#39;conestimate.spm_mat_file&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@spm_mat&#39;</span><span class="p">),</span>
-                                          <span class="p">(</span><span class="s">&#39;conestimate.spmT_images&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@T&#39;</span><span class="p">),</span>
-                                          <span class="p">(</span><span class="s">&#39;conestimate.con_images&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;contrasts.@con&#39;</span><span class="p">),</span>
+                  <span class="p">(</span><span class="n">l1analysis</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mriconvert.out_file&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@contrasts&#39;</span><span class="p">),</span>
+                                          <span class="p">(</span><span class="s1">&#39;conestimate.spm_mat_file&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@spm_mat&#39;</span><span class="p">),</span>
+                                          <span class="p">(</span><span class="s1">&#39;conestimate.spmT_images&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@T&#39;</span><span class="p">),</span>
+                                          <span class="p">(</span><span class="s1">&#39;conestimate.con_images&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;contrasts.@con&#39;</span><span class="p">),</span>
                                           <span class="p">]),</span>
                   <span class="p">])</span>
 </pre></div>
@@ -820,8 +823,8 @@
 <h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
 <p>Finally, after everything is set up correctly we can run the pipeline and let it draw the graph of the workflow.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s">&#39;colored&#39;</span><span class="p">)</span>
-<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">metaflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
+<span class="n">metaflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
@@ -838,7 +841,7 @@
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>After we&#8217;ve run our <strong>first level analysis pipeline</strong> our folder structure should look like this:</p>
 <p>After we’ve executed the first level workflow we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_fMRI_example_1st</span></code> which contains all files created during the execution of the metaflow, and the output folder <code class="docutils literal"><span class="pre">output_fMRI_example_1st</span></code> which contains all the files that we sent to the DataSink. Let’s take a closer look at the DataSink folder:</p>
-<div class="highlight-sh"><div class="highlight"><pre>output_fMRI_example_1st
+<div class="highlight-sh"><div class="highlight"><pre><span></span>output_fMRI_example_1st
 <span class="p">|</span>-- bbregister
 <span class="p">|</span>   <span class="p">|</span>-- sub001
 <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- meanarun001_bbreg_sub001.dat
@@ -946,8 +949,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 21, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
+      Last updated on July 28, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
