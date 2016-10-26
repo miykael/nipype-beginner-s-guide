@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="Introduction to Neuroimaging" href="neuroimaging.html" />
-    <link rel="prev" title="Glossary" href="glossary.html" />
+    <link rel="prev" title="Welcome to Nipype Beginner’s Guide!" href="index.html" />
     <meta name="keywords" content="nipype, neuroimaging, pipeline, workflow, parallel, python, neuroscience, python, guide, mri, fmri, dti, tutorial, user guide">
     <script type="text/javascript">
 
@@ -59,7 +59,7 @@
           <a href="neuroimaging.html" title="Introduction to Neuroimaging"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="glossary.html" title="Glossary"
+          <a href="index.html" title="Welcome to Nipype Beginner’s Guide!"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Home</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Contents</a>|</li>
@@ -92,22 +92,19 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="glossary.html"
-                        title="previous chapter">Glossary</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Nipype Beginner&#8217;s Guide!</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="neuroimaging.html"
                         title="next chapter">Introduction to Neuroimaging</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
@@ -140,8 +137,7 @@
 <h2>A Short Example<a class="headerlink" href="#a-short-example" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s assume you want to do an Analysis that uses <strong>AFNI</strong> for the <em>Motion Correction</em>, <strong>FreeSurfer</strong> for the <em>Coregistration</em>, <strong>ANTS</strong> for the <em>Normalization</em>, <strong>FSL</strong> for the <em>Smoothing</em>, <strong>Nipype</strong> for the <em>Model Specification</em>, <strong>SPM</strong> for the <em>Model Estimation</em> and <strong>SPM</strong> for the <em>Statistical Inference</em>. Normally this would be a hell of a mess. Switching between multiple scripts in different programming languages with a lot of manual intervention. On top of all that, you want to do your analysis on multiple subjects, preferably as fast as possible, i.e., processing several subjects in parallel. With Nipype, this is no problem! You can do all this and much more.</p>
 <p>To illustrate the straightforwardness of an Nipype workflow and show how simply it can be created, look at the following example. This figure shows you a simplification of the analysis <em>workflow</em> just outlined.</p>
-<p class="graphviz">
-<img src="_images/graphviz-3675a1db7a76d280f802cf889f04aa18e4079b60.png" alt="strict digraph  {
+<img src="_images/graphviz-8c87dc5ea0a1dce0a37ee2563f6812ca965fe8d1.png" alt="strict digraph  {
 
     dataset[label=&quot;rawdata&quot;, shape=box3d,style=filled, color=black, colorscheme=greys7 fillcolor=2];
     datastorage[label=&quot;output&quot;, shape=box3d,style=filled, color=black, colorscheme=greys7 fillcolor=2];
@@ -197,7 +193,6 @@
     stat3 -&gt; datastorage;
 
 }" />
-</p>
 <p>The code to create an Nipype workflow that specifies the steps illustrated in the figure above and can run all the steps would look something like this:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -478,7 +473,7 @@
           <a href="neuroimaging.html" title="Introduction to Neuroimaging"
              >next</a></li>
         <li class="right" >
-          <a href="glossary.html" title="Glossary"
+          <a href="index.html" title="Welcome to Nipype Beginner’s Guide!"
              >previous</a> |</li>
         <li><a href="index.html">Home</a>|</li>
         <li><a href="http://miykael.github.com/nipype-beginner-s-guide/tableofcontent.html">Table of Contents</a>|</li>
@@ -492,8 +487,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 28, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Last updated on October 26, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.6.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

@@ -107,14 +107,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
@@ -144,7 +141,7 @@
 <p>As with every workflow, we also need some input and output nodes which handle the data and an additional node that provides subject specific information. For that we need an <code class="docutils literal"><span class="pre">Infosource</span></code> node that knows on which subjects to run, a <code class="docutils literal"><span class="pre">SelectFiles</span></code> node that knows where to get the data, a <code class="docutils literal"><span class="pre">getsubjectinfo</span></code> node that knows subject specific information (e.g. onset times and duration of conditions, subject specific regressors, etc.) and a <code class="docutils literal"><span class="pre">DataSink</span></code> node that knows which files to store and where to store them.</p>
 <p>To run all this we need some structure. Therefore, we will put the <strong>preprocessing</strong> and the <strong>first level analysis</strong> part in its own subworkflow and create a hierarchically higher workflow that contains those two subworkflows as well as the input and output nodes. I&#8217;d like to call this top workflow <strong>metaflow</strong>.</p>
 <p>Those are a lot of different parts and it is confusing to make sense of it without actually seeing what we try to build. Here is how the metaflow should look like in the end:</p>
-<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img src="_images/graph_colored.svg" width="700pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img alt="_images/graph_colored.svg" src="_images/graph_colored.svg" width="700pt" /></div>
 </a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -177,7 +174,7 @@
 <span class="kn">from</span> <span class="nn">nipype.interfaces.utility</span> <span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">IdentityInterface</span>
 <span class="kn">from</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">import</span> <span class="n">FreeSurferSource</span><span class="p">,</span> <span class="n">SelectFiles</span><span class="p">,</span> <span class="n">DataSink</span>
 <span class="kn">from</span> <span class="nn">nipype.algorithms.rapidart</span> <span class="kn">import</span> <span class="n">ArtifactDetect</span>
-<span class="kn">from</span> <span class="nn">nipype.algorithms.misc</span> <span class="kn">import</span> <span class="n">TSNR</span>
+<span class="kn">from</span> <span class="nn">nipype.algorithms.misc</span> <span class="kn">import</span> <span class="n">TSNR</span><span class="p">,</span> <span class="n">Gunzip</span>
 <span class="kn">from</span> <span class="nn">nipype.algorithms.modelgen</span> <span class="kn">import</span> <span class="n">SpecifySPMModel</span>
 <span class="kn">from</span> <span class="nn">nipype.pipeline.engine</span> <span class="kn">import</span> <span class="n">Workflow</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">MapNode</span>
 </pre></div>
@@ -287,7 +284,10 @@
 51
 52
 53
-54</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
+54
+55
+56
+57</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Despike - Removes &#39;spikes&#39; from the 3D+time input dataset</span>
 <span class="n">despike</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Despike</span><span class="p">(</span><span class="n">outputtype</span><span class="o">=</span><span class="s1">&#39;NIFTI&#39;</span><span class="p">),</span>
                   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;despike&quot;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 
@@ -316,6 +316,9 @@
                           <span class="n">parameter_source</span><span class="o">=</span><span class="s1">&#39;SPM&#39;</span><span class="p">,</span>
                           <span class="n">use_differences</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">]),</span>
            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;art&quot;</span><span class="p">)</span>
+
+<span class="c1"># Gunzip - unzip functional</span>
+<span class="n">gunzip</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">Gunzip</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gunzip&quot;</span><span class="p">,</span> <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_file&#39;</span><span class="p">])</span>
 
 <span class="c1"># Smooth - to smooth the images with a given kernel</span>
 <span class="n">smooth</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Smooth</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm_size</span><span class="p">),</span>
@@ -361,7 +364,8 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Create a preprocessing workflow</span>
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Create a preprocessing workflow</span>
 <span class="n">preproc</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;preproc&#39;</span><span class="p">)</span>
 
 <span class="c1"># Connect all components of the preprocessing workflow</span>
@@ -372,7 +376,8 @@
                  <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">art</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask_file&#39;</span><span class="p">),</span>
                                  <span class="p">(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span>
                                   <span class="s1">&#39;realignment_parameters&#39;</span><span class="p">)]),</span>
-                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">tsnr</span><span class="p">,</span> <span class="n">gunzip</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;detrended_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
+                 <span class="p">(</span><span class="n">gunzip</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
                  <span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">bbregister</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;mean_image&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
                  <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;brainmask&#39;</span><span class="p">,</span> <span class="s1">&#39;target_file&#39;</span><span class="p">)]),</span>
                  <span class="p">(</span><span class="n">bbregister</span><span class="p">,</span> <span class="n">applyVolTrans</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_reg_file&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_file&#39;</span><span class="p">)]),</span>
@@ -949,8 +954,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 28, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Last updated on October 26, 2016.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.6.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
