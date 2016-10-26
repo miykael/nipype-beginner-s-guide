@@ -9,7 +9,7 @@ from nipype.interfaces.spm import (SliceTiming, Realign, Smooth, Level1Design,
 from nipype.interfaces.utility import Function, IdentityInterface
 from nipype.interfaces.io import FreeSurferSource, SelectFiles, DataSink
 from nipype.algorithms.rapidart import ArtifactDetect
-from nipype.algorithms.misc import TSNR
+from nipype.algorithms.misc import TSNR, Gunzip
 from nipype.algorithms.modelgen import SpecifySPMModel
 from nipype.pipeline.engine import Workflow, Node, MapNode
 
@@ -71,6 +71,9 @@ art = Node(ArtifactDetect(norm_threshold=1,
                           use_differences=[True, False]),
            name="art")
 
+# Gunzip - unzip functional
+gunzip = MapNode(Gunzip(), name="gunzip", iterfield=['in_file'])
+
 # Smooth - to smooth the images with a given kernel
 smooth = Node(Smooth(fwhm=fwhm_size),
               name="smooth")
@@ -111,7 +114,8 @@ preproc.connect([(despike, sliceTiming, [('out_file', 'in_files')]),
                  (realign, art, [('mean_image', 'mask_file'),
                                  ('realignment_parameters',
                                   'realignment_parameters')]),
-                 (tsnr, smooth, [('detrended_file', 'in_files')]),
+                 (tsnr, gunzip, [('detrended_file', 'in_file')]),
+                 (gunzip, smooth, [('out_file', 'in_files')]),
                  (realign, bbregister, [('mean_image', 'source_file')]),
                  (fssource, applyVolTrans, [('brainmask', 'target_file')]),
                  (bbregister, applyVolTrans, [('out_reg_file', 'reg_file')]),
