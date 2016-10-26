@@ -24,6 +24,7 @@ cp -r "$TMP_DIR"/html/* .
 
 # Submit changes with current timestamp
 TIMESTAMP=`date +'%Y-%m-%d %H:%M:%S'`
+git add *
 git commit -a -m "Homepage update ${TIMESTAMP}"
 git push origin gh-pages
 
