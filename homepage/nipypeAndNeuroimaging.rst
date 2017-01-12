@@ -28,7 +28,7 @@ Let's get back to the steps involved in the analysis of fMRI data from the previ
        :width: 300pt
 
 
-This all seems to be really big and complex. And what if you want to first want to do a motion correction and than a slice timing correction? Or add an additional step into a already established analysis. With Nipype, this is very easy.
+This all seems to be really big and complex. And what if you want to first want to do a motion correction and then a slice timing correction? Or add an additional step into an already established analysis. With Nipype, this is very easy.
 
 
 Nipype Workflow
@@ -50,7 +50,7 @@ Let's get back to the workflow above. In the world of Nipype, this neuroimaging 
        :align: center
        :width: 325pt
 
-As you can see, each step of the process is represented by a node in the workflow (e.g. `Motion Correction`, `Coregistration`, `Normalization`, `Smoothing`, `Model Estimation`). And each of those nodes can come from a different software package (e.g. `FreeSurfer`, `FSL`, `SPM`, `ANTs`, `AFNI`, `Nipype`). The freedom to chose the software package to use, to guide the flow and sequential order of the execution is completely up to you. Even if you want to run a node with different parameters (e.g. `fwhm = 4 and 8`) this can be done with no problem. And the great thing about all this. All of those steps can be done in parallel! 
+As you can see, each step of the process is represented by a node in the workflow (e.g. `Motion Correction`, `Coregistration`, `Normalization`, `Smoothing`, `Model Estimation`). And each of those nodes can come from a different software package (e.g. `FreeSurfer`, `FSL`, `SPM`, `ANTs`, `AFNI`, `Nipype`). The freedom to chose the software package to use, to guide the flow and sequential order of the execution is completely up to you. Even if you want to run a node with different parameters (e.g. `fwhm = 4 and 8`) this can be done with no problem. And the great thing about all this. All of those steps can be done in parallel!
 
 If you understand those concepts, you will be able to use Nipype in no time. Because this is all there is to know about Nipype. But before we'll start with the first Nipype script, lets first make sure that your system is set up correctly. All about how to check that and how to install all required softwares can be found in the next chapter of this Beginner's Guide.
 
