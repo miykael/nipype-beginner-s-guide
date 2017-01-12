@@ -59,7 +59,7 @@ So which variables should you declare in this section? **All of them!** Every va
 For example:
 
 .. code-block:: py
-   :linenos: 
+   :linenos:
 
    # What is the location of your experiment folder
    experiment_dir = '~/nipype_tutorial'
@@ -85,7 +85,7 @@ It is impossible to build a pipeline without any scaffold or objects to build wi
 Nodes
 -----
 
-A node is an object that represents a certain interface function, for example SPM's ``Realign`` method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes. 
+A node is an object that represents a certain interface function, for example SPM's ``Realign`` method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes.
 
 
 Input and Output Fields
@@ -98,7 +98,7 @@ Let's assume that we want to know more about FSL's function ``SmoothEstimate``. 
 Now that we have access to FSL, we simply can run ``fsl.SmoothEstimate.help()``. This will give us the following output:
 
 .. code-block:: py
-    :linenos: 
+    :linenos:
 
     Wraps command **smoothest**
 
@@ -181,7 +181,7 @@ For example, if you want to know that the default values for SPM's Threshold fun
 
     import nipype.interfaces.spm as spm
     spm.Threshold.input_spec()
-    
+
 This will give you the following output:
 
 .. code-block:: py
@@ -218,7 +218,7 @@ Such a "stand-alone" node is also a good opportunity to introduce the implementa
     # First, make sure to import the FSL interface
     import nipype.interfaces.fsl as fsl
 
-    # Method 1: specify parameters during node creation   
+    # Method 1: specify parameters during node creation
     mybet = fsl.BET(in_file='~/nipype_tutorial/data/sub001/struct.nii.gz',
                     out_file='~/nipype_tutorial/data/sub001/struct_bet.nii.gz')
     mybet.run()
@@ -232,7 +232,7 @@ Such a "stand-alone" node is also a good opportunity to introduce the implementa
     # Method 3: specify parameters when the node is executed
     mybet = fsl.BET()
     mybet.run(in_file='~/nipype_tutorial/data/sub001/struct.nii.gz',
-              out_file='~/nipype_tutorial/data/sub001/struct_bet.nii.gz')   
+              out_file='~/nipype_tutorial/data/sub001/struct_bet.nii.gz')
 
 .. hint::
 
@@ -588,7 +588,7 @@ Input & Output Stream
 
 This is probably one of the more important and difficult sections of a workflow script, as most of the errors and issues you can encounter with your pipeline are mostly based on some kind of error in the specification of the workflow input or output stream. So make sure that this section is correct.
 
-Before you can tell your computer where it can find your data, you yourself have to understand where and in which format your data is stored at. If you use the tutorial dataset, than your folder structure look as follows:
+Before you can tell your computer where it can find your data, you yourself have to understand where and in which format your data is stored at. If you use the tutorial dataset, then your folder structure look as follows:
 
 .. code-block:: none
 
@@ -615,7 +615,7 @@ Input Stream
 Now there are two different functions that you can use to specify the folder structure of the input stream. One of them is called ``SelectFiles`` and the other one is called ``DataGrabber``. Both are string based and easy to use once understood. Nonetheless, I would recommend to use ``SelectFiles``, as it is much more straight forward to use:
 
 .. code-block:: py
-    :linenos: 
+    :linenos:
 
      # SelectFiles
      templates = {'anat': 'data/{subject_id}/struct.nii.gz',
@@ -646,7 +646,7 @@ Output Stream
 In contrast to this, the definition of the output stream is rather simple. You only have to create a ``DataSink``. A ``DataSink`` is a node that specifies in which output folder all the relevant results should be stored at.
 
 .. code-block:: py
-    :linenos: 
+    :linenos:
 
     # Datasink
     datasink = Node(nio.DataSink(), name="datasink")
@@ -654,17 +654,17 @@ In contrast to this, the definition of the output stream is rather simple. You o
     datasink.inputs.container = 'datasink_folder'
 
 
-To store an output of a certain node in this DataSink just connect the node to the DataSink. The output data will be saved in the just specified container ``datasink_folder``. Nipype will than save this output in a folder under this container, depending on the name of the DataSink input field that you specify during the creation of connections.
+To store an output of a certain node in this DataSink just connect the node to the DataSink. The output data will be saved in the just specified container ``datasink_folder``. Nipype will then save this output in a folder under this container, depending on the name of the DataSink input field that you specify during the creation of connections.
 
 As an example, let's assume that we want to use the output of SPM's motion correction node, here called ``realign``.
 
 .. code-block:: py
-    :linenos: 
+    :linenos:
 
     # Saves the realigned files into a subfolder called 'motion'
     workflow.connect(realign, datasink, [('realigned_files', 'motion')])
 
-    # Saves the realignment_parameters also into the subfolder called 'motion'    
+    # Saves the realignment_parameters also into the subfolder called 'motion'
     workflow.connect(realign, datasink, [('realignment_parameters', 'motion.@par')])
 
     # Saves the realignment parameters in a subfolder 'par', under the folder 'motion'
@@ -673,7 +673,7 @@ As an example, let's assume that we want to use the output of SPM's motion corre
 The output folder and files of the datasink node often have long and detailed names, such as ``'_subject_id_sub002/con_0001_warped_out.nii'``. This is because many of the nodes used add their own pre- or postfix to a file or folder. You can use datasink's substitutions function to change or delete unwanted strings:
 
 .. code-block:: py
-    :linenos: 
+    :linenos:
 
     # Use the following DataSink output substitutions
     substitutions = [('_subject_id_', ''),
@@ -697,14 +697,14 @@ The DataSink is really useful to keep control over your storage capacity. If you
 Run Workflow
 ************
 
-After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the ``run()`` method of the workflow.
+After all modules are imported, important variables are specified, nodes are created and connected to workflows, you are able to run your pipeline. This can be done by calling the ``run()`` method of the workflow.
 
 As already described in the `introduction section <http://miykael.github.io/nipype-beginner-s-guide/nipype.html#execution-plugins>`_, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.
 
 Here are just a few example how you can run your workflow:
 
 .. code-block:: py
-    :linenos: 
+    :linenos:
 
     # Execute your workflow in sequential way
     workflow.run()
@@ -947,7 +947,7 @@ The following folder structure represents the working directory of the above pre
 
 Even though the working directory is most often only temporary, it contains many relevant files to be found and explore. Following are some of the highlights:
 
-- **Visualization**: The main folder of the workflow contains the visualized graph files (if created with ``write_graph()`` and an interactive execution fiew (``index.html``). 
+- **Visualization**: The main folder of the workflow contains the visualized graph files (if created with ``write_graph()`` and an interactive execution fiew (``index.html``).
 - **Reports**: Each node contains a subfolder called ``_report`` that contains a file called ``report.rst``. This file contains all relevant node information. E.g. What's the name of the node and what is its hierarchical place in the pipeline structure? What are the actual input and executed output parameters? How long did it take to execute the node and what were the values of the environment variables during the execution?
 
 
@@ -1036,7 +1036,7 @@ Before we take a look at how to find errors, let's take a look at a correct work
     [Job finished] jobname: datasink.a2 jobid: 13
     [Job finished] jobname: datasink.a0 jobid: 20
 
-This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node's execution is accompanied by the working directory of this node. The output ``[Job finished]`` than tells you when the execution of the node is done.
+This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node's execution is accompanied by the working directory of this node. The output ``[Job finished]`` then tells you when the execution of the node is done.
 
 
 It Crashes, But Where is the Problem?
