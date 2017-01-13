@@ -267,7 +267,7 @@ The following picture shows an example of good (top) and bad (bottom) coregistra
 Normalization
 ^^^^^^^^^^^^^
 
-Every person's brain is slightly different from every other's. Brains differ in size and shape. To compare the images of one person's brain to another's, the images mus first be translated onto a common shape and size, which is called **normalization**. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image.
+Every person's brain is slightly different from every other's. Brains differ in size and shape. To compare the images of one person's brain to another's, the images must first be translated onto a common shape and size, which is called **normalization**. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image.
 
 .. only:: html
 
