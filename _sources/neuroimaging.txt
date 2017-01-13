@@ -220,7 +220,7 @@ Realignment usually uses an affine rigid body transformation to manipulate the d
 Artifact Detection (fMRI only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Almost no subjects lie perfectly still. As we can see from the sharp spikes in the graphs below, some move quite drastically. Severe, sudden movement can contaminate your analysis quite severely. 
+Almost no subjects lie perfectly still. As we can see from the sharp spikes in the graphs below, some move quite drastically. Severe, sudden movement can contaminate your analysis quite severely.
 
 
 .. only:: html
@@ -236,7 +236,7 @@ Almost no subjects lie perfectly still. As we can see from the sharp spikes in t
        :align: center
 
 
-Motion correction tries to correct for smaller movements, but sometimes it's best to just remove the images acquired during extreme rapid movement. We use **Artifact Detection** to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses. 
+Motion correction tries to correct for smaller movements, but sometimes it's best to just remove the images acquired during extreme rapid movement. We use **Artifact Detection** to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses.
 
 For example, checking the translation and rotation graphs for a session shown above for sudden movement greater than 2 standard deviations from the mean, or for movement greater than 1mm, artifact detection would show that images 16-19, 21, 22 and 169-172 should be excluded from further analysis. The graph produced by artifact detection, with vertical lines corresponding to images with drastic variation is shown below.
 
@@ -267,7 +267,7 @@ The following picture shows an example of good (top) and bad (bottom) coregistra
 Normalization
 ^^^^^^^^^^^^^
 
-Every person's brain is slightly different from every other's. Brains differ in size and shape. To compare the images of one person's brain to another's, the images mus first be translated onto a common shape and size, which is called **normalization**. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image. 
+Every person's brain is slightly different from every other's. Brains differ in size and shape. To compare the images of one person's brain to another's, the images must first be translated onto a common shape and size, which is called **normalization**. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image.
 
 .. only:: html
 
@@ -329,7 +329,7 @@ Segmentation (sMRI only)
        :align: right
        :width: 200pt
 
-Segmentation is the process by which a brain is divided into neurological sections according to a given template specification. This can be rather general, for example, segmenting the brain into gray matter, white matter and cerebrospinal fluid, as is done with SPM's Segmentationr, or quite detailed, segmenting into specific functional regions and their subregions, as is done with FreeSurfer's ``recon-all``, and that is illustrated in the figure.
+Segmentation is the process by which a brain is divided into neurological sections according to a given template specification. This can be rather general, for example, segmenting the brain into gray matter, white matter and cerebrospinal fluid, as is done with SPM's Segmentation, or quite detailed, segmenting into specific functional regions and their subregions, as is done with FreeSurfer's ``recon-all``, and that is illustrated in the figure.
 
 .. only:: latex
 
@@ -343,7 +343,7 @@ Segmentation can be used for different things. You can use the segmentation to a
 Step 2: Model Specification and Estimation
 ******************************************
 
-To test our hypothesis on our data we first need to specify a model that incorporates this hypothesis and accounts for multiple factors such as the expected function of the BOLD signal, the movement during measurement, experiment specify parameters and other regressors and covariates. Such a model is usually represented by a Generalized Linear Model (GLM). 
+To test our hypothesis on our data we first need to specify a model that incorporates this hypothesis and accounts for multiple factors such as the expected function of the BOLD signal, the movement during measurement, experiment specify parameters and other regressors and covariates. Such a model is usually represented by a Generalized Linear Model (GLM).
 
 
 The General Linear Model
@@ -416,7 +416,7 @@ Let us assume we have an experiment where we present subjects faces of humans an
        :width: 200pt
        :align: left
 
-Now, we combine all that we know about our model into one single Design Matrix. This Matrix contains multiple columns, which contain information about the stimuli (onset, duration and curve function of the BOLD-signal i.e. the shape of the HRF). In our example column *Sn(1) humans* and *Sn(1) animals* code for the stimuli of humans and animals during the first session of our fictive experiment. Accordingly, Sn(2) codes for all the regressors in the second session. *Sn(1 resting* codes for the timepoints where subjects weren't presented any stimuli.
+Now, we combine all that we know about our model into one single Design Matrix. This Matrix contains multiple columns, which contain information about the stimuli (onset, duration and curve function of the BOLD-signal i.e. the shape of the HRF). In our example column *Sn(1) humans* and *Sn(1) animals* code for the stimuli of humans and animals during the first session of our fictive experiment. Accordingly, Sn(2) codes for all the regressors in the second session. *Sn(1) resting* codes for the timepoints where subjects weren't presented any stimuli.
 
 .. only:: html
 
@@ -430,7 +430,7 @@ Now, we combine all that we know about our model into one single Design Matrix. 
        :width: 300pt
        :align: center
 
-The y-axis codes for the measured scan or the passed time, depending on the specification of your design. The x-axis stands for all the regressors that we specified. 
+The y-axis codes for the measured scan or the passed time, depending on the specification of your design. The x-axis stands for all the regressors that we specified.
 
 The regressors *Sn(1) R1* to *Sn(1) R6* stand for the movement parameters we got from the realignment process. The regressors *Sn(1) linear*, *Sn(1) quadratic*, *Sn(1) cubic* and *Sn(1) quartic* are just examples of correction for the low frequency in your data. If you are using a high-pass filter of e.g. 128 seconds you don't need to specifically include those regressors in your design matrix.
 
@@ -450,10 +450,10 @@ Depending on the software you are using you might get different types of results
     images of estimated regression coefficients (parameter estimate). beta images contain information about the size of the effect of interest. A given voxel in each beta image will have a value related to the size of effect for that explanatory variable.
 * **error image** - ``ResMS``-image
     residual sum of squares or variance image. It is a measure of within-subject error at the 1st level or between-subject error at the 2nd level analysis. This image is used to produce spmT images.
-* **con images** - ``con``-images 
+* **con images** - ``con``-images
     during contrast estimation beta images are linearly combined to produce relevant ``con``-images
-* **T images** - ``spmT``-images 
-    during contrast estimation the beta values of a ``con``-image are combined with error values of the ``ResMS``-image to calculate the t-value at each voxel 
+* **T images** - ``spmT``-images
+    during contrast estimation the beta values of a ``con``-image are combined with error values of the ``ResMS``-image to calculate the t-value at each voxel
 
 
 Step 3: Statistical Inference

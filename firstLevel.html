@@ -107,8 +107,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -141,7 +141,7 @@
 <p>As with every workflow, we also need some input and output nodes which handle the data and an additional node that provides subject specific information. For that we need an <code class="docutils literal"><span class="pre">Infosource</span></code> node that knows on which subjects to run, a <code class="docutils literal"><span class="pre">SelectFiles</span></code> node that knows where to get the data, a <code class="docutils literal"><span class="pre">getsubjectinfo</span></code> node that knows subject specific information (e.g. onset times and duration of conditions, subject specific regressors, etc.) and a <code class="docutils literal"><span class="pre">DataSink</span></code> node that knows which files to store and where to store them.</p>
 <p>To run all this we need some structure. Therefore, we will put the <strong>preprocessing</strong> and the <strong>first level analysis</strong> part in its own subworkflow and create a hierarchically higher workflow that contains those two subworkflows as well as the input and output nodes. I&#8217;d like to call this top workflow <strong>metaflow</strong>.</p>
 <p>Those are a lot of different parts and it is confusing to make sense of it without actually seeing what we try to build. Here is how the metaflow should look like in the end:</p>
-<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img alt="_images/graph_colored.svg" src="_images/graph_colored.svg" width="700pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img src="_images/graph_colored.svg" width="700pt" /></div>
 </a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -954,8 +954,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on October 26, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.6.
+      Last updated on January 13, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

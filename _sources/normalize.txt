@@ -2,7 +2,7 @@
 How To Normalize Your Data
 ==========================
 
-Before you can start with a second level analysis you are facing the problem that all your output from the first level analysis are still in their subject specific subject-space. Because of the huge differences in brain size and cortical structure, it is very important to transform the data of each subject from its individual subject-space into a common standardized reference-space. This process of transformation is what we call normalization and it consists of a rigid body transformation (translations and rotations) as well as of a affine transformation (zooms and shears). The most common template that subject data is normalized to is the `MNI template <http://www.bic.mni.mcgill.ca/ServicesAtlases/HomePage>`_. 
+Before you can start with a second level analysis you are facing the problem that all your output from the first level analysis are still in their subject specific subject-space. Because of the huge differences in brain size and cortical structure, it is very important to transform the data of each subject from its individual subject-space into a common standardized reference-space. This process of transformation is what we call normalization and it consists of a rigid body transformation (translations and rotations) as well as of a affine transformation (zooms and shears). The most common template that subject data is normalized to is the `MNI template <http://www.bic.mni.mcgill.ca/ServicesAtlases/HomePage>`_.
 
 There are many different approaches to when to normalize your data (e.g. before smoothing your data in preprocessing or after the estimation of your contrasts at the end of your first level analysis). I prefer to do the normalization after the first level model was estimated, as I don't want to introduce to many unnecessary transformations in the subject specific first level analysis.
 
@@ -14,7 +14,7 @@ This section will show you how to use Nipype to do a normalization with ANTs (wh
 Normalize Your Data with ANTs
 =============================
 
-Usually, we first normalize the subject specific anatomy to the template and than use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.
+Usually, we first normalize the subject specific anatomy to the template and then use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.
 
 The coregistration of the functional data to the anatomical data means multiple interpolation of your data. That's why the coregistration and the normalization of your functional data should be done directly in one transformation. To account for both possible cases, the following script will show you both ways. The approach where both coregistration and normalization will be done in one step will be called **complete transformation**, and the approach where we only do a normalization will be called **partial transformation**. Partial does not mean that it doesn't lead to a complete normalization of the data, it just means that the coregistration of the functional and structural data was already done in an earlier step.
 
@@ -40,7 +40,7 @@ But first, as always, we have to import necessary modules and tell the system wh
    from nipype.interfaces.io import SelectFiles, DataSink, FreeSurferSource
    from nipype.pipeline.engine import Workflow, Node, MapNode
    from nipype.interfaces.fsl import Info
-   
+
    # FreeSurfer - Specify the location of the freesurfer folder
    fs_dir = '~/nipype_tutorial/freesurfer'
    FSCommand.set_default_subjects_dir(fs_dir)
@@ -53,7 +53,7 @@ Now we define the names of the folders used for this pipeline, we specify the li
 
 .. code-block:: py
    :linenos:
-   
+
    # Specify variables
    experiment_dir = '~/nipype_tutorial'          # location of experiment folder
    input_dir_1st = 'output_fMRI_example_1st'     # name of 1st-level output folder
@@ -63,7 +63,7 @@ Now we define the names of the folders used for this pipeline, we specify the li
                    'sub004', 'sub005', 'sub006',
                    'sub007', 'sub008', 'sub009',
                    'sub010']                     # list of subject identifiers
-   
+
    # location of template file
    template = Info.standard_image('MNI152_T1_1mm_brain.nii.gz')
 
@@ -84,7 +84,7 @@ In both cases, the **complete** as well as the **partial** transformation approa
 
 .. code-block:: py
    :linenos:
-  
+
    # Registration (good) - computes registration between subject's structural and MNI template.
    antsreg = Node(Registration(args='--float',
                                collapse_output_transforms=True,
@@ -176,7 +176,7 @@ In the partial transformation approach, we only need the following additional no
 
 .. code-block:: py
    :linenos:
-   
+
    # Apply Transformation - applies the normalization matrix to contrast images
    apply2con = MapNode(ApplyTransforms(args='--float',
                                        input_image_type=3,
@@ -186,7 +186,7 @@ In the partial transformation approach, we only need the following additional no
                                        reference_image=template,
                                        terminal_output='file'),
                        name='apply2con', iterfield=['input_image'])
-   
+
    # Apply Transformation - applies the normalization matrix to the mean image
    apply2mean = Node(ApplyTransforms(args='--float',
                                      input_image_type=3,
@@ -210,7 +210,7 @@ For the complete transformation, we also need to calculate the coregistration ma
    fssource = Node(FreeSurferSource(subjects_dir=fs_dir),
                    run_without_submitting=True,
                    name='fssource')
-   
+
    # Convert FreeSurfer's MGZ format into NIfTI format
    convert2nii = Node(MRIConvert(out_type='nii'), name='convert2nii')
 
@@ -219,13 +219,13 @@ For the complete transformation, we also need to calculate the coregistration ma
                                 contrast_type='t2',
                                 out_fsl_file=True),
                      name='bbregister')
-   
+
    # Convert the BBRegister transformation to ANTS ITK format
    convert2itk = Node(C3dAffineTool(fsl2ras=True,
                                     itk_transform=True),
                       name='convert2itk')
 
-   
+
    # Concatenate BBRegister's and ANTS' transforms into a list
    merge = Node(Merge(2), iterfield=['in2'], name='mergexfm')
 
@@ -248,7 +248,7 @@ Now that we have the couplet transformation matrix, we can normalize the anatomi
                                      reference_image=template,
                                      terminal_output='file'),
                      name='warpall', iterfield=['input_image'])
-   
+
    # Transform the mean image. First to anatomical and then to the target
    warpmean = Node(ApplyTransforms(args='--float',
                                    input_image_type=3,
@@ -292,7 +292,7 @@ For the **complete transformation** use the following code:
 
 .. code-block:: py
    :linenos:
-   
+
    # Connect up ANTS normalization components
    normflow.connect([(fssource, convert2nii, [('T1', 'in_file')]),
                      (convert2nii, convert2itk, [('out_file', 'reference_file')]),
@@ -311,40 +311,40 @@ Establish Input & Output Stream
 
 .. code-block:: py
    :linenos:
-   
+
    # Infosource - a function free node to iterate over the list of subject names
    infosource = Node(IdentityInterface(fields=['subject_id']),
                      name="infosource")
    infosource.iterables = [('subject_id', subject_list)]
-   
+
    # SelectFiles - to grab the data (alternativ to DataGrabber)
    anat_file = opj('freesurfer', '{subject_id}', 'mri/brain.mgz')
    func_file = opj(input_dir_1st, 'contrasts', '{subject_id}',
                    '_mriconvert*/*_out.nii.gz')
    func_orig_file = opj(input_dir_1st, 'contrasts', '{subject_id}', '[ce]*.nii')
    mean_file = opj(input_dir_1st, 'preprocout', '{subject_id}', 'mean*.nii')
-   
+
    templates = {'anat': anat_file,
                 'func': func_file,
                 'func_orig': func_orig_file,
                 'mean': mean_file,
                 }
-   
+
    selectfiles = Node(SelectFiles(templates,
                                   base_directory=experiment_dir),
                       name="selectfiles")
-   
+
    # Datasink - creates output folder for important outputs
    datasink = Node(DataSink(base_directory=experiment_dir,
                             container=output_dir),
                    name="datasink")
-   
+
    # Use the following DataSink output substitutions
    substitutions = [('_subject_id_', ''),
                     ('_apply2con', 'apply2con'),
                     ('_warpall', 'warpall')]
    datasink.inputs.substitutions = substitutions
-   
+
 
 For the **partial transformation** use the following code:
 
@@ -375,7 +375,7 @@ For the **complete transformation** use the following code:
 
 .. code-block:: py
    :linenos:
-   
+
    # Connect SelectFiles and DataSink to the workflow
    normflow.connect([(infosource, selectfiles, [('subject_id', 'subject_id')]),
                      (infosource, fssource, [('subject_id', 'subject_id')]),
@@ -405,7 +405,7 @@ Now, let's run the workflow with the following code:
 
 .. code-block:: py
    :linenos:
-   
+
    normflow.write_graph(graph2use='colored')
    normflow.run('MultiProc', plugin_args={'n_procs': 8})
 
@@ -512,19 +512,19 @@ As always, let's import necessary modules and tell the system where to find MATL
    from nipype.interfaces.io import SelectFiles, DataSink
    from nipype.algorithms.misc import Gunzip
    from nipype.pipeline.engine import Workflow, Node, MapNode
-   
+
    # Specification to MATLAB
    from nipype.interfaces.matlab import MatlabCommand
    MatlabCommand.set_default_paths('/usr/local/MATLAB/R2014a/toolbox/spm12')
    MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
-   
+
 
 Define experiment specific parameters
 *************************************
 
 .. code-block:: py
    :linenos:
-   
+
    # Specify variables
    experiment_dir = '~/nipype_tutorial'         # location of experiment folder
    input_dir_1st = 'output_fMRI_example_1st'    # name of 1st-level output folder
@@ -534,7 +534,7 @@ Define experiment specific parameters
                    'sub004', 'sub005', 'sub006',
                    'sub007', 'sub008', 'sub009',
                    'sub010']                    # list of subject identifiers
-   
+
    # location of template in form of a tissue probability map to normalize to
    template = '/usr/local/MATLAB/R2014a/toolbox/spm12/tpm/TPM.nii'
 
@@ -551,11 +551,11 @@ The functional and anatomical data that we want to normalize is in compressed ZI
 
    # Gunzip - unzip the structural image
    gunzip_struct = Node(Gunzip(), name="gunzip_struct")
-   
+
    # Gunzip - unzip the contrast image
    gunzip_con = MapNode(Gunzip(), name="gunzip_con",
                         iterfield=['in_file'])
-   
+
    # Normalize - normalizes functional and structural images to the MNI template
    normalize = Node(Normalize12(jobtype='estwrite',
                                 tpm=template,
@@ -572,7 +572,7 @@ Create the pipeline and connect nodes to it
    # Specify Normalization-Workflow & Connect Nodes
    normflow = Workflow(name='normflow')
    normflow.base_dir = opj(experiment_dir, working_dir)
-   
+
    # Connect up ANTS normalization components
    normflow.connect([(gunzip_struct, normalize, [('out_file', 'image_to_align')]),
                      (gunzip_con, normalize, [('out_file', 'apply_to_files')]),
@@ -584,12 +584,12 @@ Establish Input & Output Stream
 
 .. code-block:: py
    :linenos:
-   
+
    # Infosource - a function free node to iterate over the list of subject names
    infosource = Node(IdentityInterface(fields=['subject_id']),
                      name="infosource")
    infosource.iterables = [('subject_id', subject_list)]
-   
+
    # SelectFiles - to grab the data (alternativ to DataGrabber)
    anat_file = opj('data', '{subject_id}', 'struct.nii.gz')
    con_file = opj(input_dir_1st, 'contrasts', '{subject_id}',
@@ -600,16 +600,16 @@ Establish Input & Output Stream
    selectfiles = Node(SelectFiles(templates,
                                   base_directory=experiment_dir),
                       name="selectfiles")
-   
+
    # Datasink - creates output folder for important outputs
    datasink = Node(DataSink(base_directory=experiment_dir,
                             container=output_dir),
                    name="datasink")
-   
+
    # Use the following DataSink output substitutions
    substitutions = [('_subject_id_', '')]
    datasink.inputs.substitutions = substitutions
-   
+
    # Connect SelectFiles and DataSink to the workflow
    normflow.connect([(infosource, selectfiles, [('subject_id', 'subject_id')]),
                      (selectfiles, gunzip_struct, [('anat', 'in_file')]),
@@ -631,7 +631,7 @@ Now, let's run the workflow with the following code:
 
 .. code-block:: py
    :linenos:
-   
+
    normflow.write_graph(graph2use='colored')
    normflow.run('MultiProc', plugin_args={'n_procs': 8})
 

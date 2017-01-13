@@ -105,8 +105,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -159,8 +159,8 @@
 </pre></div>
 </div>
 <p>To illustrate, on the left you can see a simple graph of the visualization type <strong>orig</strong> when <code class="docutils literal"><span class="pre">simple_form</span></code> is set to <code class="docutils literal"><span class="pre">True</span></code> and on the right if it is set to <code class="docutils literal"><span class="pre">False</span></code>.</p>
-<a class="reference internal image-reference" href="_images/graph_orig_simple.svg"><img alt="_images/graph_orig_simple.svg" height="250pt" src="_images/graph_orig_simple.svg" /></a>
-<a class="reference internal image-reference" href="_images/graph_orig_notsimple.svg"><img alt="_images/graph_orig_notsimple.svg" height="250pt" src="_images/graph_orig_notsimple.svg" /></a>
+<a class="reference internal image-reference" href="_images/graph_orig_simple.svg"><img height="250pt" src="_images/graph_orig_simple.svg" /></a>
+<a class="reference internal image-reference" href="_images/graph_orig_notsimple.svg"><img height="250pt" src="_images/graph_orig_notsimple.svg" /></a>
 </div>
 <div class="section" id="examples-of-each-visualization-type">
 <h2>Examples of each visualization type<a class="headerlink" href="#examples-of-each-visualization-type" title="Permalink to this headline">¶</a></h2>
@@ -168,37 +168,37 @@
 <div class="section" id="orig-simple-graph">
 <h3><code class="docutils literal"><span class="pre">orig</span></code> - simple graph<a class="headerlink" href="#orig-simple-graph" title="Permalink to this headline">¶</a></h3>
 <p>The simple graph of the visualization type <code class="docutils literal"><span class="pre">orig</span></code> shows only the top layer, i.e. hierarchical highest workflows and nodes, of your workflow. In this case this is the <code class="docutils literal"><span class="pre">metaflow</span></code>. Subworkflows such as <code class="docutils literal"><span class="pre">preproc</span></code> and <code class="docutils literal"><span class="pre">l1analysis1</span></code> are represented by a single node.</p>
-<a class="reference internal image-reference" href="_images/graph_orig_simple.svg"><div align="center" class="align-center"><img alt="_images/graph_orig_simple.svg" src="_images/graph_orig_simple.svg" width="300pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_orig_simple.svg"><div align="center" class="align-center"><img src="_images/graph_orig_simple.svg" width="300pt" /></div>
 </a>
 </div>
 <div class="section" id="orig-detailed-graph">
 <h3><code class="docutils literal"><span class="pre">orig</span></code> - detailed graph<a class="headerlink" href="#orig-detailed-graph" title="Permalink to this headline">¶</a></h3>
 <p>The detailed graph of the visualization type <code class="docutils literal"><span class="pre">orig</span></code> shows the <code class="docutils literal"><span class="pre">metaflow</span></code> to the same depth as the simple version above, but with a bit more information about input and output fields. Now you can see which output of which node is connected to which input of the following node.</p>
-<a class="reference internal image-reference" href="_images/graph_orig_detailed.svg"><div align="center" class="align-center"><img alt="_images/graph_orig_detailed.svg" src="_images/graph_orig_detailed.svg" width="600pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_orig_detailed.svg"><div align="center" class="align-center"><img src="_images/graph_orig_detailed.svg" width="600pt" /></div>
 </a>
 </div>
 <div class="section" id="flat-simple-graph">
 <h3><code class="docutils literal"><span class="pre">flat</span></code> - simple graph<a class="headerlink" href="#flat-simple-graph" title="Permalink to this headline">¶</a></h3>
 <p>The simple graph of the visualization type <code class="docutils literal"><span class="pre">flat</span></code> shows all nodes of a workflow. As you can see, subworkflows such as <code class="docutils literal"><span class="pre">preproc</span></code> and <code class="docutils literal"><span class="pre">l1analysis1</span></code> are now expanded and represented by all their containing nodes.</p>
-<a class="reference internal image-reference" href="_images/graph_flat_simple.svg"><div align="center" class="align-center"><img alt="_images/graph_flat_simple.svg" src="_images/graph_flat_simple.svg" width="600pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_flat_simple.svg"><div align="center" class="align-center"><img src="_images/graph_flat_simple.svg" width="600pt" /></div>
 </a>
 </div>
 <div class="section" id="flat-detailed-graph">
 <h3><code class="docutils literal"><span class="pre">flat</span></code> - detailed graph<a class="headerlink" href="#flat-detailed-graph" title="Permalink to this headline">¶</a></h3>
 <p>The detailed graph of the visualization type <code class="docutils literal"><span class="pre">flat</span></code> shows the <code class="docutils literal"><span class="pre">metaflow</span></code> in all its glory. This graph shows all nodes, their inputs and outputs and how they are connected to each other.</p>
-<a class="reference internal image-reference" href="_images/graph_flat_detailed.svg"><div align="center" class="align-center"><img alt="_images/graph_flat_detailed.svg" src="_images/graph_flat_detailed.svg" width="600pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_flat_detailed.svg"><div align="center" class="align-center"><img src="_images/graph_flat_detailed.svg" width="600pt" /></div>
 </a>
 </div>
 <div class="section" id="exec-simple-graph">
 <h3><code class="docutils literal"><span class="pre">exec</span></code> - simple graph<a class="headerlink" href="#exec-simple-graph" title="Permalink to this headline">¶</a></h3>
 <p>The detailed graph of the visualization type <code class="docutils literal"><span class="pre">exec</span></code> doesn&#8217;t really show you anything different than the simple graph of the visualization type <code class="docutils literal"><span class="pre">flat</span></code>. The advantage of the <code class="docutils literal"><span class="pre">exec</span></code> type lies in the detailed graph.</p>
-<a class="reference internal image-reference" href="_images/graph_exec_simple.svg"><div align="center" class="align-center"><img alt="_images/graph_exec_simple.svg" src="_images/graph_exec_simple.svg" width="600pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_exec_simple.svg"><div align="center" class="align-center"><img src="_images/graph_exec_simple.svg" width="600pt" /></div>
 </a>
 </div>
 <div class="section" id="exec-detailed-graph">
 <h3><code class="docutils literal"><span class="pre">exec</span></code> - detailed graph<a class="headerlink" href="#exec-detailed-graph" title="Permalink to this headline">¶</a></h3>
 <p>The detailed graph of the visualization type <code class="docutils literal"><span class="pre">exec</span></code> shows you the nodes of the <code class="docutils literal"><span class="pre">metaflow</span></code> with the same details as the visualization type <code class="docutils literal"><span class="pre">flat</span></code> would do. But additionally, all iterables are expanded so that you can see the full hierarchical and parallel structure of your analysis. In the following example the node <code class="docutils literal"><span class="pre">selectfiles</span></code> iterates over <code class="docutils literal"><span class="pre">sub001</span></code>, <code class="docutils literal"><span class="pre">sub002</span></code> and <code class="docutils literal"><span class="pre">sub003</span></code>.</p>
-<a class="reference internal image-reference" href="_images/graph_exec_detailed.svg"><div align="center" class="align-center"><img alt="_images/graph_exec_detailed.svg" src="_images/graph_exec_detailed.svg" width="600pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_exec_detailed.svg"><div align="center" class="align-center"><img src="_images/graph_exec_detailed.svg" width="600pt" /></div>
 </a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -208,14 +208,14 @@
 <div class="section" id="hierarchical-simple-graph">
 <h3><code class="docutils literal"><span class="pre">hierarchical</span></code> - simple graph<a class="headerlink" href="#hierarchical-simple-graph" title="Permalink to this headline">¶</a></h3>
 <p>The graph of the visualization type <code class="docutils literal"><span class="pre">hierarchical</span></code> shows the <code class="docutils literal"><span class="pre">metaflow</span></code> as seen with the visualization type <code class="docutils literal"><span class="pre">flat</span></code> but emphasizes the hierarchical structure of its subworkflows. This is done by surrounding each subworkflow with a box labeled with the name of the subworkflow. Additionally, each node with an iterable field will be shown as a gray box.</p>
-<a class="reference internal image-reference" href="_images/graph_hierarchical.svg"><div align="center" class="align-center"><img alt="_images/graph_hierarchical.svg" src="_images/graph_hierarchical.svg" width="600pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_hierarchical.svg"><div align="center" class="align-center"><img src="_images/graph_hierarchical.svg" width="600pt" /></div>
 </a>
 <p>In this example you see that the <code class="docutils literal"><span class="pre">metaflow</span></code> contains a <code class="docutils literal"><span class="pre">preproc</span></code> and a <code class="docutils literal"><span class="pre">l1analysis</span></code> workflow.</p>
 </div>
 <div class="section" id="colored-simple-graph">
 <h3><code class="docutils literal"><span class="pre">colored</span></code> - simple graph<a class="headerlink" href="#colored-simple-graph" title="Permalink to this headline">¶</a></h3>
 <p>The graph of the visualization type <code class="docutils literal"><span class="pre">colored</span></code> shows the <code class="docutils literal"><span class="pre">metaflow</span></code> as seen with the visualization type <code class="docutils literal"><span class="pre">hierarchical</span></code> but color codes the different <code class="docutils literal"><span class="pre">hierarchical</span></code> levels as well as the connections between and within those levels with different colors.</p>
-<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img alt="_images/graph_colored.svg" src="_images/graph_colored.svg" width="600pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img src="_images/graph_colored.svg" width="600pt" /></div>
 </a>
 </div>
 </div>
@@ -265,8 +265,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on October 26, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.6.
+      Last updated on January 13, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

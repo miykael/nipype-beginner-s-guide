@@ -153,8 +153,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -837,7 +837,7 @@
 <div class="section" id="input-output-stream">
 <h3>Input &amp; Output Stream<a class="headerlink" href="#input-output-stream" title="Permalink to this headline">¶</a></h3>
 <p>This is probably one of the more important and difficult sections of a workflow script, as most of the errors and issues you can encounter with your pipeline are mostly based on some kind of error in the specification of the workflow input or output stream. So make sure that this section is correct.</p>
-<p>Before you can tell your computer where it can find your data, you yourself have to understand where and in which format your data is stored at. If you use the tutorial dataset, than your folder structure look as follows:</p>
+<p>Before you can tell your computer where it can find your data, you yourself have to understand where and in which format your data is stored at. If you use the tutorial dataset, then your folder structure look as follows:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>nipype_tutorial
 |-- data
 |   |-- sub001
@@ -907,7 +907,7 @@
 <span class="n">datasink</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="s1">&#39;datasink_folder&#39;</span>
 </pre></div>
 </td></tr></table></div>
-<p>To store an output of a certain node in this DataSink just connect the node to the DataSink. The output data will be saved in the just specified container <code class="docutils literal"><span class="pre">datasink_folder</span></code>. Nipype will than save this output in a folder under this container, depending on the name of the DataSink input field that you specify during the creation of connections.</p>
+<p>To store an output of a certain node in this DataSink just connect the node to the DataSink. The output data will be saved in the just specified container <code class="docutils literal"><span class="pre">datasink_folder</span></code>. Nipype will then save this output in a folder under this container, depending on the name of the DataSink input field that you specify during the creation of connections.</p>
 <p>As an example, let&#8217;s assume that we want to use the output of SPM&#8217;s motion correction node, here called <code class="docutils literal"><span class="pre">realign</span></code>.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -950,7 +950,7 @@
 </div>
 <div class="section" id="run-workflow">
 <h3>Run Workflow<a class="headerlink" href="#run-workflow" title="Permalink to this headline">¶</a></h3>
-<p>After all modules are imported, important variables are specified, nodes are created and connected to workflwos, you are able to run your pipeline. This can be done by calling the <code class="docutils literal"><span class="pre">run()</span></code> method of the workflow.</p>
+<p>After all modules are imported, important variables are specified, nodes are created and connected to workflows, you are able to run your pipeline. This can be done by calling the <code class="docutils literal"><span class="pre">run()</span></code> method of the workflow.</p>
 <p>As already described in the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/nipype.html#execution-plugins">introduction section</a>, workflows can be run with many different plugins. Those plugins allow you to run your workflow in either normal linear (i.e. sequential) or in parallel ways. Depending on your system, parallel execution is either done on your local machine or on some computation cluster.</p>
 <p>Here are just a few example how you can run your workflow:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -1365,7 +1365,7 @@ Executing node datasink.a2 in dir: ~/nipype_tutorial/workingdir_firstSteps/
 <span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a0 jobid: 20
 </pre></div>
 </td></tr></table></div>
-<p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node&#8217;s execution is accompanied by the working directory of this node. The output <code class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></code> than tells you when the execution of the node is done.</p>
+<p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node&#8217;s execution is accompanied by the working directory of this node. The output <code class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></code> then tells you when the execution of the node is done.</p>
 </div>
 <div class="section" id="it-crashes-but-where-is-the-problem">
 <h3>It Crashes, But Where is the Problem?<a class="headerlink" href="#it-crashes-but-where-is-the-problem" title="Permalink to this headline">¶</a></h3>
@@ -1782,8 +1782,8 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on October 26, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.6.
+      Last updated on January 13, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

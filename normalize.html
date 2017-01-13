@@ -118,8 +118,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -149,7 +149,7 @@
 <p>This section will show you how to use Nipype to do a normalization with ANTs (what I recommend) or with SPM12. I highly recommend the normalization with ANTs as it is much more accurate. But I also want to point out that the computation of ANTs normalization is much longer than the one with SPM12, which also does a good enough job.</p>
 <div class="section" id="normalize-your-data-with-ants">
 <h2>Normalize Your Data with ANTs<a class="headerlink" href="#normalize-your-data-with-ants" title="Permalink to this headline">¶</a></h2>
-<p>Usually, we first normalize the subject specific anatomy to the template and than use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.</p>
+<p>Usually, we first normalize the subject specific anatomy to the template and then use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.</p>
 <p>The coregistration of the functional data to the anatomical data means multiple interpolation of your data. That&#8217;s why the coregistration and the normalization of your functional data should be done directly in one transformation. To account for both possible cases, the following script will show you both ways. The approach where both coregistration and normalization will be done in one step will be called <strong>complete transformation</strong>, and the approach where we only do a normalization will be called <strong>partial transformation</strong>. Partial does not mean that it doesn&#8217;t lead to a complete normalization of the data, it just means that the coregistration of the functional and structural data was already done in an earlier step.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -1050,8 +1050,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on October 26, 2016.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.6.
+      Last updated on January 13, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
