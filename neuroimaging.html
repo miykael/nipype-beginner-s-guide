@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="Nipype and Neuroimaging" href="nipypeAndNeuroimaging.html" />
     <link rel="prev" title="Introduction to Nipype" href="nipype.html" />
@@ -125,8 +126,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -135,7 +136,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/neuroimaging.txt"
+      <li><a href="_sources/neuroimaging.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -280,29 +281,25 @@
 <h4>The General Linear Model<a class="headerlink" href="#the-general-linear-model" title="Permalink to this headline">¶</a></h4>
 <p>A GLM describes a response (y), such as the BOLD response in a voxel, in terms of all its contributing factors (xβ) in a linear combination, whilst also accounting for the contribution of error (ε). The column (y) corresponds to one voxel and one row in this column corresponds to one time-point.</p>
 <a class="reference internal image-reference" href="_images/GLM.png"><img alt="_images/GLM.png" class="align-center" src="_images/GLM.png" style="width: 300pt;" /></a>
-<ul>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt><strong>y = dependent variable</strong></dt>
-<dd><p class="first last">observed data (e.g. BOLD response in a single voxel)</p>
-</dd>
+<dd>observed data (e.g. BOLD response in a single voxel)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><strong>X = Independent Variable</strong> (aka. Predictor)</dt>
-<dd><p class="first last">e.g. <em>experimental conditions</em> (embodies all available knowledge about experimentally controlled factors and potential confounds), <em>stimulus information</em> (onset and duration of stimuli), <em>expected shape of BOLD response</em></p>
-</dd>
+<dd>e.g. <em>experimental conditions</em> (embodies all available knowledge about experimentally controlled factors and potential confounds), <em>stimulus information</em> (onset and duration of stimuli), <em>expected shape of BOLD response</em></dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><strong>β = Parameters</strong> (aka regression coefficient/beta weights)</dt>
-<dd><p class="first last">Quantifies how much each predictor (<em>X</em>) independently influences the dependent variable (<em>Y</em>)</p>
-</dd>
+<dd>Quantifies how much each predictor (<em>X</em>) independently influences the dependent variable (<em>Y</em>)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><strong>ε = Error</strong></dt>
-<dd><p class="first last">Variance in the data (<em>Y</em>) which is not explained by the linear combination of predictors (<em>Xβ</em>). The error is assumed to be normally distributed.</p>
-</dd>
+<dd>Variance in the data (<em>Y</em>) which is not explained by the linear combination of predictors (<em>Xβ</em>). The error is assumed to be normally distributed.</dd>
 </dl>
 </li>
 </ul>
@@ -339,29 +336,25 @@
 <h4>Model Estimation<a class="headerlink" href="#model-estimation" title="Permalink to this headline">¶</a></h4>
 <p>After we specified the parameters of our model in a design matrix we are ready to estimate our model. This means that we apply our model on the time course of each and every voxel.</p>
 <p>Depending on the software you are using you might get different types of results. If you are using <strong>SPM</strong> the following images are created each time an analysis is performed (1st or 2nd level):</p>
-<ul>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt><strong>beta images</strong></dt>
-<dd><p class="first last">images of estimated regression coefficients (parameter estimate). beta images contain information about the size of the effect of interest. A given voxel in each beta image will have a value related to the size of effect for that explanatory variable.</p>
-</dd>
+<dd>images of estimated regression coefficients (parameter estimate). beta images contain information about the size of the effect of interest. A given voxel in each beta image will have a value related to the size of effect for that explanatory variable.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><strong>error image</strong> - <code class="docutils literal"><span class="pre">ResMS</span></code>-image</dt>
-<dd><p class="first last">residual sum of squares or variance image. It is a measure of within-subject error at the 1st level or between-subject error at the 2nd level analysis. This image is used to produce spmT images.</p>
-</dd>
+<dd>residual sum of squares or variance image. It is a measure of within-subject error at the 1st level or between-subject error at the 2nd level analysis. This image is used to produce spmT images.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><strong>con images</strong> - <code class="docutils literal"><span class="pre">con</span></code>-images</dt>
-<dd><p class="first last">during contrast estimation beta images are linearly combined to produce relevant <code class="docutils literal"><span class="pre">con</span></code>-images</p>
-</dd>
+<dd>during contrast estimation beta images are linearly combined to produce relevant <code class="docutils literal"><span class="pre">con</span></code>-images</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><strong>T images</strong> - <code class="docutils literal"><span class="pre">spmT</span></code>-images</dt>
-<dd><p class="first last">during contrast estimation the beta values of a <code class="docutils literal"><span class="pre">con</span></code>-image are combined with error values of the <code class="docutils literal"><span class="pre">ResMS</span></code>-image to calculate the t-value at each voxel</p>
-</dd>
+<dd>during contrast estimation the beta values of a <code class="docutils literal"><span class="pre">con</span></code>-image are combined with error values of the <code class="docutils literal"><span class="pre">ResMS</span></code>-image to calculate the t-value at each voxel</dd>
 </dl>
 </li>
 </ul>
@@ -443,8 +436,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on January 13, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
+      Last updated on February 25, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

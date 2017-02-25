@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="How To Normalize Your Data" href="normalize.html" />
     <link rel="prev" title="How To Visualize A Pipeline" href="visualizePipeline.html" />
@@ -107,8 +108,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -117,7 +118,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/firstLevel.txt"
+      <li><a href="_sources/firstLevel.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -141,7 +142,7 @@
 <p>As with every workflow, we also need some input and output nodes which handle the data and an additional node that provides subject specific information. For that we need an <code class="docutils literal"><span class="pre">Infosource</span></code> node that knows on which subjects to run, a <code class="docutils literal"><span class="pre">SelectFiles</span></code> node that knows where to get the data, a <code class="docutils literal"><span class="pre">getsubjectinfo</span></code> node that knows subject specific information (e.g. onset times and duration of conditions, subject specific regressors, etc.) and a <code class="docutils literal"><span class="pre">DataSink</span></code> node that knows which files to store and where to store them.</p>
 <p>To run all this we need some structure. Therefore, we will put the <strong>preprocessing</strong> and the <strong>first level analysis</strong> part in its own subworkflow and create a hierarchically higher workflow that contains those two subworkflows as well as the input and output nodes. I&#8217;d like to call this top workflow <strong>metaflow</strong>.</p>
 <p>Those are a lot of different parts and it is confusing to make sense of it without actually seeing what we try to build. Here is how the metaflow should look like in the end:</p>
-<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img src="_images/graph_colored.svg" width="700pt" /></div>
+<a class="reference internal image-reference" href="_images/graph_colored.svg"><div align="center" class="align-center"><img alt="_images/graph_colored.svg" src="_images/graph_colored.svg" width="700pt" /></div>
 </a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -954,8 +955,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on January 13, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
+      Last updated on February 25, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking

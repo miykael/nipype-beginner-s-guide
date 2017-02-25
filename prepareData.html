@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
     <link rel="next" title="How To Build A Pipeline" href="firstSteps.html" />
     <link rel="prev" title="Download and Install Nipype" href="installation.html" />
@@ -115,8 +116,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -125,7 +126,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/prepareData.txt"
+      <li><a href="_sources/prepareData.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -280,14 +281,12 @@ rm -rf <span class="nv">$TMP_DIR</span>
 <div class="section" id="scan-parameters">
 <h4>Scan parameters<a class="headerlink" href="#scan-parameters" title="Permalink to this headline">¶</a></h4>
 <blockquote>
-<div><ul>
-<li><p class="first">Magnetic field: 3T [Tesla]</p>
-</li>
-<li><p class="first">Head coil: Siemens standard, which probably means 32-channel</p>
-</li>
+<div><ul class="simple">
+<li>Magnetic field: 3T [Tesla]</li>
+<li>Head coil: Siemens standard, which probably means 32-channel</li>
 <li><dl class="first docutils">
 <dt>Information about <strong>functional</strong> acquisition</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li>Acquisition type: contiguous echo planar imaging (EPI)</li>
 <li>Number of volumes per session: 146</li>
 <li>Number of slices per volume: 40</li>
@@ -301,7 +300,7 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </li>
 <li><dl class="first docutils">
 <dt>Information about <strong>anatomical</strong> acquisition</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li>Acquisition type: magnetization prepared gradient echo sequence (MPRAGE)</li>
 <li>Number of slices: 176</li>
 <li>Repetition time (TR): 2500ms</li>
@@ -698,8 +697,8 @@ file_type      NIFTI-1+
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on January 13, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.1.
+      Last updated on February 25, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking
