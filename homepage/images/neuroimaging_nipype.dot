@@ -52,7 +52,7 @@ digraph {
         edge [color="#00A300"];
         style=filled;
         fillcolor="#B4FFB4";
-        label="functioanl analysis";
+        label="functional analysis";
       subgraph cluster_functional_1st {
               edge [color="#FF9721"];
               style=filled;
