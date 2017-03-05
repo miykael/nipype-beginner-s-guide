@@ -64,6 +64,10 @@ Welcome to Nipype Beginner's Guide!
 
     This Beginner's guide will teach you all you need to know for your first steps with Nipype. You will see that Nipype is a really practical and easy to learn neuroimaging toolbox, written in Python, that helps to connect many of the different softwares used in neuroimaging, such as SPM, FSL, FreeSurfer and AFNI. The goal of this Beginner's guide is to teach you the basics about Neuroimaging and to show you each step along the way of a complete neuroimaging analysis. By learning Nipype, you will become an expert in neuroimaging and be able to analyze your own dataset in no time.
 
+    .. important::
+
+        Make sure to check out the new `Nipype Tutorial <https://miykael.github.io/nipype_tutorial/>`_, a very nice and more compact alternative to this comprehensive guide. Also, if you want to experience Nipype on a real dataset without the need to setting up your system, check out the `Nipype Course <https://github.com/miykael/nipype_course>`_. The Nipype Course runs in a `Docker <https://www.docker.com/>`_ container, which gives you the opportunity to run Nipype on any Windows, Mac or Linux machine.
+
 
     Neuroimaging and Nipype
     =======================
