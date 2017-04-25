@@ -47,7 +47,7 @@ Usually, the user will then modify the design matrix to make it a more accurate 
 
 Once the design matrix is set up, the program uses the methods of GLM theory - essentially multiple regression - to calculate how accurately the model described by the design matrix accounts for the real data. The standard GLM equation is Y = BX + E, where Y is the time-varying intensities from one voxel, X is the design matrix, E is an error term, and B is the "parameters" or "beta weights" - a vector of values, one for each experimental condition, that tells the researcher how big the effect of the corresponding condition was in explaining the values at that voxel. If condition A's beta weight is significantly greater than condition B's beta weight at a given voxel, the hypothesis that A had a greater effect than B at that voxel is confirmed. Generally, programs create some voxel-by-voxel image of the beta weights - a beta image or parameter image.
 
-Once the parameters are estimated, the program has both a measure of effect size and of error in the model for each voxel. Generally, the program then normalizes each effect size by the error to calculate some measure of statistical significance for effects - a contrast image (see `Contrasts`_ for more info). 
+Once the parameters are estimated, the program has both a measure of effect size and of error in the model for each voxel. Generally, the program then normalizes each effect size by the error to calculate some measure of statistical significance for effects - a contrast image (see `Contrasts`_ for more info).
 
 2. When should global mean scaling be used? What does it do?
 ************************************************************
@@ -75,7 +75,7 @@ The other approach to dealing with autocorrelation in the fMRI noise power spect
 
 In theory, this can be very tricky, because one doesn't actually know how many previous timepoints are influencing the current timepoint's value. Essentially, one is trying to model the noise, without having precise estimates of where the noise is coming from. In practice, however, enough work has been done on figuring out the sources of fMRI noise to have a fairly good model of what it looks like, and an AR(1) + w model, where each noise timepoint is some white noise plus a scaling of the noise timepoint before it, seems to be a good fit (it's also described as a 1/f model). This procedure essentially estimates the level of autocorrelation (or 'color') in the noise, and removes it from the timeseries ('whitening' the noise).
 
-Theoretically, it should work well, but as its adoption is relatively new to the field, few rigorous tests of the effectiveness of pre-whitening have been done. 
+Theoretically, it should work well, but as its adoption is relatively new to the field, few rigorous tests of the effectiveness of pre-whitening have been done.
 
 5. How does parametric modulation work? When would I use it?
 ************************************************************
@@ -404,7 +404,7 @@ Varying your ISI is a strategy to increase the efficiency of your estimates at t
 **************************************************************************************************
 Variable-ISI experiments are a way of making the tradeoff between power and efficiency in an experiment. Fixed-ISI designs are extremely limited in their potential efficiency. They can have high power by clustering the stimuli together: this is a standard block design. But in order to get decent efficiency in an experiment, you need to sample many points of the HRF, and that means variable ISI. Any experiment that needs high efficiency - say, a mental chronometry experiment, or one where you're explicitly looking for differences in HRF shape between regions - necessarily should be using a variable-ISI design. By contrast, if you're using a brand new paradigm and aren't even sure if you can get any activation at all with it, you're probably better off using a block design and a fixed ISI to maximize your detection power.
 
-From a psychological standpoint as well, the big advantage of variable-ISI designs is that they seem far more "random" to subjects. With a fixed ISI, anticipation effects can become quite substantial in subjects just before a stimulus appears, as they catch on to the timing of the experiment. Variable ISIs can decrease this anticipation effect to a greater or lesser degree, depending on how variable they are. 
+From a psychological standpoint as well, the big advantage of variable-ISI designs is that they seem far more "random" to subjects. With a fixed ISI, anticipation effects can become quite substantial in subjects just before a stimulus appears, as they catch on to the timing of the experiment. Variable ISIs can decrease this anticipation effect to a greater or lesser degree, depending on how variable they are.
 
 4. How do I decide how much to jitter, or what my mean ISI should be?
 *********************************************************************
@@ -513,7 +513,7 @@ First, the order to read it in. The top of the stack - the first error listed - 
 
 The rest of the stack is there to tell you where the function that crashed was called from. In this case, the next one down the stack was in spm_input - so our error was in spm_input_ui, which was called by spm_input. The line in spm_input that calls spm_input_ui is highlighted for us - it's line 77 within spm_input.m. The next error down tells us that spm_input was itself called from within spm_get_ons, on line 146, and so on. The last error tells us that the very first function that was called was spm_fmri_spm_ui - that's the function that was called when we first hit a button.
 
-From only this limited information, you can often tell a lot about the error. One important distinction to draw is whether the function where the error happened was an SPM function or a MATLAB function. Built-in MATLAB functions are generally pretty stable, and so if they crash, it's usually because you, the user, made a mistake somewhere along the line. 
+From only this limited information, you can often tell a lot about the error. One important distinction to draw is whether the function where the error happened was an SPM function or a MATLAB function. Built-in MATLAB functions are generally pretty stable, and so if they crash, it's usually because you, the user, made a mistake somewhere along the line.
 
 When the function that generated the error is an spm function, you can usually tell - it'll have the prefix `spm_` or generally sound like something from fMRI analysis and not MATLAB generally. In this case, the error is sometimes in the code and sometimes a mistake earlier in your analysis. The error messages can sometimes tell you enough to figure out what's going on: perhaps it says that there's an index out of range, and you realize it's because you're trying to omit the 200th scan from a session that only has 199. Just looking at the line that generated the error and what the actual error message says can give you a lot of info off the bat. Study the message carefully and look at the function stack it came from and see if you can figure out what the program was doing when it crashed.
 
@@ -572,7 +572,7 @@ This part looks specifically at how to read m-files and m-file programming - fun
 
 Functions
 ---------
-Once you've figured out some basic ways to create and refer to your variables and store some information in them, you probably want to manipulate that information. That's where functions and scripts come in. 
+Once you've figured out some basic ways to create and refer to your variables and store some information in them, you probably want to manipulate that information. That's where functions and scripts come in.
 
 A function is essentially a shorthand name for a whole set of commands. They're stored in m-files - text files with .m extensions. Any file with a .m extension you can generally read with a standard text editor, and it'll just contain a whole set of MATLAB commands. Conventionally, you put only one command per line of the file, and when you run the function, MATLAB just reads through the file top to bottom, executing each command in order. You run a function simply by typing the name of its m-file, assuming that m-file is in the MATLAB path.
 

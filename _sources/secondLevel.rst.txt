@@ -27,13 +27,13 @@ Import modules and specify interface behaviors
                                       EstimateContrast, Threshold)
    from nipype.interfaces.utility import IdentityInterface
    from nipype.pipeline.engine import Workflow, Node
- 
+
    # Specification to MATLAB
    from nipype.interfaces.matlab import MatlabCommand
    MatlabCommand.set_default_paths('/usr/local/MATLAB/R2014a/toolbox/spm12')
    MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
 
-   
+
 Define experiment specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -180,7 +180,7 @@ If you've normalized your data with ANTs but did only the so called **partial** 
    ...
    Name:pyscript_onesamplettestdesign
    ...
-   Interface OneSampleTTestDesign failed to run. 
+   Interface OneSampleTTestDesign failed to run.
 
 
 Such errors are sometimes hard to read. What this message means is that SPM's ``onesamplettestdes`` tried to open an image-file but was only able to read out 0 scans, of the requested at least 1. This is a common message where SPM tries to read a zipped NIfTI file (ending with ``nii.gz``) and cannot unpack it. To solve this issue we only need to insert an additional ``Gunzip`` node in our pipeline and redirect the workflow through this new gunzip node before it goes to the ``onesamplettestdes`` node. So the new code looks as follows:

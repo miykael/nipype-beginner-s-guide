@@ -50,7 +50,7 @@ To illustrate, on the left you can see a simple graph of the visualization type 
     .. image:: images/graph_orig_notsimple.svg
        :height: 250pt
 
-    
+
 .. only:: latex
 
     .. image:: images/graph_orig_simple.png
@@ -76,7 +76,7 @@ The simple graph of the visualization type ``orig`` shows only the top layer, i.
     .. image:: images/graph_orig_simple.svg
        :align: center
        :width: 300pt
-    
+
 .. only:: latex
 
     .. image:: images/graph_orig_simple.png
@@ -175,7 +175,7 @@ The detailed graph of the visualization type ``exec`` shows you the nodes of the
 
 
 .. note::
- 
+
    As you can see from this example, every iteration creates a subgraph with its own index. In this case ``a0``, ``a1`` and ``a2``. Such an indexing structure is also maintained in the folders and subfolders of your working and output directory.
 
 
@@ -203,7 +203,7 @@ In this example you see that the ``metaflow`` contains a ``preproc`` and a ``l1a
 ``colored`` - simple graph
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The graph of the visualization type ``colored`` shows the ``metaflow`` as seen with the visualization type ``hierarchical`` but color codes the different ``hierarchical`` levels as well as the connections between and within those levels with different colors. 
+The graph of the visualization type ``colored`` shows the ``metaflow`` as seen with the visualization type ``hierarchical`` but color codes the different ``hierarchical`` levels as well as the connections between and within those levels with different colors.
 
 .. only:: html
 

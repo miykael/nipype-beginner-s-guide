@@ -70,7 +70,7 @@ This can either be done manually or with the following code:
 
     # Specify important variables
     ZIP_FILE=~/Downloads/ds102_raw.tgz   #location of download file
-    TUTORIAL_DIR=~/nipype_tutorial       #location of experiment folder 
+    TUTORIAL_DIR=~/nipype_tutorial       #location of experiment folder
     TMP_DIR=$TUTORIAL_DIR/tmp            #location of temporary folder
     DATA_DIR=$TUTORIAL_DIR/data          #location of data folder
 
@@ -85,14 +85,14 @@ This can either be done manually or with the following code:
         mkdir -p $DATA_DIR/sub0$id
         cp $TMP_DIR/ds102/sub0$id/anatomy/highres001.nii.gz \
            $DATA_DIR/sub0$id/struct.nii.gz
-        
+
         for session in run001 run002
         do
             cp $TMP_DIR/ds102/sub0$id/BOLD/task001_$session/bold.nii.gz \
                $DATA_DIR/sub0$id/$session.nii.gz
             cp $TMP_DIR/ds102/sub0$id/behav/task001_$session/behavdata.txt \
                $DATA_DIR/sub0$id/behavdata_$session.txt
-            
+
             for con_id in {1..4}
             do
                 cp $TMP_DIR/ds102/sub0$id/model/model001/onsets/task001_$session/cond00$con_id.txt \
@@ -110,7 +110,7 @@ This can either be done manually or with the following code:
     # Delete the temporary folder
     rm -rf $TMP_DIR
 
-.. hint:: 
+.. hint::
 
     You can download this code as a script here: `tutorial_1_create_dataset.sh <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_1_create_dataset.sh>`_
 
@@ -239,7 +239,7 @@ Convert your data into NIfTI format
 
 You don't have to do this step if you're using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common ``NIfTI`` format, but rather in a scanner specific format (e.g. ``DICOM``, ``PAR/REC``, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.
 
-Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use `MRICron <http://www.mccauslandcenter.sc.edu/mricro/mricron/>`_'s `MRIConvert <http://lcni.uoregon.edu/~jolinda/MRIConvert/>`_. But for this Beginner's Guide we will use FreeSurfer's ``mri_convert`` function, as it is rather easy to use and doesn't require many steps. 
+Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use `MRICron <http://www.mccauslandcenter.sc.edu/mricro/mricron/>`_'s `MRIConvert <http://lcni.uoregon.edu/~jolinda/MRIConvert/>`_. But for this Beginner's Guide we will use FreeSurfer's ``mri_convert`` function, as it is rather easy to use and doesn't require many steps.
 
 But first, as always, be aware of your folder structure. So let's assume that we've stored our dicoms in a folder called ``raw_data`` and that the folder structure looks something like this:
 
@@ -303,7 +303,7 @@ To run ``recon-all`` on the 10 subjects of the tutorial dataset you can run the 
     :linenos:
 
     # Specify important variables
-    export TUTORIAL_DIR=~/nipype_tutorial         #location of experiment folder 
+    export TUTORIAL_DIR=~/nipype_tutorial         #location of experiment folder
     export DATA_DIR=$TUTORIAL_DIR/data            #location of data folder
     export SUBJECTS_DIR=$TUTORIAL_DIR/freesurfer  #location of freesurfer folder
 
@@ -332,7 +332,7 @@ This code will run the subjects in sequential order. If you want to process the 
 
     If your MRI data was recorded on a 3T scanner, I highly recommend to use the ``-nuintensitycor-3T`` flag on the ``recon-all`` command, e.g. ``recon-all -all -subjid sub0$id -nuintensitycor-3T``. This flag was created specifically for 3T scans and `improves the brain segmentation accuracy by optimizing non-uniformity correction using N3 <http://web.mysites.ntu.edu.sg/zvitali/publications/documents/N3_NI.pdf>`_.
 
-.. hint:: 
+.. hint::
 
     You can download this code as a script here: `tutorial_2_recon_shell.sh <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_shell.sh>`_
 
@@ -408,16 +408,16 @@ After this script has run, all important outputs will be stored directly under `
 
 .. note::
 
-    In the code above, if we don't create the ``freesurfer`` output folder on line 15, we would get following error:
+    In the code above, if we don't create the ``freesurfer`` output folder on line 19, we would get following error:
 
     .. code-block:: py
 
         TraitError: The 'subjects_dir' trait of a ReconAllInputSpec instance must be an existing
         directory name, but a value of '~/nipype_tutorial/freesurfer' <type 'str'> was specified.
-   
-    Also, if your data was recorded on a 3T scanner and you want to use the mentioned ``-nuintensitycor-3T`` flag, just uncomment line 28, i.e. delete the ``#`` sign before ``flags='-nuintensitycor-3T'`` on line 28.
 
-.. hint:: 
+    Also, if your data was recorded on a 3T scanner and you want to use the mentioned ``-nuintensitycor-3T`` flag, just uncomment line 32, i.e. delete the ``#`` sign before ``flags='-nuintensitycor-3T'`` on line 32.
+
+.. hint::
 
     You can download this code as a script here: `tutorial_2_recon_python.py <https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_2_recon_python.py>`_
 

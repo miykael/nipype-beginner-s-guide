@@ -83,7 +83,7 @@ To make sure that the MATLAB and FreeSurfer interface run correctly, add the fol
    fs_dir = '~/nipype_tutorial/freesurfer'
    FSCommand.set_default_subjects_dir(fs_dir)
 
-   
+
 Define experiment specific parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -487,7 +487,7 @@ Finally, after everything is set up correctly we can run the pipeline and let it
 
 .. code-block:: py
    :linenos:
-   
+
    metaflow.write_graph(graph2use='colored')
    metaflow.run('MultiProc', plugin_args={'n_procs': 8})
 
