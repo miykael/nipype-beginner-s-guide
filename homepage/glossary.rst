@@ -40,7 +40,7 @@ AR(1)
 
 artifact
 ********
-Essentially any noise in the fMRI signal that's localized in either space or time is generally referred to as an artifact. Common artifacts are caused by head motion, physiological motion (cardiac, respiration, etc.), or problems in the scanner itself. 
+Essentially any noise in the fMRI signal that's localized in either space or time is generally referred to as an artifact. Common artifacts are caused by head motion, physiological motion (cardiac, respiration, etc.), or problems in the scanner itself.
 
 autocorrelation
 ***************
@@ -72,7 +72,7 @@ One way to look for fMRI activation in the brain is to assume you know the exact
 
 batch, batch script
 *******************
-Analysis programs with graphical interfaces are nice. But sometimes you don't want to have to push sixteen buttons and type in fourteen options to have to analyze every individual subject in your experiment. It takes a bunch of your time, and you'll probably screw it up and have to start over at some point. So many programs - SPM, AFNI, BrainVoyager - offer a "batch mode," where you can enter in the options you'd like in some sort of scripting language and then just set it to run the program in an automated function, according to the instructions in your batch script. 
+Analysis programs with graphical interfaces are nice. But sometimes you don't want to have to push sixteen buttons and type in fourteen options to have to analyze every individual subject in your experiment. It takes a bunch of your time, and you'll probably screw it up and have to start over at some point. So many programs - SPM, AFNI, BrainVoyager - offer a "batch mode," where you can enter in the options you'd like in some sort of scripting language and then just set it to run the program in an automated function, according to the instructions in your batch script.
 
 beta images
 ***********
@@ -407,7 +407,7 @@ mat file (or dot-mat file, .mat file, etc.)
 
 MATLAB
 ******
-The dominant software package in scientific and mathematical computing and visualization. Originally built to do very fast computations and manipulations of very large arbitrary matrices; now includes things like a scripting language, graphical user interface builder, extensive mathematical reference library, etc. See `MATLAB Basics FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#matlab-basics>`_ for basic information on how to use MATLAB. For everything else, check out the `Matlab Documentation <http://www.mathworks.com/help/>`_. 
+The dominant software package in scientific and mathematical computing and visualization. Originally built to do very fast computations and manipulations of very large arbitrary matrices; now includes things like a scripting language, graphical user interface builder, extensive mathematical reference library, etc. See `MATLAB Basics FAQ <http://miykael.github.io/nipype-beginner-s-guide/faq.html#matlab-basics>`_ for basic information on how to use MATLAB. For everything else, check out the `Matlab Documentation <http://www.mathworks.com/help/>`_.
 
 mental chronometry
 ******************
@@ -600,7 +600,7 @@ After normalization_, you have some set of transformation parameters which speci
 
 run
 ***
-A term used to describe a single pass-through of a given experimental paradigm, which generally corresponds with a single chunk of time between turning the scanner on and turning it off. A given experiment for one subject often consists of several runs, which are often all modeled together in a `fixed-effects`_ analysis. Generally, it does not mean the whole time a subject is in the scanner if there are several chunks of scanning time in there. Often used interchangeable (and confusingly) with session_. 
+A term used to describe a single pass-through of a given experimental paradigm, which generally corresponds with a single chunk of time between turning the scanner on and turning it off. A given experiment for one subject often consists of several runs, which are often all modeled together in a `fixed-effects`_ analysis. Generally, it does not mean the whole time a subject is in the scanner if there are several chunks of scanning time in there. Often used interchangeable (and confusingly) with session_.
 
 
 S
@@ -620,7 +620,7 @@ A spatial step in which an automated algorithm classifies a brain image into dif
 
 session
 *******
-An ambiguous term usually used to denote the exact same thing as run_: the chunk of time in an experiment between turning the scanner on and turning it off, during which you have one pass of your experimental paradigm. Oftentimes, the experiment on one subject will have several sessions, which might all be the same paradigm or different ones. Unfortunately, this term has also been used to denote the whole single-subject experiment; i.e., one scanning session is the whole time you have the person in the scanner, which might include several different runs. 
+An ambiguous term usually used to denote the exact same thing as run_: the chunk of time in an experiment between turning the scanner on and turning it off, during which you have one pass of your experimental paradigm. Oftentimes, the experiment on one subject will have several sessions, which might all be the same paradigm or different ones. Unfortunately, this term has also been used to denote the whole single-subject experiment; i.e., one scanning session is the whole time you have the person in the scanner, which might include several different runs.
 
 Signal-to-Noise Ratio (SNR)
 ***************************

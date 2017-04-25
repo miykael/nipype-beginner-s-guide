@@ -4,7 +4,7 @@ Download and Install Nipype
 
 All you need to know to download and install Nipype can be found on the official homepage under `Download and Install <http://nipype.readthedocs.io/en/latest/users/install.html>`_. There you find a link to the newest version and more information about which dependencies are necessary or recommended.
 
-Installing Nipype as described on the official homepage should be rather easy for most users. There are some tricky steps that sometimes seem to be less straight forward. But don't worry, I've written my own installation guide to help and assist users with less UNIX experience. The following instructions hopefully help everybody to install and run Nipype on their system. Note that some steps strongly depend on the system you are using and it might be possible that some dependencies are already installed on your system. Also, 
+Installing Nipype as described on the official homepage should be rather easy for most users. There are some tricky steps that sometimes seem to be less straight forward. But don't worry, I've written my own installation guide to help and assist users with less UNIX experience. The following instructions hopefully help everybody to install and run Nipype on their system. Note that some steps strongly depend on the system you are using and it might be possible that some dependencies are already installed on your system. Also,
 
 .. note::
 
@@ -13,7 +13,7 @@ Installing Nipype as described on the official homepage should be rather easy fo
 The following steps describe how I was able to set up and run Nipype on a System with a newly installed Ubuntu 14.04 LTS OS (64-bit), called "`trusty`". To people with older Ubuntu version, don't worry, Nipype does also run on much older versions, as long as they are not too ancient. To check which version of Ubuntu you are running use the command ``lsb_release -d``. You don't have to upgrade to version 14.04 if you have an older version as long as it isn't too ancient.
 
 **To Mac Users**: I haven't installed Nipype on a Mac, yet. But the steps should be almost identical. If any major differences occur, please let me know.
-  
+
 
 Prepare your System
 ===================
@@ -88,7 +88,7 @@ Test Anaconda
 Now that Anaconda is installed let's test if our python environment is ready to run.
 
 1. Open a new terminal and type in the command ``ipython``. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the `support section <http://miykael.github.io/nipype-beginner-s-guide/links.html>`_ of this beginner's guide.
-2. To check if everything is set up correctly try to import numpy with the following command: 
+2. To check if everything is set up correctly try to import numpy with the following command:
 
     .. code-block:: py
 
@@ -318,7 +318,7 @@ After setting everything up, we can test if FreeSurfer is set up correctly and r
     #Test 2
     tksurfer bert lh pial -curv -annot aparc.a2009s.annot
 
-.. note:: 
+.. note::
 
     On a new Ubuntu System this might lead to the following error: ``freeview.bin: error while loading shared libraries: libjpeg.so.62: cannot open shared object file: No such file or directory``. This is a common error on Ubuntu and can be solved with the following command:
 
@@ -454,7 +454,7 @@ The **second** way to get ANTs on your system takes a bit longer, but guarantees
 
         tar xzvf ~/Downloads/stnava-ANTs-b4eb279.tar.gz -C ~/Downloads
 
-3. The installation of ANTs differs from other installation by the fact that the software first has to be compiled before it can run on your system. The code has to be compiled to create the binary files specific for your system. To do this, we first need to create a temporary folder to store all important files. This can bed one with the following code: 
+3. The installation of ANTs differs from other installation by the fact that the software first has to be compiled before it can run on your system. The code has to be compiled to create the binary files specific for your system. To do this, we first need to create a temporary folder to store all important files. This can bed one with the following code:
 
     .. code-block:: sh
 
@@ -475,7 +475,7 @@ The **second** way to get ANTs on your system takes a bit longer, but guarantees
         #4. Change the CMAKE_INSTALL_PREFIX value to /usr/local/antsbin
 
         #5. First press the [c] and than the [g] button to generate the code
-        
+
         #6. Now everything is set up to compile the code
         make -j 4
 
@@ -536,7 +536,7 @@ Now that everything is downloaded and installed, make sure that everything is co
     #Update and upgrade your system
     sudo apt-get update && sudo apt-get upgrade
 
-    #Optional 1: Upgrade your distribution with 
+    #Optional 1: Upgrade your distribution with
     sudo apt-get dist-upgrade
 
     #Optional 2: Clean your system and remove unused packages
@@ -561,7 +561,7 @@ Nipype is installed, recommended interfaces are ready to go and so are you. But 
     nipype.logging.update_logging(nipype.config)
 
     # Run the test: Increase verbosity parameter for more info
-    nipype.test(verbose=0) 
+    nipype.test(verbose=0)
 
 This test can take some minutes but if all goes well you will get an output more or less like this:
 
@@ -589,8 +589,8 @@ Don't worry if some modules are being skipped or some side modules show up as er
        Name:pyscript_slicetiming
        Line:6
        Return code: 0
-       Interface MatlabCommand failed to run. 
-       Interface SliceTiming failed to run. 
+       Interface MatlabCommand failed to run.
+       Interface SliceTiming failed to run.
 
     As mentioned in the error message `SPM not in matlab path`, Nipype can't find the path to SPM. To change that, you can either add ``addpath /usr/local/MATLAB/R2014a/toolbox/spm12b`` to your ``startup.m`` file, stored at ``~/matlab/startup.m`` or add the following line of code at the beginning of your Nipype script:
 

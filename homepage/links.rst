@@ -52,5 +52,5 @@ Learn Unix Shell
 Neuroimaging
 ============
 
-- `Neurostars.org <https://neurostars.org/>`_: If you have any questions about Neuroinformatics, this is the place to go! 
+- `Neurostars.org <https://neurostars.org/>`_: If you have any questions about Neuroinformatics, this is the place to go!
 - `Design efficiency in FMRI <http://imaging.mrc-cbu.cam.ac.uk/imaging/DesignEfficiency>`_: A nice and detailed guide on how to design a good fMRI study.
