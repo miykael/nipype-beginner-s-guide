@@ -17,12 +17,6 @@ Programming: Python, Git & more
 I highly recommend to use `Sublime Text 3 <http://www.sublimetext.com/3>`_ to write and edit your scripts. It's a really good and cool looking text editor with many helpful things, like the `Anaconda Plugion <http://damnwidget.github.io/anaconda/>`_ for example.
 
 
-Learn Programming
------------------
-
-A very good article that outlines what programming languages are and where they are coming from can be found on `IT Hare's Beginners Guide to Programming Languages <http://ithare.com/a-beginners-guide-to-programming-languages/>`_. A big thank you to Sarah and the class of Mrs. Lowe from Colorado for recommending this site to me!
-
-
 Learn Python
 ------------
 
@@ -47,6 +41,14 @@ Learn Unix Shell
 ----------------
 
 - `the Unix Shell <http://swcarpentry.github.io/shell-novice/>`_: If you're new to Linux, here's a quick starter guide by software carpentry that teaches you the basics.
+
+
+Learn Programming
+-----------------
+
+- A very good article that outlines what programming languages are and where they are coming from can be found on `IT Hare's Beginners Guide to Programming Languages <http://ithare.com/a-beginners-guide-to-programming-languages/>`_. A big thank you to Sarah and the class of Mrs. Lowe from Colorado for recommending this site to me!
+
+- If you want to learn more about other programming languages such as HTML & CSS, Javascript, jQuery, PHP, Python and Ruby, check out  `Beginner’s Resources to Learn Programming Languages <https://www.vodien.com/blog/education/beginners-resources-to-learn-programming-languages.php>`_. A big thank you to Mr. Tom Coner and his group for recommending the site to me. It's a great starting point to dive into any programming language.
 
 
 Neuroimaging
