@@ -561,7 +561,7 @@ Nipype is installed, recommended interfaces are ready to go and so are you. But 
     nipype.logging.update_logging(nipype.config)
 
     # Run the test: Increase verbosity parameter for more info
-    nipype.test(verbose=0)
+    nipype.test(doctests=False)
 
 This test can take some minutes but if all goes well you will get an output more or less like this:
 

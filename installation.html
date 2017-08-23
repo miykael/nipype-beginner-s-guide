@@ -617,7 +617,7 @@ sudo apt-get remove <span class="o">&amp;&amp;</span> sudo apt-get clean
 <span class="n">nipype</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">update_logging</span><span class="p">(</span><span class="n">nipype</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
 
 <span class="c1"># Run the test: Increase verbosity parameter for more info</span>
-<span class="n">nipype</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">nipype</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">doctests</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This test can take some minutes but if all goes well you will get an output more or less like this:</p>
@@ -697,7 +697,7 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on May 16, 2017.
+      Last updated on August 23, 2017.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
     </p>
     <p>
