@@ -617,6 +617,8 @@ Now there are two different functions that you can use to specify the folder str
 .. code-block:: py
     :linenos:
 
+     import nipype.interfaces.io as nio
+
      # SelectFiles
      templates = {'anat': 'data/{subject_id}/struct.nii.gz',
                   'func': 'data/{subject_id}/run*.nii.gz'}
