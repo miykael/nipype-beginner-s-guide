@@ -11,7 +11,10 @@ Important building blocks
 =========================
 
 Before we get into the details, we should explain that Nipype pipelines, or
-workflows, the terms are synonomous are made up of *nodes* and *workflows*.
+workflows, the terms are synonomous, are made up of *nodes* and *workflows*.
+We will generally use 'workflow' when referring to section in a script and
+'pipeline' to refer to the whole construction that is actually run.
+
 Briefly, you can think of a *node* as a unit of processing; for example,
 a node will run the program to smooth data.  Nodes are most often associated
 with analytic interfaces to, say, FSL, SPM, or AFNI, but they can also be a
@@ -40,7 +43,7 @@ are common to virtually all pipelines, even though the specific nodes may
 vary.  For that reason, it's important to understand the sections, how they
 relate to each other, and what their role in the overall pipeline is.
 
-* **Import modules**: The first step in any script is to import necessary functions and modules needed for data manipulation and analsysi.
+* **Import modules**: The first step in any script is to import necessary functions and modules needed for data manipulation and analysis.
 
 * **Specify variables**: The second step is to define all the variables you will use throughout the script.  This is best done in just one place, and I recommended you to do this as the second step, right after module importation.
 
