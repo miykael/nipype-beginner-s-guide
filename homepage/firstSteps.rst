@@ -16,20 +16,20 @@ We will generally use 'workflow' when referring to section in a script and
 'pipeline' to refer to the whole construction that is actually run.
 
 Briefly, you can think of a *node* as a unit of processing; for example,
-a node will run the program to smooth data.  Nodes are most often associated
+a node will run the program to smooth data. Nodes are most often associated
 with analytic interfaces to, say, FSL, SPM, or AFNI, but they can also be a
-function to gather the list of image files to be used.  Each node is a step
+function to gather the list of image files to be used. Each node is a step
 in the pipeline.
 
 A *workflow* is a collection of nodes and the rules that connect the nodes
-to each other.  Typically, the output of one node is attached to the input
-of another node in a workflow.  Workflows can also connect other workflows,
+to each other. Typically, the output of one node is attached to the input
+of another node in a workflow. Workflows can also connect other workflows,
 so you might have a preprocessing workflow, a first-level workflow, a
 second-level workflow, etc., perhaps with other nodes in between.
 
 Refer back to the diagram of a Nipype workflow on the `Nipype and Neuroimaging
 <http://miykael.github.io/nipype-beginner-s-guide/nipypeAndNeuroimaging.html#nipype-workflow>`_
-page.  There, the purple box represents an fMRI workflow, and it contains
+page. There, the purple box represents an fMRI workflow, and it contains
 a Preprocessing workflow (the pink box), a functional analysis workflow (the
 light green box), which in turn contains a 1st level analysis workflow and
 a 2nd level analysis workflow.
@@ -37,30 +37,30 @@ a 2nd level analysis workflow.
 Example preprocessing pipeline
 ==============================
 
-The following example pipeline is based on the preprocessing steps of a functional MRI study.  We can usefully categorize in a general way the sections of
-a pipeline script based on what function each section plays.  The sections
+The following example pipeline is based on the preprocessing steps of a functional MRI study. We can usefully categorize in a general way the sections of
+a pipeline script based on what function each section plays. The sections
 are common to virtually all pipelines, even though the specific nodes may
-vary.  For that reason, it's important to understand the sections, how they
+vary. For that reason, it's important to understand the sections, how they
 relate to each other, and what their role in the overall pipeline is.
 
 * **Import modules**: The first step in any script is to import necessary functions and modules needed for data manipulation and analysis.
 
-* **Specify variables**: The second step is to define all the variables you will use throughout the script.  This is best done in just one place, and I recommended you to do this as the second step, right after module importation.
+* **Specify variables**: The second step is to define all the variables you will use throughout the script. This is best done in just one place, and I recommended you to do this as the second step, right after module importation.
 
 * **Specify Nodes**: The third step is to define the nodes you will use in
-your pipeline.  Each node will assign a name to its inputs and to its outputs,
+your pipeline. Each node will assign a name to its inputs and to its outputs,
 and any parameters that are needed for the node to do its job will be
 defined or assigned to an argument here.
 
 * **Specify Workflows & Connect Nodes**: The fourth step is to define at least
-one workflow, though possibly more.  The workflows order the nodes and connect
+one workflow, though possibly more. The workflows order the nodes and connect
 them to each other to create the processing stream, insuring that the nodes
 are executed in the proper order and produce the necessary input for the next
 node in the workflow.
 
 * **Input & Output Stream**: The fifth step is to specify the structure of
-your data folders.  The purpose of the input stream is to specify in which
-folders and under what names the input data is stored.  The output stream
+your data folders. The purpose of the input stream is to specify in which
+folders and under what names the input data is stored. The output stream
 specifies in which folders output data is stored, which may well be different
 from where the input data is stored.
 
