@@ -76,7 +76,8 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How To Build A Pipeline</a><ul>
-<li><a class="reference internal" href="#important-building-blocks">Important building blocks</a><ul>
+<li><a class="reference internal" href="#important-building-blocks">Important building blocks</a></li>
+<li><a class="reference internal" href="#example-preprocessing-pipeline">Example preprocessing pipeline</a><ul>
 <li><a class="reference internal" href="#import-modules">Import modules</a></li>
 <li><a class="reference internal" href="#specify-variables">Specify variables</a></li>
 <li><a class="reference internal" href="#specify-nodes">Specify Nodes</a><ul>
@@ -176,19 +177,64 @@
   <div class="section" id="how-to-build-a-pipeline">
 <h1>How To Build A Pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">¶</a></h1>
 <p>So, you&#8217;ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html">installed Nipype</a> on your system? And you&#8217;ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/prepareData.html">prepared your dataset</a> for the analysis? This means that you are ready to start this tutorial.</p>
-<p>The following section is a general step by step introduction on how to build a pipeline. It will first introduce you to the building blocks of any pipeline, show you on an example how a basic pipeline is implemented, how to read the output and most importantly how to tackle problems. At the end you should understand what a pipeline is, how the key parts interact with each other and how to solve certain issues. Short, you should be able to build any kind of neuroimaging pipeline that you like. So let&#8217;s get started!</p>
+<p>The following section is a general step by step introduction on how to build a pipeline. It will first introduce you to the building blocks of any pipeline, then show you an example of how a basic pipeline is implemented, how to read the output, and most importantly how to tackle problems. At the end you should understand what a pipeline is, how the key parts interact with each other, and how to solve certain issues. In short, you should be able to build any kind of neuroimaging pipeline that you like. So let&#8217;s get started!</p>
 <div class="section" id="important-building-blocks">
 <h2>Important building blocks<a class="headerlink" href="#important-building-blocks" title="Permalink to this headline">¶</a></h2>
-<p>The following example pipeline is based on the preprocessing steps of a functional MRI study. Nonetheless, all elements are relevant for any kind of pipeline and it is important that you understand them well. They can be summarized into the following sections:</p>
+<p>Before we get into the details, we should explain that Nipype pipelines, or
+workflows, the terms are synonomous, are made up of <em>nodes</em> and <em>workflows</em>.
+We will generally use &#8216;workflow&#8217; when referring to section in a script and
+&#8216;pipeline&#8217; to refer to the whole construction that is actually run.</p>
+<p>Briefly, you can think of a <em>node</em> as a unit of processing; for example,
+a node will run the program to smooth data. Nodes are most often associated
+with analytic interfaces to, say, FSL, SPM, or AFNI, but they can also be a
+function to gather the list of image files to be used. Each node is a step
+in the pipeline.</p>
+<p>A <em>workflow</em> is a collection of nodes and the rules that connect the nodes
+to each other. Typically, the output of one node is attached to the input
+of another node in a workflow. Workflows can also connect other workflows,
+so you might have a preprocessing workflow, a first-level workflow, a
+second-level workflow, etc., perhaps with other nodes in between.</p>
+<p>Refer back to the diagram of a Nipype workflow on the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/nipypeAndNeuroimaging.html#nipype-workflow">Nipype and Neuroimaging</a>
+page. There, the purple box represents an fMRI workflow, and it contains
+a Preprocessing workflow (the pink box), a functional analysis workflow (the
+light green box), which in turn contains a 1st level analysis workflow and
+a 2nd level analysis workflow.</p>
+</div>
+<div class="section" id="example-preprocessing-pipeline">
+<h2>Example preprocessing pipeline<a class="headerlink" href="#example-preprocessing-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>The following example pipeline is based on the preprocessing steps of a functional MRI study. We can usefully categorize in a general way the sections of
+a pipeline script based on what function each section plays. The sections
+are common to virtually all pipelines, even though the specific nodes may
+vary. For that reason, it&#8217;s important to understand the sections, how they
+relate to each other, and what their role in the overall pipeline is.</p>
 <ul class="simple">
-<li><strong>Import modules</strong>: The first step in any script is to import necessary functions or modules.</li>
-<li><strong>Specify variables</strong>: The definition of variables which you use throughout the script is best done in just one place of your script. I recommended you to do this just right after module importation.</li>
-<li><strong>Specify Nodes</strong>: Before you can build a pipeline you first have to create some nodes.</li>
-<li><strong>Specify Workflows &amp; Connect Nodes</strong>: Without further information, your computer wouldn&#8217;t know in which order to execute the just created nodes. That&#8217;s why you have to create some workflows and specify the connections between the nodes and the workflows, so that the pipeline can be executed in a sequential sequence.</li>
-<li><strong>Input &amp; Output Stream</strong>: Your computer needs to know the structure of your folders, where it can get the data from and where it should store the output data at.</li>
-<li><strong>Run Workflow</strong>: If everything else is done, you can run your pipeline.</li>
+<li><strong>Import modules</strong>: The first step in any script is to import necessary functions and modules needed for data manipulation and analysis.</li>
+<li><strong>Specify variables</strong>: The second step is to define all the variables you will use throughout the script. This is best done in just one place, and I recommended you to do this as the second step, right after module importation.</li>
+<li><strong>Specify Nodes</strong>: The third step is to define the nodes you will use in</li>
 </ul>
-<p>So, make yourself ready, start an IPython environment (type <code class="docutils literal"><span class="pre">ipython</span></code> into the terminal) and have fun.</p>
+<p>your pipeline. Each node will assign a name to its inputs and to its outputs,
+and any parameters that are needed for the node to do its job will be
+defined or assigned to an argument here.</p>
+<ul class="simple">
+<li><strong>Specify Workflows &amp; Connect Nodes</strong>: The fourth step is to define at least</li>
+</ul>
+<p>one workflow, though possibly more. The workflows order the nodes and connect
+them to each other to create the processing stream, insuring that the nodes
+are executed in the proper order and produce the necessary input for the next
+node in the workflow.</p>
+<ul class="simple">
+<li><strong>Input &amp; Output Stream</strong>: The fifth step is to specify the structure of</li>
+</ul>
+<p>your data folders. The purpose of the input stream is to specify in which
+folders and under what names the input data is stored. The output stream
+specifies in which folders output data is stored, which may well be different
+from where the input data is stored.</p>
+<ul class="simple">
+<li><strong>Run Workflow</strong>: The final step is to actually run the outermost</li>
+</ul>
+<p>workflow to do the work and make you famous!</p>
+<p>So, make yourself ready, start an IPython environment (type <code class="docutils literal"><span class="pre">ipython</span></code> into
+the terminal) and have fun creating this example workflow.</p>
 <div class="section" id="import-modules">
 <h3>Import modules<a class="headerlink" href="#import-modules" title="Permalink to this headline">¶</a></h3>
 <p>The first thing you should do in any script is to import the modules you want to use in your script. In our case, most modules are actually interfaces to other software packages (e.g. FSL, FreeSurfer or SPM) and can be found in the <code class="docutils literal"><span class="pre">nipype</span></code> module.</p>
@@ -1336,34 +1382,34 @@
 31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span><span class="s1">&#39;check&#39;</span>, <span class="s1">&#39;execution&#39;</span>, <span class="s1">&#39;logging&#39;</span><span class="o">]</span>
 Running in parallel.
 Submitting <span class="m">3</span> <span class="nb">jobs</span>
-Executing: selectfiles.a2 ID: 0
-Executing: selectfiles.a1 ID: 1
-Executing: selectfiles.a0 ID: 14
+Executing: selectfiles.a2 ID: <span class="m">0</span>
+Executing: selectfiles.a1 ID: <span class="m">1</span>
+Executing: selectfiles.a0 ID: <span class="m">14</span>
 Executing node selectfiles.a2 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                         preproc/_subject_id_sub003/selectfiles
 Executing node selectfiles.a1 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                         preproc/_subject_id_sub002/selectfiles
 Executing node selectfiles.a0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                         preproc/_subject_id_sub001/selectfiles
-<span class="o">[</span>Job finished<span class="o">]</span> jobname: selectfiles.a2 jobid: 0
-<span class="o">[</span>Job finished<span class="o">]</span> jobname: selectfiles.a1 jobid: 1
-<span class="o">[</span>Job finished<span class="o">]</span> jobname: selectfiles.a0 jobid: 14
+<span class="o">[</span>Job finished<span class="o">]</span> jobname: selectfiles.a2 jobid: <span class="m">0</span>
+<span class="o">[</span>Job finished<span class="o">]</span> jobname: selectfiles.a1 jobid: <span class="m">1</span>
+<span class="o">[</span>Job finished<span class="o">]</span> jobname: selectfiles.a0 jobid: <span class="m">14</span>
 
 <span class="o">[</span>...<span class="o">]</span>
 
 Submitting <span class="m">3</span> <span class="nb">jobs</span>
-Executing: datasink.a1 ID: 7
-Executing: datasink.a2 ID: 13
-Executing: datasink.a0 ID: 20
+Executing: datasink.a1 ID: <span class="m">7</span>
+Executing: datasink.a2 ID: <span class="m">13</span>
+Executing: datasink.a0 ID: <span class="m">20</span>
 Executing node datasink.a0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                      preproc/_subject_id_sub001/datasink
 Executing node datasink.a1 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                      preproc/_subject_id_sub002/datasink
 Executing node datasink.a2 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                      preproc/_subject_id_sub003/datasink
-<span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a1 jobid: 7
-<span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a2 jobid: 13
-<span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a0 jobid: 20
+<span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a1 jobid: <span class="m">7</span>
+<span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a2 jobid: <span class="m">13</span>
+<span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a0 jobid: <span class="m">20</span>
 </pre></div>
 </td></tr></table></div>
 <p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node&#8217;s execution is accompanied by the working directory of this node. The output <code class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></code> then tells you when the execution of the node is done.</p>
@@ -1425,59 +1471,59 @@ Executing node datasink.a2 in dir: ~/nipype_tutorial/workingdir_firstSteps/
 51
 52
 53
-54</pre></div></td><td class="code"><div class="highlight"><pre><span></span>141018-14:01:51,671 workflow INFO:
+54</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="m">141018</span>-14:01:51,671 workflow INFO:
      <span class="o">[</span><span class="s1">&#39;check&#39;</span>, <span class="s1">&#39;execution&#39;</span>, <span class="s1">&#39;logging&#39;</span><span class="o">]</span>
-141018-14:01:51,688 workflow INFO:
+<span class="m">141018</span>-14:01:51,688 workflow INFO:
      Running serially.
-141018-14:01:51,689 workflow INFO:
+<span class="m">141018</span>-14:01:51,689 workflow INFO:
      Executing node selectfiles.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                              preproc/_subject_id_sub001/selectfiles
-141018-14:01:51,697 workflow INFO:
+<span class="m">141018</span>-14:01:51,697 workflow INFO:
      Executing node gunzip.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                         preproc/_subject_id_sub001/gunzip
-141018-14:01:51,699 workflow INFO:
+<span class="m">141018</span>-14:01:51,699 workflow INFO:
      Executing node _gunzip0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                        preproc/_subject_id_sub001/gunzip/mapflow/_gunzip0
-141018-14:01:52,53 workflow INFO:
+<span class="m">141018</span>-14:01:52,53 workflow INFO:
      Executing node sliceTiming.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                              preproc/_subject_id_sub001/sliceTiming
-141018-14:02:30,30 workflow INFO:
+<span class="m">141018</span>-14:02:30,30 workflow INFO:
      Executing node realign.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                          preproc/_subject_id_sub001/realign
-141018-14:03:29,374 workflow INFO:
+<span class="m">141018</span>-14:03:29,374 workflow INFO:
      Executing node smooth.aI.a1.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                               preproc/_subject_id_sub001/smooth
-141018-14:04:40,927 workflow INFO:
+<span class="m">141018</span>-14:04:40,927 workflow INFO:
      Executing node art.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                      preproc/_subject_id_sub001/art
-141018-14:04:40,929 workflow ERROR:
+<span class="m">141018</span>-14:04:40,929 workflow ERROR:
      <span class="o">[</span><span class="s1">&#39;Node art.b0 failed to run on host mnotter.&#39;</span><span class="o">]</span>
-141018-14:04:40,930 workflow INFO:
+<span class="m">141018</span>-14:04:40,930 workflow INFO:
      Saving crash info to ~/nipype_tutorial/crash-20141018-140440-mnotter-art.b0.pklz
-141018-14:04:40,930 workflow INFO:
+<span class="m">141018</span>-14:04:40,930 workflow INFO:
      Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/plugins/linear.py&quot;</span>,
-       line 38, in run node.run<span class="o">(</span><span class="nv">updatehash</span><span class="o">=</span>updatehash<span class="o">)</span>
+       line <span class="m">38</span>, in run node.run<span class="o">(</span><span class="nv">updatehash</span><span class="o">=</span>updatehash<span class="o">)</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1424, in run self._run_interface<span class="o">()</span>
+       line <span class="m">1424</span>, in run self._run_interface<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1534, in _run_interface self._result <span class="o">=</span> self._run_command<span class="o">(</span>execute<span class="o">)</span>
+       line <span class="m">1534</span>, in _run_interface self._result <span class="o">=</span> self._run_command<span class="o">(</span>execute<span class="o">)</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1660, in _run_command <span class="nv">result</span> <span class="o">=</span> self._interface.run<span class="o">()</span>
+       line <span class="m">1660</span>, in _run_command <span class="nv">result</span> <span class="o">=</span> self._interface.run<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
-       line 965, in run self._check_mandatory_inputs<span class="o">()</span>
+       line <span class="m">965</span>, in run self._check_mandatory_inputs<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
-       line 903, in _check_mandatory_inputs raise ValueError<span class="o">(</span>msg<span class="o">)</span>
+       line <span class="m">903</span>, in _check_mandatory_inputs raise ValueError<span class="o">(</span>msg<span class="o">)</span>
 ValueError: ArtifactDetect requires a value <span class="k">for</span> input <span class="s1">&#39;realigned_files&#39;</span>.
             For a list of required inputs, see ArtifactDetect.help<span class="o">()</span>
 
-141018-14:05:18,144 workflow INFO:
+<span class="m">141018</span>-14:05:18,144 workflow INFO:
      ***********************************
-141018-14:05:18,144 workflow ERROR:
+<span class="m">141018</span>-14:05:18,144 workflow ERROR:
      could not run node: preproc.art.b0
-141018-14:05:18,144 workflow INFO:
+<span class="m">141018</span>-14:05:18,144 workflow INFO:
      crashfile: ~/nipype_tutorial/crash-20141018-140440-mnotter-art.b0.pklz
-141018-14:05:18,144 workflow INFO:
+<span class="m">141018</span>-14:05:18,144 workflow INFO:
      ***********************************
 </pre></div>
 </td></tr></table></div>
@@ -1542,13 +1588,13 @@ Working directory: ~/nipype_tutorial/workingdir_firstSteps/
 Node inputs:
 
 <span class="nv">bound_by_brainmask</span> <span class="o">=</span> False
-<span class="nv">global_threshold</span> <span class="o">=</span> 8.0
+<span class="nv">global_threshold</span> <span class="o">=</span> <span class="m">8</span>.0
 <span class="nv">ignore_exception</span> <span class="o">=</span> False
 <span class="nv">intersect_mask</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">mask_file</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">mask_threshold</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">mask_type</span> <span class="o">=</span> spm_global
-<span class="nv">norm_threshold</span> <span class="o">=</span> 0.5
+<span class="nv">norm_threshold</span> <span class="o">=</span> <span class="m">0</span>.5
 <span class="nv">parameter_source</span> <span class="o">=</span> SPM
 <span class="nv">plot_type</span> <span class="o">=</span> png
 <span class="nv">realigned_files</span> <span class="o">=</span> &lt;undefined&gt;
@@ -1559,21 +1605,21 @@ Node inputs:
 <span class="nv">translation_threshold</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">use_differences</span> <span class="o">=</span> <span class="o">[</span>True, False<span class="o">]</span>
 <span class="nv">use_norm</span> <span class="o">=</span> True
-<span class="nv">zintensity_threshold</span> <span class="o">=</span> 3.0
+<span class="nv">zintensity_threshold</span> <span class="o">=</span> <span class="m">3</span>.0
 
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/plugins/linear.py&quot;</span>,
-       line 38, in run node.run<span class="o">(</span><span class="nv">updatehash</span><span class="o">=</span>updatehash<span class="o">)</span>
+       line <span class="m">38</span>, in run node.run<span class="o">(</span><span class="nv">updatehash</span><span class="o">=</span>updatehash<span class="o">)</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1424, in run self._run_interface<span class="o">()</span>
+       line <span class="m">1424</span>, in run self._run_interface<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1534, in _run_interface self._result <span class="o">=</span> self._run_command<span class="o">(</span>execute<span class="o">)</span>
+       line <span class="m">1534</span>, in _run_interface self._result <span class="o">=</span> self._run_command<span class="o">(</span>execute<span class="o">)</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1660, in _run_command <span class="nv">result</span> <span class="o">=</span> self._interface.run<span class="o">()</span>
+       line <span class="m">1660</span>, in _run_command <span class="nv">result</span> <span class="o">=</span> self._interface.run<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
-       line 965, in run self._check_mandatory_inputs<span class="o">()</span>
+       line <span class="m">965</span>, in run self._check_mandatory_inputs<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
-       line 903, in _check_mandatory_inputs raise ValueError<span class="o">(</span>msg<span class="o">)</span>
+       line <span class="m">903</span>, in _check_mandatory_inputs raise ValueError<span class="o">(</span>msg<span class="o">)</span>
 ValueError: ArtifactDetect requires a value <span class="k">for</span> input <span class="s1">&#39;realigned_files&#39;</span>.
             For a list of required inputs, see ArtifactDetect.help<span class="o">()</span>
 </pre></div>
@@ -1673,32 +1719,32 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 52
 53
 54
-55</pre></div></td><td class="code"><div class="highlight"><pre><span></span>141018-13:25:22,227 workflow INFO:
+55</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="m">141018</span>-13:25:22,227 workflow INFO:
      Executing node selectfiles.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                              preproc/_subject_id_sub001/selectfiles
-141018-13:25:22,235 workflow INFO:
+<span class="m">141018</span>-13:25:22,235 workflow INFO:
      Executing node sliceTiming.b0 in dir: ~/nipype_tutorial/workingdir_firstSteps/
                                              preproc/_subject_id_sub001/sliceTiming
-141018-13:25:39,673 workflow ERROR:
+<span class="m">141018</span>-13:25:39,673 workflow ERROR:
      <span class="o">[</span><span class="s1">&#39;Node sliceTiming.b0 failed to run on host mnotter.&#39;</span><span class="o">]</span>
-141018-13:25:39,673 workflow INFO:
+<span class="m">141018</span>-13:25:39,673 workflow INFO:
      Saving crash info to ~/nipype_tutorial/
                             crash-20141018-132539-mnotter-sliceTiming.b0.pklz
 
 <span class="o">[</span>...<span class="o">]</span>
 
                &lt; M A T L A B <span class="o">(</span>R<span class="o">)</span> &gt;
-     Copyright 1984-2014 The MathWorks, Inc.
-       R2014a <span class="o">(</span>8.3.0.532<span class="o">)</span> 64-bit <span class="o">(</span>glnxa64<span class="o">)</span>
-                February 11, 2014
+     Copyright <span class="m">1984</span>-2014 The MathWorks, Inc.
+       R2014a <span class="o">(</span><span class="m">8</span>.3.0.532<span class="o">)</span> <span class="m">64</span>-bit <span class="o">(</span>glnxa64<span class="o">)</span>
+                February <span class="m">11</span>, <span class="m">2014</span>
 
 <span class="o">[</span>...<span class="o">]</span>
 
 Warning: Run spm_jobman<span class="o">(</span><span class="s1">&#39;initcfg&#39;</span><span class="o">)</span><span class="p">;</span> beforehand
-&gt; In spm_jobman at 106
-  In pyscript_slicetiming at 362
-Item <span class="s1">&#39;Session&#39;</span>, field <span class="s1">&#39;val&#39;</span>: Number of matching files <span class="o">(</span>0<span class="o">)</span> less than required <span class="o">(</span>2<span class="o">)</span>.
-Item <span class="s1">&#39;Session&#39;</span>, field <span class="s1">&#39;val&#39;</span>: Number of matching files <span class="o">(</span>0<span class="o">)</span> less than required <span class="o">(</span>2<span class="o">)</span>.
+&gt; In spm_jobman at <span class="m">106</span>
+  In pyscript_slicetiming at <span class="m">362</span>
+Item <span class="s1">&#39;Session&#39;</span>, field <span class="s1">&#39;val&#39;</span>: Number of matching files <span class="o">(</span><span class="m">0</span><span class="o">)</span> less than required <span class="o">(</span><span class="m">2</span><span class="o">)</span>.
+Item <span class="s1">&#39;Session&#39;</span>, field <span class="s1">&#39;val&#39;</span>: Number of matching files <span class="o">(</span><span class="m">0</span><span class="o">)</span> less than required <span class="o">(</span><span class="m">2</span><span class="o">)</span>.
 
 Standard error:
 MATLAB code threw an exception:
@@ -1716,17 +1762,17 @@ Line:459
 File:ç
 Name:U
 Line:
-Return code: 0
+Return code: <span class="m">0</span>
 Interface MatlabCommand failed to run.
 Interface SliceTiming failed to run.
 
-141018-13:25:39,681 workflow INFO:
+<span class="m">141018</span>-13:25:39,681 workflow INFO:
      ***********************************
-141018-13:25:39,682 workflow ERROR:
+<span class="m">141018</span>-13:25:39,682 workflow ERROR:
      could not run node: preproc.sliceTiming
-141018-13:25:39,682 workflow INFO:
+<span class="m">141018</span>-13:25:39,682 workflow INFO:
      crashfile: ~/nipype_tutorial/crash-20141018-132539-mnotter-sliceTiming.pklz
-141018-13:25:39,682 workflow INFO:
+<span class="m">141018</span>-13:25:39,682 workflow INFO:
      ***********************************
 </pre></div>
 </td></tr></table></div>
@@ -1783,8 +1829,8 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on August 23, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
+      Last updated on December 04, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

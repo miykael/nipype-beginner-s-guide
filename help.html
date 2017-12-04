@@ -193,13 +193,13 @@ Working directory: ~/nipype_tutorial/workingdir_firstSteps/
 Node inputs:
 
 <span class="nv">bound_by_brainmask</span> <span class="o">=</span> False
-<span class="nv">global_threshold</span> <span class="o">=</span> 8.0
+<span class="nv">global_threshold</span> <span class="o">=</span> <span class="m">8</span>.0
 <span class="nv">ignore_exception</span> <span class="o">=</span> False
 <span class="nv">intersect_mask</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">mask_file</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">mask_threshold</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">mask_type</span> <span class="o">=</span> spm_global
-<span class="nv">norm_threshold</span> <span class="o">=</span> 0.5
+<span class="nv">norm_threshold</span> <span class="o">=</span> <span class="m">0</span>.5
 <span class="nv">parameter_source</span> <span class="o">=</span> SPM
 <span class="nv">plot_type</span> <span class="o">=</span> png
 <span class="nv">realigned_files</span> <span class="o">=</span> &lt;undefined&gt;
@@ -210,21 +210,21 @@ Node inputs:
 <span class="nv">translation_threshold</span> <span class="o">=</span> &lt;undefined&gt;
 <span class="nv">use_differences</span> <span class="o">=</span> <span class="o">[</span>True, False<span class="o">]</span>
 <span class="nv">use_norm</span> <span class="o">=</span> True
-<span class="nv">zintensity_threshold</span> <span class="o">=</span> 3.0
+<span class="nv">zintensity_threshold</span> <span class="o">=</span> <span class="m">3</span>.0
 
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/plugins/linear.py&quot;</span>,
-       line 38, in run node.run<span class="o">(</span><span class="nv">updatehash</span><span class="o">=</span>updatehash<span class="o">)</span>
+       line <span class="m">38</span>, in run node.run<span class="o">(</span><span class="nv">updatehash</span><span class="o">=</span>updatehash<span class="o">)</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1424, in run self._run_interface<span class="o">()</span>
+       line <span class="m">1424</span>, in run self._run_interface<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1534, in _run_interface self._result <span class="o">=</span> self._run_command<span class="o">(</span>execute<span class="o">)</span>
+       line <span class="m">1534</span>, in _run_interface self._result <span class="o">=</span> self._run_command<span class="o">(</span>execute<span class="o">)</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/pipeline/engine.py&quot;</span>,
-       line 1660, in _run_command <span class="nv">result</span> <span class="o">=</span> self._interface.run<span class="o">()</span>
+       line <span class="m">1660</span>, in _run_command <span class="nv">result</span> <span class="o">=</span> self._interface.run<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
-       line 965, in run self._check_mandatory_inputs<span class="o">()</span>
+       line <span class="m">965</span>, in run self._check_mandatory_inputs<span class="o">()</span>
   File <span class="s2">&quot;~/anaconda/lib/python2.7/site-packages/nipype/interfaces/base.py&quot;</span>,
-       line 903, in _check_mandatory_inputs raise ValueError<span class="o">(</span>msg<span class="o">)</span>
+       line <span class="m">903</span>, in _check_mandatory_inputs raise ValueError<span class="o">(</span>msg<span class="o">)</span>
 ValueError: ArtifactDetect requires a value <span class="k">for</span> input <span class="s1">&#39;realigned_files&#39;</span>.
             For a list of required inputs, see ArtifactDetect.help<span class="o">()</span>
 </pre></div>
@@ -293,8 +293,8 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on August 23, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
+      Last updated on December 04, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

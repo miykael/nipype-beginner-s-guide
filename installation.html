@@ -380,7 +380,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 <li><p class="first">The usage of FreeSurfer requires a license file. Therefore, before you can use FreeSurfer, make sure to <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/registration.html">register</a>. The content of the license file looks something like this:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span></span>username@gmail.com
-12345
+<span class="m">12345</span>
  *A3zKO68mtFu5
 </pre></div>
 </div>
@@ -407,7 +407,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 <p>After setting everything up, we can test if FreeSurfer is set up correctly and run a test with the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span><span class="c1">#Test 1</span>
 freeview -v <span class="nv">$SUBJECTS_DIR</span>/bert/mri/brainmask.mgz <span class="se">\</span>
-         -v <span class="nv">$SUBJECTS_DIR</span>/bert/mri/aseg.mgz:colormap<span class="o">=</span>lut:opacity<span class="o">=</span>0.2 <span class="se">\</span>
+         -v <span class="nv">$SUBJECTS_DIR</span>/bert/mri/aseg.mgz:colormap<span class="o">=</span>lut:opacity<span class="o">=</span><span class="m">0</span>.2 <span class="se">\</span>
          -f <span class="nv">$SUBJECTS_DIR</span>/bert/surf/lh.white:edgecolor<span class="o">=</span>yellow <span class="se">\</span>
          -f <span class="nv">$SUBJECTS_DIR</span>/bert/surf/rh.white:edgecolor<span class="o">=</span>yellow <span class="se">\</span>
          -f <span class="nv">$SUBJECTS_DIR</span>/bert/surf/lh.pial:annot<span class="o">=</span>aparc:edgecolor<span class="o">=</span>red <span class="se">\</span>
@@ -546,7 +546,7 @@ ccmake ../../stnava-ANTs-b4eb279
 <span class="c1">#5. First press the [c] and than the [g] button to generate the code</span>
 
 <span class="c1">#6. Now everything is set up to compile the code</span>
-make -j 4
+make -j <span class="m">4</span>
 
 <span class="c1">#7. Now you&#39;re ready to install ANTs with the following commands:</span>
 <span class="nb">cd</span> ANTS-build/
@@ -697,8 +697,8 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on August 23, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
+      Last updated on December 04, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

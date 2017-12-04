@@ -234,7 +234,7 @@ mkdir -p <span class="nv">$TMP_DIR</span>
 tar -zxvf <span class="nv">$ZIP_FILE</span> -C <span class="nv">$TMP_DIR</span>
 
 <span class="c1"># Copy data of first ten subjects into DATA_DIR</span>
-<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> 10<span class="k">)</span>
+<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> <span class="m">10</span><span class="k">)</span>
 <span class="k">do</span>
     <span class="nb">echo</span> <span class="s2">&quot;Creating dataset for subject: sub0</span><span class="nv">$id</span><span class="s2">&quot;</span>
     mkdir -p <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>
@@ -248,7 +248,7 @@ tar -zxvf <span class="nv">$ZIP_FILE</span> -C <span class="nv">$TMP_DIR</span>
         cp <span class="nv">$TMP_DIR</span>/ds102/sub0<span class="nv">$id</span>/behav/task001_<span class="nv">$session</span>/behavdata.txt <span class="se">\</span>
            <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/behavdata_<span class="nv">$session</span>.txt
 
-        <span class="k">for</span> con_id in <span class="o">{</span>1..4<span class="o">}</span>
+        <span class="k">for</span> con_id in <span class="o">{</span><span class="m">1</span>..4<span class="o">}</span>
         <span class="k">do</span>
             cp <span class="nv">$TMP_DIR</span>/ds102/sub0<span class="nv">$id</span>/model/model001/onsets/task001_<span class="nv">$session</span>/cond00<span class="nv">$con_id</span>.txt <span class="se">\</span>
                <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/onset_<span class="si">${</span><span class="nv">session</span><span class="si">}</span>_cond00<span class="nv">$con_id</span>.txt
@@ -339,34 +339,34 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </div>
 <p>To verify the information about the scan parameters we can use <code class="docutils literal"><span class="pre">fslinfo</span></code>. <code class="docutils literal"><span class="pre">fslinfo</span></code> allows us to read the header information of a NIfTI file and therefore get information about voxel resolution and TR. For example, reading the header of the anatomical scan of subject2 with the command <code class="docutils literal"><span class="pre">fslinfo</span> <span class="pre">~/nipype_tutorial/data/sub002/struct.nii.gz</span></code> gives us following output:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>data_type      INT16
-dim1           176
-dim2           256
-dim3           256
-dim4           1
-datatype       4
-pixdim1        1.000000
-pixdim2        1.000000
-pixdim3        1.000000
-pixdim4        0.000000
-cal_max        0.0000
-cal_min        0.0000
+dim1           <span class="m">176</span>
+dim2           <span class="m">256</span>
+dim3           <span class="m">256</span>
+dim4           <span class="m">1</span>
+datatype       <span class="m">4</span>
+pixdim1        <span class="m">1</span>.000000
+pixdim2        <span class="m">1</span>.000000
+pixdim3        <span class="m">1</span>.000000
+pixdim4        <span class="m">0</span>.000000
+cal_max        <span class="m">0</span>.0000
+cal_min        <span class="m">0</span>.0000
 file_type      NIFTI-1+
 </pre></div>
 </div>
 <p>This output tells us, that the anatomical volume consists of 256x256x176 voxels with each having 1x1x1mm resolution.</p>
 <p>Using the same command on a functional scan of subject 2 gives as following output:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>data_type      INT16
-dim1           64
-dim2           64
-dim3           40
-dim4           146
-datatype       4
-pixdim1        3.000000
-pixdim2        3.000000
-pixdim3        4.000000
-pixdim4        2000.000000
-cal_max        0.0000
-cal_min        0.0000
+dim1           <span class="m">64</span>
+dim2           <span class="m">64</span>
+dim3           <span class="m">40</span>
+dim4           <span class="m">146</span>
+datatype       <span class="m">4</span>
+pixdim1        <span class="m">3</span>.000000
+pixdim2        <span class="m">3</span>.000000
+pixdim3        <span class="m">4</span>.000000
+pixdim4        <span class="m">2000</span>.000000
+cal_max        <span class="m">0</span>.0000
+cal_min        <span class="m">0</span>.0000
 file_type      NIFTI-1+
 </pre></div>
 </div>
@@ -440,7 +440,7 @@ file_type      NIFTI-1+
 <span class="nv">FUNC_FOLDER2</span><span class="o">=</span>fmri_run2_long        <span class="c1"># dicom folder containing 2nd functional scan</span>
 <span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data        <span class="c1"># location of output folder</span>
 
-<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> 10<span class="k">)</span>
+<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> <span class="m">10</span><span class="k">)</span>
 <span class="k">do</span>
     mkdir -p <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>
     mri_convert <span class="nv">$RAW_DIR</span>/sub0<span class="nv">$id</span>/<span class="nv">$T1_FOLDER</span>/00001.dcm    <span class="nv">$DATA_DIR</span>/sub0<span class="nv">$id</span>/struct.nii.gz
@@ -476,7 +476,7 @@ file_type      NIFTI-1+
 <span class="nb">export</span> <span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/data            <span class="c1">#location of data folder</span>
 <span class="nb">export</span> <span class="nv">SUBJECTS_DIR</span><span class="o">=</span><span class="nv">$TUTORIAL_DIR</span>/freesurfer  <span class="c1">#location of freesurfer folder</span>
 
-<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> 10<span class="k">)</span>
+<span class="k">for</span> id in <span class="k">$(</span>seq -w <span class="m">1</span> <span class="m">10</span><span class="k">)</span>
 <span class="k">do</span>
     <span class="nb">echo</span> <span class="s2">&quot;working on sub0</span><span class="nv">$id</span><span class="s2">&quot;</span>
     mkdir -p <span class="nv">$SUBJECTS_DIR</span>/sub0<span class="nv">$id</span>/mri/orig
@@ -693,8 +693,8 @@ file_type      NIFTI-1+
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on August 23, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1.
+      Last updated on December 04, 2017.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.
