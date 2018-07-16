@@ -2,6 +2,25 @@
 Nipype Beginner's Guide
 =======================
 
+.. image:: https://img.shields.io/github/issues/miykael/nipype-beginner-s-guide.svg
+   target: https://github.com/miykael/nipype-beginner-s-guide/issues/
+
+.. image:: https://img.shields.io/github/issues-pr/miykael/nipype-beginner-s-guide.svg
+   target: https://github.com/miykael/nipype-beginner-s-guide/pulls/
+
+.. image:: https://img.shields.io/github/contributors/miykael/nipype-beginner-s-guide.svg
+   target: https://GitHub.com/miykael/nipype-beginner-s-guide/graphs/contributors/
+
+.. image:: https://github-basic-badges.herokuapp.com/commits/miykael/nipype-beginner-s-guide.svg
+   target: https://github.com/miykael/nipype-beginner-s-guide/commits/master
+
+.. image:: https://github-size-badge.herokuapp.com/miykael/nipype-beginner-s-guide.svg
+   target: https://github.com/miykael/nipype-beginner-s-guide/archive/master.zip
+
+.. image:: http://hits.dwyl.io/miykael/nipype-beginner-s-guide.svg
+   target: http://hits.dwyl.io/miykael/nipype-beginner-s-guide
+
+
 This homepage provides a beginner's guide for Nipype, a user-friendly software written in Python that provides a uniform interface to existing neuroimaging softwares like SPM, FSL, FreeSurfer, Camino, AFNI, Slicer, etc.
 
 
@@ -44,23 +63,23 @@ This beginner's guide was mostly written by Michael Notter. But some of its idea
 
   Copyright (c) 2009-2014, NIPY Developers
   All rights reserved.
-  
+
   Redistribution and use in source and binary forms, with or without
   modification, are permitted provided that the following conditions are
   met:
-  
+
       * Redistributions of source code must retain the above copyright
          notice, this list of conditions and the following disclaimer.
-  
+
       * Redistributions in binary form must reproduce the above
          copyright notice, this list of conditions and the following
          disclaimer in the documentation and/or other materials provided
          with the distribution.
-  
+
       * Neither the name of the NIPY Developers nor the names of any
          contributors may be used to endorse or promote products derived
          from this software without specific prior written permission.
-  
+
   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
