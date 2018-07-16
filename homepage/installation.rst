@@ -1,3 +1,7 @@
+.. important::
+
+    This guide hasn't been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the `Nipype Tutorial <https://miykael.github.io/nipype_tutorial/>`_.
+
 ===========================
 Download and Install Nipype
 ===========================

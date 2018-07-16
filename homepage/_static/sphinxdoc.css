@@ -192,7 +192,7 @@ div.footer a:hover {
 
 /* -- body styles ----------------------------------------------------------- */
 
-p {    
+p {
     margin: 0.8em 0 0.5em 0;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
@@ -318,7 +318,7 @@ hr {
 a tt {
     border: 0;
     color: #EE4B00;
-}	
+}
 
 a tt:hover {
     color: #2491CF;
@@ -456,13 +456,21 @@ div.warning ul, div.warning ol {
 }
 
 div.important {
-    border: 1px solid black;
+    border: 2px solid black;
 }
 
 div.important p.admonition-title {
+    padding: 0.4em 0 0.1em 0.5em;
     background-color: #EE4B00;
     border-bottom-color: black;
+    font-size: 2em;
     color: black;
+    height: 30px;
+}
+
+div.important p.last {
+    font-size: 1.25em;
+
 }
 
 div.hint {
