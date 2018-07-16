@@ -143,23 +143,26 @@
         <div class="bodywrapper">
           <div class="body">
 
-            <!-- Disqus counter -->
             
-  <div class="section" id="introduction-to-neuroimaging">
+  <div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+</div>
+<div class="section" id="introduction-to-neuroimaging">
 <h1>Introduction to Neuroimaging<a class="headerlink" href="#introduction-to-neuroimaging" title="Permalink to this headline">¶</a></h1>
-<p>In this section, I will introduce you to the basics of analyzing neuroimaging data. I will give a brief explanation of how the neuroimaging data is acquired, how the data is prepared for analysis (also called preprocessing). Finally, I&#8217;ll show how you can analyze your data using a model based on your hypothesis.</p>
+<p>In this section, I will introduce you to the basics of analyzing neuroimaging data. I will give a brief explanation of how the neuroimaging data is acquired, how the data is prepared for analysis (also called preprocessing). Finally, I’ll show how you can analyze your data using a model based on your hypothesis.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This part is only a brief introduction to neuroimaging. Further information on this topic can be found under the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/glossary.html">Glossary</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/faq.html">FAQ</a> pages of this beginner&#8217;s guide.</p>
+<p class="last">This part is only a brief introduction to neuroimaging. Further information on this topic can be found under the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/glossary.html">Glossary</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/faq.html">FAQ</a> pages of this beginner’s guide.</p>
 </div>
 <div class="section" id="acquisition-of-mri-data">
 <h2>Acquisition of MRI Data<a class="headerlink" href="#acquisition-of-mri-data" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/brain.gif"><img alt="_images/brain.gif" class="align-left" src="_images/brain.gif" style="width: 160pt;" /></a>
-<p>The technology and physics behind an MRI scanner is quite astonishing. But I won&#8217;t go into the details of how it all works. You do need to know some terms, concepts, and parameters that are used to acquire MRI data in a scanning session and use that to construct useable images.</p>
+<p>The technology and physics behind an MRI scanner is quite astonishing. But I won’t go into the details of how it all works. You do need to know some terms, concepts, and parameters that are used to acquire MRI data in a scanning session and use that to construct useable images.</p>
 <p>The brain occupies space, so when we collect data on how it fills space, we call that volume data, and all the volume data needed to create the complete, 3D image of the brain, recorded at one single timepoint and as pictured on the left, is called a <strong>volume</strong>. The data is measured in <strong>voxels</strong>, which are like the pixels used to display images on your screen, only in 3D. Each voxel has a specific dimension, in this case it is 1mm x 1mm x 1mm: a cube, so it is the same dimension from all sides (isotropic). Each voxel contains one value which stands for the average signal measured at the given location.</p>
-<p>A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a <strong>3D matrix</strong> of 256 x 256 x 256 voxels. The following picture shows a slice &#8211; one layer of the big, 3D matrix &#8211; through a brain volume, and the superimposed grid shows the remaining two dimensions of the voxels.</p>
+<p>A standard anatomical volume, with an isotropic voxel resolution of 1mm contains almost 17 million voxels, which are arranged in a <strong>3D matrix</strong> of 256 x 256 x 256 voxels. The following picture shows a slice – one layer of the big, 3D matrix – through a brain volume, and the superimposed grid shows the remaining two dimensions of the voxels.</p>
 <a class="reference internal image-reference" href="_images/voxel.png"><img alt="_images/voxel.png" class="align-center" src="_images/voxel.png" style="width: 450pt;" /></a>
-<p>As the scanner can&#8217;t measure the whole volume at once it has to measure portions of the brain sequentially in time. This is done by measuring one plane of the brain (generally the horizontal one) after the other. Such a plane is also called a <strong>slice</strong>. The <strong>resolution</strong> of the measured volume data, therefore, depends on the in-plane resolution (the size of the squares in the above image), the number of slices and their thickness (how many layers), and any possible gaps between the layers.</p>
+<p>As the scanner can’t measure the whole volume at once it has to measure portions of the brain sequentially in time. This is done by measuring one plane of the brain (generally the horizontal one) after the other. Such a plane is also called a <strong>slice</strong>. The <strong>resolution</strong> of the measured volume data, therefore, depends on the in-plane resolution (the size of the squares in the above image), the number of slices and their thickness (how many layers), and any possible gaps between the layers.</p>
 <p>The quality of the measured data depends on the resolution and the following parameters:</p>
 <ul class="simple">
 <li><strong>repetition time (TR)</strong>: time required to scan one volume</li>
@@ -202,8 +205,8 @@
 <div class="section" id="dmri-diffusion-mri">
 <h3>dMRI (diffusion MRI)<a class="headerlink" href="#dmri-diffusion-mri" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/tractography_small.gif" class="align-left" src="_images/tractography_small.gif" />
-<p>Diffusion imaging is done to obtain information about the brain&#8217;s white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make inferences about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecules in this region will mostly diffuse (move) in a horizontal manner, as they can&#8217;t move vertically because of this neural barrier. The diffusion itself is mostly a <a class="reference external" href="https://en.wikipedia.org/wiki/Brownian_motion">Brownian motion</a>.</p>
-<p>There are many different <a class="reference external" href="https://en.wikipedia.org/wiki/Diffusion_MRI#Measures_of_anisotropy_and_diffusivity">diffusion measurements</a>, such as <strong>mean diffusivity</strong> (MD), <a class="reference external" href="https://en.wikipedia.org/wiki/Fractional_anisotropy">fractional anisotropy</a> (FA) and <a class="reference external" href="https://en.wikipedia.org/wiki/Tractography">Tractography</a>. Each measurement gives different insights into the brain&#8217;s neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.</p>
+<p>Diffusion imaging is done to obtain information about the brain’s white matter connections. There are multiple modalities to record diffusion images, such as diffusion tensor imaging (DTI), diffusion spectrum imaging (DSI), diffusion weighted imaging (DWI) and diffusion functional MRI (DfMRI). By recording the diffusion trajectory of the molecules (usually water) in a given voxel, one can make inferences about the underlying structure in the voxel. For example, if one voxel contains mostly horizontal fiber tracts, the water molecules in this region will mostly diffuse (move) in a horizontal manner, as they can’t move vertically because of this neural barrier. The diffusion itself is mostly a <a class="reference external" href="https://en.wikipedia.org/wiki/Brownian_motion">Brownian motion</a>.</p>
+<p>There are many different <a class="reference external" href="https://en.wikipedia.org/wiki/Diffusion_MRI#Measures_of_anisotropy_and_diffusivity">diffusion measurements</a>, such as <strong>mean diffusivity</strong> (MD), <a class="reference external" href="https://en.wikipedia.org/wiki/Fractional_anisotropy">fractional anisotropy</a> (FA) and <a class="reference external" href="https://en.wikipedia.org/wiki/Tractography">Tractography</a>. Each measurement gives different insights into the brain’s neural fiber tracts. An example of a reconstructed tractography can be seen in the image to the left.</p>
 <p>Diffusion MRI is a rather new field in MRI and still has some problems with its sensitivity to correctly detect fiber tracts and their underlying orientation. For example, the standard DTI method has almost no chance of reliably detecting kissing (touching) or crossing fiber tracts. To account for this disadvantage, newer methods such as <strong>High-angular-resolution diffusion imaging</strong> (HARDI) and Q-ball vector analysis were developed. For more about diffusion MRI see the <a class="reference external" href="https://en.wikipedia.org/wiki/Diffusion_MRI">Diffusion MRI Wikipedia page</a>.</p>
 </div>
 </div>
@@ -217,11 +220,11 @@
 </ol>
 <div class="section" id="step-1-preprocessing">
 <h3>Step 1: Preprocessing<a class="headerlink" href="#step-1-preprocessing" title="Permalink to this headline">¶</a></h3>
-<p>Preprocessing is the term used to for all the steps taken to improve our data and prepare it for statistical analysis. We may correct or adjust our data for a number of things inherent in the experimental situation:  to take account of time differences between acquiring each image slice, to correct for head movement during scanning, to detect &#8216;artifacts&#8217; &#8211; anomalous measurements &#8211; that should be excluded from subsequent analysis; to align the functional images with the reference structural image, and to normalize the data into a standard space so that data can be compared among several subjects; to apply filtering to the image to increase the signal-to-noise ratio; finally, if sMRI is intended, a segmentation step may be performed. We will now look at each of those steps in more detail.</p>
+<p>Preprocessing is the term used to for all the steps taken to improve our data and prepare it for statistical analysis. We may correct or adjust our data for a number of things inherent in the experimental situation:  to take account of time differences between acquiring each image slice, to correct for head movement during scanning, to detect ‘artifacts’ – anomalous measurements – that should be excluded from subsequent analysis; to align the functional images with the reference structural image, and to normalize the data into a standard space so that data can be compared among several subjects; to apply filtering to the image to increase the signal-to-noise ratio; finally, if sMRI is intended, a segmentation step may be performed. We will now look at each of those steps in more detail.</p>
 <div class="section" id="slice-timing-correction-fmri-only">
 <h4>Slice Timing Correction (fMRI only)<a class="headerlink" href="#slice-timing-correction-fmri-only" title="Permalink to this headline">¶</a></h4>
 <a class="reference internal image-reference" href="_images/slicetiming_small.gif"><img alt="_images/slicetiming_small.gif" class="align-right" src="_images/slicetiming_small.gif" style="width: 499px;" /></a>
-<p>Because functional MRI measurement sequences don&#8217;t acquire every slice in a volume at the same time we have to account for the time differences among the slices. For example, if you acquire a volume with 37 slices in ascending order, and each slice is acquired every 50ms, there is a difference of 1.8s between the first and the last slice acquired. You must know the order in which the slices were acquired to be able to apply the proper correction. Slices are typically acquired in one of three methods:  descending order (top-down); ascending order (bottom-up); or interleaved (acquire every other slice in each direction), where the interleaving may start at the top or the bottom. (Left: <em>ascending</em>, Right: <em>interleaved</em>)</p>
+<p>Because functional MRI measurement sequences don’t acquire every slice in a volume at the same time we have to account for the time differences among the slices. For example, if you acquire a volume with 37 slices in ascending order, and each slice is acquired every 50ms, there is a difference of 1.8s between the first and the last slice acquired. You must know the order in which the slices were acquired to be able to apply the proper correction. Slices are typically acquired in one of three methods:  descending order (top-down); ascending order (bottom-up); or interleaved (acquire every other slice in each direction), where the interleaving may start at the top or the bottom. (Left: <em>ascending</em>, Right: <em>interleaved</em>)</p>
 <p>Slice Timing Correction is used to compensate for the time differences between the slice acquisitions by temporally interpolating the slices so that the resulting volume is close to equivalent to acquiring the whole brain image at a single time point. This temporal factor of acquisition especially has to be accounted for in fMRI models where timing is an important factor (e.g. for event related designs, where the type of stimulus changes from volume to volume).</p>
 </div>
 <div class="section" id="motion-correction-fmri-only">
@@ -229,26 +232,26 @@
 <a class="reference internal image-reference" href="_images/movement.gif"><img alt="_images/movement.gif" class="align-right" src="_images/movement.gif" style="width: 200pt;" /></a>
 <p>Motion correction, also known as Realignment, is used to correct for head movement during the acquisition of functional data. Even small head movements lead to unwanted variation in voxels and reduce the quality of your data. Motion correction tries to minimize the influence of movement on your data by aligning your data to a reference time volume. This reference time volume is usually the mean image of all timepoints, but it could also be the first, or some other, time point.</p>
 <p>Head movement can be characterized by six parameters:  Three translation parameters which code movement in the directions of the three dimensional axes, movement along the X, Y, or Z axes; and three rotation parameters which code rotation about those axes, rotation centered on each of the X, Y, and Z axes).</p>
-<p>Realignment usually uses an affine rigid body transformation to manipulate the data in those six parameters. That is, each image can be moved but not distorted to best align with all the other images. Below you see a plot of a &#8220;good&#8221; subject where the movement is minimal.</p>
+<p>Realignment usually uses an affine rigid body transformation to manipulate the data in those six parameters. That is, each image can be moved but not distorted to best align with all the other images. Below you see a plot of a “good” subject where the movement is minimal.</p>
 <a class="reference internal image-reference" href="_images/realignment_good.png"><img alt="_images/realignment_good.png" class="align-center" src="_images/realignment_good.png" style="width: 400pt;" /></a>
 </div>
 <div class="section" id="artifact-detection-fmri-only">
 <h4>Artifact Detection (fMRI only)<a class="headerlink" href="#artifact-detection-fmri-only" title="Permalink to this headline">¶</a></h4>
 <p>Almost no subjects lie perfectly still. As we can see from the sharp spikes in the graphs below, some move quite drastically. Severe, sudden movement can contaminate your analysis quite severely.</p>
 <a class="reference internal image-reference" href="_images/realignment_bad.png"><img alt="_images/realignment_bad.png" class="align-center" src="_images/realignment_bad.png" style="width: 400pt;" /></a>
-<p>Motion correction tries to correct for smaller movements, but sometimes it&#8217;s best to just remove the images acquired during extreme rapid movement. We use <strong>Artifact Detection</strong> to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses.</p>
+<p>Motion correction tries to correct for smaller movements, but sometimes it’s best to just remove the images acquired during extreme rapid movement. We use <strong>Artifact Detection</strong> to identify the timepoints/images of the functional image that vary so much they should be excluded from further analysis and to label them so they are excluded from subsequent analyses.</p>
 <p>For example, checking the translation and rotation graphs for a session shown above for sudden movement greater than 2 standard deviations from the mean, or for movement greater than 1mm, artifact detection would show that images 16-19, 21, 22 and 169-172 should be excluded from further analysis. The graph produced by artifact detection, with vertical lines corresponding to images with drastic variation is shown below.</p>
 <img alt="_images/artifact_detection.png" class="align-center" src="_images/artifact_detection.png" />
 </div>
 <div class="section" id="coregistration">
 <h4>Coregistration<a class="headerlink" href="#coregistration" title="Permalink to this headline">¶</a></h4>
-<p>Motion correction aligns all the images within a volume so they are &#8216;aligned&#8217;. Coregistration aligns the functional image with the reference structural image. If you think of the functional image as having been printed on tracing paper, coregistration moves that image around on the reference image until the alignment is at its best. In other words, coregistration tries to superimpose the functional image perfectly on the anatomical image. This allows further transformations of the anatomical image, such as normalization, to be directly applied to the functional image.</p>
+<p>Motion correction aligns all the images within a volume so they are ‘aligned’. Coregistration aligns the functional image with the reference structural image. If you think of the functional image as having been printed on tracing paper, coregistration moves that image around on the reference image until the alignment is at its best. In other words, coregistration tries to superimpose the functional image perfectly on the anatomical image. This allows further transformations of the anatomical image, such as normalization, to be directly applied to the functional image.</p>
 <p>The following picture shows an example of good (top) and bad (bottom) coregistration of functional images with the corresponding anatomical images. The red lines are the outline of the cortical folds of the anatomical image superimposed on the underlying greyscale functional image.</p>
 <a class="reference internal image-reference" href="_images/coregistration.png"><img alt="_images/coregistration.png" class="align-center" src="_images/coregistration.png" style="width: 400pt;" /></a>
 </div>
 <div class="section" id="normalization">
 <h4>Normalization<a class="headerlink" href="#normalization" title="Permalink to this headline">¶</a></h4>
-<p>Every person&#8217;s brain is slightly different from every other&#8217;s. Brains differ in size and shape. To compare the images of one person&#8217;s brain to another&#8217;s, the images must first be translated onto a common shape and size, which is called <strong>normalization</strong>. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image.</p>
+<p>Every person’s brain is slightly different from every other’s. Brains differ in size and shape. To compare the images of one person’s brain to another’s, the images must first be translated onto a common shape and size, which is called <strong>normalization</strong>. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image.</p>
 <a class="reference internal image-reference" href="_images/normalization.png"><img alt="_images/normalization.png" class="align-center" src="_images/normalization.png" style="width: 600pt;" /></a>
 <ul class="simple">
 <li>The <strong>template</strong> image is the standard brain in reference-space onto which you want to map your data. This can be a Talairach-, MNI-, or SPM-template, or some other reference image you choose to use.</li>
@@ -260,13 +263,13 @@
 <p>Structural as well as functional images are smoothed by applying a filter to the image. Smoothing increases the signal to noise ratio of your data by filtering the highest frequencies from the frequency domain; that is, removing the smallest scale changes among voxels. That helps to make the larger scale changes more apparent. There is some inherent variability in functional location among individuals, and smoothing helps to reduce spatial differences between subjects and therefore aids comparing multiple subjects. The trade-off, of course, is that you lose resolution by smoothing. Keep in mind, though, that smoothing can cause regions that are functionally different to combine with each other. In such cases a surface based analysis with smoothing on the surface might be a better choice.</p>
 <a class="reference internal image-reference" href="_images/smoothed.png"><img alt="_images/smoothed.png" class="align-center" src="_images/smoothed.png" style="width: 500pt;" /></a>
 <a class="reference internal image-reference" href="_images/kernel.png"><img alt="_images/kernel.png" class="align-right" src="_images/kernel.png" style="width: 200pt;" /></a>
-<p>Smoothing is implemented by applying a 3D Gaussian kernel to the image, and the amount of smoothing is typically determined by its full width at half maximum (<strong>FWHM</strong>) parameter. As the name implies, FWHM is the width/diameter of the smoothing kernel at half of its height. Each voxel&#8217;s value is changed to the result of applying this smoothing kernel to its original value.</p>
-<p>Choosing the size of the smoothing kernel also depends on your reason for smoothing. If you want to study a small region, a large kernel might smooth your data too much. The filter shouldn&#8217;t generally be larger than the activation you&#8217;re trying to detect. Thus, the amount of smoothing that you should use is determined partly by the question you want to answer. Some authors suggest using twice the voxel dimensions as a reasonable starting point.</p>
+<p>Smoothing is implemented by applying a 3D Gaussian kernel to the image, and the amount of smoothing is typically determined by its full width at half maximum (<strong>FWHM</strong>) parameter. As the name implies, FWHM is the width/diameter of the smoothing kernel at half of its height. Each voxel’s value is changed to the result of applying this smoothing kernel to its original value.</p>
+<p>Choosing the size of the smoothing kernel also depends on your reason for smoothing. If you want to study a small region, a large kernel might smooth your data too much. The filter shouldn’t generally be larger than the activation you’re trying to detect. Thus, the amount of smoothing that you should use is determined partly by the question you want to answer. Some authors suggest using twice the voxel dimensions as a reasonable starting point.</p>
 </div>
 <div class="section" id="segmentation-smri-only">
 <h4>Segmentation (sMRI only)<a class="headerlink" href="#segmentation-smri-only" title="Permalink to this headline">¶</a></h4>
 <a class="reference internal image-reference" href="_images/segmentation.gif"><img alt="_images/segmentation.gif" class="align-right" src="_images/segmentation.gif" style="width: 200pt;" /></a>
-<p>Segmentation is the process by which a brain is divided into neurological sections according to a given template specification. This can be rather general, for example, segmenting the brain into gray matter, white matter and cerebrospinal fluid, as is done with SPM&#8217;s Segmentation, or quite detailed, segmenting into specific functional regions and their subregions, as is done with FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code>, and that is illustrated in the figure.</p>
+<p>Segmentation is the process by which a brain is divided into neurological sections according to a given template specification. This can be rather general, for example, segmenting the brain into gray matter, white matter and cerebrospinal fluid, as is done with SPM’s Segmentation, or quite detailed, segmenting into specific functional regions and their subregions, as is done with FreeSurfer’s <code class="docutils literal"><span class="pre">recon-all</span></code>, and that is illustrated in the figure.</p>
 <p>Segmentation can be used for different things. You can use the segmentation to aid the normalization process or use it to aid further analysis by using a specific segmentation as a mask or as the definition of a specific region of interest (ROI).</p>
 </div>
 </div>
@@ -309,7 +312,7 @@
 </ul>
 <p><strong>BOLD signals include substantial amounts of low-frequency noise</strong></p>
 <ul class="simple">
-<li>By high pass filtering our data and adding time regressors of 1st, 2nd,... order we can correct for low-frequency drifts in our measured data. This low frequency signals are caused by non-experimental effects, such as scanner drift etc.</li>
+<li>By high pass filtering our data and adding time regressors of 1st, 2nd,… order we can correct for low-frequency drifts in our measured data. This low frequency signals are caused by non-experimental effects, such as scanner drift etc.</li>
 </ul>
 <a class="reference internal image-reference" href="_images/time.png"><img alt="_images/time.png" class="align-center" src="_images/time.png" style="width: 350pt;" /></a>
 <p>This <strong>High pass Filter</strong> is established by setting up discrete cosine functions over the time period of your acquisition. In the example below you see a constant term of 1, followed by half of a cosine function increasing by half a period for each following curve. Such regressors correct for the influence of changes in the low-frequency spectrum.</p>
@@ -319,10 +322,10 @@
 <h4>Example of a Design Matrix<a class="headerlink" href="#example-of-a-design-matrix" title="Permalink to this headline">¶</a></h4>
 <a class="reference internal image-reference" href="_images/stimuli.png"><img alt="_images/stimuli.png" class="align-right" src="_images/stimuli.png" style="width: 200pt;" /></a>
 <p>Let us assume we have an experiment where we present subjects faces of humans and animals alike. Our goal is to measure the difference between the brain activation when a face of an animal is presented in contrast to the activation of the brain when a human face is presented. Our experiment is set up in such a way that subjects have two different blocks of stimuli presentation. In both blocks there are timepoints where faces of humans, faces of animals and no faces (resting state) are presented.</p>
-<p>Now, we combine all that we know about our model into one single Design Matrix. This Matrix contains multiple columns, which contain information about the stimuli (onset, duration and curve function of the BOLD-signal i.e. the shape of the HRF). In our example column <em>Sn(1) humans</em> and <em>Sn(1) animals</em> code for the stimuli of humans and animals during the first session of our fictive experiment. Accordingly, Sn(2) codes for all the regressors in the second session. <em>Sn(1) resting</em> codes for the timepoints where subjects weren&#8217;t presented any stimuli.</p>
+<p>Now, we combine all that we know about our model into one single Design Matrix. This Matrix contains multiple columns, which contain information about the stimuli (onset, duration and curve function of the BOLD-signal i.e. the shape of the HRF). In our example column <em>Sn(1) humans</em> and <em>Sn(1) animals</em> code for the stimuli of humans and animals during the first session of our fictive experiment. Accordingly, Sn(2) codes for all the regressors in the second session. <em>Sn(1) resting</em> codes for the timepoints where subjects weren’t presented any stimuli.</p>
 <a class="reference internal image-reference" href="_images/designmatrix.png"><img alt="_images/designmatrix.png" class="align-center" src="_images/designmatrix.png" style="width: 350pt;" /></a>
 <p>The y-axis codes for the measured scan or the passed time, depending on the specification of your design. The x-axis stands for all the regressors that we specified.</p>
-<p>The regressors <em>Sn(1) R1</em> to <em>Sn(1) R6</em> stand for the movement parameters we got from the realignment process. The regressors <em>Sn(1) linear</em>, <em>Sn(1) quadratic</em>, <em>Sn(1) cubic</em> and <em>Sn(1) quartic</em> are just examples of correction for the low frequency in your data. If you are using a high-pass filter of e.g. 128 seconds you don&#8217;t need to specifically include those regressors in your design matrix.</p>
+<p>The regressors <em>Sn(1) R1</em> to <em>Sn(1) R6</em> stand for the movement parameters we got from the realignment process. The regressors <em>Sn(1) linear</em>, <em>Sn(1) quadratic</em>, <em>Sn(1) cubic</em> and <em>Sn(1) quartic</em> are just examples of correction for the low frequency in your data. If you are using a high-pass filter of e.g. 128 seconds you don’t need to specifically include those regressors in your design matrix.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Adding one more regressors to your model decrease the degrees of freedom in your statistical tests by one.</p>
@@ -361,15 +364,15 @@
 <p>Before we go into the specifics of a statistical analysis, let me explain you the difference between a 1st and a 2nd level analysis.</p>
 <dl class="docutils">
 <dt><strong>1st level analysis (within-subject)</strong></dt>
-<dd>A 1st level analysis is the statistical analysis done on each and every subject by itself. For this procedure the data doesn&#8217;t have to be normalized, i.e in a common reference space. A design matrix on this level controls for subject specific parameters as movement, respiration, heart beat, etc.</dd>
+<dd>A 1st level analysis is the statistical analysis done on each and every subject by itself. For this procedure the data doesn’t have to be normalized, i.e in a common reference space. A design matrix on this level controls for subject specific parameters as movement, respiration, heart beat, etc.</dd>
 <dt><strong>2nd level analysis (between-subject)</strong></dt>
-<dd>A 2nd level analysis is the statistical analysis done on the group. To be able to do this, our subject specific data has to be normalized and transformed from subject-space into reference-space. Otherwise we wouldn&#8217;t be able to compare subjects between each other. Additionally, all contrasts of the 1st level analysis have to be estimated because the model of the 2nd level analysis is conducted on them. The design matrix of the 2nd level analysis controls for subject specific parameters such as age, gender, socio-economic parameters, etc. At this point we also specify the group assignment of each subject.</dd>
+<dd>A 2nd level analysis is the statistical analysis done on the group. To be able to do this, our subject specific data has to be normalized and transformed from subject-space into reference-space. Otherwise we wouldn’t be able to compare subjects between each other. Additionally, all contrasts of the 1st level analysis have to be estimated because the model of the 2nd level analysis is conducted on them. The design matrix of the 2nd level analysis controls for subject specific parameters such as age, gender, socio-economic parameters, etc. At this point we also specify the group assignment of each subject.</dd>
 </dl>
 <div class="section" id="contrast-estimation">
 <h4>Contrast Estimation<a class="headerlink" href="#contrast-estimation" title="Permalink to this headline">¶</a></h4>
 <a class="reference internal image-reference" href="_images/contrasts.png"><img alt="_images/contrasts.png" class="align-right" src="_images/contrasts.png" style="width: 220pt;" /></a>
-<p>Independent of the level of your analysis, after you&#8217;ve specified and estimated your model you now have to estimate the contrasts you are interested in. In such a <strong>contrast</strong> you specify how to weight the different regressors of your design matrix and combine them in one single image.</p>
-<p>For example, if you want to compare the brain activation during the presentation of human faces compared to the brain activation during the presentation of animal faces over two sessions you have to weight the regressors <em>Sn(1) humans</em> and <em>Sn(2) humans</em> with 1 and <em>Sn(1) animals</em> and <em>Sn(2) animals</em> with -1, as can be seen in <strong>contrast 3</strong>. This will subtract the value of the animal-activation from the activation during the presentation of human faces. The result is an image where the positive activation stands for &#8220;more active&#8221; during the presentation of human faces than during the presentation of animal faces.</p>
+<p>Independent of the level of your analysis, after you’ve specified and estimated your model you now have to estimate the contrasts you are interested in. In such a <strong>contrast</strong> you specify how to weight the different regressors of your design matrix and combine them in one single image.</p>
+<p>For example, if you want to compare the brain activation during the presentation of human faces compared to the brain activation during the presentation of animal faces over two sessions you have to weight the regressors <em>Sn(1) humans</em> and <em>Sn(2) humans</em> with 1 and <em>Sn(1) animals</em> and <em>Sn(2) animals</em> with -1, as can be seen in <strong>contrast 3</strong>. This will subtract the value of the animal-activation from the activation during the presentation of human faces. The result is an image where the positive activation stands for “more active” during the presentation of human faces than during the presentation of animal faces.</p>
 <p>Contrast 1 codes for <em>human faces vs. resting</em>, contrast 2 codes for <em>animal faces vs. resting</em>, contrast 4 codes for <em>animal faces vs. human faces</em> (which is just the inverse image of contrast 3) and contrast 5 codes for <em>session 1 vs. session 2</em>, which looks for regions which were more active in the first session than in the second session.</p>
 </div>
 <div class="section" id="thresholding">
@@ -378,10 +381,10 @@
 <ul class="simple">
 <li><strong>FWE-correction</strong>: The family-wise error correction is one way to correct for multiple comparisons</li>
 <li><strong>p-value</strong>: specify the hight of the significance threshold that you want to use (e.g. z=1.6449 equals p&lt;0.05 (one-tailed); see image)</li>
-<li><strong>voxel extend</strong>: specify the minimum size of a &#8220;significant&#8221; cluster by specifying the number of voxel it at least has to contain.</li>
+<li><strong>voxel extend</strong>: specify the minimum size of a “significant” cluster by specifying the number of voxel it at least has to contain.</li>
 </ul>
 <a class="reference internal image-reference" href="_images/pvalues.png"><img alt="_images/pvalues.png" class="align-center" src="_images/pvalues.png" style="width: 350pt;" /></a>
-<p>If you do all this correctly, you&#8217;ll end up with something as shown in the following picture. The picture shows you the average brain activation of 20 subjects during the presentation of an acoustic stimuli. The p-value are shown from red to yellow, representing values from 0.05 to 0.00. Shown are only cluster with a voxel extend of at least 100 voxels.</p>
+<p>If you do all this correctly, you’ll end up with something as shown in the following picture. The picture shows you the average brain activation of 20 subjects during the presentation of an acoustic stimuli. The p-value are shown from red to yellow, representing values from 0.05 to 0.00. Shown are only cluster with a voxel extend of at least 100 voxels.</p>
 <a class="reference internal image-reference" href="_images/contrast_acoustic.png"><img alt="_images/contrast_acoustic.png" class="align-center" src="_images/contrast_acoustic.png" style="width: 350pt;" /></a>
 </div>
 </div>
@@ -390,25 +393,9 @@
 
 
 
-
           </div>
         </div>
       </div>
-
-      <!-- Disqus message -->
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
-          /* * * DON'T EDIT BELOW THIS LINE * * */
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-              })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
       <div class="clearer"></div>
     </div>
     <div class="related">
@@ -432,8 +419,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on December 04, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
+      Last updated on July 16, 2018.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

@@ -136,21 +136,24 @@
         <div class="bodywrapper">
           <div class="body">
 
-            <!-- Disqus counter -->
             
-  <div class="section" id="how-to-normalize-your-data">
+  <div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+</div>
+<div class="section" id="how-to-normalize-your-data">
 <h1>How To Normalize Your Data<a class="headerlink" href="#how-to-normalize-your-data" title="Permalink to this headline">¶</a></h1>
 <p>Before you can start with a second level analysis you are facing the problem that all your output from the first level analysis are still in their subject specific subject-space. Because of the huge differences in brain size and cortical structure, it is very important to transform the data of each subject from its individual subject-space into a common standardized reference-space. This process of transformation is what we call normalization and it consists of a rigid body transformation (translations and rotations) as well as of a affine transformation (zooms and shears). The most common template that subject data is normalized to is the <a class="reference external" href="http://www.bic.mni.mcgill.ca/ServicesAtlases/HomePage">MNI template</a>.</p>
-<p>There are many different approaches to when to normalize your data (e.g. before smoothing your data in preprocessing or after the estimation of your contrasts at the end of your first level analysis). I prefer to do the normalization after the first level model was estimated, as I don&#8217;t want to introduce to many unnecessary transformations in the subject specific first level analysis.</p>
-<p>There are also many different softwares that you could use to normalize your data and there is a lot of debate of which ones are better and which ones are worse. There is a very good paper by Klein et al. (2009), called <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2747506/">Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration</a>, that summarizes and compares the main approaches. According to this paper and from my own personal experience, I highly recommend to use <a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> to normalize your data. I also recommend to not use SPM8&#8217;s normalization module (to see why check out <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf#page=9">SPM12&#8217;s release notes</a>, page 9, section &#8220;8.5. Old Normalise&#8221;). In contrary to SPM8, SPM12&#8217;s new normalization approach seems to do very good.</p>
+<p>There are many different approaches to when to normalize your data (e.g. before smoothing your data in preprocessing or after the estimation of your contrasts at the end of your first level analysis). I prefer to do the normalization after the first level model was estimated, as I don’t want to introduce to many unnecessary transformations in the subject specific first level analysis.</p>
+<p>There are also many different softwares that you could use to normalize your data and there is a lot of debate of which ones are better and which ones are worse. There is a very good paper by Klein et al. (2009), called <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2747506/">Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration</a>, that summarizes and compares the main approaches. According to this paper and from my own personal experience, I highly recommend to use <a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> to normalize your data. I also recommend to not use SPM8’s normalization module (to see why check out <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf#page=9">SPM12’s release notes</a>, page 9, section “8.5. Old Normalise”). In contrary to SPM8, SPM12’s new normalization approach seems to do very good.</p>
 <p>This section will show you how to use Nipype to do a normalization with ANTs (what I recommend) or with SPM12. I highly recommend the normalization with ANTs as it is much more accurate. But I also want to point out that the computation of ANTs normalization is much longer than the one with SPM12, which also does a good enough job.</p>
 <div class="section" id="normalize-your-data-with-ants">
 <h2>Normalize Your Data with ANTs<a class="headerlink" href="#normalize-your-data-with-ants" title="Permalink to this headline">¶</a></h2>
 <p>Usually, we first normalize the subject specific anatomy to the template and then use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.</p>
-<p>The coregistration of the functional data to the anatomical data means multiple interpolation of your data. That&#8217;s why the coregistration and the normalization of your functional data should be done directly in one transformation. To account for both possible cases, the following script will show you both ways. The approach where both coregistration and normalization will be done in one step will be called <strong>complete transformation</strong>, and the approach where we only do a normalization will be called <strong>partial transformation</strong>. Partial does not mean that it doesn&#8217;t lead to a complete normalization of the data, it just means that the coregistration of the functional and structural data was already done in an earlier step.</p>
+<p>The coregistration of the functional data to the anatomical data means multiple interpolation of your data. That’s why the coregistration and the normalization of your functional data should be done directly in one transformation. To account for both possible cases, the following script will show you both ways. The approach where both coregistration and normalization will be done in one step will be called <strong>complete transformation</strong>, and the approach where we only do a normalization will be called <strong>partial transformation</strong>. Partial does not mean that it doesn’t lead to a complete normalization of the data, it just means that the coregistration of the functional and structural data was already done in an earlier step.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">A big thanks to <a class="reference external" href="https://github.com/juhuntenburg">Julia Huntenburg</a>! Without her help and knowledge about ANTs and Nipype this section wouldn&#8217;t exist, as she provided me with the relevant code and structure of this pipeline.</p>
+<p class="last">A big thanks to <a class="reference external" href="https://github.com/juhuntenburg">Julia Huntenburg</a>! Without her help and knowledge about ANTs and Nipype this section wouldn’t exist, as she provided me with the relevant code and structure of this pipeline.</p>
 </div>
 <div class="section" id="import-modules-and-specify-interface-behaviors">
 <h3>Import modules and specify interface behaviors<a class="headerlink" href="#import-modules-and-specify-interface-behaviors" title="Permalink to this headline">¶</a></h3>
@@ -213,7 +216,7 @@
 </td></tr></table></div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p>For other templates check out the ones in FSL&#8217;s <code class="docutils literal"><span class="pre">standard</span></code> folder, in my case this is under <code class="docutils literal"><span class="pre">/usr/share/fsl/data/standard</span></code>. You can also see a list and access them much easier within Nipype with the following code:</p>
+<p>For other templates check out the ones in FSL’s <code class="docutils literal"><span class="pre">standard</span></code> folder, in my case this is under <code class="docutils literal"><span class="pre">/usr/share/fsl/data/standard</span></code>. You can also see a list and access them much easier within Nipype with the following code:</p>
 <div class="last highlight-py"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nipype.interfaces.fsl</span> <span class="kn">import</span> <span class="n">Info</span>
 <span class="n">Info</span><span class="o">.</span><span class="n">standard_image</span><span class="p">()</span>
 </pre></div>
@@ -222,7 +225,7 @@
 </div>
 <div class="section" id="create-nodes">
 <h3>Create nodes<a class="headerlink" href="#create-nodes" title="Permalink to this headline">¶</a></h3>
-<p>In both cases, the <strong>complete</strong> as well as the <strong>partial</strong> transformation approach, we will use ANTs&#8217; <code class="docutils literal"><span class="pre">Registration</span></code> to compute the transformation matrix between the subject specific anatomy and the template:</p>
+<p>In both cases, the <strong>complete</strong> as well as the <strong>partial</strong> transformation approach, we will use ANTs’ <code class="docutils literal"><span class="pre">Registration</span></code> to compute the transformation matrix between the subject specific anatomy and the template:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -369,7 +372,7 @@
                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;antsregfast&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>Now that we have the transformation matrix to normalize the functional data to the template, we  can use ANTs&#8217; <code class="docutils literal"><span class="pre">ApplyTransforms</span></code> to execute that. <strong>Note</strong>: Here you have again the option to specify the number of threads used in the interpolation of the data.</p>
+<p>Now that we have the transformation matrix to normalize the functional data to the template, we  can use ANTs’ <code class="docutils literal"><span class="pre">ApplyTransforms</span></code> to execute that. <strong>Note</strong>: Here you have again the option to specify the number of threads used in the interpolation of the data.</p>
 <div class="section" id="partial-transformation">
 <h4>Partial Transformation<a class="headerlink" href="#partial-transformation" title="Permalink to this headline">¶</a></h4>
 <p>In the partial transformation approach, we only need the following additional nodes. One to normalize the anatomical and one to normalize the functional data.</p>
@@ -415,7 +418,7 @@
 </div>
 <div class="section" id="complete-transformation">
 <h4>Complete Transformation<a class="headerlink" href="#complete-transformation" title="Permalink to this headline">¶</a></h4>
-<p>For the complete transformation, we also need to calculate the coregistration matrix (we will use FreeSurfer&#8217;s <cite>BBRegister</cite> for that). But first, we need to use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">FreeSurferSource</span></code> to grab the subject specific anatomy, convert it from MGZ to NII format with <code class="docutils literal"><span class="pre">MRIConvert</span></code>. Than we need to transform the BBRegister transformation matrix to ITK format with <code class="docutils literal"><span class="pre">C3dAffineTool</span></code> and merge this transformation matrix with the transformation matrix from the normalization, i.e. <code class="docutils literal"><span class="pre">antsreg</span></code>, by using a <code class="docutils literal"><span class="pre">Merge</span></code> node.</p>
+<p>For the complete transformation, we also need to calculate the coregistration matrix (we will use FreeSurfer’s <cite>BBRegister</cite> for that). But first, we need to use FreeSurfer’s <code class="docutils literal"><span class="pre">FreeSurferSource</span></code> to grab the subject specific anatomy, convert it from MGZ to NII format with <code class="docutils literal"><span class="pre">MRIConvert</span></code>. Than we need to transform the BBRegister transformation matrix to ITK format with <code class="docutils literal"><span class="pre">C3dAffineTool</span></code> and merge this transformation matrix with the transformation matrix from the normalization, i.e. <code class="docutils literal"><span class="pre">antsreg</span></code>, by using a <code class="docutils literal"><span class="pre">Merge</span></code> node.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -707,7 +710,7 @@
 </div>
 <div class="section" id="run-the-pipeline-and-generate-the-graphs">
 <h3>Run the pipeline and generate the graphs<a class="headerlink" href="#run-the-pipeline-and-generate-the-graphs" title="Permalink to this headline">¶</a></h3>
-<p>Now, let&#8217;s run the workflow with the following code:</p>
+<p>Now, let’s run the workflow with the following code:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">normflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">normflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
@@ -780,7 +783,7 @@
 <p>The normalization of your data with SPM12 is much simpler than the one with ANTs. We only need to feed all the necessary inputs to a node called <code class="docutils literal"><span class="pre">Normalize12</span></code>.</p>
 <div class="section" id="id1">
 <h3>Import modules and specify interface behaviors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>As always, let&#8217;s import necessary modules and tell the system where to find MATLAB.</p>
+<p>As always, let’s import necessary modules and tell the system where to find MATLAB.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -834,11 +837,11 @@
 <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12/tpm/TPM.nii&#39;</span>
 </pre></div>
 </td></tr></table></div>
-<p>It&#8217;s important to note that SPM12 provides its own template <code class="docutils literal"><span class="pre">TMP.nii</span></code> to which the data will be normalized to.</p>
+<p>It’s important to note that SPM12 provides its own template <code class="docutils literal"><span class="pre">TMP.nii</span></code> to which the data will be normalized to.</p>
 </div>
 <div class="section" id="id3">
 <h3>Create nodes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>The functional and anatomical data that we want to normalize is in compressed ZIP format, which SPM12 can&#8217;t handle. Therefore we first have to unzip those files with <code class="docutils literal"><span class="pre">Gunzip</span></code>, before we can feed those files to SPM&#8217;s <code class="docutils literal"><span class="pre">Normalize12</span></code> node.</p>
+<p>The functional and anatomical data that we want to normalize is in compressed ZIP format, which SPM12 can’t handle. Therefore we first have to unzip those files with <code class="docutils literal"><span class="pre">Gunzip</span></code>, before we can feed those files to SPM’s <code class="docutils literal"><span class="pre">Normalize12</span></code> node.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -965,7 +968,7 @@
 </div>
 <div class="section" id="id6">
 <h3>Run the pipeline and generate the graphs<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>Now, let&#8217;s run the workflow with the following code:</p>
+<p>Now, let’s run the workflow with the following code:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">normflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">normflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
@@ -1005,25 +1008,9 @@
 
 
 
-
           </div>
         </div>
       </div>
-
-      <!-- Disqus message -->
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
-          /* * * DON'T EDIT BELOW THIS LINE * * */
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-              })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
       <div class="clearer"></div>
     </div>
     <div class="related">
@@ -1047,8 +1034,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on December 04, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
+      Last updated on July 16, 2018.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

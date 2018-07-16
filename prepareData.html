@@ -91,7 +91,7 @@
 </li>
 <li><a class="reference internal" href="#make-the-dataset-ready-for-nipype">Make the dataset ready for Nipype</a><ul>
 <li><a class="reference internal" href="#convert-your-data-into-nifti-format">Convert your data into NIfTI format</a></li>
-<li><a class="reference internal" href="#run-freesurfer-s-recon-all">Run FreeSurfer&#8217;s recon-all</a><ul>
+<li><a class="reference internal" href="#run-freesurfer-s-recon-all">Run FreeSurfer’s recon-all</a><ul>
 <li><a class="reference internal" href="#run-recon-all-on-the-tutorial-dataset-terminal-version">Run recon-all on the tutorial dataset (terminal version)</a></li>
 <li><a class="reference internal" href="#run-recon-all-on-the-tutorial-dataset-nipype-version">Run recon-all on the tutorial dataset (Nipype version)</a></li>
 </ul>
@@ -133,11 +133,14 @@
         <div class="bodywrapper">
           <div class="body">
 
-            <!-- Disqus counter -->
             
-  <div class="section" id="prepare-your-dataset">
+  <div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+</div>
+<div class="section" id="prepare-your-dataset">
 <h1>Prepare your Dataset<a class="headerlink" href="#prepare-your-dataset" title="Permalink to this headline">¶</a></h1>
-<p>We can&#8217;t start to learn how to use Nipype before we don&#8217;t have any data to work on. The fact that you are interested in using Nipype implies that you probably already have access to an MRI dataset. You are of course free to do your first steps with Nipype directly on your own dataset. But if you&#8217;re new to the topic or want to be sure that you get the same results like I do, I recommend to use a tutorial dataset which we can find over on <a class="reference external" href="https://openfmri.org/">OpenfMRI</a>.</p>
+<p>We can’t start to learn how to use Nipype before we don’t have any data to work on. The fact that you are interested in using Nipype implies that you probably already have access to an MRI dataset. You are of course free to do your first steps with Nipype directly on your own dataset. But if you’re new to the topic or want to be sure that you get the same results like I do, I recommend to use a tutorial dataset which we can find over on <a class="reference external" href="https://openfmri.org/">OpenfMRI</a>.</p>
 <div class="section" id="download-the-tutorial-dataset">
 <h2>Download the tutorial dataset<a class="headerlink" href="#download-the-tutorial-dataset" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoOpenfmri.png"><img alt="_images/logoOpenfmri.png" class="align-left" src="_images/logoOpenfmri.png" style="width: 120pt;" /></a>
@@ -155,7 +158,7 @@
 </div>
 <div class="section" id="unpack-and-prepare-the-folder-structure">
 <h3>Unpack and prepare the folder structure<a class="headerlink" href="#unpack-and-prepare-the-folder-structure" title="Permalink to this headline">¶</a></h3>
-<p>The file you&#8217;ve just downloaded contains amongst others one anatomical and two functional MRI scans and the behavioral response and onsets of stimuli during those functional scans. The whole dataset consists of 26 subjects. Information about gender and age of each subject is stored in the <cite>demographics.txt</cite> file, also found in downloaded file. To reduce the total time of computation, this tutorial will only analyze the first 10 subjects of the whole dataset. Now let&#8217;s get ready.</p>
+<p>The file you’ve just downloaded contains amongst others one anatomical and two functional MRI scans and the behavioral response and onsets of stimuli during those functional scans. The whole dataset consists of 26 subjects. Information about gender and age of each subject is stored in the <cite>demographics.txt</cite> file, also found in downloaded file. To reduce the total time of computation, this tutorial will only analyze the first 10 subjects of the whole dataset. Now let’s get ready.</p>
 <p>What we want is an experiment folder called <code class="docutils literal"><span class="pre">nipype_tutorial</span></code> that contains a folder called <code class="docutils literal"><span class="pre">data</span></code> where we save the raw data of the first 10 subjects into. In the end, the structure should be something like this</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>nipype_tutorial
 <span class="p">|</span>-- data
@@ -323,7 +326,7 @@ rm -rf <span class="nv">$TMP_DIR</span>
 <blockquote>
 <div><ul class="simple">
 <li>We know that we have two functional scans per subjects, in our case called <cite>run001</cite> and <cite>run002</cite>. Each functional scan represents 5min of scan time and consists of 146 volumes. Each of those volume consists 40 slices (with a thickness of 4mm) and each slice consists of 64x64 voxel with the size of 3x3mm. The TR of each volume is 2000ms.</li>
-<li>So far we don&#8217;t know what the slice order of the functional acquisition is. But a closer look at the provided references tells us that the data was acquired with an <em>interleaved</em> slice to slice order. The fact that it is not stated if it is ascending or descending interleaved means that the acquisition is most certainly ascending.</li>
+<li>So far we don’t know what the slice order of the functional acquisition is. But a closer look at the provided references tells us that the data was acquired with an <em>interleaved</em> slice to slice order. The fact that it is not stated if it is ascending or descending interleaved means that the acquisition is most certainly ascending.</li>
 <li>We know that we have one anatomical scan per subject, in our case called <cite>struct</cite> and that this anatomical scan consists of 176 slices with each having a FOV of 256mm. This hints to an isometric voxel resolution of 1x1x1mm.</li>
 <li>We know the task of the experiment and that it consists of two conditions, <em>congruent</em> and <em>incongruent</em>. With each condition being presented 12 times per session.</li>
 <li>We know from the onset file found in the subject folder what the actual onset of the two conditions are, but we have no clear information about the duration of each stimulation. The <a class="reference external" href="https://openfmri.org/dataset/ds000102">description of the design on OpenfMRI.org</a> tells us that the inter-trial interval varies between 8 and 14s with a mean of 12s. A closer look at the references tells us that the subjects first see a fixation cross for 500ms, followed by the congruent or incongruent condition (i.e. the arrows) for 1500ms, followed by a blank screen for 8000-12000ms.</li>
@@ -333,7 +336,7 @@ rm -rf <span class="nv">$TMP_DIR</span>
 </div>
 <div class="section" id="check-the-data">
 <h3>Check the data<a class="headerlink" href="#check-the-data" title="Permalink to this headline">¶</a></h3>
-<p>It is always important to look at your data and verify that it actually is recorded the way it should be. To take a look at the data, I usually use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">freeview</span></code>. For example, if you want to load the anatomical scan of all ten subjects use the following code:</p>
+<p>It is always important to look at your data and verify that it actually is recorded the way it should be. To take a look at the data, I usually use FreeSurfer’s <code class="docutils literal"><span class="pre">freeview</span></code>. For example, if you want to load the anatomical scan of all ten subjects use the following code:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>freeview -v ~/nipype_tutorial/data/sub00*/struct.nii.gz
 </pre></div>
 </div>
@@ -374,7 +377,7 @@ file_type      NIFTI-1+
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Just as a side note: The <cite>data_type</cite> of a NIfTI file tells you the amount of bits used to store the value of each voxel. <strong>INT16</strong> stands for <em>signed short</em> (16 bits/voxel), <strong>INT32</strong> stands for <em>signed int</em> (32 bits/voxel) and <strong>FLOAT64</strong> stands for <em>float</em> (64 bits/voxel). The more bits used for storing a voxel value the bigger the whole NIfTI file.</p>
-<p>If you want to change the data type of your image, either use Nipype&#8217;s function <code class="docutils literal"><span class="pre">ChangeDataType</span></code> found in the <code class="docutils literal"><span class="pre">nipype.interfaces.fsl.maths</span></code> package (read more <a class="reference external" href="http://nipype.readthedocs.io/en/latest/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype">here</a>) or use <code class="docutils literal"><span class="pre">fslmaths</span></code> directly to change the data_type to INT32 with the following command:</p>
+<p>If you want to change the data type of your image, either use Nipype’s function <code class="docutils literal"><span class="pre">ChangeDataType</span></code> found in the <code class="docutils literal"><span class="pre">nipype.interfaces.fsl.maths</span></code> package (read more <a class="reference external" href="http://nipype.readthedocs.io/en/latest/interfaces/generated/nipype.interfaces.fsl.maths.html#changedatatype">here</a>) or use <code class="docutils literal"><span class="pre">fslmaths</span></code> directly to change the data_type to INT32 with the following command:</p>
 <div class="last highlight-sh"><div class="highlight"><pre><span></span>fslmaths input.nii output.nii -odt int
 </pre></div>
 </div>
@@ -399,9 +402,9 @@ file_type      NIFTI-1+
 <h2>Make the dataset ready for Nipype<a class="headerlink" href="#make-the-dataset-ready-for-nipype" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="convert-your-data-into-nifti-format">
 <h3>Convert your data into NIfTI format<a class="headerlink" href="#convert-your-data-into-nifti-format" title="Permalink to this headline">¶</a></h3>
-<p>You don&#8217;t have to do this step if you&#8217;re using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common <code class="docutils literal"><span class="pre">NIfTI</span></code> format, but rather in a scanner specific format (e.g. <code class="docutils literal"><span class="pre">DICOM</span></code>, <code class="docutils literal"><span class="pre">PAR/REC</span></code>, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.</p>
-<p>Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use <a class="reference external" href="http://www.mccauslandcenter.sc.edu/mricro/mricron/">MRICron</a>&#8216;s <a class="reference external" href="http://lcni.uoregon.edu/~jolinda/MRIConvert/">MRIConvert</a>. But for this Beginner&#8217;s Guide we will use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, as it is rather easy to use and doesn&#8217;t require many steps.</p>
-<p>But first, as always, be aware of your folder structure. So let&#8217;s assume that we&#8217;ve stored our dicoms in a folder called <code class="docutils literal"><span class="pre">raw_data</span></code> and that the folder structure looks something like this:</p>
+<p>You don’t have to do this step if you’re using the tutorial dataset. But chances are that you soon want to analyze your own recorded dataset. And most often, the images coming directly from the scanner are not in the common <code class="docutils literal"><span class="pre">NIfTI</span></code> format, but rather in a scanner specific format (e.g. <code class="docutils literal"><span class="pre">DICOM</span></code>, <code class="docutils literal"><span class="pre">PAR/REC</span></code>, etc.). This means you first have to convert your data from this specific scanner format to the standard NIfTI format.</p>
+<p>Probably the most common scanner format is DICOM. Therefore, the following section will cover how you can convert your files from DICOM to NIfTI. There are many different tools that you can use to convert your files. For example, if you like to have a nice GUI to convert your files, use <a class="reference external" href="http://www.mccauslandcenter.sc.edu/mricro/mricron/">MRICron</a>’s <a class="reference external" href="http://lcni.uoregon.edu/~jolinda/MRIConvert/">MRIConvert</a>. But for this Beginner’s Guide we will use FreeSurfer’s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, as it is rather easy to use and doesn’t require many steps.</p>
+<p>But first, as always, be aware of your folder structure. So let’s assume that we’ve stored our dicoms in a folder called <code class="docutils literal"><span class="pre">raw_data</span></code> and that the folder structure looks something like this:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>raw_dicom
 |-- sub001
 |   |-- t1w_3d_MPRAGE
@@ -418,7 +421,7 @@ file_type      NIFTI-1+
 |-- sub010
 </pre></div>
 </div>
-<p>This means, that we have one folder per subject with each containing another folder, one for the structural T1 weighted image and 2 for the functional T2 weighted images. The conversion of the dicom files in those folders is rather easy. If you use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, the command is as as follows: <code class="docutils literal"><span class="pre">mri_convert</span> <span class="pre">&lt;in</span> <span class="pre">volume&gt;</span> <span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code>. You have to replace <code class="docutils literal"><span class="pre">&lt;in</span> <span class="pre">volume&gt;</span></code> by the actual path to any one dicom file in the folder and <code class="docutils literal"><span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code> with the name for your outputfile.</p>
+<p>This means, that we have one folder per subject with each containing another folder, one for the structural T1 weighted image and 2 for the functional T2 weighted images. The conversion of the dicom files in those folders is rather easy. If you use FreeSurfer’s <code class="docutils literal"><span class="pre">mri_convert</span></code> function, the command is as as follows: <code class="docutils literal"><span class="pre">mri_convert</span> <span class="pre">&lt;in</span> <span class="pre">volume&gt;</span> <span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code>. You have to replace <code class="docutils literal"><span class="pre">&lt;in</span> <span class="pre">volume&gt;</span></code> by the actual path to any one dicom file in the folder and <code class="docutils literal"><span class="pre">&lt;out</span> <span class="pre">volume&gt;</span></code> with the name for your outputfile.</p>
 <p>So, to accomplish this with some few terminal command, we first have to tell the system the path and names of the folders that we later want to feed to the <code class="docutils literal"><span class="pre">mri_convert</span></code> function. This is done by the following variables (line 1 to 6). If this is done, we only have to run the loop (line 8 to 17) to actually run <code class="docutils literal"><span class="pre">mri_convert</span></code> for each subject and each scanner image.</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -451,9 +454,9 @@ file_type      NIFTI-1+
 </td></tr></table></div>
 </div>
 <div class="section" id="run-freesurfer-s-recon-all">
-<h3>Run FreeSurfer&#8217;s recon-all<a class="headerlink" href="#run-freesurfer-s-recon-all" title="Permalink to this headline">¶</a></h3>
-<p>Not mandatory but highly recommended is to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process on the anatomical scans of your subject. <code class="docutils literal"><span class="pre">recon-all</span></code> is FreeSurfer&#8217;s cortical reconstruction process that automatically creates a <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">parcellation of cortical</a> and a <a class="reference external" href="http://freesurfer.net/fswiki/SubcorticalSegmentation">segmentation of subcortical</a> regions. A more detailed description about the <code class="docutils literal"><span class="pre">recon-all</span></code> process can be found on the <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">official homepage</a>.</p>
-<p>As I said, you don&#8217;t have to use FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process, but you want to! Because many of FreeSurfer&#8217;s other algorithms require the output of <code class="docutils literal"><span class="pre">recon-all</span></code>. The only negative point about <code class="docutils literal"><span class="pre">recon-all</span></code> is that it takes rather long to process a single subject. My average times are between 12-24h, but it is also possible that the process takes up to 40h. All of it depends on the system you are using. So far, <code class="docutils literal"><span class="pre">recon-all</span></code> can&#8217;t be run in parallel. Luckily, if you have an 8 core processor with enough memory, you should be able to process 8 subjects in parallel.</p>
+<h3>Run FreeSurfer’s recon-all<a class="headerlink" href="#run-freesurfer-s-recon-all" title="Permalink to this headline">¶</a></h3>
+<p>Not mandatory but highly recommended is to run FreeSurfer’s <code class="docutils literal"><span class="pre">recon-all</span></code> process on the anatomical scans of your subject. <code class="docutils literal"><span class="pre">recon-all</span></code> is FreeSurfer’s cortical reconstruction process that automatically creates a <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">parcellation of cortical</a> and a <a class="reference external" href="http://freesurfer.net/fswiki/SubcorticalSegmentation">segmentation of subcortical</a> regions. A more detailed description about the <code class="docutils literal"><span class="pre">recon-all</span></code> process can be found on the <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">official homepage</a>.</p>
+<p>As I said, you don’t have to use FreeSurfer’s <code class="docutils literal"><span class="pre">recon-all</span></code> process, but you want to! Because many of FreeSurfer’s other algorithms require the output of <code class="docutils literal"><span class="pre">recon-all</span></code>. The only negative point about <code class="docutils literal"><span class="pre">recon-all</span></code> is that it takes rather long to process a single subject. My average times are between 12-24h, but it is also possible that the process takes up to 40h. All of it depends on the system you are using. So far, <code class="docutils literal"><span class="pre">recon-all</span></code> can’t be run in parallel. Luckily, if you have an 8 core processor with enough memory, you should be able to process 8 subjects in parallel.</p>
 <div class="section" id="run-recon-all-on-the-tutorial-dataset-terminal-version">
 <h4>Run recon-all on the tutorial dataset (terminal version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-terminal-version" title="Permalink to this headline">¶</a></h4>
 <p>The code to run <code class="docutils literal"><span class="pre">recon-all</span></code> on a single subject is rather simple, i.e. <code class="docutils literal"><span class="pre">recon-all</span> <span class="pre">-all</span> <span class="pre">-subjid</span> <span class="pre">sub001</span></code>. The only thing that you need to keep in mind is to tell your system the path to the freesurfer folder by specifying the variable <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code> and that each subject you want to run the process on has a according anatomical scan in this freesurfer folder under <code class="docutils literal"><span class="pre">SUBJECTS_DIR</span></code>.</p>
@@ -508,7 +511,7 @@ file_type      NIFTI-1+
 <div class="section" id="run-recon-all-on-the-tutorial-dataset-nipype-version">
 <h4>Run recon-all on the tutorial dataset (Nipype version)<a class="headerlink" href="#run-recon-all-on-the-tutorial-dataset-nipype-version" title="Permalink to this headline">¶</a></h4>
 <p>If you run <code class="docutils literal"><span class="pre">recon-all</span></code> only by itself, I recommend you to use the terminal version shown above. But of course, you can also create a pipeline and use Nipype to do the same steps. This might be better if you want to make better use of the parallelization implemented in Nipype or if you want to put <code class="docutils literal"><span class="pre">recon-all</span></code> in a bigger workflow.</p>
-<p>I won&#8217;t explain to much how this workflow actually works, as the structure and creation of a common pipeline is covered in more detail in the next section. But to use Nipype to run FreeSurfer&#8217;s <code class="docutils literal"><span class="pre">recon-all</span></code> process do as follows:</p>
+<p>I won’t explain to much how this workflow actually works, as the structure and creation of a common pipeline is covered in more detail in the next section. But to use Nipype to run FreeSurfer’s <code class="docutils literal"><span class="pre">recon-all</span></code> process do as follows:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -617,7 +620,7 @@ file_type      NIFTI-1+
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>In the code above, if we don&#8217;t create the <code class="docutils literal"><span class="pre">freesurfer</span></code> output folder on line 19, we would get following error:</p>
+<p>In the code above, if we don’t create the <code class="docutils literal"><span class="pre">freesurfer</span></code> output folder on line 19, we would get following error:</p>
 <div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">TraitError</span><span class="p">:</span> <span class="n">The</span> <span class="s1">&#39;subjects_dir&#39;</span> <span class="n">trait</span> <span class="n">of</span> <span class="n">a</span> <span class="n">ReconAllInputSpec</span> <span class="n">instance</span> <span class="n">must</span> <span class="n">be</span> <span class="n">an</span> <span class="n">existing</span>
 <span class="n">directory</span> <span class="n">name</span><span class="p">,</span> <span class="n">but</span> <span class="n">a</span> <span class="n">value</span> <span class="n">of</span> <span class="s1">&#39;~/nipype_tutorial/freesurfer&#39;</span> <span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;str&#39;</span><span class="o">&gt;</span> <span class="n">was</span> <span class="n">specified</span><span class="o">.</span>
 </pre></div>
@@ -633,7 +636,7 @@ file_type      NIFTI-1+
 </div>
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
-<p>After we&#8217;ve prepared our data and run the <code class="docutils literal"><span class="pre">recon-all</span></code> process the folder structure of our experiment folder should look as follows:</p>
+<p>After we’ve prepared our data and run the <code class="docutils literal"><span class="pre">recon-all</span></code> process the folder structure of our experiment folder should look as follows:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>nipype_tutorial
 <span class="p">|</span>-- rawdata <span class="o">(</span>optional<span class="o">)</span>
 <span class="p">|</span>-- data
@@ -651,25 +654,9 @@ file_type      NIFTI-1+
 
 
 
-
           </div>
         </div>
       </div>
-
-      <!-- Disqus message -->
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
-          /* * * DON'T EDIT BELOW THIS LINE * * */
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-              })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
       <div class="clearer"></div>
     </div>
     <div class="related">
@@ -693,8 +680,8 @@ file_type      NIFTI-1+
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on December 04, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
+      Last updated on July 16, 2018.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

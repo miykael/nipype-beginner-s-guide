@@ -172,18 +172,21 @@
         <div class="bodywrapper">
           <div class="body">
 
-            <!-- Disqus counter -->
             
-  <div class="section" id="how-to-build-a-pipeline">
+  <div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+</div>
+<div class="section" id="how-to-build-a-pipeline">
 <h1>How To Build A Pipeline<a class="headerlink" href="#how-to-build-a-pipeline" title="Permalink to this headline">¶</a></h1>
-<p>So, you&#8217;ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html">installed Nipype</a> on your system? And you&#8217;ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/prepareData.html">prepared your dataset</a> for the analysis? This means that you are ready to start this tutorial.</p>
-<p>The following section is a general step by step introduction on how to build a pipeline. It will first introduce you to the building blocks of any pipeline, then show you an example of how a basic pipeline is implemented, how to read the output, and most importantly how to tackle problems. At the end you should understand what a pipeline is, how the key parts interact with each other, and how to solve certain issues. In short, you should be able to build any kind of neuroimaging pipeline that you like. So let&#8217;s get started!</p>
+<p>So, you’ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html">installed Nipype</a> on your system? And you’ve <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/prepareData.html">prepared your dataset</a> for the analysis? This means that you are ready to start this tutorial.</p>
+<p>The following section is a general step by step introduction on how to build a pipeline. It will first introduce you to the building blocks of any pipeline, then show you an example of how a basic pipeline is implemented, how to read the output, and most importantly how to tackle problems. At the end you should understand what a pipeline is, how the key parts interact with each other, and how to solve certain issues. In short, you should be able to build any kind of neuroimaging pipeline that you like. So let’s get started!</p>
 <div class="section" id="important-building-blocks">
 <h2>Important building blocks<a class="headerlink" href="#important-building-blocks" title="Permalink to this headline">¶</a></h2>
 <p>Before we get into the details, we should explain that Nipype pipelines, or
 workflows, the terms are synonomous, are made up of <em>nodes</em> and <em>workflows</em>.
-We will generally use &#8216;workflow&#8217; when referring to section in a script and
-&#8216;pipeline&#8217; to refer to the whole construction that is actually run.</p>
+We will generally use ‘workflow’ when referring to section in a script and
+‘pipeline’ to refer to the whole construction that is actually run.</p>
 <p>Briefly, you can think of a <em>node</em> as a unit of processing; for example,
 a node will run the program to smooth data. Nodes are most often associated
 with analytic interfaces to, say, FSL, SPM, or AFNI, but they can also be a
@@ -205,7 +208,7 @@ a 2nd level analysis workflow.</p>
 <p>The following example pipeline is based on the preprocessing steps of a functional MRI study. We can usefully categorize in a general way the sections of
 a pipeline script based on what function each section plays. The sections
 are common to virtually all pipelines, even though the specific nodes may
-vary. For that reason, it&#8217;s important to understand the sections, how they
+vary. For that reason, it’s important to understand the sections, how they
 relate to each other, and what their role in the overall pipeline is.</p>
 <ul class="simple">
 <li><strong>Import modules</strong>: The first step in any script is to import necessary functions and modules needed for data manipulation and analysis.</li>
@@ -256,7 +259,7 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="specify-variables">
 <h3>Specify variables<a class="headerlink" href="#specify-variables" title="Permalink to this headline">¶</a></h3>
-<p>There are always variables that change between analysis or that are specific for a certain computer structure. That&#8217;s why it is important to keep them all together and at one place. This allows you to be fast, flexible and to keep the changes in your script just to this section.</p>
+<p>There are always variables that change between analysis or that are specific for a certain computer structure. That’s why it is important to keep them all together and at one place. This allows you to be fast, flexible and to keep the changes in your script just to this section.</p>
 <p>So which variables should you declare in this section? <strong>All of them!</strong> Every variable that you change more than once between analysis should be specified here.</p>
 <p>For example:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -294,11 +297,11 @@ the terminal) and have fun creating this example workflow.</p>
 <p>It is impossible to build a pipeline without any scaffold or objects to build with. Therefore, we first have to create those scaffolds (i.e. <code class="docutils literal"><span class="pre">workflows</span></code>) and objects (i.e. <code class="docutils literal"><span class="pre">nodes</span></code> or other <code class="docutils literal"><span class="pre">workflows</span></code>).</p>
 <div class="section" id="nodes">
 <h4>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h4>
-<p>A node is an object that represents a certain interface function, for example SPM&#8217;s <code class="docutils literal"><span class="pre">Realign</span></code> method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes.</p>
+<p>A node is an object that represents a certain interface function, for example SPM’s <code class="docutils literal"><span class="pre">Realign</span></code> method. Every node has always at least one input and one output field. The existent of those fields allow Nipype to connect different nodes to each other and therefore guide the stream of input and output between the nodes.</p>
 <div class="section" id="input-and-output-fields">
 <h5>Input and Output Fields<a class="headerlink" href="#input-and-output-fields" title="Permalink to this headline">¶</a></h5>
-<p>Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">here</a>. So how do you know which input and output field a given node has? Don&#8217;t worry. There&#8217;s an easy way how you can figure out which input fields are <strong>mandatory</strong> or <strong>optional</strong> and which output fields you can use.</p>
-<p>Let&#8217;s assume that we want to know more about FSL&#8217;s function <code class="docutils literal"><span class="pre">SmoothEstimate</span></code>. First, make sure that you&#8217;ve imported the fsl module with the following python command <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype.interfaces.fsl</span> <span class="pre">as</span> <span class="pre">fsl</span></code>.</p>
+<p>Nipype provides so many different interfaces with each having a lot of different functions (for a list of all interfaces go <a class="reference external" href="http://nipy.org/nipype/interfaces/index.html">here</a>. So how do you know which input and output field a given node has? Don’t worry. There’s an easy way how you can figure out which input fields are <strong>mandatory</strong> or <strong>optional</strong> and which output fields you can use.</p>
+<p>Let’s assume that we want to know more about FSL’s function <code class="docutils literal"><span class="pre">SmoothEstimate</span></code>. First, make sure that you’ve imported the fsl module with the following python command <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype.interfaces.fsl</span> <span class="pre">as</span> <span class="pre">fsl</span></code>.</p>
 <p>Now that we have access to FSL, we simply can run <code class="docutils literal"><span class="pre">fsl.SmoothEstimate.help()</span></code>. This will give us the following output:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -409,7 +412,7 @@ the terminal) and have fun creating this example workflow.</p>
         <span class="n">number</span> <span class="n">of</span> <span class="n">voxels</span> <span class="ow">in</span> <span class="n">mask</span>
 </pre></div>
 </td></tr></table></div>
-<p>The first few lines <em>(line 1-3)</em> give as a short explanation of the function, followed by a short example on how to implement the function <em>(line 5-12)</em>. After the example come information about <code class="docutils literal"><span class="pre">Inputs</span></code> <em>(line 14-45)</em> and <code class="docutils literal"><span class="pre">Outputs</span></code> <em>(line 47-54)</em>. There are always some inputs that are <strong>mandatory</strong> and some that are <strong>optional</strong>. Which is not the case for outputs, as they are always optional. It&#8217;s important to note that some of the inputs are mutually exclusive <em>(see line 19)</em>, which means that if one input is specified, another one can&#8217;t be set and will result in an error if it is defined nonetheless.</p>
+<p>The first few lines <em>(line 1-3)</em> give as a short explanation of the function, followed by a short example on how to implement the function <em>(line 5-12)</em>. After the example come information about <code class="docutils literal"><span class="pre">Inputs</span></code> <em>(line 14-45)</em> and <code class="docutils literal"><span class="pre">Outputs</span></code> <em>(line 47-54)</em>. There are always some inputs that are <strong>mandatory</strong> and some that are <strong>optional</strong>. Which is not the case for outputs, as they are always optional. It’s important to note that some of the inputs are mutually exclusive <em>(see line 19)</em>, which means that if one input is specified, another one can’t be set and will result in an error if it is defined nonetheless.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p>If you only want to see the <strong>example</strong> part of the information view, without the details about the input and output fields, use the command <code class="docutils literal"><span class="pre">fsl.SmoothEstimate?</span></code>.</p>
@@ -422,8 +425,8 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="default-value-of-inputs">
 <h5>Default value of Inputs<a class="headerlink" href="#default-value-of-inputs" title="Permalink to this headline">¶</a></h5>
-<p>As you&#8217;ve might seen in the example above <em>(line 32)</em>, some input fields have Nipype specific default values. To figure out which default values are used for which functions, use the method <code class="docutils literal"><span class="pre">input_spec()</span></code>.</p>
-<p>For example, if you want to know that the default values for SPM&#8217;s Threshold function are, use the following command:</p>
+<p>As you’ve might seen in the example above <em>(line 32)</em>, some input fields have Nipype specific default values. To figure out which default values are used for which functions, use the method <code class="docutils literal"><span class="pre">input_spec()</span></code>.</p>
+<p>For example, if you want to know that the default values for SPM’s Threshold function are, use the following command:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span> <span class="kn">as</span> <span class="nn">spm</span>
 <span class="n">spm</span><span class="o">.</span><span class="n">Threshold</span><span class="o">.</span><span class="n">input_spec</span><span class="p">()</span>
@@ -467,8 +470,8 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="stand-alone-nodes">
 <h4>Stand-alone nodes<a class="headerlink" href="#stand-alone-nodes" title="Permalink to this headline">¶</a></h4>
-<p>Nodes are most of the time used inside a pipeline. But it is also possible to use one just by itself. Such a &#8220;stand-alone&#8221; node is often times very convenient when you run a python script and want to use just one function of a given dependency package, e.g. FSL, and are not really interested in creating an elaborate workflow.</p>
-<p>Such a &#8220;stand-alone&#8221; node is also a good opportunity to introduce the implementation of nodes. Because there are many ways how you can create a node. Let&#8217;s assume that you want to create a single node that runs FSL&#8217;s Brain Extraction Tool function <code class="docutils literal"><span class="pre">BET</span></code> on the anatomical scan of our tutorial subject <code class="docutils literal"><span class="pre">sub001</span></code>. This can be achieved in the following three ways:</p>
+<p>Nodes are most of the time used inside a pipeline. But it is also possible to use one just by itself. Such a “stand-alone” node is often times very convenient when you run a python script and want to use just one function of a given dependency package, e.g. FSL, and are not really interested in creating an elaborate workflow.</p>
+<p>Such a “stand-alone” node is also a good opportunity to introduce the implementation of nodes. Because there are many ways how you can create a node. Let’s assume that you want to create a single node that runs FSL’s Brain Extraction Tool function <code class="docutils literal"><span class="pre">BET</span></code> on the anatomical scan of our tutorial subject <code class="docutils literal"><span class="pre">sub001</span></code>. This can be achieved in the following three ways:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -517,7 +520,7 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="workflow-nodes">
 <h4>Workflow Nodes<a class="headerlink" href="#workflow-nodes" title="Permalink to this headline">¶</a></h4>
-<p>Most of the times when you create a node you want to use it later on in a workflow. The creation of such a &#8220;workflow&#8221; node is only partly different from the creation of &#8220;stand-alone&#8221; nodes. The implementation of a &#8220;workflow&#8221; node has always the following structure:</p>
+<p>Most of the times when you create a node you want to use it later on in a workflow. The creation of such a “workflow” node is only partly different from the creation of “stand-alone” nodes. The implementation of a “workflow” node has always the following structure:</p>
 <div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">nodename</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">interface_function</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -527,7 +530,7 @@ the terminal) and have fun creating this example workflow.</p>
 <li><strong>interface_function</strong>: This is the name of the function this node should represent. Most of the times this function name is preceded by an interface name, e.g. <code class="docutils literal"><span class="pre">fsl.BET</span></code>.</li>
 <li><strong>label</strong>: This is the name, that this node uses to create its working directory or to label itself in the visualized graph.</li>
 </ul>
-<p>For example: If you want to create a node called <code class="docutils literal"><span class="pre">realign</span></code> that runs SPM&#8217;s <code class="docutils literal"><span class="pre">Realign</span></code> function on a functional data <code class="docutils literal"><span class="pre">func.nii</span></code>, use the following code:</p>
+<p>For example: If you want to create a node called <code class="docutils literal"><span class="pre">realign</span></code> that runs SPM’s <code class="docutils literal"><span class="pre">Realign</span></code> function on a functional data <code class="docutils literal"><span class="pre">func.nii</span></code>, use the following code:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -565,8 +568,8 @@ the terminal) and have fun creating this example workflow.</p>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>This will create a working directory at <code class="docutils literal"><span class="pre">~/nipype_tutorial/tmp</span></code>, containing one folder called <code class="docutils literal"><span class="pre">realignnode</span></code> containing all temporary and final output files of SPM&#8217;s <code class="docutils literal"><span class="pre">realign</span></code> function.</p>
-<p>If you&#8217;re curious what the realign function just calculated, use the following python commands to plot the estimated translation and rotation parameters of the functional scan <code class="docutils literal"><span class="pre">func.nii</span></code>:</p>
+<p>This will create a working directory at <code class="docutils literal"><span class="pre">~/nipype_tutorial/tmp</span></code>, containing one folder called <code class="docutils literal"><span class="pre">realignnode</span></code> containing all temporary and final output files of SPM’s <code class="docutils literal"><span class="pre">realign</span></code> function.</p>
+<p>If you’re curious what the realign function just calculated, use the following python commands to plot the estimated translation and rotation parameters of the functional scan <code class="docutils literal"><span class="pre">func.nii</span></code>:</p>
 <div class="last highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -606,7 +609,7 @@ the terminal) and have fun creating this example workflow.</p>
 <div class="section" id="iterables">
 <h5>Iterables<a class="headerlink" href="#iterables" title="Permalink to this headline">¶</a></h5>
 <p>Iterables are a special kind of input fields and any input field of any Node can be turned into an Iterable. Iterables are very important for the repeated execution of a workflow with slightly changed parameters.</p>
-<p>For example, let&#8217;s assume that you have a preprocessing pipeline and on one step smooth the data with a FWHM smoothing kernel of 6mm. But because you&#8217;re not sure if the FWHM value is right you would want to execute the workflow again with 4mm and 8mm. Instead of running your workflow three times with slightly different parameters you could also just define the FWHM input field as an iterables:</p>
+<p>For example, let’s assume that you have a preprocessing pipeline and on one step smooth the data with a FWHM smoothing kernel of 6mm. But because you’re not sure if the FWHM value is right you would want to execute the workflow again with 4mm and 8mm. Instead of running your workflow three times with slightly different parameters you could also just define the FWHM input field as an iterables:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -646,9 +649,9 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="individual-nodes">
 <h4>Individual Nodes<a class="headerlink" href="#individual-nodes" title="Permalink to this headline">¶</a></h4>
-<p>There are situations where you need to create your own Node that is independent from any other interface or function provided by Nipype. You need a Node with your specific input and output fields, that does what you want. Well, this can be achieved with Nipype&#8217;s <code class="docutils literal"><span class="pre">Function</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface.</p>
-<p>Let&#8217;s assume that you want to have a node that takes as an input a NIfTI file and returns the voxel dimension and the TR of this file. We will read the voxel dimension and the TR value of the NIfTI file with <code class="docutils literal"><span class="pre">nibabel</span></code>&#8216;s <code class="docutils literal"><span class="pre">get_header()</span></code> function.</p>
-<p>Here is how it&#8217;s done:</p>
+<p>There are situations where you need to create your own Node that is independent from any other interface or function provided by Nipype. You need a Node with your specific input and output fields, that does what you want. Well, this can be achieved with Nipype’s <code class="docutils literal"><span class="pre">Function</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface.</p>
+<p>Let’s assume that you want to have a node that takes as an input a NIfTI file and returns the voxel dimension and the TR of this file. We will read the voxel dimension and the TR value of the NIfTI file with <code class="docutils literal"><span class="pre">nibabel</span></code>’s <code class="docutils literal"><span class="pre">get_header()</span></code> function.</p>
+<p>Here is how it’s done:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -713,8 +716,8 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="function-free-nodes">
 <h4>Function Free Nodes<a class="headerlink" href="#function-free-nodes" title="Permalink to this headline">¶</a></h4>
-<p>Sometimes you need a Node without a specific interface function. A Node that just distributes values. For example, when you need to feed the voxel dimension and the different subject names into your pipeline. Don&#8217;t worry that you&#8217;ll need a complex node to do this. You only need a Node that can receive the input <code class="docutils literal"><span class="pre">[3.0,</span> <span class="pre">3.0,</span> <span class="pre">4.0]</span></code> and <code class="docutils literal"><span class="pre">['sub001','sub002','sub003']</span></code> and distribute those inputs to the workflow.</p>
-<p>Such a way of identity mapping input to output can be achieved with Nipype&#8217;s own <code class="docutils literal"><span class="pre">IdentityInterface</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface:</p>
+<p>Sometimes you need a Node without a specific interface function. A Node that just distributes values. For example, when you need to feed the voxel dimension and the different subject names into your pipeline. Don’t worry that you’ll need a complex node to do this. You only need a Node that can receive the input <code class="docutils literal"><span class="pre">[3.0,</span> <span class="pre">3.0,</span> <span class="pre">4.0]</span></code> and <code class="docutils literal"><span class="pre">['sub001','sub002','sub003']</span></code> and distribute those inputs to the workflow.</p>
+<p>Such a way of identity mapping input to output can be achieved with Nipype’s own <code class="docutils literal"><span class="pre">IdentityInterface</span></code> function from the <code class="docutils literal"><span class="pre">utility</span></code> interface:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -751,7 +754,7 @@ the terminal) and have fun creating this example workflow.</p>
 <div class="section" id="workflows">
 <h4>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h4>
 <p>Workflows are the scaffolds of a pipeline. They are, together with Nodes, the core element of any pipeline. The purpose of workflows is to guide the sequential execution of Nodes. This is done by connecting Nodes to the workflow and to each other in a certain way. The nice thing about workflows is, that they themselves can be connected to other workflows or can be used as a sub part of another, bigger worklfow. So how are they actually created?</p>
-<p>Workflows are implemented almost the same as Nodes are. Except that you don&#8217;t need to declare any interface or function:</p>
+<p>Workflows are implemented almost the same as Nodes are. Except that you don’t need to declare any interface or function:</p>
 <div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">workflowname</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -790,8 +793,8 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="connect-workflows-to-workflows">
 <h5>Connect Workflows to Workflows<a class="headerlink" href="#connect-workflows-to-workflows" title="Permalink to this headline">¶</a></h5>
-<p>Sometimes you also want to connect a workflow to another workflow. For example a preprocessing pipeline to a analysis pipeline. This, so that you can execute the whole pipeline as one. To do this, you can&#8217;t just connect the nodes to each other. You have to additionally connect the workflows to themselves.</p>
-<p>Let&#8217;s assume that we have a node <code class="docutils literal"><span class="pre">realign</span></code> which is part of a preprocessing pipeline called <code class="docutils literal"><span class="pre">preprocess</span></code> and that we have a node called <code class="docutils literal"><span class="pre">modelspec</span></code> which is part of an analysis pipeline called <code class="docutils literal"><span class="pre">modelestimation</span></code>. To be able to connect those two pipelines at those particular points we need another workflow to serve as a connection scaffold:</p>
+<p>Sometimes you also want to connect a workflow to another workflow. For example a preprocessing pipeline to a analysis pipeline. This, so that you can execute the whole pipeline as one. To do this, you can’t just connect the nodes to each other. You have to additionally connect the workflows to themselves.</p>
+<p>Let’s assume that we have a node <code class="docutils literal"><span class="pre">realign</span></code> which is part of a preprocessing pipeline called <code class="docutils literal"><span class="pre">preprocess</span></code> and that we have a node called <code class="docutils literal"><span class="pre">modelspec</span></code> which is part of an analysis pipeline called <code class="docutils literal"><span class="pre">modelestimation</span></code>. To be able to connect those two pipelines at those particular points we need another workflow to serve as a connection scaffold:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -865,12 +868,12 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="clone-existing-pipelines">
 <h4>Clone Existing Pipelines<a class="headerlink" href="#clone-existing-pipelines" title="Permalink to this headline">¶</a></h4>
-<p>Sometimes you want to reuse a pipeline you&#8217;ve already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the <code class="docutils literal"><span class="pre">clone</span></code> command.</p>
-<p>For example, if you&#8217;ve already created an analysis pipeline that analysis the data on the volume and now would love to reuse this pipeline to do the analysis of the surface, just do as follows:</p>
+<p>Sometimes you want to reuse a pipeline you’ve already created with some different parameters and node connections. Instead of just copying and changing the whole script, just use the <code class="docutils literal"><span class="pre">clone</span></code> command.</p>
+<p>For example, if you’ve already created an analysis pipeline that analysis the data on the volume and now would love to reuse this pipeline to do the analysis of the surface, just do as follows:</p>
 <div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">surfanalysis</span> <span class="o">=</span> <span class="n">volanalysis</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;surfanalysis&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This is all you have to do to have the same connections and parameters in <code class="docutils literal"><span class="pre">surfanalysis</span></code> as you have in <code class="docutils literal"><span class="pre">volanalysis</span></code>. If you wouldn&#8217;t clone the pipeline and keep continuing the same pipeline, Nipype would assume that it still is the same execution flow and just rewrite all the output from the <code class="docutils literal"><span class="pre">volanalysis</span></code> pipeline.</p>
+<p>This is all you have to do to have the same connections and parameters in <code class="docutils literal"><span class="pre">surfanalysis</span></code> as you have in <code class="docutils literal"><span class="pre">volanalysis</span></code>. If you wouldn’t clone the pipeline and keep continuing the same pipeline, Nipype would assume that it still is the same execution flow and just rewrite all the output from the <code class="docutils literal"><span class="pre">volanalysis</span></code> pipeline.</p>
 <p>If you want to change some parameters of the pipeline after cloning, just  specify the name of the pipeline, node and parameter you want to change:</p>
 <div class="highlight-py"><div class="highlight"><pre><span></span><span class="n">surfanalysis</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">level1design</span><span class="o">.</span><span class="n">timing_units</span> <span class="o">=</span> <span class="s1">&#39;secs&#39;</span>
 </pre></div>
@@ -955,7 +958,7 @@ the terminal) and have fun creating this example workflow.</p>
 </pre></div>
 </td></tr></table></div>
 <p>To store an output of a certain node in this DataSink just connect the node to the DataSink. The output data will be saved in the just specified container <code class="docutils literal"><span class="pre">datasink_folder</span></code>. Nipype will then save this output in a folder under this container, depending on the name of the DataSink input field that you specify during the creation of connections.</p>
-<p>As an example, let&#8217;s assume that we want to use the output of SPM&#8217;s motion correction node, here called <code class="docutils literal"><span class="pre">realign</span></code>.</p>
+<p>As an example, let’s assume that we want to use the output of SPM’s motion correction node, here called <code class="docutils literal"><span class="pre">realign</span></code>.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -973,7 +976,7 @@ the terminal) and have fun creating this example workflow.</p>
 <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">realign</span><span class="p">,</span> <span class="n">datasink</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;realignment_parameters&#39;</span><span class="p">,</span> <span class="s1">&#39;motion.par&#39;</span><span class="p">)])</span>
 </pre></div>
 </td></tr></table></div>
-<p>The output folder and files of the datasink node often have long and detailed names, such as <code class="docutils literal"><span class="pre">'_subject_id_sub002/con_0001_warped_out.nii'</span></code>. This is because many of the nodes used add their own pre- or postfix to a file or folder. You can use datasink&#8217;s substitutions function to change or delete unwanted strings:</p>
+<p>The output folder and files of the datasink node often have long and detailed names, such as <code class="docutils literal"><span class="pre">'_subject_id_sub002/con_0001_warped_out.nii'</span></code>. This is because many of the nodes used add their own pre- or postfix to a file or folder. You can use datasink’s substitutions function to change or delete unwanted strings:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -991,7 +994,7 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">After you&#8217;ve created the input and output node it is very important to connect them to the rest of your workflow. Otherwise your pipeline would have no real input or output stream. You can see how to do this in the example below.</p>
+<p class="last">After you’ve created the input and output node it is very important to connect them to the rest of your workflow. Otherwise your pipeline would have no real input or output stream. You can see how to do this in the example below.</p>
 </div>
 </div>
 </div>
@@ -1020,7 +1023,7 @@ the terminal) and have fun creating this example workflow.</p>
 </pre></div>
 </td></tr></table></div>
 <p>The computation time of your workflow depends on many different factors, such as which nodes you use, with which parameters, on how many subjects, if you use parallel execution and the power of your system. Therefore, no real prediction about the execution time can be made.</p>
-<p>But the nice thing about Nipype is that it will always check if a node has already been run and if the input parameters have changed or not. Only nodes that have different input parameters will be rerun. Nipype&#8217;s hashing mechanism ensures that none of the nodes are executed during a new run if the inputs remain the same. This keeps the computation time to its minimum.</p>
+<p>But the nice thing about Nipype is that it will always check if a node has already been run and if the input parameters have changed or not. Only nodes that have different input parameters will be rerun. Nipype’s hashing mechanism ensures that none of the nodes are executed during a new run if the inputs remain the same. This keeps the computation time to its minimum.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">More about Plugins and how you can run your pipeline in a distributed system can be found on the official homepage under <a class="reference external" href="http://nipy.org/nipype/users/plugins.html">Using Nipype Plugins</a>.</p>
@@ -1029,10 +1032,10 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="example-script">
 <h2>Example Script<a class="headerlink" href="#example-script" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s try to summarize what we&#8217;ve learned by building a short preprocessing pipeline. The following script assumes that you&#8217;re using the tutorial dataset with the three subjects <code class="docutils literal"><span class="pre">sub001</span></code>, <code class="docutils literal"><span class="pre">sub002</span></code> and <code class="docutils literal"><span class="pre">sub003</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>.</p>
+<p>Let’s try to summarize what we’ve learned by building a short preprocessing pipeline. The following script assumes that you’re using the tutorial dataset with the three subjects <code class="docutils literal"><span class="pre">sub001</span></code>, <code class="docutils literal"><span class="pre">sub002</span></code> and <code class="docutils literal"><span class="pre">sub003</span></code>, each having two functional scans <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> and <code class="docutils literal"><span class="pre">run002.nii.gz</span></code>.</p>
 <div class="section" id="id1">
 <h3>Import modules<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>First, import all necessary modules. Which modules you have to import becomes clear while you&#8217;re adding specific nodes.</p>
+<p>First, import all necessary modules. Which modules you have to import becomes clear while you’re adding specific nodes.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -1082,13 +1085,13 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="id3">
 <h3>Specify Nodes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>Let&#8217;s now create all the nodes we need for this preprocessing workflow:</p>
+<p>Let’s now create all the nodes we need for this preprocessing workflow:</p>
 <ul class="simple">
-<li><strong>Gunzip</strong>: This node is needed to convert the NIfTI files from the zipped version <code class="docutils literal"><span class="pre">.nii.gz</span></code> to the unzipped version <code class="docutils literal"><span class="pre">.nii</span></code>. This step has to be done because SPM&#8217;s SliceTiming can not handle zipped files.</li>
-<li><strong>SliceTiming</strong>: This node executes SPM&#8217;s SliceTiming on each functional scan.</li>
-<li><strong>Realign</strong>: This node executes SPM&#8217;s Realign on each slice time corrected functional scan.</li>
-<li><strong>ArtifactDetect</strong>: This node executes <a class="reference external" href="http://www.nitrc.org/projects/artifact_detect/">ART</a>&#8216;s artifact detection on the functional scans.</li>
-<li><strong>Smooth</strong>: This node executes SPM&#8217;s Smooth on each realigned functional scan.</li>
+<li><strong>Gunzip</strong>: This node is needed to convert the NIfTI files from the zipped version <code class="docutils literal"><span class="pre">.nii.gz</span></code> to the unzipped version <code class="docutils literal"><span class="pre">.nii</span></code>. This step has to be done because SPM’s SliceTiming can not handle zipped files.</li>
+<li><strong>SliceTiming</strong>: This node executes SPM’s SliceTiming on each functional scan.</li>
+<li><strong>Realign</strong>: This node executes SPM’s Realign on each slice time corrected functional scan.</li>
+<li><strong>ArtifactDetect</strong>: This node executes <a class="reference external" href="http://www.nitrc.org/projects/artifact_detect/">ART</a>’s artifact detection on the functional scans.</li>
+<li><strong>Smooth</strong>: This node executes SPM’s Smooth on each realigned functional scan.</li>
 </ul>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1152,7 +1155,7 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="id4">
 <h3>Specify Workflows &amp; Connect Nodes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>After we&#8217;ve created all the nodes we can create our preprocessing workflow and connect the nodes to this workflow.</p>
+<p>After we’ve created all the nodes we can create our preprocessing workflow and connect the nodes to this workflow.</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1182,7 +1185,7 @@ the terminal) and have fun creating this example workflow.</p>
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><strong>Line 3</strong> is needed to tell the workflow in which folder it should be run. You don&#8217;t have to do this for any subworkflows that you&#8217;re using. But the &#8220;main&#8221; workflow, the one which we execute with the <code class="docutils literal"><span class="pre">.run()</span></code> command, should always have a <code class="docutils literal"><span class="pre">base_dir</span></code> specified.</p>
+<p class="last"><strong>Line 3</strong> is needed to tell the workflow in which folder it should be run. You don’t have to do this for any subworkflows that you’re using. But the “main” workflow, the one which we execute with the <code class="docutils literal"><span class="pre">.run()</span></code> command, should always have a <code class="docutils literal"><span class="pre">base_dir</span></code> specified.</p>
 </div>
 </div>
 <div class="section" id="id5">
@@ -1271,7 +1274,7 @@ the terminal) and have fun creating this example workflow.</p>
 <span class="n">preproc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
-<p>As you see, we&#8217;ve executed the function <code class="docutils literal"><span class="pre">write_graph()</span></code> before we&#8217;ve run the pipeline. <code class="docutils literal"><span class="pre">write_graph()</span></code> is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html">How To Visualize A Pipeline</a>.</p>
+<p>As you see, we’ve executed the function <code class="docutils literal"><span class="pre">write_graph()</span></code> before we’ve run the pipeline. <code class="docutils literal"><span class="pre">write_graph()</span></code> is not needed to run the pipeline, but allows you to visualize the execution flow of your pipeline, before you actually execute the pipeline. More about the visualization of workflows can be found in the next chapter, <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/visualizePipeline.html">How To Visualize A Pipeline</a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">You can download the code for this preprocessing pipeline as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/tutorial_3_first_steps.py">tutorial_3_first_steps.py</a></p>
@@ -1280,10 +1283,10 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
-<p>After we&#8217;ve executed the preprocessing pipeline we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_firstSteps</span></code> which contains all files created during the execution of the workflow, and the output folder <code class="docutils literal"><span class="pre">output_firstSteps</span></code> which contains all the files that we sent to the DataSink. Let&#8217;s take a closer look at those two folders.</p>
+<p>After we’ve executed the preprocessing pipeline we have two new folders under <code class="docutils literal"><span class="pre">~/nipype_tutorial</span></code>. The working directory <code class="docutils literal"><span class="pre">workingdir_firstSteps</span></code> which contains all files created during the execution of the workflow, and the output folder <code class="docutils literal"><span class="pre">output_firstSteps</span></code> which contains all the files that we sent to the DataSink. Let’s take a closer look at those two folders.</p>
 <div class="section" id="working-directory">
 <h3>Working Directory<a class="headerlink" href="#working-directory" title="Permalink to this headline">¶</a></h3>
-<p>The working directory contains many temporary files that might be not so important for your further analysis. That&#8217;s why I highly recommend to save all the important outputs of your workflow in a DataSink folder. So that everything important is at one place.</p>
+<p>The working directory contains many temporary files that might be not so important for your further analysis. That’s why I highly recommend to save all the important outputs of your workflow in a DataSink folder. So that everything important is at one place.</p>
 <p>The following folder structure represents the working directory of the above preprocessing workflow:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>workingdir_firstSteps
 <span class="p">|</span>-- preproc
@@ -1305,7 +1308,7 @@ the terminal) and have fun creating this example workflow.</p>
 <p>Even though the working directory is most often only temporary, it contains many relevant files to be found and explore. Following are some of the highlights:</p>
 <ul class="simple">
 <li><strong>Visualization</strong>: The main folder of the workflow contains the visualized graph files (if created with <code class="docutils literal"><span class="pre">write_graph()</span></code> and an interactive execution fiew (<code class="docutils literal"><span class="pre">index.html</span></code>).</li>
-<li><strong>Reports</strong>: Each node contains a subfolder called <code class="docutils literal"><span class="pre">_report</span></code> that contains a file called <code class="docutils literal"><span class="pre">report.rst</span></code>. This file contains all relevant node information. E.g. What&#8217;s the name of the node and what is its hierarchical place in the pipeline structure? What are the actual input and executed output parameters? How long did it take to execute the node and what were the values of the environment variables during the execution?</li>
+<li><strong>Reports</strong>: Each node contains a subfolder called <code class="docutils literal"><span class="pre">_report</span></code> that contains a file called <code class="docutils literal"><span class="pre">report.rst</span></code>. This file contains all relevant node information. E.g. What’s the name of the node and what is its hierarchical place in the pipeline structure? What are the actual input and executed output parameters? How long did it take to execute the node and what were the values of the environment variables during the execution?</li>
 </ul>
 </div>
 <div class="section" id="output-folder">
@@ -1345,10 +1348,10 @@ the terminal) and have fun creating this example workflow.</p>
 </div>
 <div class="section" id="common-issues-problems-and-crashes">
 <h2>Common Issues, Problems and Crashes<a class="headerlink" href="#common-issues-problems-and-crashes" title="Permalink to this headline">¶</a></h2>
-<p>As so often in life, there is always something that doesn&#8217;t go as planed. And this is the same for Nipype. There are many reasons why a pipeline can cause problems or even crash. But there&#8217;s always a way to figure out what went wrong and what needs to be fixed.</p>
+<p>As so often in life, there is always something that doesn’t go as planed. And this is the same for Nipype. There are many reasons why a pipeline can cause problems or even crash. But there’s always a way to figure out what went wrong and what needs to be fixed.</p>
 <div class="section" id="best-case-scenario-everything-works">
 <h3>Best Case Scenario - Everything Works<a class="headerlink" href="#best-case-scenario-everything-works" title="Permalink to this headline">¶</a></h3>
-<p>Before we take a look at how to find errors, let&#8217;s take a look at a correct working pipeline. The following is the abbreviated terminal output of the preprocessing workflow from above. For readability reasons, lines containing the execution timestamps are not shown:</p>
+<p>Before we take a look at how to find errors, let’s take a look at a correct working pipeline. The following is the abbreviated terminal output of the preprocessing workflow from above. For readability reasons, lines containing the execution timestamps are not shown:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1412,12 +1415,12 @@ Executing node datasink.a2 in dir: ~/nipype_tutorial/workingdir_firstSteps/
 <span class="o">[</span>Job finished<span class="o">]</span> jobname: datasink.a0 jobid: <span class="m">20</span>
 </pre></div>
 </td></tr></table></div>
-<p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node&#8217;s execution is accompanied by the working directory of this node. The output <code class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></code> then tells you when the execution of the node is done.</p>
+<p>This output shows you the chronological execution of the pipeline, run in parallel mode. Each node first has to be transformed into a job and submitted to the execution cluster. The start of a node’s execution is accompanied by the working directory of this node. The output <code class="docutils literal"><span class="pre">[Job</span> <span class="pre">finished]</span></code> then tells you when the execution of the node is done.</p>
 </div>
 <div class="section" id="it-crashes-but-where-is-the-problem">
 <h3>It Crashes, But Where is the Problem?<a class="headerlink" href="#it-crashes-but-where-is-the-problem" title="Permalink to this headline">¶</a></h3>
-<p>In the beginning when you&#8217;re not used to reading Nipype&#8217;s terminal output it can be tricky to find the actual error. But most of the time, Nipype tells you exactly what&#8217;s wrong.</p>
-<p>Let&#8217;s assume for example, that you want to create a preprocessing pipeline as shown above but forget to provide the mandatory input <code class="docutils literal"><span class="pre">realigned_files</span></code> for the artifact detection node <code class="docutils literal"><span class="pre">art</span></code>. The running of such a workflow will lead to the following terminal output:</p>
+<p>In the beginning when you’re not used to reading Nipype’s terminal output it can be tricky to find the actual error. But most of the time, Nipype tells you exactly what’s wrong.</p>
+<p>Let’s assume for example, that you want to create a preprocessing pipeline as shown above but forget to provide the mandatory input <code class="docutils literal"><span class="pre">realigned_files</span></code> for the artifact detection node <code class="docutils literal"><span class="pre">art</span></code>. The running of such a workflow will lead to the following terminal output:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1624,7 +1627,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
             For a list of required inputs, see ArtifactDetect.help<span class="o">()</span>
 </pre></div>
 </td></tr></table></div>
-<p>From this output you can see in the lower half the same error stack of the crash and the exact description of what is wrong, as we&#8217;ve seen in the terminal output. But in the first half you also have additional information of the nodes input, which might help to solve some problems.</p>
+<p>From this output you can see in the lower half the same error stack of the crash and the exact description of what is wrong, as we’ve seen in the terminal output. But in the first half you also have additional information of the nodes input, which might help to solve some problems.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Note that the information about the exact input values of a node can also be obtained from the <code class="docutils literal"><span class="pre">report.rst</span></code> file, stored in the nodes subfolder under the working directory. More about this later under <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#working-directory">Working Directory</a>.</p>
@@ -1632,9 +1635,9 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 </div>
 <div class="section" id="interface-issues">
 <h3>Interface Issues<a class="headerlink" href="#interface-issues" title="Permalink to this headline">¶</a></h3>
-<p>Sometimes the most basic errors can occur because Nipype doesn&#8217;t know where the correct files are. Two very common issues are for example that FreeSurfer can&#8217;t find the subject folder or that MATLAB doesn&#8217;t find SPM.</p>
-<p>Before you do anything else, please make sure again that you&#8217;ve installed FreeSurfer and SPM12 as described in the installation section, <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html#freesurfer">How to install FreeSurfer</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html#spm12">How to install SPM</a>.</p>
-<p>But don&#8217;t worry if the problem still exists. There are two nice ways how you can tell Nipype where FreeSurfer subject folders are stored at and where MATLAB can find SPM12. Just add the following code to the beginning of your script:</p>
+<p>Sometimes the most basic errors can occur because Nipype doesn’t know where the correct files are. Two very common issues are for example that FreeSurfer can’t find the subject folder or that MATLAB doesn’t find SPM.</p>
+<p>Before you do anything else, please make sure again that you’ve installed FreeSurfer and SPM12 as described in the installation section, <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html#freesurfer">How to install FreeSurfer</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/installation.html#spm12">How to install SPM</a>.</p>
+<p>But don’t worry if the problem still exists. There are two nice ways how you can tell Nipype where FreeSurfer subject folders are stored at and where MATLAB can find SPM12. Just add the following code to the beginning of your script:</p>
 <div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -1653,7 +1656,7 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
 </div>
 <div class="section" id="be-aware-of-your-data">
 <h3>Be Aware of Your Data<a class="headerlink" href="#be-aware-of-your-data" title="Permalink to this headline">¶</a></h3>
-<p>Sometimes the biggest issue with your code is that you try to force things that can&#8217;t work.</p>
+<p>Sometimes the biggest issue with your code is that you try to force things that can’t work.</p>
 <p>One common example is that you try to feed in two values (e.g. <code class="docutils literal"><span class="pre">run001</span></code> and <code class="docutils literal"><span class="pre">run002</span></code>) into an input field that only expects one value. An example output of such an Error would contain something like this:</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1662,9 +1665,9 @@ ValueError: ArtifactDetect requires a value <span class="k">for</span> input <sp
             <span class="s1">&#39;~/nipype_tutorial/data/sub002/run002.nii.gz&#39;</span><span class="o">]</span> &lt;<span class="nb">type</span> <span class="s1">&#39;list&#39;</span>&gt; was specified.
 </pre></div>
 </td></tr></table></div>
-<p>This error tells you that it expects an <code class="docutils literal"><span class="pre">'in_file'</span></code> (i.e. singular) and that the file <code class="docutils literal"><span class="pre">['run001',</span> <span class="pre">'run002']</span></code> doesn&#8217;t exist. What makes sense, because a <cite>list</cite> isn&#8217;t a file. Such an error can often times be resolved by using a MapNode. Otherwise, find another way to reduce the number of input values per field.</p>
-<p>Another common mistake is the fact that your data is given as input to a node that can&#8217;t handle the format of this input. This error is most often encountered when your data type is zipped and the following node can&#8217;t unzip the file by itself. We included a <code class="docutils literal"><span class="pre">Gunzip</span></code> node exaclty for this reason in the example pipeline above.</p>
-<p>So what will the terminal output look like if we try to feed a zipped <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> to a node that executes SPM&#8217;s SliceTiming?</p>
+<p>This error tells you that it expects an <code class="docutils literal"><span class="pre">'in_file'</span></code> (i.e. singular) and that the file <code class="docutils literal"><span class="pre">['run001',</span> <span class="pre">'run002']</span></code> doesn’t exist. What makes sense, because a <cite>list</cite> isn’t a file. Such an error can often times be resolved by using a MapNode. Otherwise, find another way to reduce the number of input values per field.</p>
+<p>Another common mistake is the fact that your data is given as input to a node that can’t handle the format of this input. This error is most often encountered when your data type is zipped and the following node can’t unzip the file by itself. We included a <code class="docutils literal"><span class="pre">Gunzip</span></code> node exaclty for this reason in the example pipeline above.</p>
+<p>So what will the terminal output look like if we try to feed a zipped <code class="docutils literal"><span class="pre">run001.nii.gz</span></code> to a node that executes SPM’s SliceTiming?</p>
 <div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1776,36 +1779,20 @@ Interface SliceTiming failed to run.
      ***********************************
 </pre></div>
 </td></tr></table></div>
-<p>This error message doesn&#8217;t tell you directly what is wrong. Unfortunately, Nipype can&#8217;t go deep enough into SPM&#8217;s code and figure out what is wrong, because SPM itself doesn&#8217;t tell us what&#8217;s wrong. But <strong>line 25-26</strong> tells us that SPM has some issues with finding the appropriate files.</p>
+<p>This error message doesn’t tell you directly what is wrong. Unfortunately, Nipype can’t go deep enough into SPM’s code and figure out what is wrong, because SPM itself doesn’t tell us what’s wrong. But <strong>line 25-26</strong> tells us that SPM has some issues with finding the appropriate files.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">For more information about Errors go to the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/index.html#support">Support section</a> of this beginner&#8217;s guide.</p>
+<p class="last">For more information about Errors go to the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/index.html#support">Support section</a> of this beginner’s guide.</p>
 </div>
 </div>
 </div>
 </div>
-
 
 
 
           </div>
         </div>
       </div>
-
-      <!-- Disqus message -->
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
-          /* * * DON'T EDIT BELOW THIS LINE * * */
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-              })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
       <div class="clearer"></div>
     </div>
     <div class="related">
@@ -1829,8 +1816,8 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on December 04, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
+      Last updated on July 16, 2018.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

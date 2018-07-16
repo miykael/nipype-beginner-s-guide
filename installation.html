@@ -151,18 +151,21 @@
         <div class="bodywrapper">
           <div class="body">
 
-            <!-- Disqus counter -->
             
-  <div class="section" id="download-and-install-nipype">
+  <div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+</div>
+<div class="section" id="download-and-install-nipype">
 <h1>Download and Install Nipype<a class="headerlink" href="#download-and-install-nipype" title="Permalink to this headline">¶</a></h1>
 <p>All you need to know to download and install Nipype can be found on the official homepage under <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/install.html">Download and Install</a>. There you find a link to the newest version and more information about which dependencies are necessary or recommended.</p>
-<p>Installing Nipype as described on the official homepage should be rather easy for most users. There are some tricky steps that sometimes seem to be less straight forward. But don&#8217;t worry, I&#8217;ve written my own installation guide to help and assist users with less UNIX experience. The following instructions hopefully help everybody to install and run Nipype on their system. Note that some steps strongly depend on the system you are using and it might be possible that some dependencies are already installed on your system. Also,</p>
+<p>Installing Nipype as described on the official homepage should be rather easy for most users. There are some tricky steps that sometimes seem to be less straight forward. But don’t worry, I’ve written my own installation guide to help and assist users with less UNIX experience. The following instructions hopefully help everybody to install and run Nipype on their system. Note that some steps strongly depend on the system you are using and it might be possible that some dependencies are already installed on your system. Also,</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">It is highly recommended to run Nipype on a machine with either a Mac or Linux OS, as most dependencies such as FSL or FreeSurfer don&#8217;t run on Windows. If you have a Windows machine, I recommend you to install <a class="reference external" href="http://www.ubuntu.com/download/desktop">Ubuntu</a> on your system.</p>
+<p class="last">It is highly recommended to run Nipype on a machine with either a Mac or Linux OS, as most dependencies such as FSL or FreeSurfer don’t run on Windows. If you have a Windows machine, I recommend you to install <a class="reference external" href="http://www.ubuntu.com/download/desktop">Ubuntu</a> on your system.</p>
 </div>
-<p>The following steps describe how I was able to set up and run Nipype on a System with a newly installed Ubuntu 14.04 LTS OS (64-bit), called &#8220;<cite>trusty</cite>&#8221;. To people with older Ubuntu version, don&#8217;t worry, Nipype does also run on much older versions, as long as they are not too ancient. To check which version of Ubuntu you are running use the command <code class="docutils literal"><span class="pre">lsb_release</span> <span class="pre">-d</span></code>. You don&#8217;t have to upgrade to version 14.04 if you have an older version as long as it isn&#8217;t too ancient.</p>
-<p><strong>To Mac Users</strong>: I haven&#8217;t installed Nipype on a Mac, yet. But the steps should be almost identical. If any major differences occur, please let me know.</p>
+<p>The following steps describe how I was able to set up and run Nipype on a System with a newly installed Ubuntu 14.04 LTS OS (64-bit), called “<cite>trusty</cite>”. To people with older Ubuntu version, don’t worry, Nipype does also run on much older versions, as long as they are not too ancient. To check which version of Ubuntu you are running use the command <code class="docutils literal"><span class="pre">lsb_release</span> <span class="pre">-d</span></code>. You don’t have to upgrade to version 14.04 if you have an older version as long as it isn’t too ancient.</p>
+<p><strong>To Mac Users</strong>: I haven’t installed Nipype on a Mac, yet. But the steps should be almost identical. If any major differences occur, please let me know.</p>
 <div class="section" id="prepare-your-system">
 <h2>Prepare your System<a class="headerlink" href="#prepare-your-system" title="Permalink to this headline">¶</a></h2>
 <p>Before we start, make sure that your Ubuntu system is up to date with the following command:</p>
@@ -177,7 +180,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 <p>As you can see under <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/install.html#recommended-software">Dependencies</a>, there are a lot of software packages that have to be installed on your system to run Nipype. For example: <cite>python</cite>, <cite>ipython</cite>, <cite>matplotlib</cite>, <cite>networkx</cite>, <cite>numpy</cite>, <cite>scipy</cite>, <cite>sphinx</cite> etc. Luckily, most of the those required dependencies, most importantly a working Python environment, can be set up by installing <a class="reference external" href="https://www.continuum.io/downloads">Anaconda</a>.</p>
 <div class="section" id="install-anaconda">
 <h3>Install Anaconda<a class="headerlink" href="#install-anaconda" title="Permalink to this headline">¶</a></h3>
-<p>Instructions on how to install Anaconda can be found on the <a class="reference external" href="http://docs.continuum.io/anaconda/install">official homepage</a>. Following are the steps how I&#8217;ve installed the Anaconda package on my system:</p>
+<p>Instructions on how to install Anaconda can be found on the <a class="reference external" href="http://docs.continuum.io/anaconda/install">official homepage</a>. Following are the steps how I’ve installed the Anaconda package on my system:</p>
 <ol class="arabic">
 <li><p class="first">Download the software under <a class="reference external" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a> and move the downloaded sh-file to your Download folder. In my case this folder is at <code class="docutils literal"><span class="pre">/home/username/Downloads</span></code> abbreviated with <code class="docutils literal"><span class="pre">~/Downloads</span></code>.</p>
 </li>
@@ -190,7 +193,7 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 </li>
 <li><p class="first">Specify the location of the installation (default is ok).</p>
 </li>
-<li><p class="first">Add the anaconda binary directory to your PATH environment variable. This path is automatically added if you answer the question <cite>&#8220;Do you wish the installer to prepend the Anaconda install location to PATH in your /home/username/.bashrc ? [yes|no]&#8221;</cite> with yes. Otherwise, add the following line to your <cite>.bashrc</cite> file:</p>
+<li><p class="first">Add the anaconda binary directory to your PATH environment variable. This path is automatically added if you answer the question <cite>“Do you wish the installer to prepend the Anaconda install location to PATH in your /home/username/.bashrc ? [yes|no]”</cite> with yes. Otherwise, add the following line to your <cite>.bashrc</cite> file:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/home/username/anaconda/bin:<span class="nv">$PATH</span>
 </pre></div>
@@ -216,14 +219,14 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">To update a software package in anaconda use the command &#8220;conda update packagename&#8221;. For example, if you want to update python use &#8220;conda update python&#8221;</p>
+<p class="last">To update a software package in anaconda use the command “conda update packagename”. For example, if you want to update python use “conda update python”</p>
 </div>
 </div>
 <div class="section" id="test-anaconda">
 <h3>Test Anaconda<a class="headerlink" href="#test-anaconda" title="Permalink to this headline">¶</a></h3>
-<p>Now that Anaconda is installed let&#8217;s test if our python environment is ready to run.</p>
+<p>Now that Anaconda is installed let’s test if our python environment is ready to run.</p>
 <ol class="arabic">
-<li><p class="first">Open a new terminal and type in the command <code class="docutils literal"><span class="pre">ipython</span></code>. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/links.html">support section</a> of this beginner&#8217;s guide.</p>
+<li><p class="first">Open a new terminal and type in the command <code class="docutils literal"><span class="pre">ipython</span></code>. This should bring you to the IPython environment. IPython is used to run all your python scripts. Fore more information about Python and IPython see the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/links.html">support section</a> of this beginner’s guide.</p>
 </li>
 <li><p class="first">To check if everything is set up correctly try to import numpy with the following command:</p>
 <blockquote>
@@ -241,9 +244,9 @@ sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get upgrade
 <a class="reference internal image-reference" href="_images/logoNeurodebian.png"><img alt="_images/logoNeurodebian.png" class="align-left" src="_images/logoNeurodebian.png" style="width: 70pt;" /></a>
 <p>To facilitate the installation of some necessary and recommended software packages such as FSL and Nipype itself, Debian and Ubuntu based system should install the <a class="reference external" href="http://neuro.debian.net/">NeuroDebian</a> repository. To see which software packages are included in NeuroDebian, go to <a class="reference external" href="http://www.nitrc.org/projects/neurodebian/">NITRCT - NeuroDebian</a>.</p>
 <ol class="arabic">
-<li><p class="first">To install NeuroDebian on your System go to the <a class="reference external" href="http://neuro.debian.net/#get-neurodebian">Get NeuroDebian</a> and select the operating system and the server you want to use. In my case, the operating system is <cite>&#8216;Ubuntu 14.04 &#8220;Trusty Tahr&#8221; (trusty)&#8217;</cite>. If you have an Ubuntu OS but don&#8217;t know which version, just type <cite>lsb_release -a</cite> in the terminal and it will show you.</p>
+<li><p class="first">To install NeuroDebian on your System go to the <a class="reference external" href="http://neuro.debian.net/#get-neurodebian">Get NeuroDebian</a> and select the operating system and the server you want to use. In my case, the operating system is <cite>‘Ubuntu 14.04 “Trusty Tahr” (trusty)’</cite>. If you have an Ubuntu OS but don’t know which version, just type <cite>lsb_release -a</cite> in the terminal and it will show you.</p>
 </li>
-<li><p class="first">Chose the option &#8220;All software&#8221;</p>
+<li><p class="first">Chose the option “All software”</p>
 </li>
 <li><p class="first">Now you should see two lines of command. In my case they were the following:</p>
 <blockquote>
@@ -268,7 +271,7 @@ sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
 <div class="section" id="install-nipype">
 <h3>Install Nipype<a class="headerlink" href="#install-nipype" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="_images/logoNipype.png"><img alt="_images/logoNipype.png" class="align-right" src="_images/logoNipype.png" style="width: 100pt;" /></a>
-<p>Finally, it&#8217;s time to install Nipype. There are multiple ways how you can install Nipype, but assuming that you installed anaconda beforehand, the easiest way to install Nipype is by using conda. To do this you need to add the channel <code class="docutils literal"><span class="pre">conda-forge</span></code> to your channels:</p>
+<p>Finally, it’s time to install Nipype. There are multiple ways how you can install Nipype, but assuming that you installed anaconda beforehand, the easiest way to install Nipype is by using conda. To do this you need to add the channel <code class="docutils literal"><span class="pre">conda-forge</span></code> to your channels:</p>
 <blockquote>
 <div><code class="docutils literal"><span class="pre">conda</span> <span class="pre">config</span> <span class="pre">--add</span> <span class="pre">channels</span> <span class="pre">conda-forge</span></code></div></blockquote>
 <p>Once the conda-forge channel has been enabled, nipype can be installed with:</p>
@@ -290,7 +293,7 @@ pip install --upgrade pygraphviz graphviz
 </div>
 <div class="section" id="test-nipype">
 <h3>Test Nipype<a class="headerlink" href="#test-nipype" title="Permalink to this headline">¶</a></h3>
-<p>To test if everything worked fine and if you&#8217;re able to use Nipype go into an IPython environment and import nipype with the command: <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype</span></code>. If you see no <cite>ImportError</cite> message, everything is set up correctly.</p>
+<p>To test if everything worked fine and if you’re able to use Nipype go into an IPython environment and import nipype with the command: <code class="docutils literal"><span class="pre">import</span> <span class="pre">nipype</span></code>. If you see no <cite>ImportError</cite> message, everything is set up correctly.</p>
 </div>
 <div class="section" id="upgrade-nipype-and-other-python-dependencies">
 <h3>Upgrade Nipype (and other python dependencies)<a class="headerlink" href="#upgrade-nipype-and-other-python-dependencies" title="Permalink to this headline">¶</a></h3>
@@ -305,8 +308,8 @@ pip install --upgrade pygraphviz graphviz
 </div>
 <div class="section" id="upgrade-nipype-to-the-developer-version">
 <h3>Upgrade Nipype to the developer version<a class="headerlink" href="#upgrade-nipype-to-the-developer-version" title="Permalink to this headline">¶</a></h3>
-<p>If you want or have to upgrade Nipype to the developer version us the following steps. Such an upgrade is only recommended to people who know what they are doing or need a certain fix that isn&#8217;t distributed yet in the general Nipype version.</p>
-<p>The most current developer version of Nipype can be found on <a class="reference external" href="https://github.com/">GitHub</a> under <a class="reference external" href="https://github.com/nipy/nipype">Nipype &#64; GitHub</a>. The following steps assume assume that you&#8217;ve already set up your own GitHub account and are ready to download the Nipype repository:</p>
+<p>If you want or have to upgrade Nipype to the developer version us the following steps. Such an upgrade is only recommended to people who know what they are doing or need a certain fix that isn’t distributed yet in the general Nipype version.</p>
+<p>The most current developer version of Nipype can be found on <a class="reference external" href="https://github.com/">GitHub</a> under <a class="reference external" href="https://github.com/nipy/nipype">Nipype &#64; GitHub</a>. The following steps assume assume that you’ve already set up your own GitHub account and are ready to download the Nipype repository:</p>
 <ol class="arabic">
 <li><p class="first">First, open a terminal and download the Nipype repository at the current location with <code class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/nipy/nipype.git</span></code>, or download the repository directly by using <a class="reference external" href="https://codeload.github.com/nipy/nipype/zip/master">this link</a>.</p>
 </li>
@@ -323,7 +326,7 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you haven&#8217;t set up a GitHub account yet but don&#8217;t know how to set everything up, see this link: <a class="reference external" href="https://help.github.com/articles/set-up-git">Set Up Git</a>.</p>
+<p class="last">If you haven’t set up a GitHub account yet but don’t know how to set everything up, see this link: <a class="reference external" href="https://help.github.com/articles/set-up-git">Set Up Git</a>.</p>
 </div>
 </div>
 </div>
@@ -335,8 +338,8 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 <div class="section" id="download-and-installation">
 <h3>Download and Installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="_images/logoFSL.jpg"><img alt="_images/logoFSL.jpg" class="align-left" src="_images/logoFSL.jpg" style="width: 70pt;" /></a>
-<p><a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/">FSL</a> is a comprehensive library of analysis tools for fMRI, MRI and DTI data. An overview of FSL&#8217;s tools can be found on their homepage under <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview">FSL Overview</a>.</p>
-<p>The installation of FSL is simple if you&#8217;ve already installed the NeuroDebian repository.</p>
+<p><a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/">FSL</a> is a comprehensive library of analysis tools for fMRI, MRI and DTI data. An overview of FSL’s tools can be found on their homepage under <a class="reference external" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslOverview">FSL Overview</a>.</p>
+<p>The installation of FSL is simple if you’ve already installed the NeuroDebian repository.</p>
 <p>Just run the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span>sudo apt-get install fsl
 </pre></div>
@@ -362,13 +365,13 @@ cp -R ~/Downloads/nipype/nipype ~/anaconda/lib/python2.7/site-packages/nipype
 <div class="section" id="freesurfer">
 <h2>FreeSurfer<a class="headerlink" href="#freesurfer" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoFreeSurfer.jpg"><img alt="_images/logoFreeSurfer.jpg" class="align-left" src="_images/logoFreeSurfer.jpg" style="height: 55pt;" /></a>
-<p><a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> is an open source software suite for processing and analyzing (human) brain MRI images. The installation of <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> includes abit more steps than the other installations, but the official <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">FreeSurfer: Download and Install</a> homepage is written very well and should get you through it without any problem. Nonetheless, following are the steps how I&#8217;ve installed FreeSurfer on my system.</p>
+<p><a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> is an open source software suite for processing and analyzing (human) brain MRI images. The installation of <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> includes abit more steps than the other installations, but the official <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">FreeSurfer: Download and Install</a> homepage is written very well and should get you through it without any problem. Nonetheless, following are the steps how I’ve installed FreeSurfer on my system.</p>
 <div class="section" id="id6">
 <h3>Download and Installation<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
 <li><p class="first">Go to <a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/Download">FreeSurfer: Download</a> and download the corresponding version for your system. In my case this was the <cite>Linux CentOS 6 x86_64 (64b) stable v5.3.0</cite> version. The file is called <code class="docutils literal"><span class="pre">freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0.tar.gz</span></code>.</p>
 </li>
-<li><p class="first">Unpack FreeSurfer&#8217;s binary folder to the place where you want the software to be at. In my case, I want to install FreeSurfer at <code class="docutils literal"><span class="pre">/usr/local/freesurfer</span></code>, which in my case needs root privilege. In my case this all can be done with the following command:</p>
+<li><p class="first">Unpack FreeSurfer’s binary folder to the place where you want the software to be at. In my case, I want to install FreeSurfer at <code class="docutils literal"><span class="pre">/usr/local/freesurfer</span></code>, which in my case needs root privilege. In my case this all can be done with the following command:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span></span>sudo tar xzvf <span class="se">\</span>
     ~/Downloads/freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0.tar.gz
@@ -432,7 +435,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 <div class="section" id="matlab">
 <h2>MATLAB<a class="headerlink" href="#matlab" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoMatlab.png"><img alt="_images/logoMatlab.png" class="align-left" src="_images/logoMatlab.png" style="width: 70pt;" /></a>
-<p>Nowadays almost all scientific fields take advantage of <a class="reference external" href="http://www.mathworks.com/">MATLAB</a>. Neuroscience is no exception in this and also some of Nipype&#8217;s recommended interfaces can (but don&#8217;t have to) take advantage of MATLAB, e.g. SPM, FSL, FreeSurfer.</p>
+<p>Nowadays almost all scientific fields take advantage of <a class="reference external" href="http://www.mathworks.com/">MATLAB</a>. Neuroscience is no exception in this and also some of Nipype’s recommended interfaces can (but don’t have to) take advantage of MATLAB, e.g. SPM, FSL, FreeSurfer.</p>
 <p>Having MATLAB is always a good thing, and as I myself rely often on algorithms from the <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a> interface, I need it to be on my system. A detailed documentation on how to install MATLAB can be found <a class="reference external" href="http://www.mathworks.com/help/">here</a>. In my case, MATLAB is installed at the following location: <code class="docutils literal"><span class="pre">/usr/local/MATLAB/R2014a</span></code>.</p>
 <p>The only thing you need to do to run MATLAB on your Ubuntu System is to add the following lines to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span><span class="c1">#MATLAB</span>
@@ -440,29 +443,29 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 <span class="nb">export</span> <span class="nv">MATLABCMD</span><span class="o">=</span>/usr/local/MATLAB/R2014a/bin/glnxa64/MATLAB
 </pre></div>
 </div>
-<p>To test if everything is set up correctly. Open a new Terminal and type in the command: &#8220;matlab&#8221;.</p>
+<p>To test if everything is set up correctly. Open a new Terminal and type in the command: “matlab”.</p>
 </div>
 <div class="section" id="spm12">
 <h2>SPM12<a class="headerlink" href="#spm12" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoSPM12.png"><img alt="_images/logoSPM12.png" class="align-right" src="_images/logoSPM12.png" style="width: 80pt;" /></a>
 <p><a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/">SPM</a> stands for Statistical Parametric Mapping and is probably one of the most widely-used neuroimaging analysis software package worldwide. SPM is based on MATLAB and therefore needs it to be installed on your system. Luckily, the previous step just made that sure.</p>
-<p>As of 1st October 2014, SPM released it&#8217;s newest version <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a>. The <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf">Release Notes</a> mention some important updates and I therefore recommend to use <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a> instead of <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm8/">SPM8</a>. Nonetheless, Nipype has no issue with either <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm8/">SPM8</a> or <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a>. Therefore, you can install the version that you prefer.</p>
+<p>As of 1st October 2014, SPM released it’s newest version <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a>. The <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/SPM12_Release_Notes.pdf">Release Notes</a> mention some important updates and I therefore recommend to use <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a> instead of <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm8/">SPM8</a>. Nonetheless, Nipype has no issue with either <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm8/">SPM8</a> or <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a>. Therefore, you can install the version that you prefer.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">There is a standalone version of SPM available that doesn&#8217;t need MATLAB, but so far it isn&#8217;t recommended as a lot of additional toolboxes don&#8217;t work with the standalone, yet. For more information go on the <a class="reference external" href="https://en.wikibooks.org/wiki/SPM/Standalone">SPM wikipage</a>.</p>
+<p class="last">There is a standalone version of SPM available that doesn’t need MATLAB, but so far it isn’t recommended as a lot of additional toolboxes don’t work with the standalone, yet. For more information go on the <a class="reference external" href="https://en.wikibooks.org/wiki/SPM/Standalone">SPM wikipage</a>.</p>
 </div>
 <div class="section" id="id13">
 <h3>Download and Installation<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>To download and install the newest version <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/spm12/">SPM12</a> do as follows:</p>
 <ol class="arabic">
-<li><p class="first">Got to SPM12&#8217;s <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/download/">Download and registration</a> page and fill out the form. Under <strong>Select SPM version required</strong>, chose SPM12 (or SPM8 if preferred) and download the zip file.</p>
+<li><p class="first">Got to SPM12’s <a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/software/download/">Download and registration</a> page and fill out the form. Under <strong>Select SPM version required</strong>, chose SPM12 (or SPM8 if preferred) and download the zip file.</p>
 </li>
 <li><p class="first">Now, unpack the zip file and copy the content to the recommended folder <code class="docutils literal"><span class="pre">/usr/local/MATLAB/R2014a/toolbox/</span></code> use the following code:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span></span>sudo unzip ~/Downloads/spm12.zip -d /usr/local/MATLAB/R2014a/toolbox/
 </pre></div>
 </div>
-<p><strong>Note:</strong> You don&#8217;t have to put the spm12 folder into this folder, just make sure that you tell your system where to find it.</p>
+<p><strong>Note:</strong> You don’t have to put the spm12 folder into this folder, just make sure that you tell your system where to find it.</p>
 </div></blockquote>
 </li>
 <li><p class="first">Now tell your system where it can find SPM12 by adding the following line to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file:</p>
@@ -473,7 +476,7 @@ sudo ln -s libtiff.so.4 libtiff.so.3
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Now, set up your MATLAB <code class="docutils literal"><span class="pre">startup.m</span></code> script so that MATLAB knows where SPM12 is stored at. If you&#8217;ve already installed FreeSurfer, than the <code class="docutils literal"><span class="pre">startup.m</span></code> file should be at <code class="docutils literal"><span class="pre">~/matlab/startup.m</span></code>. Otherwise create it and save it at this location. Now add the following code to this file:</p>
+<li><p class="first">Now, set up your MATLAB <code class="docutils literal"><span class="pre">startup.m</span></code> script so that MATLAB knows where SPM12 is stored at. If you’ve already installed FreeSurfer, than the <code class="docutils literal"><span class="pre">startup.m</span></code> file should be at <code class="docutils literal"><span class="pre">~/matlab/startup.m</span></code>. Otherwise create it and save it at this location. Now add the following code to this file:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span></span>%-SPM12-
 <span class="nv">spm_path</span> <span class="o">=</span> getenv<span class="o">(</span><span class="s1">&#39;SPM_PATH&#39;</span><span class="o">)</span><span class="p">;</span>
@@ -505,7 +508,7 @@ end
 <a class="reference internal image-reference" href="_images/logoANTS.png"><img alt="_images/logoANTS.png" class="align-left" src="_images/logoANTS.png" style="width: 70pt;" /></a>
 <p><a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> stands for Advanced Normalization Tools and is a great software package for registration, segmentation and normalization of MRI data. I highly recommend to use ANTs for the normalization of your data. <strong>Side note</strong>: ANTs can also be used to create a very cool looking average brain (template) out of a your own population of subjects.</p>
 <p>There are two ways how you can set up ANTS on your own system:</p>
-<p>The <strong>first</strong> way is very fast and simple. Just download the newest release of ANTs from their <a class="reference external" href="https://github.com/stnava/ANTs/releases">official github homepage</a>. Decompress the downloaded files and store them somewhere on your system, e.g. under <code class="docutils literal"><span class="pre">/usr/local/antsbin</span></code>. After you&#8217;ve done that, just add the following line to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file so that your system knows where to find the ANTs binaries:</p>
+<p>The <strong>first</strong> way is very fast and simple. Just download the newest release of ANTs from their <a class="reference external" href="https://github.com/stnava/ANTs/releases">official github homepage</a>. Decompress the downloaded files and store them somewhere on your system, e.g. under <code class="docutils literal"><span class="pre">/usr/local/antsbin</span></code>. After you’ve done that, just add the following line to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file so that your system knows where to find the ANTs binaries:</p>
 <blockquote>
 <div><div class="highlight-sh"><div class="highlight"><pre><span></span><span class="c1">#ANTs</span>
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/usr/local/antsbin/bin:<span class="nv">$PATH</span>
@@ -515,7 +518,7 @@ end
 </div></blockquote>
 <p>The <strong>second</strong> way to get ANTs on your system takes a bit longer, but guarantees that you have the newest version of ANTs, specifically compiled for your system. Do as follows:</p>
 <ol class="arabic">
-<li><p class="first">Download the data from the official homepage <a class="reference external" href="http://stnava.github.io/ANTs/">http://stnava.github.io/ANTs/</a>. I chose the &#8220;Download TAR Ball&#8221; option.</p>
+<li><p class="first">Download the data from the official homepage <a class="reference external" href="http://stnava.github.io/ANTs/">http://stnava.github.io/ANTs/</a>. I chose the “Download TAR Ball” option.</p>
 </li>
 <li><p class="first">Unpack the just downloaded files to a subfolder in your download folder (or wherever you want) with the following command:</p>
 <blockquote>
@@ -578,7 +581,7 @@ sudo cp ~/Downloads/stnava-ANTs-b4eb279/Scripts/* /usr/local/antsbin/bin/
 <h2>AFNI<a class="headerlink" href="#afni" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/logoAFNI.png"><img alt="_images/logoAFNI.png" class="align-left" src="_images/logoAFNI.png" style="width: 70pt;" /></a>
 <p><a class="reference external" href="https://afni.nimh.nih.gov/afni/">AFNI</a> is an open source software package specialized on the analysis of functional MRI. To see a list of all AFNI algorithms that can be used with Nipype go to <a class="reference external" href="http://nipype.readthedocs.io/en/latest/interfaces/generated/nipype.interfaces.afni.preprocess.html">interfaces.afni.preprocess</a>.</p>
-<p>If you&#8217;ve installed the NeuroDebian repository, just use the following command to install AFNI on your system: <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">afni</span></code></p>
+<p>If you’ve installed the NeuroDebian repository, just use the following command to install AFNI on your system: <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">afni</span></code></p>
 <p>To be able to run AFNI make sure to add the following lines of code to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file:</p>
 <div class="highlight-sh"><div class="highlight"><pre><span></span><span class="c1">#AFNI</span>
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/usr/lib/afni/bin:<span class="nv">$PATH</span>
@@ -587,7 +590,7 @@ sudo cp ~/Downloads/stnava-ANTs-b4eb279/Scripts/* /usr/local/antsbin/bin/
 </div>
 <div class="section" id="additional-interfaces">
 <h2>Additional interfaces<a class="headerlink" href="#additional-interfaces" title="Permalink to this headline">¶</a></h2>
-<p>There are many additional interfaces, such as <a class="reference external" href="http://camino.cs.ucl.ac.uk/">Camino</a>, <a class="reference external" href="http://www.brain.org.au/software/mrtrix/index.html">MRtrix</a>, <a class="reference external" href="http://slicer.org/">Slicer</a>, <a class="reference external" href="http://www.connectomics.org/viewer/">ConnectomeViewer</a>, for which I haven&#8217;t created an installation guide yet. This is also due to my lack of knowledge about them. Feel free to help me to complete this list.</p>
+<p>There are many additional interfaces, such as <a class="reference external" href="http://camino.cs.ucl.ac.uk/">Camino</a>, <a class="reference external" href="http://www.brain.org.au/software/mrtrix/index.html">MRtrix</a>, <a class="reference external" href="http://slicer.org/">Slicer</a>, <a class="reference external" href="http://www.connectomics.org/viewer/">ConnectomeViewer</a>, for which I haven’t created an installation guide yet. This is also due to my lack of knowledge about them. Feel free to help me to complete this list.</p>
 </div>
 </div>
 <div class="section" id="clean-up-your-system">
@@ -627,7 +630,7 @@ sudo apt-get remove <span class="o">&amp;&amp;</span> sudo apt-get clean
 <span class="n">Out</span><span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">nose</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">TextTestResult</span> <span class="n">run</span><span class="o">=</span><span class="mi">7454</span> <span class="n">errors</span><span class="o">=</span><span class="mi">0</span> <span class="n">failures</span><span class="o">=</span><span class="mi">0</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>Don&#8217;t worry if some modules are being skipped or some side modules show up as errors or failures during the run. As long as no main modules cause any problems, you&#8217;re fine. The number of tests and time will vary depending on which interfaces you have installed on your system. But if you receive an <code class="docutils literal"><span class="pre">OK</span></code>, <code class="docutils literal"><span class="pre">errors=0</span></code> and <code class="docutils literal"><span class="pre">failures=0</span></code> then everything is ready.</p>
+<p>Don’t worry if some modules are being skipped or some side modules show up as errors or failures during the run. As long as no main modules cause any problems, you’re fine. The number of tests and time will vary depending on which interfaces you have installed on your system. But if you receive an <code class="docutils literal"><span class="pre">OK</span></code>, <code class="docutils literal"><span class="pre">errors=0</span></code> and <code class="docutils literal"><span class="pre">failures=0</span></code> then everything is ready.</p>
 <p><strong>Congratulation! You now have a system with a fully working Nipype environment. Have fun!</strong></p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -643,7 +646,7 @@ Interface MatlabCommand failed to run.
 Interface SliceTiming failed to run.
 </pre></div>
 </div>
-<p>As mentioned in the error message <cite>SPM not in matlab path</cite>, Nipype can&#8217;t find the path to SPM. To change that, you can either add <code class="docutils literal"><span class="pre">addpath</span> <span class="pre">/usr/local/MATLAB/R2014a/toolbox/spm12b</span></code> to your <code class="docutils literal"><span class="pre">startup.m</span></code> file, stored at <code class="docutils literal"><span class="pre">~/matlab/startup.m</span></code> or add the following line of code at the beginning of your Nipype script:</p>
+<p>As mentioned in the error message <cite>SPM not in matlab path</cite>, Nipype can’t find the path to SPM. To change that, you can either add <code class="docutils literal"><span class="pre">addpath</span> <span class="pre">/usr/local/MATLAB/R2014a/toolbox/spm12b</span></code> to your <code class="docutils literal"><span class="pre">startup.m</span></code> file, stored at <code class="docutils literal"><span class="pre">~/matlab/startup.m</span></code> or add the following line of code at the beginning of your Nipype script:</p>
 <blockquote class="last">
 <div><div class="highlight-py"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nipype.interfaces.matlab</span> <span class="kn">import</span> <span class="n">MatlabCommand</span>
 <span class="n">MatlabCommand</span><span class="o">.</span><span class="n">set_default_paths</span><span class="p">(</span><span class="s1">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12b&#39;</span><span class="p">)</span>
@@ -655,25 +658,9 @@ Interface SliceTiming failed to run.
 
 
 
-
           </div>
         </div>
       </div>
-
-      <!-- Disqus message -->
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-          var disqus_shortname = 'nipypebeginnersguide'; // required: replace example with your forum shortname
-          /* * * DON'T EDIT BELOW THIS LINE * * */
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-              })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
       <div class="clearer"></div>
     </div>
     <div class="related">
@@ -697,8 +684,8 @@ Interface SliceTiming failed to run.
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on December 04, 2017.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.6.
+      Last updated on July 16, 2018.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.
