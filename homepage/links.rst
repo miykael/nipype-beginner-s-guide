@@ -54,6 +54,8 @@ Learn Programming
 
 - If you want to learn more about other programming languages such as HTML & CSS, Javascript, jQuery, PHP, Python and Ruby, check out  `Beginner’s Resources to Learn Programming Languages <https://www.vodien.com/blog/education/beginners-resources-to-learn-programming-languages.php>`_. A big thank you to Mr. Tom Coner and his group for recommending the site to me. It's a great starting point to dive into any programming language.
 
+- A great resource to better understand many programming and coding related words can be found on `Software Programming and Coding Glossary for Kids <https://www.smartadvocate.com/News/Blog/software-programming-and-coding-glossary-for-kids>`_. A big thanks to Katie and the Lyndhurst STEM Club for Girls for sharing this resource with me! The glossary gives a great overview of many important concepts and the homepage includes tons of other games and practice websites to play with.
+
 
 Neuroimaging
 ============
