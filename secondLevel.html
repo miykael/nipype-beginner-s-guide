@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -73,7 +75,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How To Build A Pipeline For A Second Level fMRI Analysis</a><ul>
 <li><a class="reference internal" href="#write-your-pipeline-script">Write your pipeline script</a><ul>
@@ -98,15 +100,15 @@
   <p class="topless"><a href="help.html"
                         title="next chapter">Help &amp; Support</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -123,22 +125,22 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="how-to-build-a-pipeline-for-a-second-level-fmri-analysis">
 <h1>How To Build A Pipeline For A Second Level fMRI Analysis<a class="headerlink" href="#how-to-build-a-pipeline-for-a-second-level-fmri-analysis" title="Permalink to this headline">¶</a></h1>
 <p>In this section you will learn how to create a workflow that does a <strong>second level analysis</strong> on fMRI data. There are again multiple ways how you can do this, but the most simple on is to check if your contrasts from the first level analysis are still significant on the group-level a.k.a. the 2nd level.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You can only do a <strong>second level analysis</strong> if you already have done a first level analysis, obviously! But more importantly, those first level contrasts have to be in a common reference space. Otherwise there is now way of actually comparing them with each other and getting a valid results from them. Luckily, if you’ve done the previous step, you’ve already normalized your data (either with ANTs or SPM) to a template.</p>
+<p class="admonition-title">Note</p>
+<p>You can only do a <strong>second level analysis</strong> if you already have done a first level analysis, obviously! But more importantly, those first level contrasts have to be in a common reference space. Otherwise there is now way of actually comparing them with each other and getting a valid results from them. Luckily, if you’ve done the previous step, you’ve already normalized your data (either with ANTs or SPM) to a template.</p>
 </div>
 <div class="section" id="write-your-pipeline-script">
 <h2>Write your pipeline script<a class="headerlink" href="#write-your-pipeline-script" title="Permalink to this headline">¶</a></h2>
 <p>If you’ve already done the previous sections, you know how this works. We first import necessary modules, define experiment specific parameters, create nodes, create a workflow and connect the nodes to it, we create an I/O stream and connect it to the workflow and finally run this workflow.</p>
 <div class="section" id="import-modules-and-specify-interface-behaviors">
 <h3>Import modules and specify interface behaviors<a class="headerlink" href="#import-modules-and-specify-interface-behaviors" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -164,7 +166,7 @@
 </div>
 <div class="section" id="define-experiment-specific-parameters">
 <h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -186,14 +188,14 @@
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Pay attention to the name of the <code class="docutils literal"><span class="pre">input_dir_norm</span></code>. Depending on the way you normalized your data, ANTs or SPM, the folder name has either the ending <code class="docutils literal"><span class="pre">_ants</span></code> or <code class="docutils literal"><span class="pre">_spm</span></code>.</p>
+<p class="admonition-title">Note</p>
+<p>Pay attention to the name of the <code class="docutils literal notranslate"><span class="pre">input_dir_norm</span></code>. Depending on the way you normalized your data, ANTs or SPM, the folder name has either the ending <code class="docutils literal notranslate"><span class="pre">_ants</span></code> or <code class="docutils literal notranslate"><span class="pre">_spm</span></code>.</p>
 </div>
 </div>
 <div class="section" id="create-nodes">
 <h3>Create nodes<a class="headerlink" href="#create-nodes" title="Permalink to this headline">¶</a></h3>
 <p>We don’t need many nodes for a simple second level analysis. In fact they are the same as the ones we used for the first level analysis. We create a simple T-Test, estimate it and look at a simple mean contrast, i.e. a contrast that shows what the group mean activation of a certain first level contrast is.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -214,7 +216,7 @@
                       <span class="n">name</span><span class="o">=</span><span class="s2">&quot;level2estimate&quot;</span><span class="p">)</span>
 
 <span class="c1"># EstimateContrast - estimates simple group contrast</span>
-<span class="n">level2conestimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateContrast</span><span class="p">(</span><span class="n">group_contrast</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+<span class="n">level2conestimate</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">EstimateContrast</span><span class="p">(</span><span class="n">group_contrast</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                          <span class="n">name</span><span class="o">=</span><span class="s2">&quot;level2conestimate&quot;</span><span class="p">)</span>
 <span class="n">cont1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
 <span class="n">level2conestimate</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">contrasts</span> <span class="o">=</span> <span class="p">[</span><span class="n">cont1</span><span class="p">]</span>
@@ -223,7 +225,7 @@
 </div>
 <div class="section" id="create-the-pipeline-and-connect-nodes-to-it">
 <h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#create-the-pipeline-and-connect-nodes-to-it" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -255,8 +257,8 @@
 </div>
 <div class="section" id="establish-input-output-stream">
 <h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">¶</a></h3>
-<p>The creation of the I/O stream is as usual. But because I showed you three ways to normalize your data in the previous section, be aware that you have to point the <code class="docutils literal"><span class="pre">SelectFiles</span></code> node to the right input folder. Your option for the <code class="docutils literal"><span class="pre">SelectFiles</span></code> input template are as follows:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>The creation of the I/O stream is as usual. But because I showed you three ways to normalize your data in the previous section, be aware that you have to point the <code class="docutils literal notranslate"><span class="pre">SelectFiles</span></code> node to the right input folder. Your option for the <code class="docutils literal notranslate"><span class="pre">SelectFiles</span></code> input template are as follows:</p>
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -268,23 +270,23 @@
 10
 11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># contrast template for ANTs normalization (complete)</span>
 <span class="n">con_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_norm</span><span class="p">,</span> <span class="s1">&#39;warp_complete&#39;</span><span class="p">,</span> <span class="s1">&#39;sub*&#39;</span><span class="p">,</span> <span class="s1">&#39;warpall*&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;{contrast_id}_trans.nii&#39;</span><span class="p">)</span>
+               <span class="s1">&#39;</span><span class="si">{contrast_id}</span><span class="s1">_trans.nii&#39;</span><span class="p">)</span>
 
 <span class="c1"># contrast template for ANTs normalization (partial)</span>
 <span class="n">con_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_norm</span><span class="p">,</span> <span class="s1">&#39;warp_partial&#39;</span><span class="p">,</span> <span class="s1">&#39;sub*&#39;</span><span class="p">,</span> <span class="s1">&#39;apply2con*&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;{contrast_id}_out_trans.nii.gz&#39;</span><span class="p">)</span>
+               <span class="s1">&#39;</span><span class="si">{contrast_id}</span><span class="s1">_out_trans.nii.gz&#39;</span><span class="p">)</span>
 
 <span class="c1"># contrast template for SPM normalization</span>
 <span class="n">con_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_norm</span><span class="p">,</span> <span class="s1">&#39;normalized&#39;</span><span class="p">,</span> <span class="s1">&#39;sub*&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;*{contrast_id}_out.nii&#39;</span><span class="p">)</span>
+               <span class="s1">&#39;*</span><span class="si">{contrast_id}</span><span class="s1">_out.nii&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It is very important to notice that only contrast images (e.g. <code class="docutils literal"><span class="pre">con</span></code>-images) can be used for a second-level group analysis. It is statistically incorrect to use statistic images, such as <code class="docutils literal"><span class="pre">spmT</span></code>- or <code class="docutils literal"><span class="pre">spmF</span></code>-images.</p>
+<p class="admonition-title">Note</p>
+<p>It is very important to notice that only contrast images (e.g. <code class="docutils literal notranslate"><span class="pre">con</span></code>-images) can be used for a second-level group analysis. It is statistically incorrect to use statistic images, such as <code class="docutils literal notranslate"><span class="pre">spmT</span></code>- or <code class="docutils literal notranslate"><span class="pre">spmF</span></code>-images.</p>
 </div>
 <p>The following example is adjusted for the situation where the normalization was done with ANTs. The code for the I/O stream looks as follows:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -324,7 +326,7 @@
 
 <span class="c1"># SelectFiles - to grab the data (alternative to DataGrabber)</span>
 <span class="n">con_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_norm</span><span class="p">,</span> <span class="s1">&#39;warp_complete&#39;</span><span class="p">,</span> <span class="s1">&#39;sub*&#39;</span><span class="p">,</span> <span class="s1">&#39;warpall*&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;{contrast_id}_trans.nii&#39;</span><span class="p">)</span>
+               <span class="s1">&#39;</span><span class="si">{contrast_id}</span><span class="s1">_trans.nii&#39;</span><span class="p">)</span>
 <span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cons&#39;</span><span class="p">:</span> <span class="n">con_file</span><span class="p">}</span>
 
 <span class="n">selectfiles</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">SelectFiles</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span>
@@ -354,25 +356,25 @@
 </pre></div>
 </td></tr></table></div>
 <p>If you’ve normalized your data with ANTs but did only the so called <strong>partial</strong> approach, the code above will not work and crash with the following message:</p>
-<div class="highlight-matlab"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-matlab notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Item</span> <span class="s">&#39;Scans&#39;</span><span class="p">,</span> <span class="n">field</span> <span class="s">&#39;val&#39;</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">matching</span> <span class="n">files</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">less</span> <span class="n">than</span> <span class="n">required</span> <span class="p">(</span><span class="mi">1</span><span class="p">).</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Item</span> <span class="s">&#39;Scans&#39;,</span> <span class="s">field</span> <span class="s">&#39;val&#39;:</span> <span class="s">Number</span> <span class="s">of</span> <span class="s">matching</span> <span class="s">files</span> <span class="s">(0)</span> <span class="s">less</span> <span class="s">than</span> <span class="s">required</span> <span class="s">(1).</span>
 
-<span class="n">Standard</span> <span class="n">error</span><span class="p">:</span>
-<span class="n">MATLAB</span> <span class="n">code</span> <span class="n">threw</span> <span class="n">an</span> <span class="n">exception</span><span class="p">:</span>
-<span class="c">...</span>
+<span class="n">Standard</span> <span class="s">error:</span>
+<span class="n">MATLAB</span> <span class="s">code</span> <span class="s">threw</span> <span class="s">an</span> <span class="s">exception:</span>
+<span class="k">...</span>
 <span class="n">Name</span><span class="p">:</span><span class="n">pyscript_onesamplettestdesign</span>
-<span class="c">...</span>
-<span class="n">Interface</span> <span class="n">OneSampleTTestDesign</span> <span class="n">failed</span> <span class="n">to</span> <span class="n">run</span><span class="p">.</span>
+<span class="k">...</span>
+<span class="n">Interface</span> <span class="s">OneSampleTTestDesign</span> <span class="s">failed</span> <span class="s">to</span> <span class="s">run.</span>
 </pre></div>
 </td></tr></table></div>
-<p>Such errors are sometimes hard to read. What this message means is that SPM’s <code class="docutils literal"><span class="pre">onesamplettestdes</span></code> tried to open an image-file but was only able to read out 0 scans, of the requested at least 1. This is a common message where SPM tries to read a zipped NIfTI file (ending with <code class="docutils literal"><span class="pre">nii.gz</span></code>) and cannot unpack it. To solve this issue we only need to insert an additional <code class="docutils literal"><span class="pre">Gunzip</span></code> node in our pipeline and redirect the workflow through this new gunzip node before it goes to the <code class="docutils literal"><span class="pre">onesamplettestdes</span></code> node. So the new code looks as follows:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>Such errors are sometimes hard to read. What this message means is that SPM’s <code class="docutils literal notranslate"><span class="pre">onesamplettestdes</span></code> tried to open an image-file but was only able to read out 0 scans, of the requested at least 1. This is a common message where SPM tries to read a zipped NIfTI file (ending with <code class="docutils literal notranslate"><span class="pre">nii.gz</span></code>) and cannot unpack it. To solve this issue we only need to insert an additional <code class="docutils literal notranslate"><span class="pre">Gunzip</span></code> node in our pipeline and redirect the workflow through this new gunzip node before it goes to the <code class="docutils literal notranslate"><span class="pre">onesamplettestdes</span></code> node. So the new code looks as follows:</p>
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -414,14 +416,14 @@
 </div>
 <div class="section" id="run-the-pipeline-and-generate-the-graph">
 <h3>Run the pipeline and generate the graph<a class="headerlink" href="#run-the-pipeline-and-generate-the-graph" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">l2analysis</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">l2analysis</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">You can download the code for this 2nd level pipeline as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_3_second_level.py">example_fMRI_3_second_level.py</a></p>
+<p class="admonition-title">Hint</p>
+<p>You can download the code for this 2nd level pipeline as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_3_second_level.py">example_fMRI_3_second_level.py</a></p>
 </div>
 </div>
 </div>
@@ -433,7 +435,7 @@
 <div class="section" id="resulting-folder-structure">
 <h2>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h2>
 <p>The resulting folder structure looks as follows:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>output_fMRI_example_2nd
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>output_fMRI_example_2nd
 <span class="p">|</span>-- contrasts
     <span class="p">|</span>-- con_0001
     <span class="p">|</span>   <span class="p">|</span>-- con_0001.nii
@@ -480,8 +482,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -73,7 +75,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Introduction to Nipype</a><ul>
 <li><a class="reference internal" href="#what-is-nipype">What is Nipype?</a></li>
@@ -95,15 +97,15 @@
   <p class="topless"><a href="neuroimaging.html"
                         title="next chapter">Introduction to Neuroimaging</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -120,8 +122,8 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="introduction-to-nipype">
 <h1>Introduction to Nipype<a class="headerlink" href="#introduction-to-nipype" title="Permalink to this headline">¶</a></h1>
@@ -137,7 +139,7 @@
 <h2>A Short Example<a class="headerlink" href="#a-short-example" title="Permalink to this headline">¶</a></h2>
 <p>Let’s assume you want to do an Analysis that uses <strong>AFNI</strong> for the <em>Motion Correction</em>, <strong>FreeSurfer</strong> for the <em>Coregistration</em>, <strong>ANTS</strong> for the <em>Normalization</em>, <strong>FSL</strong> for the <em>Smoothing</em>, <strong>Nipype</strong> for the <em>Model Specification</em>, <strong>SPM</strong> for the <em>Model Estimation</em> and <strong>SPM</strong> for the <em>Statistical Inference</em>. Normally this would be a hell of a mess. Switching between multiple scripts in different programming languages with a lot of manual intervention. On top of all that, you want to do your analysis on multiple subjects, preferably as fast as possible, i.e., processing several subjects in parallel. With Nipype, this is no problem! You can do all this and much more.</p>
 <p>To illustrate the straightforwardness of an Nipype workflow and show how simply it can be created, look at the following example. This figure shows you a simplification of the analysis <em>workflow</em> just outlined.</p>
-<img src="_images/graphviz-8c87dc5ea0a1dce0a37ee2563f6812ca965fe8d1.png" alt="strict digraph  {
+<div class="graphviz"><img src="_images/graphviz-15f3e6984796a80f0e02d6da4a457b70ba79e8d4.png" alt="strict digraph  {
 
     dataset[label=&quot;rawdata&quot;, shape=box3d,style=filled, color=black, colorscheme=greys7 fillcolor=2];
     datastorage[label=&quot;output&quot;, shape=box3d,style=filled, color=black, colorscheme=greys7 fillcolor=2];
@@ -192,9 +194,9 @@
     stat2 -&gt; datastorage;
     stat3 -&gt; datastorage;
 
-}" />
+}" class="graphviz" /></div>
 <p>The code to create an Nipype workflow that specifies the steps illustrated in the figure above and can run all the steps would look something like this:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -272,12 +274,12 @@
 76
 77</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#Import modules</span>
 <span class="kn">import</span> <span class="nn">nipype</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.afni</span>        <span class="kn">as</span> <span class="nn">afni</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span>  <span class="kn">as</span> <span class="nn">fs</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.ants</span>        <span class="kn">as</span> <span class="nn">ants</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.fsl</span>         <span class="kn">as</span> <span class="nn">fsl</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.nipy</span>        <span class="kn">as</span> <span class="nn">nipy</span>
-<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span>         <span class="kn">as</span> <span class="nn">spm</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.afni</span>        <span class="k">as</span> <span class="nn">afni</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.freesurfer</span>  <span class="k">as</span> <span class="nn">fs</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.ants</span>        <span class="k">as</span> <span class="nn">ants</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.fsl</span>         <span class="k">as</span> <span class="nn">fsl</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.nipy</span>        <span class="k">as</span> <span class="nn">nipy</span>
+<span class="kn">import</span> <span class="nn">nipype.interfaces.spm</span>         <span class="k">as</span> <span class="nn">spm</span>
 
 
 <span class="c1">#Specify experiment specifc parameters</span>
@@ -326,7 +328,7 @@
 
 <span class="c1">#Statistical Inference (SPM)</span>
 <span class="n">threshold</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">Threshold</span><span class="p">()</span>
-<span class="n">threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_fwe_correction</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_fwe_correction</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">threshold</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extent_fdr_p_threshold</span> <span class="o">=</span> <span class="mf">0.05</span>
 
 
@@ -351,8 +353,8 @@
 </td></tr></table></div>
 <p>By using <em>multicore processing</em>, <em>SGE</em>, <em>PBS</em>, <em>Torque</em>, <em>HTCondor</em>, <em>LSF</em> or other plugins for parallel execution you will be able to reduce your computation time considerably. This means, that an analysis of 24 subjects where each takes one hour to process would normally take about one day, but it could be done on a single machine with eight processors in under about three hours.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The code above is of course a shortened and simplified version of the real code. But it gives you a good idea of what the code would look like, and how straightforward and readable the programming of a neuroimaging pipeline with Nipype is.</p>
+<p class="admonition-title">Note</p>
+<p>The code above is of course a shortened and simplified version of the real code. But it gives you a good idea of what the code would look like, and how straightforward and readable the programming of a neuroimaging pipeline with Nipype is.</p>
 </div>
 </div>
 <div class="section" id="nipype-s-architecture">
@@ -360,8 +362,8 @@
 <p>Nipype consists of many parts, but the most important ones are <strong>Interfaces</strong>, the <strong>Workflow Engine</strong> and the <strong>Execution Plugins</strong>.</p>
 <img alt="_images/architecture.png" class="align-center" src="_images/architecture.png" />
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For a deeper understanding of Nipype go either to <a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype’s main homepage</a> or read the official paper: Gorgolewski K, Burns CD, Madison C, Clark D, Halchenko YO, Waskom ML, Ghosh SS (2011) <strong>Nipype: a flexible, lightweight and extensible neuroimaging data processing framework in Python.</strong> <em>Front. Neuroinform. 5:13</em>. <a class="reference external" href="http://journal.frontiersin.org/article/10.3389/fninf.2011.00013/abstract">http://dx.doi.org/10.3389/fninf.2011.00013</a></p>
+<p class="admonition-title">Note</p>
+<p>For a deeper understanding of Nipype go either to <a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype’s main homepage</a> or read the official paper: Gorgolewski K, Burns CD, Madison C, Clark D, Halchenko YO, Waskom ML, Ghosh SS (2011) <strong>Nipype: a flexible, lightweight and extensible neuroimaging data processing framework in Python.</strong> <em>Front. Neuroinform. 5:13</em>. <a class="reference external" href="http://journal.frontiersin.org/article/10.3389/fninf.2011.00013/abstract">http://dx.doi.org/10.3389/fninf.2011.00013</a></p>
 </div>
 <div class="section" id="interfaces">
 <h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h3>
@@ -372,16 +374,16 @@
 <h3>Workflow Engine<a class="headerlink" href="#workflow-engine" title="Permalink to this headline">¶</a></h3>
 <p>The core of Nipype’s architecture is the workflow engine. It consists of <strong>Nodes</strong>, <strong>MapNodes</strong> and <strong>Workflows</strong>, which can be interconnected in various ways.</p>
 <ul class="simple">
-<li><strong>Node</strong>: A node provides the information – parameters, filenames, etc. – that is needed by an interface to run the program properly for a particular job, whether as part of a workflow or separately.</li>
-<li><strong>MapNode</strong>: A Mapnode is quite similar to a Node, but it differs because it takes multiple inputs of a single type to create a single output. For example, it might specify multiple DICOM files to create one NIfTI file.</li>
-<li><strong>Workflow</strong>: A workflow (also called a pipeline), is a directed acyclic graph (DAG) or forest of graphs whose nodes are of type Node, MapNode or Workflow and whose edges (lines connecting nodes) represent data flow.</li>
+<li><p><strong>Node</strong>: A node provides the information – parameters, filenames, etc. – that is needed by an interface to run the program properly for a particular job, whether as part of a workflow or separately.</p></li>
+<li><p><strong>MapNode</strong>: A Mapnode is quite similar to a Node, but it differs because it takes multiple inputs of a single type to create a single output. For example, it might specify multiple DICOM files to create one NIfTI file.</p></li>
+<li><p><strong>Workflow</strong>: A workflow (also called a pipeline), is a directed acyclic graph (DAG) or forest of graphs whose nodes are of type Node, MapNode or Workflow and whose edges (lines connecting nodes) represent data flow.</p></li>
 </ul>
 <p>Each Node, MapNode or Workflow has (at least) one input field and (at least) one output field. Those fields specify the dataflow into and out of a Node, MapNode or Workflow. MapNodes use fields to specify multiple inputs (basically a list of input items). There they are called <em>iterfields</em> because the interface will iterate over the list of input items, and they have to be labeled as such to distinguish them from single-item fields.</p>
 <p>A very cool feature of a Nipype workflow are so called <strong>iterables</strong>. Iterables allow you to run a given workflow or subgraph several times with changing input values. For example, if you want to run an analysis pipeline on multiple subjects or with an FWHM smoothing kernel of 4mm, 6mm, and 8mm. This can easily be achieved with iterables and additionally allows you to do this all in parallel (simultaneous execution), if requested.</p>
 <p>Go to the documentation section of <a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype’s main homepage</a> to read more about <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/mapnode_and_iterables.html">MapNode, iterfield, and iterables</a>, <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/joinnode_and_itersource.html">JoinNode, synchronize and itersource</a> and <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/pipeline_tutorial.html">much more</a>. Nonetheless, a more detailed explanation will be given in a <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/firstSteps.html#specify-workflows-connect-nodes">later section</a> of this beginner’s guide.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For more practical and extended examples of Nipype concepts see <a class="reference external" href="https://github.com/mwaskom">Michael Waskom</a>’s really cool Jupyter notebooks about <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb">Interfaces</a>, <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb">Iteration</a> and <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb">Workflows</a>.</p>
+<p class="admonition-title">Note</p>
+<p>For more practical and extended examples of Nipype concepts see <a class="reference external" href="https://github.com/mwaskom">Michael Waskom</a>’s really cool Jupyter notebooks about <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb">Interfaces</a>, <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb">Iteration</a> and <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb">Workflows</a>.</p>
 </div>
 </div>
 <div class="section" id="execution-plugins">
@@ -390,18 +392,18 @@
 <p>On a local machine, you can use the plugin <strong>Serial</strong> for a linear, or serial, execution of your workflow. If you machine has more than one core, you can use the <strong>Multicore</strong> plugin for parallel execution of your workflow. On a cluster, you have the option of using plugins for:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>HTCondor</strong></li>
-<li><strong>PBS, Torque, SGE, LSF</strong> (native and via IPython)</li>
-<li><strong>SSH</strong> (via IPython)</li>
-<li><strong>Soma Workflow</strong></li>
+<li><p><strong>HTCondor</strong></p></li>
+<li><p><strong>PBS, Torque, SGE, LSF</strong> (native and via IPython)</p></li>
+<li><p><strong>SSH</strong> (via IPython)</p></li>
+<li><p><strong>Soma Workflow</strong></p></li>
 </ul>
 </div></blockquote>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Cluster operation often needs a special setup. You may wish to consult your cluster operators about which plugins are available.</p>
+<p class="admonition-title">Note</p>
+<p>Cluster operation often needs a special setup. You may wish to consult your cluster operators about which plugins are available.</p>
 </div>
 <p>To show how easily this can be done, the following code shows how to run a workflow with different plugins:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -471,8 +473,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

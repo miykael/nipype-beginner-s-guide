@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -69,7 +71,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Glossary</a><ul>
 <li><a class="reference internal" href="#a">A</a><ul>
@@ -319,15 +321,15 @@
   <p class="topless"><a href="faq.html"
                         title="previous chapter">Frequently Asked Questions</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -344,16 +346,16 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="glossary">
 <h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
 <p>This Glossary wasn’t created by myself. Its content is almost exclusively from the <a class="reference external" href="http://mindhive.mit.edu/node/71">Imaging Knowledge Base - Glossary</a> from the <a class="reference external" href="http://gablab.mit.edu/">Gabrieli Lab at MIT</a>. It is my thanks to them, for generating such an exhaustive Glossary.</p>
 <p><strong>Index</strong>: <a class="reference internal" href="#a">A</a> | <a class="reference internal" href="#b">B</a> | <a class="reference internal" href="#c">C</a> | <a class="reference internal" href="#d">D</a> | <a class="reference internal" href="#e">E</a> | <a class="reference internal" href="#f">F</a> | <a class="reference internal" href="#g">G</a> | <a class="reference internal" href="#h">H</a> | <a class="reference internal" href="#i">I</a> | <a class="reference internal" href="#j">J</a> | <a class="reference internal" href="#k">K</a> | <a class="reference internal" href="#l">L</a> | <a class="reference internal" href="#m">M</a> | <a class="reference internal" href="#n">N</a> | <a class="reference internal" href="#o">O</a> | <a class="reference internal" href="#p">P</a> | <a class="reference internal" href="#q">Q</a> | <a class="reference internal" href="#r">R</a> | <a class="reference internal" href="#s">S</a> | <a class="reference internal" href="#t">T</a> | <a class="reference internal" href="#u">U</a> | <a class="reference internal" href="#v">V</a> | <a class="reference internal" href="#w">W</a> | <a class="reference internal" href="#x">X</a> | <a class="reference internal" href="#y">Y</a> | <a class="reference internal" href="#z">Z</a> | <a class="reference internal" href="#numbers">Numbers</a></p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">To help me to extend this glossary, please feel free to leave a comment at the bottom to recommend additions and to clear misapprehension.</p>
+<p class="admonition-title">Note</p>
+<p>To help me to extend this glossary, please feel free to leave a comment at the bottom to recommend additions and to clear misapprehension.</p>
 </div>
 <div class="section" id="a">
 <h2>A<a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h2>
@@ -404,8 +406,8 @@
 <div class="section" id="baseline">
 <h3>baseline<a class="headerlink" href="#baseline" title="Permalink to this headline">¶</a></h3>
 <ol class="upperalpha simple">
-<li>The point from which deviations are measured. In a signal measure like % signal change, the baseline value is the answer to, “Percent signal change <em>from what?</em>” It’s the zero point on a % signal change plot.</li>
-<li>A condition in your experiment that’s intended to contain all of the cognitive tasks of your experimental condition - except the task of interest. In fMRI, you generally can only measure differences between two conditions (not anything absolute about one condition). So an fMRI baseline task is one where the person is doing everything you’re not interested in, and not doing the thing you’re interested in. This way you can look at signal during the baseline, subtract it from signal during the experimental condition, and be left with only the signal from the task of interest. Designing a good baseline is crucially important to your experiment. Resting with the eyes open is a common baseline for certain types of experiment, but inappropriate for others, where cognitive activity during rest may corrupt your results. In order to get good estimates of the shape of your HRF, you need to have a baseline condition (as opposed to several experimental conditions). Check out <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/faq.html#design">Design FAQ</a> for more.</li>
+<li><p>The point from which deviations are measured. In a signal measure like % signal change, the baseline value is the answer to, “Percent signal change <em>from what?</em>” It’s the zero point on a % signal change plot.</p></li>
+<li><p>A condition in your experiment that’s intended to contain all of the cognitive tasks of your experimental condition - except the task of interest. In fMRI, you generally can only measure differences between two conditions (not anything absolute about one condition). So an fMRI baseline task is one where the person is doing everything you’re not interested in, and not doing the thing you’re interested in. This way you can look at signal during the baseline, subtract it from signal during the experimental condition, and be left with only the signal from the task of interest. Designing a good baseline is crucially important to your experiment. Resting with the eyes open is a common baseline for certain types of experiment, but inappropriate for others, where cognitive activity during rest may corrupt your results. In order to get good estimates of the shape of your HRF, you need to have a baseline condition (as opposed to several experimental conditions). Check out <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/faq.html#design">Design FAQ</a> for more.</p></li>
 </ol>
 </div>
 <div class="section" id="basis-function">
@@ -733,11 +735,11 @@
 <h3>mat file (or dot-mat file, .mat file, etc.)<a class="headerlink" href="#mat-file-or-dot-mat-file-mat-file-etc" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ol class="arabic simple">
-<li>A <a class="reference internal" href="#matlab">MATLAB</a> file format which contains saved Matlab variables, and allows you to save variables to disk and load them into the workspace again from disk. Format is binary data, so it’s not accessible with text editors.</li>
+<li><p>A <a class="reference internal" href="#matlab">MATLAB</a> file format which contains saved Matlab variables, and allows you to save variables to disk and load them into the workspace again from disk. Format is binary data, so it’s not accessible with text editors.</p></li>
 </ol>
 </div></blockquote>
 <ol class="arabic simple" start="2">
-<li>One special kind of .mat file in SPM is the .mat file which can go along with a format .img/.hdr pair. A .mat file with the same filename as a .hdr/.img pair is interpreted in a special way by SPM; when that image file is read, SPM looks into the .mat file for a matrix specifying a position and orientation transform of the image. In this way, SPM can save a rigid-body transformation of the image (rotation, zoom, etc.) without actually changing the data in the .img file. Almost every SPM image-reading function automatically reads the .mat file if it’s present, and many functions which move the image around (<a class="reference internal" href="#realignment">realignment</a>, <a class="reference internal" href="#slice-timing">slice timing</a>, etc.) give you the option to save the changes as a .mat file instead of actually re-slicing the image.</li>
+<li><p>One special kind of .mat file in SPM is the .mat file which can go along with a format .img/.hdr pair. A .mat file with the same filename as a .hdr/.img pair is interpreted in a special way by SPM; when that image file is read, SPM looks into the .mat file for a matrix specifying a position and orientation transform of the image. In this way, SPM can save a rigid-body transformation of the image (rotation, zoom, etc.) without actually changing the data in the .img file. Almost every SPM image-reading function automatically reads the .mat file if it’s present, and many functions which move the image around (<a class="reference internal" href="#realignment">realignment</a>, <a class="reference internal" href="#slice-timing">slice timing</a>, etc.) give you the option to save the changes as a .mat file instead of actually re-slicing the image.</p></li>
 </ol>
 </div>
 <div class="section" id="matlab">
@@ -1138,8 +1140,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

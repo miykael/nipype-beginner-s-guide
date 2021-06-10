@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -73,7 +75,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Frequently Asked Questions</a><ul>
 <li><a class="reference internal" href="#basic-statistical-modeling">Basic Statistical Modeling</a><ul>
@@ -316,15 +318,15 @@
   <p class="topless"><a href="glossary.html"
                         title="next chapter">Glossary</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -341,40 +343,40 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="frequently-asked-questions">
 <h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
 <p>This FAQ wasn’t created by myself. Its content is almost exclusively from the <a class="reference external" href="http://mindhive.mit.edu/node/46">Imaging Knowledge Base - FAQ</a> from the <a class="reference external" href="http://gablab.mit.edu/">Gabrieli Lab at MIT</a>. It is my thanks to them, for generating such an exhaustive FAQ.</p>
 <p><strong>Index of FAQ</strong></p>
 <ul class="simple">
-<li><a class="reference internal" href="#basic-statistical-modeling">Basic Statistical Modeling</a></li>
-<li><a class="reference internal" href="#connectivity">Connectivity</a></li>
-<li><a class="reference internal" href="#contrasts">Contrasts</a></li>
-<li><a class="reference internal" href="#coregistration">Coregistration</a></li>
-<li><a class="reference internal" href="#design">Design</a></li>
-<li><a class="reference internal" href="#hrf">HRF</a></li>
-<li><a class="reference internal" href="#jitter">Jitter</a></li>
-<li><a class="reference internal" href="#matlab-basics">MATLAB Basics</a></li>
-<li><a class="reference internal" href="#mental-chronometry">Mental Chronometry</a></li>
-<li><a class="reference internal" href="#normalization">Normalization</a></li>
-<li><a class="reference internal" href="#p-threshold">P threshold</a></li>
-<li><a class="reference internal" href="#percent-signal-change">Percent Signal Change</a></li>
-<li><a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a></li>
-<li><a class="reference internal" href="#roi">ROI</a></li>
-<li><a class="reference internal" href="#random-and-fixed-effects">Random and Fixed Effects</a></li>
-<li><a class="reference internal" href="#realignment">Realignment</a></li>
-<li><a class="reference internal" href="#scanning">Scanning</a></li>
-<li><a class="reference internal" href="#segmentation">Segmentation</a></li>
-<li><a class="reference internal" href="#slice-timing">Slice Timing</a></li>
-<li><a class="reference internal" href="#smoothing">Smoothing</a></li>
-<li><a class="reference internal" href="#spm-in-a-nutshell">SPM in a Nutshell</a></li>
-<li><a class="reference internal" href="#temporal-filtering">Temporal Filtering</a></li>
+<li><p><a class="reference internal" href="#basic-statistical-modeling">Basic Statistical Modeling</a></p></li>
+<li><p><a class="reference internal" href="#connectivity">Connectivity</a></p></li>
+<li><p><a class="reference internal" href="#contrasts">Contrasts</a></p></li>
+<li><p><a class="reference internal" href="#coregistration">Coregistration</a></p></li>
+<li><p><a class="reference internal" href="#design">Design</a></p></li>
+<li><p><a class="reference internal" href="#hrf">HRF</a></p></li>
+<li><p><a class="reference internal" href="#jitter">Jitter</a></p></li>
+<li><p><a class="reference internal" href="#matlab-basics">MATLAB Basics</a></p></li>
+<li><p><a class="reference internal" href="#mental-chronometry">Mental Chronometry</a></p></li>
+<li><p><a class="reference internal" href="#normalization">Normalization</a></p></li>
+<li><p><a class="reference internal" href="#p-threshold">P threshold</a></p></li>
+<li><p><a class="reference internal" href="#percent-signal-change">Percent Signal Change</a></p></li>
+<li><p><a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a></p></li>
+<li><p><a class="reference internal" href="#roi">ROI</a></p></li>
+<li><p><a class="reference internal" href="#random-and-fixed-effects">Random and Fixed Effects</a></p></li>
+<li><p><a class="reference internal" href="#realignment">Realignment</a></p></li>
+<li><p><a class="reference internal" href="#scanning">Scanning</a></p></li>
+<li><p><a class="reference internal" href="#segmentation">Segmentation</a></p></li>
+<li><p><a class="reference internal" href="#slice-timing">Slice Timing</a></p></li>
+<li><p><a class="reference internal" href="#smoothing">Smoothing</a></p></li>
+<li><p><a class="reference internal" href="#spm-in-a-nutshell">SPM in a Nutshell</a></p></li>
+<li><p><a class="reference internal" href="#temporal-filtering">Temporal Filtering</a></p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">To help me to extend this FAQ, please feel free to leave a comment at the bottom to recommend additions and to clear misapprehension.</p>
+<p class="admonition-title">Note</p>
+<p>To help me to extend this FAQ, please feel free to leave a comment at the bottom to recommend additions and to clear misapprehension.</p>
 </div>
 <div class="section" id="basic-statistical-modeling">
 <h2>Basic Statistical Modeling<a class="headerlink" href="#basic-statistical-modeling" title="Permalink to this headline">¶</a></h2>
@@ -552,9 +554,9 @@
 <p>The tradeoff between power and efficiency is, unfortunately, inescapable (shown by Liu et. al) - you can’t be optimal at both. Things that increase power include block design experiments, very high numbers of trials per condition, and increased numbers of subjects. Things that increase efficiency include designs with randomized inter-trial intervals (also called inter-stimulus intervals or ISIs) and analyzing your design with an event-related model (whether the design was blocked or not). Semi-random designs can give you a good dollop of both power and efficiency, at the cost of increased experimental length. Where you fall in designing your experiment will depend on what measures you’re interested in looking at - but within the given constraints of a particular number of subjects, a reasonable experimental length, and a guess at how big an effect you’ll have, there are good steps you can take to optimize your design.</p>
 <p>Experimental design is heavily mixed in with setting your scanning parameters, and jittering your trial sequence, so be sure to check out the other design-related pages:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#scanning">Scanning</a></li>
-<li><a class="reference internal" href="#jitter">Jitter</a></li>
-<li><a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a></li>
+<li><p><a class="reference internal" href="#scanning">Scanning</a></p></li>
+<li><p><a class="reference internal" href="#jitter">Jitter</a></p></li>
+<li><p><a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a></p></li>
 </ul>
 <div class="section" id="what-are-some-pros-and-cons-of-block-designs">
 <h3>1. What are some pros and cons of block designs?<a class="headerlink" href="#what-are-some-pros-and-cons-of-block-designs" title="Permalink to this headline">¶</a></h3>
@@ -723,7 +725,7 @@ As well, if you type help command into MATLAB, where command is some MATLAB func
 <p>SPM errors can happen in terribly uninformative fashion. Everyone who’s used SPM has seen the infamous “Error during uicontrol callback,” which is a generic MATLAB error that means “Something went wrong in the function called by pushing whatever button you just pushed.” Fortunately, MATLAB has relatively well-designed error-detection and bug-tracking facilities. You can learn a great deal about your error just by interpreting your error message.</p>
 <p>Sometimes in SPM you’ll get a full error message of several lines, but oftentimes you’ll get the one-line “uicontrol callback” error. However, if you close the panel that’s home to the button that generated the error, you can often get the full underlying error message. So if you hit “volume” in the results section and get a uicontrol callback error, closing the results panel will usually generate further information about the error. You may also be able to generate more information simply by going to the MATLAB window and hitting return a couple of times. Always try and get a full error message when you have an error! Even if you can’t figure out the problem, it’s almost totally useless to another troubleshooter if you come to them and say, “I have an error!” or “I have a uicontrol callback error!” without any more information about the problem. Gather as much information about the error as you can - the MATLAB window is your friend.</p>
 <p>MATLAB error messages are of varying helpfulness, but they all follow the same structure, so let’s take a look at one:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>??? Error using ==&gt; spm_input_ui Input window cleared whilst waiting for response: Bailing out!
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>??? Error using ==&gt; spm_input_ui Input window cleared whilst waiting for response: Bailing out!
 Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_input.m
     On line 77 ==&gt; [varargout{:}] = spm_input_ui(varargin{1:ib-1});
 Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_get_ons.m
@@ -790,10 +792,10 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <p>If you’re running the graphical version of MATLAB, you can open the built-in text editor with the command open filename. The single best thing you can do to learn and teach yourself about the inner workings of SPM (or other MATLAB packages) is to open up particular functions and read through them to see what they’re actually doing. Reading them can seem like reading Greek a lot of the time, but it’s a skill you can learn, and it’ll help you understand what’s happening to your data better than anything else. Unless you can read MATLAB code, you’ll always be a little in the dark about what’s being done in your analysis. You don’t need to know how to program the code - just to understand more or less what it’s doing.</p>
 <p>Reading code is relatively straightforward in some ways - you simply start from the top and go through line-by-line to see what each successive line does. But there are some things to keep in mind on the way:</p>
 <ul class="simple">
-<li>Lines that start with % are “comments.” Anything after a % on a line is ignored by MATLAB (even if there was real code before the % on the line), and so comments are used by programmers to explain what’s happening in a file. Most functions have some overview comments at the top of the file, to try and explain what’s happening overall and hopefully some of the data structures and variables in use. Good programmers also comment throughout the function, to point out different sections of code and help explain what’s happening in each chunk, or why they chose to use a particular strategy. Read the comments! They can be super helpful in understanding what’s going on.</li>
-<li>If you see a function name and don’t know what it does, check the MATLAB help! There’s a lot of information in there about what every function under the sun does. Many MATLAB functions are obviously named, but not all. If it’s not a MATLAB function, try typing help function-name at the prompt anyways - a lot of times something will come up.</li>
-<li>Certain statements control the flow of execution through the program - if and for are the biggies, but there are others like switch or while, too. They’re generally paired with an end statement; anything in between the if or for and the end is under the control of that flow statement. Generally those blocks of code are indented, for readability. They’re often nested within each other, too. An if statement specifies some condition to test; if the condition is true, then the block of code before the paired end will be executed. If the condition is false, that code won’t run at all. A for statement is used to execute a block of code several times. For statements specify some index variable - often named i or j, but sometimes other things - and specify the range of values it will take on. It’ll then loop over the code before the paired end statement and execute it for each value of the index variable. So for i = 1:10 will make a loop that will run 10 times, with i becoming one number bigger each time. This is often used to walk through a whole vector or array of numbers and do something to each element, using the index variable as the index into the array.</li>
-<li>If you get stuck, ask somebody! There are experienced programmers out there who can help.</li>
+<li><p>Lines that start with % are “comments.” Anything after a % on a line is ignored by MATLAB (even if there was real code before the % on the line), and so comments are used by programmers to explain what’s happening in a file. Most functions have some overview comments at the top of the file, to try and explain what’s happening overall and hopefully some of the data structures and variables in use. Good programmers also comment throughout the function, to point out different sections of code and help explain what’s happening in each chunk, or why they chose to use a particular strategy. Read the comments! They can be super helpful in understanding what’s going on.</p></li>
+<li><p>If you see a function name and don’t know what it does, check the MATLAB help! There’s a lot of information in there about what every function under the sun does. Many MATLAB functions are obviously named, but not all. If it’s not a MATLAB function, try typing help function-name at the prompt anyways - a lot of times something will come up.</p></li>
+<li><p>Certain statements control the flow of execution through the program - if and for are the biggies, but there are others like switch or while, too. They’re generally paired with an end statement; anything in between the if or for and the end is under the control of that flow statement. Generally those blocks of code are indented, for readability. They’re often nested within each other, too. An if statement specifies some condition to test; if the condition is true, then the block of code before the paired end will be executed. If the condition is false, that code won’t run at all. A for statement is used to execute a block of code several times. For statements specify some index variable - often named i or j, but sometimes other things - and specify the range of values it will take on. It’ll then loop over the code before the paired end statement and execute it for each value of the index variable. So for i = 1:10 will make a loop that will run 10 times, with i becoming one number bigger each time. This is often used to walk through a whole vector or array of numbers and do something to each element, using the index variable as the index into the array.</p></li>
+<li><p>If you get stuck, ask somebody! There are experienced programmers out there who can help.</p></li>
 </ul>
 </div>
 </div>
@@ -909,15 +911,15 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h3>5. When should I use different types of multiple-comparison correction?<a class="headerlink" href="#when-should-i-use-different-types-of-multiple-comparison-correction" title="Permalink to this headline">¶</a></h3>
 <p>Nichols and Hayasaka’s paper does an explicit review of various FWE correction methods (as well as FDR) on simulated and real data of a variety of smoothness levels and degrees of freedom, to judge how conservative or liberal different methods were. Their main findings are:</p>
 <ul class="simple">
-<li>Random-field corrections are extremely conservative for all smoothnesses except the highest. This bias becomes stronger as the degrees of freedom go down, such that low-degree-of-freedom, low-smoothness images corrected with RFT methods show the worst underactivation. At the highest smoothness (8-12mm FWHM), they perform reasonably well for all df.</li>
-<li>Permutation methods are almost exact for all degrees of freedom and for all smoothnesses. They become slightly better with data of high smoothness, but basically perform tremendously well under all conditions.</li>
-<li>FDR is not strictly speaking intended to control FWE, but it does an excellent job doing so for low-smoothness data at all degrees of freedom. At high smoothnesses (6mm FWHM and greater), the correction becomes too conservative.</li>
+<li><p>Random-field corrections are extremely conservative for all smoothnesses except the highest. This bias becomes stronger as the degrees of freedom go down, such that low-degree-of-freedom, low-smoothness images corrected with RFT methods show the worst underactivation. At the highest smoothness (8-12mm FWHM), they perform reasonably well for all df.</p></li>
+<li><p>Permutation methods are almost exact for all degrees of freedom and for all smoothnesses. They become slightly better with data of high smoothness, but basically perform tremendously well under all conditions.</p></li>
+<li><p>FDR is not strictly speaking intended to control FWE, but it does an excellent job doing so for low-smoothness data at all degrees of freedom. At high smoothnesses (6mm FWHM and greater), the correction becomes too conservative.</p></li>
 </ul>
 <p>Accordingly, the nutshell recommendations are as follows:</p>
 <ul class="simple">
-<li>Random-field methods are good for highly-smoothed data only and are best for single-subject data. For researchers who need a good deal of smoothing to collect significant signal, or who aren’t particularly interested in very fine resolution, RFT corrections are quite exact and easily implemented for single subjects. At low degrees of freedom for any smoothness (say, less than 20 df), the RF corrections are generally too conservative for any smoothness.</li>
-<li>For unsmoothed (or low-smoothed), single-subject data, FDR corrections are the best. They have very high sensitivity while still providing good control of false positives, even with low degrees of freedom. Group data tend naturally to be smoother than single-subject data, due to the blurring imposed by anatomical variability, and so may not be ideal for FDR corrections.</li>
-<li>Permutation tests are optimized for group data - they perform perfectly at very low degrees of freedom, where other methods’ assumptions are invalidated, and they improve slightly with high-smoothness data, although they still do fine with unsmoothed. In group testing, the permutation is whether each subject’s t-statistic signs are true or flipped - presumably, if the mean is zero, flipping the sign of the statistic won’t make a difference, but if the mean is nonzero, that flipping will matter. As well, the relative speed of estimating group models in most programs helps counter the increased computational cost of permutation testing in general.</li>
+<li><p>Random-field methods are good for highly-smoothed data only and are best for single-subject data. For researchers who need a good deal of smoothing to collect significant signal, or who aren’t particularly interested in very fine resolution, RFT corrections are quite exact and easily implemented for single subjects. At low degrees of freedom for any smoothness (say, less than 20 df), the RF corrections are generally too conservative for any smoothness.</p></li>
+<li><p>For unsmoothed (or low-smoothed), single-subject data, FDR corrections are the best. They have very high sensitivity while still providing good control of false positives, even with low degrees of freedom. Group data tend naturally to be smoother than single-subject data, due to the blurring imposed by anatomical variability, and so may not be ideal for FDR corrections.</p></li>
+<li><p>Permutation tests are optimized for group data - they perform perfectly at very low degrees of freedom, where other methods’ assumptions are invalidated, and they improve slightly with high-smoothness data, although they still do fine with unsmoothed. In group testing, the permutation is whether each subject’s t-statistic signs are true or flipped - presumably, if the mean is zero, flipping the sign of the statistic won’t make a difference, but if the mean is nonzero, that flipping will matter. As well, the relative speed of estimating group models in most programs helps counter the increased computational cost of permutation testing in general.</p></li>
 </ul>
 </div>
 <div class="section" id="what-is-small-volume-correction">
@@ -965,12 +967,12 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h3>3. How do those timecourse programs work?<a class="headerlink" href="#how-do-those-timecourse-programs-work" title="Permalink to this headline">¶</a></h3>
 <p>The simplest way to find percent signal change is perfectly good for some types of experiments. The basic steps are as follows:</p>
 <ul class="simple">
-<li>Extract a timecourse for the whole experiment for your given voxel (or extract the average timecourse for a region).</li>
-<li>Choose a baseline (more on that below) that you’ll be measuring percent signal change from. Popular choices are “the mean of the whole timecourse” or “the mean of the baseline condition.”</li>
-<li>Divide every timepoint’s intensity value by the baseline, multiply by 100, and subtract 100, to give you a whole-experiment timecourse in percent signal change.</li>
-<li>For each condition C, start at the onset of each C trial. Average the percent signal change values for all the onsets of C trials together.</li>
-<li>Do the same thing for the timepoint after the onset of each C trial, e.g., average together the onset + 1 timepoint for all C trials.</li>
-<li>Repeat for each timepoint out from the onset of the trial, out to around 30 seconds or however long an HRF you want to look at.</li>
+<li><p>Extract a timecourse for the whole experiment for your given voxel (or extract the average timecourse for a region).</p></li>
+<li><p>Choose a baseline (more on that below) that you’ll be measuring percent signal change from. Popular choices are “the mean of the whole timecourse” or “the mean of the baseline condition.”</p></li>
+<li><p>Divide every timepoint’s intensity value by the baseline, multiply by 100, and subtract 100, to give you a whole-experiment timecourse in percent signal change.</p></li>
+<li><p>For each condition C, start at the onset of each C trial. Average the percent signal change values for all the onsets of C trials together.</p></li>
+<li><p>Do the same thing for the timepoint after the onset of each C trial, e.g., average together the onset + 1 timepoint for all C trials.</p></li>
+<li><p>Repeat for each timepoint out from the onset of the trial, out to around 30 seconds or however long an HRF you want to look at.</p></li>
 </ul>
 <p>You’ll end up with an average peristimulus timecourse for each condition, and even a timecourse of standard deviations/confidence intervals if you like - enough to put confidence bars on your average timecourse estimate. This is the basic method, and it’s perfect for long event-related experiments - where the inter-trial interval is at least as long as the HRF you want to estimate, so every experimental timepoint is included in one and only one average timecourse.</p>
 <p>This method breaks down, though, with short ISIs - and those are most experiments these days, since rapid event-related designs are hugely more efficient than long event-related designs. If one trial onsets before the response of the last one has faded away, then how do you know how much of the timepoint’s intensity is due to the previous trial and how much due to the current trial? The simple method will result in timecourses that have the contributions of several trials (probably of different trial types) averaged in, and that’s not what you want. Ideally, you’d like to be able to run trials with very short ISIs, but come up with peristimulus timecourses showing what a particular trial’s response would have been had it happened in isolation. You need to be able to deconvolve the various contributions of the different trial types and separate them into their component pieces.</p>
@@ -1008,9 +1010,9 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h2>Physiology and fMRI<a class="headerlink" href="#physiology-and-fmri" title="Permalink to this headline">¶</a></h2>
 <p>This section is intended to address design-related questions that focus primarily on how physiological factors can affect your scanning - things like heart rate, breathing, the types of artifacts generated by those movements, etc. Obviously, physiological factors are mixed in heavily with your experimental design, so be sure to check out some other design-related pages:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#design">Design</a></li>
-<li><a class="reference internal" href="#scanning">Scanning</a></li>
-<li><a class="reference internal" href="#jitter">Jitter</a></li>
+<li><p><a class="reference internal" href="#design">Design</a></p></li>
+<li><p><a class="reference internal" href="#scanning">Scanning</a></p></li>
+<li><p><a class="reference internal" href="#jitter">Jitter</a></p></li>
 </ul>
 <div class="section" id="why-would-i-want-to-collect-physiological-data">
 <h3>1. Why would I want to collect physiological data?<a class="headerlink" href="#why-would-i-want-to-collect-physiological-data" title="Permalink to this headline">¶</a></h3>
@@ -1055,21 +1057,21 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <p>Funny you should ask; I just happened to have this little grid lying around, which has been helpfully converted into a sort of tree for the Digi-Web. The methods of ROI definition can be split along two axes - the type of brain ROIs are defined on (individual, group, atlas) and the features used to define it (microanatomy/cytoarchitecture, macroanatomy, function). The breakdown goes like this:</p>
 <p><strong>Microanatomy / cytoarchitecture ROIs</strong></p>
 <ul class="simple">
-<li>Individually-defined: This would mean drawing (by hand or automated method) ROIs on the cytoarchitectonic map for an individual. The pros of this method: you’re quite close to the neuronal level of organization, you’ve got very high resolution on your ROI, and the mapping between cytoarchitectonic regions has generally proven to be close (see Brett et. al). Cons: Not all functional info is represented (columnar structure, for example, is sometimes represented in cytoarchitecture and sometimes not), and, of course, getting the cytoarchitectonic map for a living human non-invasively is practically impossible at this point. That may change in the future, though - some groups are attempting to mine this data from fMRI maps.</li>
-<li>Group-defined: This is almost never done - it would mean drawing cytoarchitectonic maps on a template or something.</li>
-<li>Atlas-defined: This means getting coordinates for particular cytoarchitectonic regions from an atlas, and generally this means using the Talairach Daemon or some similar tool to get Brodmann Areas for particular atlas coordinates. Pros of this: the Tal Daemon’s easy to get, easy to use, fast, popular, and can be easily used for MNI-space coordinates with a simple transform. Cons: Lots of sources of error in labeling. The original Talairach BA labeling is very crude (see Brett et. al) and based on eyeball. The Talairach - MNI transform isn’t perfect. And perhaps biggest of all, there is enormouse individual variability of the shape and size of cytoarchitectonic regions - what’s BA32 on the atlas may well be deep into BA10 on your subject. Some of those problems are solved by getting a better cyto. atlas - Zilles et. al are working on one - but the problem of individual variability remains.</li>
+<li><p>Individually-defined: This would mean drawing (by hand or automated method) ROIs on the cytoarchitectonic map for an individual. The pros of this method: you’re quite close to the neuronal level of organization, you’ve got very high resolution on your ROI, and the mapping between cytoarchitectonic regions has generally proven to be close (see Brett et. al). Cons: Not all functional info is represented (columnar structure, for example, is sometimes represented in cytoarchitecture and sometimes not), and, of course, getting the cytoarchitectonic map for a living human non-invasively is practically impossible at this point. That may change in the future, though - some groups are attempting to mine this data from fMRI maps.</p></li>
+<li><p>Group-defined: This is almost never done - it would mean drawing cytoarchitectonic maps on a template or something.</p></li>
+<li><p>Atlas-defined: This means getting coordinates for particular cytoarchitectonic regions from an atlas, and generally this means using the Talairach Daemon or some similar tool to get Brodmann Areas for particular atlas coordinates. Pros of this: the Tal Daemon’s easy to get, easy to use, fast, popular, and can be easily used for MNI-space coordinates with a simple transform. Cons: Lots of sources of error in labeling. The original Talairach BA labeling is very crude (see Brett et. al) and based on eyeball. The Talairach - MNI transform isn’t perfect. And perhaps biggest of all, there is enormouse individual variability of the shape and size of cytoarchitectonic regions - what’s BA32 on the atlas may well be deep into BA10 on your subject. Some of those problems are solved by getting a better cyto. atlas - Zilles et. al are working on one - but the problem of individual variability remains.</p></li>
 </ul>
 <p><strong>Macroanatomy / anatomically-defined ROIs</strong></p>
 <ul class="simple">
-<li>Individually-defined: This means drawing ROIs on each individual subject’s anatomy, based on anatomical markers like sulci, gyri, and other features viewable by the naked eye. This drawing can be by hand or by an automated or semi-automated program . (See <a class="reference internal" href="#segmentation">Segmentation</a> for more info on those - they’re getting pretty good.) Pros: Gets around problem of individual anatomical variability - by extracting each measure from an individually defined structure, you eliminate the issue of whether everyone’s structures line up. Allows you to keep your data unsmoothed (smoothing is often done to avoid problems of anatomical variability), and so gives you higher resolution without sacrificing power and even while gaining some. Better mapping of function to structure. Cons: Can be hard to get - requires either good use of an automated algorithm or a lot of labor and experience in hand-drawing ROIs. Makes it more difficult to report activation coordinates (but note Swallow et. al suggest you can normalize your data before defining and be okay). Most importantly, the relationship between function and macroanatomy is very unclear in many regions of the brain, particularly associational cortex and prefrontal areas. Just because you’re extracting from everybody’s superior frontal gyrus doesn’t mean you’re going to get at all the same function. So this path may not gain you any power at all and might lose you some.</li>
-<li>Group-defined: Again, this is rarely done - it would mean drawing your ROI on some group average. Probably all of the cons of above, with fewer pros.</li>
-<li>Atlas-defined: This means taking some atlas system’s description of anatomical features, like using the Talairach-defined amygdala or Talairach superior frontal gyrus, or possibly drawing an ROI on the MNI template brain. Often the ROIs are then reverse-normalized to fit the subject’s non-normalized functional data. Pros: Very easy to get - probably the most-used method for defining anatomical ROIs. Very standardized, and so easily comparable across studies. There’s not as much an issue with labeling as above - the Talairach and Tournoux atlas is very accurate at picking out coordinates for macroanatomical features, so you get to leverage their skill at drawing ROIs for your own study. Cons: The overlap of the atlas-defined region with your subjects’ is only as good as your normalization - and Nieto-Castanon et. al offer a scathing commentary on how good standard normalization algorithms are, showing that even post-normalization, they had huge variations in the shape of particular gyri. Because of that, atlas-defined regions will always tend to obscure differences in anatomical variability, even with reverse normalization. As well, this method is still subject to the problem of unclear structure-function relationships in many areas of the brain.</li>
+<li><p>Individually-defined: This means drawing ROIs on each individual subject’s anatomy, based on anatomical markers like sulci, gyri, and other features viewable by the naked eye. This drawing can be by hand or by an automated or semi-automated program . (See <a class="reference internal" href="#segmentation">Segmentation</a> for more info on those - they’re getting pretty good.) Pros: Gets around problem of individual anatomical variability - by extracting each measure from an individually defined structure, you eliminate the issue of whether everyone’s structures line up. Allows you to keep your data unsmoothed (smoothing is often done to avoid problems of anatomical variability), and so gives you higher resolution without sacrificing power and even while gaining some. Better mapping of function to structure. Cons: Can be hard to get - requires either good use of an automated algorithm or a lot of labor and experience in hand-drawing ROIs. Makes it more difficult to report activation coordinates (but note Swallow et. al suggest you can normalize your data before defining and be okay). Most importantly, the relationship between function and macroanatomy is very unclear in many regions of the brain, particularly associational cortex and prefrontal areas. Just because you’re extracting from everybody’s superior frontal gyrus doesn’t mean you’re going to get at all the same function. So this path may not gain you any power at all and might lose you some.</p></li>
+<li><p>Group-defined: Again, this is rarely done - it would mean drawing your ROI on some group average. Probably all of the cons of above, with fewer pros.</p></li>
+<li><p>Atlas-defined: This means taking some atlas system’s description of anatomical features, like using the Talairach-defined amygdala or Talairach superior frontal gyrus, or possibly drawing an ROI on the MNI template brain. Often the ROIs are then reverse-normalized to fit the subject’s non-normalized functional data. Pros: Very easy to get - probably the most-used method for defining anatomical ROIs. Very standardized, and so easily comparable across studies. There’s not as much an issue with labeling as above - the Talairach and Tournoux atlas is very accurate at picking out coordinates for macroanatomical features, so you get to leverage their skill at drawing ROIs for your own study. Cons: The overlap of the atlas-defined region with your subjects’ is only as good as your normalization - and Nieto-Castanon et. al offer a scathing commentary on how good standard normalization algorithms are, showing that even post-normalization, they had huge variations in the shape of particular gyri. Because of that, atlas-defined regions will always tend to obscure differences in anatomical variability, even with reverse normalization. As well, this method is still subject to the problem of unclear structure-function relationships in many areas of the brain.</p></li>
 </ul>
 <p><strong>Functional ROIs</strong></p>
 <ul class="simple">
-<li>Individually-defined: This means choosing functionally-activated voxels from each individual’s results - either from a localizer task or from the actual study task. This is so popular these days we’ve actually broken it out to its own page, FunctionalLocalization.</li>
-<li>Group-defined: This means choosing functionally-activated voxels from your group results and using that voxel set as an ROI to extract from individuals. Pros: Gets to function, as above. Can be a better guarantee that you’ve got some effect in a given region, since presumably voxels activated in the group had some decent activations in most or all subjects. A good chunk less labor than individually-defining ROIs. Cons: Swallow et. al demonstrate these ROIs are not as reliable (i.e., are more variable) than the individually-created ones. This method doesn’t account at all for individual functional variability, which can be considerable (i.e., different voxels can be included or exluded wrongly in every subject).</li>
-<li>Atlas-defined: Probably the closest thing to this is using some other study’s reported sites of functional activation - choosing ROIs that correspond to the Tal or MNI coords of other studies’ activations. Pros: Avoids the problem of defining localizers, allows direct comparison between studies. Cons: Ignores differences in subject pool and anatomical and functional variability in your own subjects. Also introduces whatever error the other study might have had in localization into your study - if they got their spot wrong, you might be even wrong-er…</li>
+<li><p>Individually-defined: This means choosing functionally-activated voxels from each individual’s results - either from a localizer task or from the actual study task. This is so popular these days we’ve actually broken it out to its own page, FunctionalLocalization.</p></li>
+<li><p>Group-defined: This means choosing functionally-activated voxels from your group results and using that voxel set as an ROI to extract from individuals. Pros: Gets to function, as above. Can be a better guarantee that you’ve got some effect in a given region, since presumably voxels activated in the group had some decent activations in most or all subjects. A good chunk less labor than individually-defining ROIs. Cons: Swallow et. al demonstrate these ROIs are not as reliable (i.e., are more variable) than the individually-created ones. This method doesn’t account at all for individual functional variability, which can be considerable (i.e., different voxels can be included or exluded wrongly in every subject).</p></li>
+<li><p>Atlas-defined: Probably the closest thing to this is using some other study’s reported sites of functional activation - choosing ROIs that correspond to the Tal or MNI coords of other studies’ activations. Pros: Avoids the problem of defining localizers, allows direct comparison between studies. Cons: Ignores differences in subject pool and anatomical and functional variability in your own subjects. Also introduces whatever error the other study might have had in localization into your study - if they got their spot wrong, you might be even wrong-er…</p></li>
 </ul>
 <p>Lotta options. All of ‘em have their pros and cons - which one you choose will depend largely on the type of questions you want to ask.</p>
 </div>
@@ -1083,8 +1085,8 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h3>4. What sort of measures can I get out of ROIs?<a class="headerlink" href="#what-sort-of-measures-can-i-get-out-of-rois" title="Permalink to this headline">¶</a></h3>
 <p>The two big ones that are usually looked at are:</p>
 <ul class="simple">
-<li>beta weights (also called parameter weights or fit coefficients), which are voxel-by-voxel slope values from the multiple regression of your statistical model and correspond with effect sizes of particular conditions.</li>
-<li>percent signal change or timecourse information - literally looking at the TR-by-TR image intensity at a particular voxel or ROI to get a timecourse of intensities in a particular area. That timecourse is often trial-averaged to come up with time-locked average timecourse, which correspond to the average intensity change following the onset of a particular trial type - essentially an empirical look at the shape of the hemodynamic response to different trial types in a given region.</li>
+<li><p>beta weights (also called parameter weights or fit coefficients), which are voxel-by-voxel slope values from the multiple regression of your statistical model and correspond with effect sizes of particular conditions.</p></li>
+<li><p>percent signal change or timecourse information - literally looking at the TR-by-TR image intensity at a particular voxel or ROI to get a timecourse of intensities in a particular area. That timecourse is often trial-averaged to come up with time-locked average timecourse, which correspond to the average intensity change following the onset of a particular trial type - essentially an empirical look at the shape of the hemodynamic response to different trial types in a given region.</p></li>
 </ul>
 <p>Other measures are occasionally taken - for voxel-based morphometry, for example, where you might look at percentage of gray matter in a given voxel - but those two are the biggies. Beta weights are used in block-related and event-related experiments; percent signal change is usually more important for event-related experiments, although it’s occasionally used for blocks as well.</p>
 </div>
@@ -1145,9 +1147,9 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h3>1. What is realignment / motion correction?<a class="headerlink" href="#what-is-realignment-motion-correction" title="Permalink to this headline">¶</a></h3>
 <p>In a perfect world, subjects would lie perfectly still in the scanner while you experimented on them. But, of course, in a perfect world, I’d be six foot ten with a killer Jump Hook, and my car would have those hubcaps that spin independently of the wheels. Sadly, I only have three of my original Camry hubcaps, and subjects are too darned alive to hold perfectly still. When your subject moves in the scanner, no matter how much, a couple things happen:</p>
 <ul class="simple">
-<li>Your voxels don’t move with them. So the center of your voxel 10, 10, 10, say, used to be just on the front edge of your subject’s brain, but now they’ve moved a millimeter backwards - and that same voxel now sampling from outside the brain. If you don’t correct for that, you’re going to get an blurry-looking brain when you average your functional effect over time. Think of the scanner as a camera taking a really long exposure - if your subject moves during the exposure, she’ll look blurry.</li>
-<li>Their movement generates tiny inhomogeneities in the magnetic field. You’ve carefully prepared your magnetic field to be perfectly smooth everywhere in the scanner - so long as the subject is in a certain position. When she moves, she generates tiny “ripples” in the field that can cause transient artifacts. She also subtly changes the magnetic field for the rest of the experiment; if she gradually moves forward, for example, you may see the back of her brain get gradually brighter over the experiment as she changes the field and moves through it. If you don’t account for that, it’ll look like the back of her brain is getting gradually more and more active.</li>
-<li>Realignment (also called motion correction - they’re the same thing) mainly aims to help correct the first of these problems. Motion correction algorithms look across your images and try to “line up” each functional image with the one before it, so your voxels always sample the same location and you don’t get blurring. The second problem is a little trickier - see the question below on including movement parameters in your design matrix. This issue also comes up in correcting for physiological movement, so check out <a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a> as well.</li>
+<li><p>Your voxels don’t move with them. So the center of your voxel 10, 10, 10, say, used to be just on the front edge of your subject’s brain, but now they’ve moved a millimeter backwards - and that same voxel now sampling from outside the brain. If you don’t correct for that, you’re going to get an blurry-looking brain when you average your functional effect over time. Think of the scanner as a camera taking a really long exposure - if your subject moves during the exposure, she’ll look blurry.</p></li>
+<li><p>Their movement generates tiny inhomogeneities in the magnetic field. You’ve carefully prepared your magnetic field to be perfectly smooth everywhere in the scanner - so long as the subject is in a certain position. When she moves, she generates tiny “ripples” in the field that can cause transient artifacts. She also subtly changes the magnetic field for the rest of the experiment; if she gradually moves forward, for example, you may see the back of her brain get gradually brighter over the experiment as she changes the field and moves through it. If you don’t account for that, it’ll look like the back of her brain is getting gradually more and more active.</p></li>
+<li><p>Realignment (also called motion correction - they’re the same thing) mainly aims to help correct the first of these problems. Motion correction algorithms look across your images and try to “line up” each functional image with the one before it, so your voxels always sample the same location and you don’t get blurring. The second problem is a little trickier - see the question below on including movement parameters in your design matrix. This issue also comes up in correcting for physiological movement, so check out <a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a> as well.</p></li>
 </ul>
 </div>
 <div class="section" id="how-do-the-major-programs-algorithms-work-how-do-they-perform-relative-to-each-other">
@@ -1204,15 +1206,15 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h2>Scanning<a class="headerlink" href="#scanning" title="Permalink to this headline">¶</a></h2>
 <p>This section is intended to address design-related questions that focus primarily on technical aspects about the scanner - things like TR, pulse sequence, slice thickness, etc. Obviously, setting your scanner parameters is mixed in heavily with your experimental design, so be sure to check out some other design-related pages:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#design">Design</a></li>
-<li><a class="reference internal" href="#jitter">Jitter</a></li>
-<li><a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a></li>
+<li><p><a class="reference internal" href="#design">Design</a></p></li>
+<li><p><a class="reference internal" href="#jitter">Jitter</a></p></li>
+<li><p><a class="reference internal" href="#physiology-and-fmri">Physiology and fMRI</a></p></li>
 </ul>
 <div class="section" id="what-pulse-sequence-shoudl-i-use-epi-or-spiral-what-are-pros-and-cons-of-each-what-do-each-of-them-get-you">
 <h3>1. What pulse sequence shoudl I use (EPI or spiral)?: What are pros and cons of each? What do each of them get you?<a class="headerlink" href="#what-pulse-sequence-shoudl-i-use-epi-or-spiral-what-are-pros-and-cons-of-each-what-do-each-of-them-get-you" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>EPI: More widely used, and hence supported by all fMRI analysis programs. Some programs (FSL, or SPM’s unwarping module, for example) do not support spiral data. Can be subject to less drop-out in some regions than spiral-in or spiral-out data alone. Can be easier to figure out what the slice ordering is.</li>
-<li>Spiral: Properly weighted and combined, spiral in-out shows significantly less signal drop-out and shows significantly greater activations in many areas of the brain, including ventromedial PFC, medial temporal lobe, etc. Effect is even more pronounced at higher field strengths (see Preston et. al). However, it is less widely supported, and Gary’s trademark spiral i-o sequence may not even be physically possible on some other institutions’ equipment.</li>
+<li><p>EPI: More widely used, and hence supported by all fMRI analysis programs. Some programs (FSL, or SPM’s unwarping module, for example) do not support spiral data. Can be subject to less drop-out in some regions than spiral-in or spiral-out data alone. Can be easier to figure out what the slice ordering is.</p></li>
+<li><p>Spiral: Properly weighted and combined, spiral in-out shows significantly less signal drop-out and shows significantly greater activations in many areas of the brain, including ventromedial PFC, medial temporal lobe, etc. Effect is even more pronounced at higher field strengths (see Preston et. al). However, it is less widely supported, and Gary’s trademark spiral i-o sequence may not even be physically possible on some other institutions’ equipment.</p></li>
 </ul>
 </div>
 <div class="section" id="what-should-your-tr-be-what-are-the-tradeoffs-and-what-s-the-best-tradeoff-of-coverage-vs-speed-for-different-types-of-analysis">
@@ -1298,8 +1300,8 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h3>7. At what point in the processing stream should you use it?<a class="headerlink" href="#at-what-point-in-the-processing-stream-should-you-use-it" title="Permalink to this headline">¶</a></h3>
 <p>This is the great open question about slice timing, and it’s not super-answerable. Both SPM and AFNI recommend you do it before doing realignment/motion correction, but it’s not entirely clear why. The issue is this:</p>
 <ul class="simple">
-<li>If you do slice timing correction before realignment, you might look down your non-realigned timecourse for a given voxel on the border of gray matter and CSF, say, and see one TR where the head moved and the voxel sampled from CSF instead of gray. This would results in an interpolation error for that voxel, as it would attempt to interpolate part of that big giant signal into the previous voxel.</li>
-<li>On the other hand, if you do realignment before slice timing correction, you might shift a voxel or a set of voxels onto a different slice, and then you’d apply the wrong amount of slice timing correction to them when you corrected - you’d be shifting the signal as if it had come from slice 20, say, when it actually came from slice 19, and shouldn’t be shifted as much. There’s no way to avoid all the error (short of doing a four-dimensional realignment process combining spatial and temporal correction - possibly coming soon), but I believe the current thinking is that doing slice timing first minimizes your possible error. The set of voxels subject to such an interpolation error is small, and the interpolation into another TR will also be small and will only affect a few TRs in the timecourse. By contrast, if one realigns first, many voxels in a slice could be affected at once, and their whole timecourses will be affected. I think that’s why it makes sense to do slice timing first. That said, here’s some articles from the SPM e-mail list that comment helpfully on this subject both ways, and there are even more if you do a search for “slice timing AND before” in the archives of the list.</li>
+<li><p>If you do slice timing correction before realignment, you might look down your non-realigned timecourse for a given voxel on the border of gray matter and CSF, say, and see one TR where the head moved and the voxel sampled from CSF instead of gray. This would results in an interpolation error for that voxel, as it would attempt to interpolate part of that big giant signal into the previous voxel.</p></li>
+<li><p>On the other hand, if you do realignment before slice timing correction, you might shift a voxel or a set of voxels onto a different slice, and then you’d apply the wrong amount of slice timing correction to them when you corrected - you’d be shifting the signal as if it had come from slice 20, say, when it actually came from slice 19, and shouldn’t be shifted as much. There’s no way to avoid all the error (short of doing a four-dimensional realignment process combining spatial and temporal correction - possibly coming soon), but I believe the current thinking is that doing slice timing first minimizes your possible error. The set of voxels subject to such an interpolation error is small, and the interpolation into another TR will also be small and will only affect a few TRs in the timecourse. By contrast, if one realigns first, many voxels in a slice could be affected at once, and their whole timecourses will be affected. I think that’s why it makes sense to do slice timing first. That said, here’s some articles from the SPM e-mail list that comment helpfully on this subject both ways, and there are even more if you do a search for “slice timing AND before” in the archives of the list.</p></li>
 </ul>
 </div>
 <div class="section" id="how-should-you-choose-your-reference-slice">
@@ -1332,19 +1334,19 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <h3>3. When should you smooth? When should you not?<a class="headerlink" href="#when-should-you-smooth-when-should-you-not" title="Permalink to this headline">¶</a></h3>
 <p><strong>Smoothing is a good idea if:</strong></p>
 <ul class="simple">
-<li>You’re not particularly concerned with voxel-by-voxel resolution.</li>
-<li>You’re not particularly concerned with finding small (less than a handful of voxels) clusters.</li>
-<li>You want (or need) to improve your signal-to-noise ratio.</li>
-<li>You’re averaging results over a group, in a brain region where functional anatomy and organization isn’t precisely known.</li>
-<li>You’re using SPM, and you want to use p-values corrected with Gaussian field theory (as opposed to FDR).</li>
+<li><p>You’re not particularly concerned with voxel-by-voxel resolution.</p></li>
+<li><p>You’re not particularly concerned with finding small (less than a handful of voxels) clusters.</p></li>
+<li><p>You want (or need) to improve your signal-to-noise ratio.</p></li>
+<li><p>You’re averaging results over a group, in a brain region where functional anatomy and organization isn’t precisely known.</p></li>
+<li><p>You’re using SPM, and you want to use p-values corrected with Gaussian field theory (as opposed to FDR).</p></li>
 </ul>
 <p><strong>Smoothing’d not a good idea if:</strong></p>
 <ul class="simple">
-<li>You need voxel-by-voxel resolution.</li>
-<li>You believe your activations of interest will only be a few voxels large.</li>
-<li>You’re confident your task will generate large amounts of signal relative to noise.</li>
-<li>You’re working primarily with single-subject results.</li>
-<li>You’re mainly interested in getting region-of-interest data from very specific structures that you’ve drawn with high resolution on single subjects.</li>
+<li><p>You need voxel-by-voxel resolution.</p></li>
+<li><p>You believe your activations of interest will only be a few voxels large.</p></li>
+<li><p>You’re confident your task will generate large amounts of signal relative to noise.</p></li>
+<li><p>You’re working primarily with single-subject results.</p></li>
+<li><p>You’re mainly interested in getting region-of-interest data from very specific structures that you’ve drawn with high resolution on single subjects.</p></li>
 </ul>
 </div>
 <div class="section" id="at-what-point-in-your-analysis-stream-should-you-smooth">
@@ -1386,11 +1388,11 @@ Error in ==&gt; /usr/local/MATLAB/R2014a/toolbox/spm12/spm_fmri_spm_ui.m
 <p>Those voxels are where brain activity in your experiment was heavily influenced by one condition in your experiment more than another condition, so heavily influenced as to make it unlikely that activity was just noise. Those voxels were brighter / more intense in one condition of your experiment than they were in another with great reliability, and so they’re considered active.</p>
 <p>For more detail about a particular aspect of spatial preprocessing, check out the individual FAQ pages at:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#coregistration">Coregistration</a></li>
-<li><a class="reference internal" href="#realignment">Realignment</a></li>
-<li><a class="reference internal" href="#normalization">Normalization</a></li>
-<li><a class="reference internal" href="#smoothing">Smoothing</a></li>
-<li><a class="reference internal" href="#slice-timing">Slice Timing</a></li>
+<li><p><a class="reference internal" href="#coregistration">Coregistration</a></p></li>
+<li><p><a class="reference internal" href="#realignment">Realignment</a></p></li>
+<li><p><a class="reference internal" href="#normalization">Normalization</a></p></li>
+<li><p><a class="reference internal" href="#smoothing">Smoothing</a></p></li>
+<li><p><a class="reference internal" href="#slice-timing">Slice Timing</a></p></li>
 </ul>
 </div>
 <div class="section" id="temporal-filtering">
@@ -1418,8 +1420,8 @@ Finally, you could apply combinations of these filters to try and restrict the s
 <h3>4. What’s good about low-pass filtering? Bad?<a class="headerlink" href="#whats-good-about-low-pass-filtering-bad" title="Permalink to this headline">¶</a></h3>
 <p>Low-pass filtering is much more controversial in MRI, and even in the face of mounting empirical evidence that it wasn’t doing much good, the SPM group long offered some substantial and reasonable arguments in favor of it. The two big reasons offered in favor of low-pass filtering broke down as:</p>
 <ul class="simple">
-<li>The matched-filter theorem suggests filtering our timecourse with a filter shaped like an HRF should enhance signals of that shape relative to the noise, and</li>
-<li>We need to modify our general linear model to account for all the autocorrelation in fMRI noise; one way of doing that is by conditioning our data with a low-pass filter - essentially ‘coloring’ the noise spectrum, or introducing our own autocorrelations - and assuming that our introduced autocorrelation ‘swamps’ the existing autocorrelations, so that they can be ignored. (See <a class="reference internal" href="#basic-statistical-modeling">Basic Statistical Modeling</a> for more on this.) This was a way of getting around early ignorance about the shape of the noise spectrum in fMRI and avoiding the computational burden of approximating the autocorrelation function for each model. Even as those burdens began to be overcome, Friston et. al pointed out potential problems with pre-whitening the data as opposed to low-pass filtering, relating to potential biases of the analysis.</li>
+<li><p>The matched-filter theorem suggests filtering our timecourse with a filter shaped like an HRF should enhance signals of that shape relative to the noise, and</p></li>
+<li><p>We need to modify our general linear model to account for all the autocorrelation in fMRI noise; one way of doing that is by conditioning our data with a low-pass filter - essentially ‘coloring’ the noise spectrum, or introducing our own autocorrelations - and assuming that our introduced autocorrelation ‘swamps’ the existing autocorrelations, so that they can be ignored. (See <a class="reference internal" href="#basic-statistical-modeling">Basic Statistical Modeling</a> for more on this.) This was a way of getting around early ignorance about the shape of the noise spectrum in fMRI and avoiding the computational burden of approximating the autocorrelation function for each model. Even as those burdens began to be overcome, Friston et. al pointed out potential problems with pre-whitening the data as opposed to low-pass filtering, relating to potential biases of the analysis.</p></li>
 </ul>
 <p>However, the mounting evidence demonstrating the failure of low-pass filtering, as well as advances in computation speed enabling better ways of dealing with autocorrelation, seem to have won the day. In practice, low-pass filtering seems to have the effect of greatly reducing one’s sensitivity to detecting true activations without significantly enhancing the ability to reject false ones (see Skudlarksi et. al, Della-Maggiore et. al). The problem with low-pass filtering seems to be that because noise is not independent from timepoint to timepoint in fMRI, ‘smoothing’ the timecourse doesn’t suppress the noise but can, in fact, enhance it relative to the signal - it amplifies the worst of the noise and smooths the peaks of the signal out. Simulations with white noise show significant benefits from low-pass filtering, but with real, correlated fMRI noise, the filtering because counter-effective. Due to these results and a better sense now of how to correctly pre-whiten the timeseries noise, low-pass filtering is now no longer available in SPM2, nor is it allowed by standard methods in AFNI or BrainVoyager.</p>
 </div>
@@ -1460,8 +1462,8 @@ Finally, you could apply combinations of these filters to try and restrict the s
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

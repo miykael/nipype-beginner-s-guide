@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -65,7 +67,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Table of content</a><ul>
 <li><a class="reference internal" href="#neuroimaging-and-nipype">Neuroimaging and Nipype</a></li>
@@ -79,15 +81,15 @@
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -104,8 +106,8 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="table-of-content">
 <h1>Table of content<a class="headerlink" href="#table-of-content" title="Permalink to this headline">¶</a></h1>
@@ -290,10 +292,10 @@
 <div class="section" id="downloads">
 <h2>Downloads<a class="headerlink" href="#downloads" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Download Nipype here: <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/install.html">Nipype Homepage</a>.</li>
-<li>Download this beginner’s guide as a PDF here: <a class="reference external" href="https://raw.githubusercontent.com/miykael/nipype-beginner-s-guide/master/NipypeBeginnersGuide.pdf">Nipype Beginner’s Guide</a></li>
-<li>Download all scripts from this beginner’s guide here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/tree/master/scripts">Scripts</a></li>
-<li>Download the <a class="reference external" href="https://openfmri.org/dataset/ds000102">Open fMRI dataset ‘Flanker task (event-related)’</a> used in this tutorial here: <a class="reference external" href="http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">Open fMRI Dataset - ds102</a></li>
+<li><p>Download Nipype here: <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/install.html">Nipype Homepage</a>.</p></li>
+<li><p>Download this beginner’s guide as a PDF here: <a class="reference external" href="https://raw.githubusercontent.com/miykael/nipype-beginner-s-guide/master/NipypeBeginnersGuide.pdf">Nipype Beginner’s Guide</a></p></li>
+<li><p>Download all scripts from this beginner’s guide here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/tree/master/scripts">Scripts</a></p></li>
+<li><p>Download the <a class="reference external" href="https://openfmri.org/dataset/ds000102">Open fMRI dataset ‘Flanker task (event-related)’</a> used in this tutorial here: <a class="reference external" href="http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">Open fMRI Dataset - ds102</a></p></li>
 </ul>
 </div>
 </div>
@@ -320,8 +322,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

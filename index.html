@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="#" />
@@ -69,7 +71,7 @@
             <p class="logo"><a href="#">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="#">Table Of Contents</a></h3>
+  <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to Nipype Beginner’s Guide!</a><ul>
 <li><a class="reference internal" href="#neuroimaging-and-nipype">Neuroimaging and Nipype</a></li>
@@ -86,15 +88,15 @@
   <p class="topless"><a href="nipype.html"
                         title="next chapter">Introduction to Nipype</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -111,8 +113,8 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="welcome-to-nipype-beginner-s-guide">
 <h1>Welcome to Nipype Beginner’s Guide!<a class="headerlink" href="#welcome-to-nipype-beginner-s-guide" title="Permalink to this headline">¶</a></h1>
@@ -120,14 +122,14 @@
 <div class="section" id="neuroimaging-and-nipype">
 <h2>Neuroimaging and Nipype<a class="headerlink" href="#neuroimaging-and-nipype" title="Permalink to this headline">¶</a></h2>
 <p>This part introduces you to Nipype, explains what it is and how it works. It will also introduce you to neuroimaging in general and tell you all you need to know for the analysis of a basic neuroimaging dataset. At the end, you should be able to understand what Nipype is, how it is working and why it is so useful in neuroimaging.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="81%" />
+<col style="width: 19%" />
+<col style="width: 81%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="_images/start.png"><img alt="start" src="_images/start.png" style="width: 80pt;" /></a></td>
-<td><div class="toctree-wrapper first last compound">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_images/start.png"><img alt="start" src="_images/start.png" style="width: 80pt;" /></a></p></td>
+<td><div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nipype.html">Introduction to Nipype</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nipype.html#what-is-nipype">What is Nipype?</a></li>
@@ -157,14 +159,14 @@
 <div class="section" id="get-nipype-to-run-on-your-system">
 <h2>Get Nipype to run on your System<a class="headerlink" href="#get-nipype-to-run-on-your-system" title="Permalink to this headline">¶</a></h2>
 <p>This part is all about downloading and installing Nipype and its dependencies. It will also show you how to set up all necessary environment variables and prepare everything, so that at the end you will be ready to run Nipype on your system.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="81%" />
+<col style="width: 19%" />
+<col style="width: 81%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="_images/setup.png"><img alt="setup" src="_images/setup.png" style="width: 80pt;" /></a></td>
-<td><div class="toctree-wrapper first last compound">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_images/setup.png"><img alt="setup" src="_images/setup.png" style="width: 80pt;" /></a></p></td>
+<td><div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Download and Install Nipype</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#prepare-your-system">Prepare your System</a></li>
@@ -195,14 +197,14 @@
 <div class="section" id="first-steps-with-nipype">
 <h2>First steps with Nipype<a class="headerlink" href="#first-steps-with-nipype" title="Permalink to this headline">¶</a></h2>
 <p>This part will show you how to use Nipype by analyzing an fMRI dataset. By going through a neuroimaging analysis step by step, you will learn all about Nipype, its building blocks and how to connect them to create your own analysis workflow. At the end you will be able to run your own neuroimaging analysis and make your first experiences with Nipype on real data.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="81%" />
+<col style="width: 19%" />
+<col style="width: 81%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="_images/nipype.png"><img alt="nipype" src="_images/nipype.png" style="width: 80pt;" /></a></td>
-<td><div class="toctree-wrapper first last compound">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_images/nipype.png"><img alt="nipype" src="_images/nipype.png" style="width: 80pt;" /></a></p></td>
+<td><div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="prepareData.html">Prepare your Dataset</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="prepareData.html#download-the-tutorial-dataset">Download the tutorial dataset</a></li>
@@ -234,14 +236,14 @@
 <div class="section" id="from-beginner-to-expert">
 <h2>From beginner to expert<a class="headerlink" href="#from-beginner-to-expert" title="Permalink to this headline">¶</a></h2>
 <p>This part contains many different implementations of Nipype. Amongst others, you will learn how to do a first and second level analysis, how to normalize your data, how to use Nipype in a more flexible way (e.g. import and reuse of other workflows), how to do a region of interest (ROI) analysis, how to do a surfaced based morphometry (SBM) analysis, how to use ANTs to create your own dataset template, how to quality control your data, how to use additional supporting toolboxes such as bips and mindboggle and more…</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="81%" />
+<col style="width: 19%" />
+<col style="width: 81%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="_images/expert.png"><img alt="expert" src="_images/expert.png" style="width: 80pt;" /></a></td>
-<td><div class="toctree-wrapper first last compound">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_images/expert.png"><img alt="expert" src="_images/expert.png" style="width: 80pt;" /></a></p></td>
+<td><div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="firstLevel.html">How To Build A Pipeline For A First Level fMRI Analysis</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="firstLevel.html#define-the-structure-of-your-pipeline">Define the structure of your pipeline</a></li>
@@ -271,14 +273,14 @@
 <div class="section" id="support">
 <h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
 <p>First things first: <strong>Don’t panic!</strong> This part will show you how to tackle almost all problems you can encounter by using Nipype, iPython or this beginner’s guide. And for everything else, there’s always chocolate!</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="81%" />
+<col style="width: 19%" />
+<col style="width: 81%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="_images/support.png"><img alt="support" src="_images/support.png" style="width: 80pt;" /></a></td>
-<td><div class="toctree-wrapper first last compound">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_images/support.png"><img alt="support" src="_images/support.png" style="width: 80pt;" /></a></p></td>
+<td><div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="help.html">Help &amp; Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="links.html">Links to Nipype, Programming and Neuroimaging</a></li>
@@ -293,21 +295,21 @@
 </div>
 <div class="section" id="id1">
 <h2>Downloads<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="5%" />
-<col width="95%" />
+<col style="width: 5%" />
+<col style="width: 95%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="_images/data.png"><img alt="data" src="_images/data.png" style="width: 60pt;" /></a></td>
-<td><p class="first">Everything important to download can be found in this section.</p>
-<ul class="last simple">
-<li>Nipype can be downloaded here: <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/install.html">How to install Nipype</a>.</li>
-<li>All Scripts used in this Beginner’s Guide can be found on the Beginner’s Guide <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts">Github homepage</a>.</li>
-<li>The dataset <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> used as the tutorial dataset
-for this beginner’s guide can be directly downloaded here: <a class="reference external" href="http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">ds102_raw.tgz</a>.</li>
-<li>This Beginner’s Guide can be downloaded as a PDF
-<a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true">here</a>.</li>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_images/data.png"><img alt="data" src="_images/data.png" style="width: 60pt;" /></a></p></td>
+<td><p>Everything important to download can be found in this section.</p>
+<ul class="simple">
+<li><p>Nipype can be downloaded here: <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/install.html">How to install Nipype</a>.</p></li>
+<li><p>All Scripts used in this Beginner’s Guide can be found on the Beginner’s Guide <a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts">Github homepage</a>.</p></li>
+<li><p>The dataset <a class="reference external" href="https://openfmri.org/dataset/ds000102">DS102: Flanker task (event-related)</a> used as the tutorial dataset
+for this beginner’s guide can be directly downloaded here: <a class="reference external" href="http://openfmri.s3.amazonaws.com/tarballs/ds102_raw.tgz">ds102_raw.tgz</a>.</p></li>
+<li><p>This Beginner’s Guide can be downloaded as a PDF
+<a class="reference external" href="http://github.com/miykael/nipype-beginner-s-guide/blob/master/NipypeBeginnersGuide.pdf?raw=true">here</a>.</p></li>
 </ul>
 </td>
 </tr>
@@ -341,8 +343,8 @@ for this beginner’s guide can be directly downloaded here: <a class="reference
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

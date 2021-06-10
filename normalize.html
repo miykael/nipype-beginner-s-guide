@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -73,7 +75,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How To Normalize Your Data</a><ul>
 <li><a class="reference internal" href="#normalize-your-data-with-ants">Normalize Your Data with ANTs</a><ul>
@@ -113,15 +115,15 @@
   <p class="topless"><a href="secondLevel.html"
                         title="next chapter">How To Build A Pipeline For A Second Level fMRI Analysis</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -138,8 +140,8 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="how-to-normalize-your-data">
 <h1>How To Normalize Your Data<a class="headerlink" href="#how-to-normalize-your-data" title="Permalink to this headline">¶</a></h1>
@@ -152,13 +154,13 @@
 <p>Usually, we first normalize the subject specific anatomy to the template and then use the resulting transformation matrix to normalize the functional data (i.e. first level contrasts) to the template. But this also means that we assume that the functional and the anatomical data is laying on top of each other, or in other words, that they were coregistered to each other.</p>
 <p>The coregistration of the functional data to the anatomical data means multiple interpolation of your data. That’s why the coregistration and the normalization of your functional data should be done directly in one transformation. To account for both possible cases, the following script will show you both ways. The approach where both coregistration and normalization will be done in one step will be called <strong>complete transformation</strong>, and the approach where we only do a normalization will be called <strong>partial transformation</strong>. Partial does not mean that it doesn’t lead to a complete normalization of the data, it just means that the coregistration of the functional and structural data was already done in an earlier step.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">A big thanks to <a class="reference external" href="https://github.com/juhuntenburg">Julia Huntenburg</a>! Without her help and knowledge about ANTs and Nipype this section wouldn’t exist, as she provided me with the relevant code and structure of this pipeline.</p>
+<p class="admonition-title">Important</p>
+<p>A big thanks to <a class="reference external" href="https://github.com/juhuntenburg">Julia Huntenburg</a>! Without her help and knowledge about ANTs and Nipype this section wouldn’t exist, as she provided me with the relevant code and structure of this pipeline.</p>
 </div>
 <div class="section" id="import-modules-and-specify-interface-behaviors">
 <h3>Import modules and specify interface behaviors<a class="headerlink" href="#import-modules-and-specify-interface-behaviors" title="Permalink to this headline">¶</a></h3>
 <p>But first, as always, we have to import necessary modules and tell the system where to find the FreeSurfer folder.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -188,8 +190,8 @@
 </div>
 <div class="section" id="define-experiment-specific-parameters">
 <h3>Define experiment specific parameters<a class="headerlink" href="#define-experiment-specific-parameters" title="Permalink to this headline">¶</a></h3>
-<p>Now we define the names of the folders used for this pipeline, we specify the list of subjects which should be normalized and specify which template the data should be normalized too. In this case it is the <code class="docutils literal"><span class="pre">MNI152_T1_1mm_brain.nii.gz</span></code> template.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>Now we define the names of the folders used for this pipeline, we specify the list of subjects which should be normalized and specify which template the data should be normalized too. In this case it is the <code class="docutils literal notranslate"><span class="pre">MNI152_T1_1mm_brain.nii.gz</span></code> template.</p>
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -215,9 +217,9 @@
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p>For other templates check out the ones in FSL’s <code class="docutils literal"><span class="pre">standard</span></code> folder, in my case this is under <code class="docutils literal"><span class="pre">/usr/share/fsl/data/standard</span></code>. You can also see a list and access them much easier within Nipype with the following code:</p>
-<div class="last highlight-py"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nipype.interfaces.fsl</span> <span class="kn">import</span> <span class="n">Info</span>
+<p class="admonition-title">Hint</p>
+<p>For other templates check out the ones in FSL’s <code class="docutils literal notranslate"><span class="pre">standard</span></code> folder, in my case this is under <code class="docutils literal notranslate"><span class="pre">/usr/share/fsl/data/standard</span></code>. You can also see a list and access them much easier within Nipype with the following code:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nipype.interfaces.fsl</span> <span class="kn">import</span> <span class="n">Info</span>
 <span class="n">Info</span><span class="o">.</span><span class="n">standard_image</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -225,8 +227,8 @@
 </div>
 <div class="section" id="create-nodes">
 <h3>Create nodes<a class="headerlink" href="#create-nodes" title="Permalink to this headline">¶</a></h3>
-<p>In both cases, the <strong>complete</strong> as well as the <strong>partial</strong> transformation approach, we will use ANTs’ <code class="docutils literal"><span class="pre">Registration</span></code> to compute the transformation matrix between the subject specific anatomy and the template:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>In both cases, the <strong>complete</strong> as well as the <strong>partial</strong> transformation approach, we will use ANTs’ <code class="docutils literal notranslate"><span class="pre">Registration</span></code> to compute the transformation matrix between the subject specific anatomy and the template:</p>
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -260,12 +262,12 @@
 32
 33</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Registration (good) - computes registration between subject&#39;s structural and MNI template.</span>
 <span class="n">antsreg</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Registration</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;--float&#39;</span><span class="p">,</span>
-                            <span class="n">collapse_output_transforms</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">collapse_output_transforms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">fixed_image</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
-                            <span class="n">initial_moving_transform_com</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">initial_moving_transform_com</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                            <span class="n">output_inverse_warped_image</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                            <span class="n">output_warped_image</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">output_inverse_warped_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">output_warped_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">sigma_units</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vox&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
                             <span class="n">transforms</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rigid&#39;</span><span class="p">,</span> <span class="s1">&#39;Affine&#39;</span><span class="p">,</span> <span class="s1">&#39;SyN&#39;</span><span class="p">],</span>
                             <span class="n">terminal_output</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span>
@@ -288,14 +290,14 @@
                             <span class="n">transform_parameters</span><span class="o">=</span><span class="p">[(</span><span class="mf">0.1</span><span class="p">,),</span>
                                                   <span class="p">(</span><span class="mf">0.1</span><span class="p">,),</span>
                                                   <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)],</span>
-                            <span class="n">use_histogram_matching</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                            <span class="n">write_composite_transform</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                            <span class="n">use_histogram_matching</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">write_composite_transform</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;antsreg&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>This registration node <code class="docutils literal"><span class="pre">antsreg</span></code> might take a while, depending on the power of your system. One way to speed up this process is by using multiple cores/threads for the calculation. For example, use 4 cores for the calculation by setting the parameter <code class="docutils literal"><span class="pre">num_threads</span></code> to 4. But be aware, that if you run the normalization pipeline for 10 subjects in parallel, the code will try to launch 10 instances of ANTs registration with each asking for 4 cores.</p>
-<p>Another approach to reduce the computation time of the registration is by reducing its accuracy by changing the parameters of <code class="docutils literal"><span class="pre">Registration</span></code> according to the following script: <a class="reference external" href="https://github.com/stnava/ANTs/blob/master/Scripts/newAntsExample.sh">https://github.com/stnava/ANTs/blob/master/Scripts/newAntsExample.sh</a> to the following:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>This registration node <code class="docutils literal notranslate"><span class="pre">antsreg</span></code> might take a while, depending on the power of your system. One way to speed up this process is by using multiple cores/threads for the calculation. For example, use 4 cores for the calculation by setting the parameter <code class="docutils literal notranslate"><span class="pre">num_threads</span></code> to 4. But be aware, that if you run the normalization pipeline for 10 subjects in parallel, the code will try to launch 10 instances of ANTs registration with each asking for 4 cores.</p>
+<p>Another approach to reduce the computation time of the registration is by reducing its accuracy by changing the parameters of <code class="docutils literal notranslate"><span class="pre">Registration</span></code> according to the following script: <a class="reference external" href="https://github.com/stnava/ANTs/blob/master/Scripts/newAntsExample.sh">https://github.com/stnava/ANTs/blob/master/Scripts/newAntsExample.sh</a> to the following:</p>
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -334,12 +336,12 @@
 37
 38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Registration (fast) - computes registration between subject&#39;s structural and MNI template.</span>
 <span class="n">antsregfast</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">Registration</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;--float&#39;</span><span class="p">,</span>
-                                <span class="n">collapse_output_transforms</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                <span class="n">collapse_output_transforms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                 <span class="n">fixed_image</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
-                                <span class="n">initial_moving_transform_com</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                <span class="n">initial_moving_transform_com</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                 <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                                <span class="n">output_inverse_warped_image</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                                <span class="n">output_warped_image</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                <span class="n">output_inverse_warped_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">output_warped_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                 <span class="n">sigma_units</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vox&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
                                 <span class="n">transforms</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Rigid&#39;</span><span class="p">,</span> <span class="s1">&#39;Affine&#39;</span><span class="p">,</span> <span class="s1">&#39;SyN&#39;</span><span class="p">],</span>
                                 <span class="n">terminal_output</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span>
@@ -353,10 +355,10 @@
                                                       <span class="p">[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">11110</span><span class="p">,</span> <span class="mi">11110</span><span class="p">],</span>
                                                       <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">]],</span>
                                 <span class="n">radius_or_number_of_bins</span><span class="o">=</span><span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span>
-                                <span class="n">sampling_percentage</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]],</span>
+                                <span class="n">sampling_percentage</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]],</span>
                                 <span class="n">sampling_strategy</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Regular&#39;</span><span class="p">,</span>
                                                    <span class="s1">&#39;Regular&#39;</span><span class="p">,</span>
-                                                   <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]],</span>
+                                                   <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]],</span>
                                 <span class="n">shrink_factors</span><span class="o">=</span><span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
                                                 <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
                                                 <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
@@ -366,17 +368,17 @@
                                 <span class="n">transform_parameters</span><span class="o">=</span><span class="p">[(</span><span class="mf">0.1</span><span class="p">,),</span>
                                                       <span class="p">(</span><span class="mf">0.1</span><span class="p">,),</span>
                                                       <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)],</span>
-                                <span class="n">use_estimate_learning_rate_once</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
-                                <span class="n">use_histogram_matching</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">],</span>
-                                <span class="n">write_composite_transform</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                                <span class="n">use_estimate_learning_rate_once</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
+                                <span class="n">use_histogram_matching</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+                                <span class="n">write_composite_transform</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;antsregfast&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>Now that we have the transformation matrix to normalize the functional data to the template, we  can use ANTs’ <code class="docutils literal"><span class="pre">ApplyTransforms</span></code> to execute that. <strong>Note</strong>: Here you have again the option to specify the number of threads used in the interpolation of the data.</p>
+<p>Now that we have the transformation matrix to normalize the functional data to the template, we  can use ANTs’ <code class="docutils literal notranslate"><span class="pre">ApplyTransforms</span></code> to execute that. <strong>Note</strong>: Here you have again the option to specify the number of threads used in the interpolation of the data.</p>
 <div class="section" id="partial-transformation">
 <h4>Partial Transformation<a class="headerlink" href="#partial-transformation" title="Permalink to this headline">¶</a></h4>
 <p>In the partial transformation approach, we only need the following additional nodes. One to normalize the anatomical and one to normalize the functional data.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -398,7 +400,7 @@
 <span class="n">apply2con</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;--float&#39;</span><span class="p">,</span>
                                     <span class="n">input_image_type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                                     <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span>
-                                    <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">],</span>
+                                    <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">],</span>
                                     <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                                     <span class="n">reference_image</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
                                     <span class="n">terminal_output</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">),</span>
@@ -408,7 +410,7 @@
 <span class="n">apply2mean</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;--float&#39;</span><span class="p">,</span>
                                   <span class="n">input_image_type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                                   <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span>
-                                  <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">],</span>
+                                  <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">],</span>
                                   <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                                   <span class="n">reference_image</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
                                   <span class="n">terminal_output</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">),</span>
@@ -418,8 +420,8 @@
 </div>
 <div class="section" id="complete-transformation">
 <h4>Complete Transformation<a class="headerlink" href="#complete-transformation" title="Permalink to this headline">¶</a></h4>
-<p>For the complete transformation, we also need to calculate the coregistration matrix (we will use FreeSurfer’s <cite>BBRegister</cite> for that). But first, we need to use FreeSurfer’s <code class="docutils literal"><span class="pre">FreeSurferSource</span></code> to grab the subject specific anatomy, convert it from MGZ to NII format with <code class="docutils literal"><span class="pre">MRIConvert</span></code>. Than we need to transform the BBRegister transformation matrix to ITK format with <code class="docutils literal"><span class="pre">C3dAffineTool</span></code> and merge this transformation matrix with the transformation matrix from the normalization, i.e. <code class="docutils literal"><span class="pre">antsreg</span></code>, by using a <code class="docutils literal"><span class="pre">Merge</span></code> node.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>For the complete transformation, we also need to calculate the coregistration matrix (we will use FreeSurfer’s <cite>BBRegister</cite> for that). But first, we need to use FreeSurfer’s <code class="docutils literal notranslate"><span class="pre">FreeSurferSource</span></code> to grab the subject specific anatomy, convert it from MGZ to NII format with <code class="docutils literal notranslate"><span class="pre">MRIConvert</span></code>. Than we need to transform the BBRegister transformation matrix to ITK format with <code class="docutils literal notranslate"><span class="pre">C3dAffineTool</span></code> and merge this transformation matrix with the transformation matrix from the normalization, i.e. <code class="docutils literal notranslate"><span class="pre">antsreg</span></code>, by using a <code class="docutils literal notranslate"><span class="pre">Merge</span></code> node.</p>
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -442,7 +444,7 @@
 21
 22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># FreeSurferSource - Data grabber specific for FreeSurfer data</span>
 <span class="n">fssource</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">FreeSurferSource</span><span class="p">(</span><span class="n">subjects_dir</span><span class="o">=</span><span class="n">fs_dir</span><span class="p">),</span>
-                <span class="n">run_without_submitting</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fssource&#39;</span><span class="p">)</span>
 
 <span class="c1"># Convert FreeSurfer&#39;s MGZ format into NIfTI format</span>
@@ -451,12 +453,12 @@
 <span class="c1"># Coregister the median to the surface</span>
 <span class="n">bbregister</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">BBRegister</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="s1">&#39;fsl&#39;</span><span class="p">,</span>
                              <span class="n">contrast_type</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">,</span>
-                             <span class="n">out_fsl_file</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                             <span class="n">out_fsl_file</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bbregister&#39;</span><span class="p">)</span>
 
 <span class="c1"># Convert the BBRegister transformation to ANTS ITK format</span>
-<span class="n">convert2itk</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">C3dAffineTool</span><span class="p">(</span><span class="n">fsl2ras</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                                 <span class="n">itk_transform</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+<span class="n">convert2itk</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">C3dAffineTool</span><span class="p">(</span><span class="n">fsl2ras</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                 <span class="n">itk_transform</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;convert2itk&#39;</span><span class="p">)</span>
 
 
@@ -465,11 +467,11 @@
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Before you can use the <code class="docutils literal"><span class="pre">C3dAffineTool</span></code> you have to make sure that you have the C3D routines on your system. Otherwise you get the following error: <code class="docutils literal"><span class="pre">IOError:</span> <span class="pre">c3d_affine_tool</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">found</span> <span class="pre">on</span> <span class="pre">host</span></code>. To download the newest C3D version, go to <a class="reference external" href="http://sourceforge.net/projects/c3d/">this homepage</a>. Afterwards, unpack and install the code on your system, this can be done with the following command: <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">tar</span> <span class="pre">xzvf</span> <span class="pre">~/Downloads/c3d-nightly-Linux-x86_64.tar.gz</span> <span class="pre">-C</span> <span class="pre">/usr/local/.</span></code>. And finally, to make sure that your system finds the binaries of this software, add the following line to your <code class="docutils literal"><span class="pre">.bashrc</span></code> file: <code class="docutils literal"><span class="pre">export</span> <span class="pre">PATH=/usr/local/c3d-1.0.0-Linux-x86_64/bin:$PATH</span></code>.</p>
+<p class="admonition-title">Note</p>
+<p>Before you can use the <code class="docutils literal notranslate"><span class="pre">C3dAffineTool</span></code> you have to make sure that you have the C3D routines on your system. Otherwise you get the following error: <code class="docutils literal notranslate"><span class="pre">IOError:</span> <span class="pre">c3d_affine_tool</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">found</span> <span class="pre">on</span> <span class="pre">host</span></code>. To download the newest C3D version, go to <a class="reference external" href="http://sourceforge.net/projects/c3d/">this homepage</a>. Afterwards, unpack and install the code on your system, this can be done with the following command: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">tar</span> <span class="pre">xzvf</span> <span class="pre">~/Downloads/c3d-nightly-Linux-x86_64.tar.gz</span> <span class="pre">-C</span> <span class="pre">/usr/local/.</span></code>. And finally, to make sure that your system finds the binaries of this software, add the following line to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file: <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=/usr/local/c3d-1.0.0-Linux-x86_64/bin:$PATH</span></code>.</p>
 </div>
 <p>Now that we have the couplet transformation matrix, we can normalize the anatomical and functional data with the following two nodes:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -491,7 +493,7 @@
 <span class="n">warpall</span> <span class="o">=</span> <span class="n">MapNode</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;--float&#39;</span><span class="p">,</span>
                                   <span class="n">input_image_type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                                   <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span>
-                                  <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
+                                  <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
                                   <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                                   <span class="n">reference_image</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
                                   <span class="n">terminal_output</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">),</span>
@@ -501,7 +503,7 @@
 <span class="n">warpmean</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;--float&#39;</span><span class="p">,</span>
                                 <span class="n">input_image_type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                                 <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span>
-                                <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
+                                <span class="n">invert_transform_flags</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
                                 <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                                 <span class="n">reference_image</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
                                 <span class="n">terminal_output</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">),</span>
@@ -509,14 +511,14 @@
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">A very important difference between the partial and the complete approach is that the parameter <code class="docutils literal"><span class="pre">invert_transform_flags</span></code> of the <code class="docutils literal"><span class="pre">ApplyTransforms</span></code> has two values in the case where we have two transformation matrices and only one value where we have only one transformation. If this is not accounted for than you get the following error: <code class="docutils literal"><span class="pre">ERROR:</span> <span class="pre">The</span> <span class="pre">useInverse</span> <span class="pre">list</span> <span class="pre">must</span> <span class="pre">have</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">entries</span> <span class="pre">as</span> <span class="pre">the</span> <span class="pre">transformsFileName</span> <span class="pre">list</span></code>.</p>
+<p class="admonition-title">Note</p>
+<p>A very important difference between the partial and the complete approach is that the parameter <code class="docutils literal notranslate"><span class="pre">invert_transform_flags</span></code> of the <code class="docutils literal notranslate"><span class="pre">ApplyTransforms</span></code> has two values in the case where we have two transformation matrices and only one value where we have only one transformation. If this is not accounted for than you get the following error: <code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">The</span> <span class="pre">useInverse</span> <span class="pre">list</span> <span class="pre">must</span> <span class="pre">have</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">entries</span> <span class="pre">as</span> <span class="pre">the</span> <span class="pre">transformsFileName</span> <span class="pre">list</span></code>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="create-the-pipeline-and-connect-nodes-to-it">
 <h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#create-the-pipeline-and-connect-nodes-to-it" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Initiation of the ANTS normalization workflow</span>
 <span class="n">normflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;normflow&#39;</span><span class="p">)</span>
@@ -524,7 +526,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>For the <strong>partial transformation</strong> use the following code:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
@@ -536,7 +538,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>For the <strong>complete transformation</strong> use the following code:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -562,7 +564,7 @@
 </div>
 <div class="section" id="establish-input-output-stream">
 <h3>Establish Input &amp; Output Stream<a class="headerlink" href="#establish-input-output-stream" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -599,11 +601,11 @@
 <span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)]</span>
 
 <span class="c1"># SelectFiles - to grab the data (alternativ to DataGrabber)</span>
-<span class="n">anat_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="s1">&#39;freesurfer&#39;</span><span class="p">,</span> <span class="s1">&#39;{subject_id}&#39;</span><span class="p">,</span> <span class="s1">&#39;mri/brain.mgz&#39;</span><span class="p">)</span>
-<span class="n">func_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;contrasts&#39;</span><span class="p">,</span> <span class="s1">&#39;{subject_id}&#39;</span><span class="p">,</span>
+<span class="n">anat_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="s1">&#39;freesurfer&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{subject_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;mri/brain.mgz&#39;</span><span class="p">)</span>
+<span class="n">func_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;contrasts&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{subject_id}</span><span class="s1">&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;_mriconvert*/*_out.nii.gz&#39;</span><span class="p">)</span>
-<span class="n">func_orig_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;contrasts&#39;</span><span class="p">,</span> <span class="s1">&#39;{subject_id}&#39;</span><span class="p">,</span> <span class="s1">&#39;[ce]*.nii&#39;</span><span class="p">)</span>
-<span class="n">mean_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;preprocout&#39;</span><span class="p">,</span> <span class="s1">&#39;{subject_id}&#39;</span><span class="p">,</span> <span class="s1">&#39;mean*.nii&#39;</span><span class="p">)</span>
+<span class="n">func_orig_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;contrasts&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{subject_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;[ce]*.nii&#39;</span><span class="p">)</span>
+<span class="n">mean_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;preprocout&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{subject_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;mean*.nii&#39;</span><span class="p">)</span>
 
 <span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;anat&#39;</span><span class="p">:</span> <span class="n">anat_file</span><span class="p">,</span>
              <span class="s1">&#39;func&#39;</span><span class="p">:</span> <span class="n">func_file</span><span class="p">,</span>
@@ -628,7 +630,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>For the <strong>partial transformation</strong> use the following code:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -666,7 +668,7 @@
 </pre></div>
 </td></tr></table></div>
 <p>For the <strong>complete transformation</strong> use the following code:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -711,14 +713,14 @@
 <div class="section" id="run-the-pipeline-and-generate-the-graphs">
 <h3>Run the pipeline and generate the graphs<a class="headerlink" href="#run-the-pipeline-and-generate-the-graphs" title="Permalink to this headline">¶</a></h3>
 <p>Now, let’s run the workflow with the following code:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">normflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">normflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">You can download the code for the partial and complete normalization with ANTS as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_complete.py">example_fMRI_2_normalize_ANTS_complete.py</a> or <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_partial.py">example_fMRI_2_normalize_ANTS_partial.py</a></p>
+<p class="admonition-title">Hint</p>
+<p>You can download the code for the partial and complete normalization with ANTS as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_complete.py">example_fMRI_2_normalize_ANTS_complete.py</a> or <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_ANTS_partial.py">example_fMRI_2_normalize_ANTS_partial.py</a></p>
 </div>
 </div>
 <div class="section" id="visualize-the-workflow">
@@ -731,7 +733,7 @@
 <div class="section" id="resulting-folder-structure">
 <h3>Resulting Folder Structure<a class="headerlink" href="#resulting-folder-structure" title="Permalink to this headline">¶</a></h3>
 <p>The resulting folder structure looks for the <strong>partial</strong> and <strong>complete</strong> approach combined as follows:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>output_fMRI_example_norm_ants/
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>output_fMRI_example_norm_ants/
 <span class="p">|</span>-- antsreg
 <span class="p">|</span>   <span class="p">|</span>-- sub001
 <span class="p">|</span>   <span class="p">|</span>   <span class="p">|</span>-- transformComposite.h5
@@ -780,11 +782,11 @@
 </div>
 <div class="section" id="normalize-your-data-with-spm12">
 <h2>Normalize Your Data with SPM12<a class="headerlink" href="#normalize-your-data-with-spm12" title="Permalink to this headline">¶</a></h2>
-<p>The normalization of your data with SPM12 is much simpler than the one with ANTs. We only need to feed all the necessary inputs to a node called <code class="docutils literal"><span class="pre">Normalize12</span></code>.</p>
+<p>The normalization of your data with SPM12 is much simpler than the one with ANTs. We only need to feed all the necessary inputs to a node called <code class="docutils literal notranslate"><span class="pre">Normalize12</span></code>.</p>
 <div class="section" id="id1">
 <h3>Import modules and specify interface behaviors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>As always, let’s import necessary modules and tell the system where to find MATLAB.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -812,7 +814,7 @@
 </div>
 <div class="section" id="id2">
 <h3>Define experiment specific parameters<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -837,12 +839,12 @@
 <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/MATLAB/R2014a/toolbox/spm12/tpm/TPM.nii&#39;</span>
 </pre></div>
 </td></tr></table></div>
-<p>It’s important to note that SPM12 provides its own template <code class="docutils literal"><span class="pre">TMP.nii</span></code> to which the data will be normalized to.</p>
+<p>It’s important to note that SPM12 provides its own template <code class="docutils literal notranslate"><span class="pre">TMP.nii</span></code> to which the data will be normalized to.</p>
 </div>
 <div class="section" id="id3">
 <h3>Create nodes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>The functional and anatomical data that we want to normalize is in compressed ZIP format, which SPM12 can’t handle. Therefore we first have to unzip those files with <code class="docutils literal"><span class="pre">Gunzip</span></code>, before we can feed those files to SPM’s <code class="docutils literal"><span class="pre">Normalize12</span></code> node.</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>The functional and anatomical data that we want to normalize is in compressed ZIP format, which SPM12 can’t handle. Therefore we first have to unzip those files with <code class="docutils literal notranslate"><span class="pre">Gunzip</span></code>, before we can feed those files to SPM’s <code class="docutils literal notranslate"><span class="pre">Normalize12</span></code> node.</p>
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -870,7 +872,7 @@
 </div>
 <div class="section" id="id4">
 <h3>Create the pipeline and connect nodes to it<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
@@ -890,7 +892,7 @@
 </div>
 <div class="section" id="id5">
 <h3>Establish Input &amp; Output Stream<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -932,8 +934,8 @@
 <span class="n">infosource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="n">subject_list</span><span class="p">)]</span>
 
 <span class="c1"># SelectFiles - to grab the data (alternativ to DataGrabber)</span>
-<span class="n">anat_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;{subject_id}&#39;</span><span class="p">,</span> <span class="s1">&#39;struct.nii.gz&#39;</span><span class="p">)</span>
-<span class="n">con_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;contrasts&#39;</span><span class="p">,</span> <span class="s1">&#39;{subject_id}&#39;</span><span class="p">,</span>
+<span class="n">anat_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{subject_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;struct.nii.gz&#39;</span><span class="p">)</span>
+<span class="n">con_file</span> <span class="o">=</span> <span class="n">opj</span><span class="p">(</span><span class="n">input_dir_1st</span><span class="p">,</span> <span class="s1">&#39;contrasts&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{subject_id}</span><span class="s1">&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;_mriconvert*/*_out.nii.gz&#39;</span><span class="p">)</span>
 <span class="n">templates</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;anat&#39;</span><span class="p">:</span> <span class="n">anat_file</span><span class="p">,</span>
              <span class="s1">&#39;con&#39;</span><span class="p">:</span> <span class="n">con_file</span><span class="p">,</span>
@@ -969,14 +971,14 @@
 <div class="section" id="id6">
 <h3>Run the pipeline and generate the graphs<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>Now, let’s run the workflow with the following code:</p>
-<div class="highlight-py"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-py notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">normflow</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">graph2use</span><span class="o">=</span><span class="s1">&#39;colored&#39;</span><span class="p">)</span>
 <span class="n">normflow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;MultiProc&#39;</span><span class="p">,</span> <span class="n">plugin_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_procs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">You can download the code for the normalization with SPM12 as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_SPM.py">example_fMRI_2_normalize_SPM.py</a></p>
+<p class="admonition-title">Hint</p>
+<p>You can download the code for the normalization with SPM12 as a script here: <a class="reference external" href="https://github.com/miykael/nipype-beginner-s-guide/blob/master/scripts/example_fMRI_2_normalize_SPM.py">example_fMRI_2_normalize_SPM.py</a></p>
 </div>
 </div>
 <div class="section" id="id7">
@@ -987,7 +989,7 @@
 <div class="section" id="id8">
 <h3>Resulting Folder Structure<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>The resulting folder structure looks as follows:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>output_fMRI_example_norm_spm/
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>output_fMRI_example_norm_spm/
 <span class="p">|</span>-- normalized
     <span class="p">|</span>-- sub001
     <span class="p">|</span>   <span class="p">|</span>-- wcon_0001_out.nii
@@ -1034,8 +1036,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

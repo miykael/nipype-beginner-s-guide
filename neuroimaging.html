@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -73,7 +75,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Introduction to Neuroimaging</a><ul>
 <li><a class="reference internal" href="#acquisition-of-mri-data">Acquisition of MRI Data</a></li>
@@ -120,15 +122,15 @@
   <p class="topless"><a href="nipypeAndNeuroimaging.html"
                         title="next chapter">Nipype and Neuroimaging</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -145,15 +147,15 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="introduction-to-neuroimaging">
 <h1>Introduction to Neuroimaging<a class="headerlink" href="#introduction-to-neuroimaging" title="Permalink to this headline">¶</a></h1>
 <p>In this section, I will introduce you to the basics of analyzing neuroimaging data. I will give a brief explanation of how the neuroimaging data is acquired, how the data is prepared for analysis (also called preprocessing). Finally, I’ll show how you can analyze your data using a model based on your hypothesis.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This part is only a brief introduction to neuroimaging. Further information on this topic can be found under the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/glossary.html">Glossary</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/faq.html">FAQ</a> pages of this beginner’s guide.</p>
+<p class="admonition-title">Note</p>
+<p>This part is only a brief introduction to neuroimaging. Further information on this topic can be found under the <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/glossary.html">Glossary</a> and <a class="reference external" href="http://miykael.github.io/nipype-beginner-s-guide/faq.html">FAQ</a> pages of this beginner’s guide.</p>
 </div>
 <div class="section" id="acquisition-of-mri-data">
 <h2>Acquisition of MRI Data<a class="headerlink" href="#acquisition-of-mri-data" title="Permalink to this headline">¶</a></h2>
@@ -165,17 +167,17 @@
 <p>As the scanner can’t measure the whole volume at once it has to measure portions of the brain sequentially in time. This is done by measuring one plane of the brain (generally the horizontal one) after the other. Such a plane is also called a <strong>slice</strong>. The <strong>resolution</strong> of the measured volume data, therefore, depends on the in-plane resolution (the size of the squares in the above image), the number of slices and their thickness (how many layers), and any possible gaps between the layers.</p>
 <p>The quality of the measured data depends on the resolution and the following parameters:</p>
 <ul class="simple">
-<li><strong>repetition time (TR)</strong>: time required to scan one volume</li>
-<li><strong>acquisition time (TA)</strong>: time required to scan one slice. TA = TR - (TR/number of slices)</li>
-<li><strong>field of view (FOV)</strong>: defines the extent of a slice, e.g. 256mm x 256mm</li>
+<li><p><strong>repetition time (TR)</strong>: time required to scan one volume</p></li>
+<li><p><strong>acquisition time (TA)</strong>: time required to scan one slice. TA = TR - (TR/number of slices)</p></li>
+<li><p><strong>field of view (FOV)</strong>: defines the extent of a slice, e.g. 256mm x 256mm</p></li>
 </ul>
 </div>
 <div class="section" id="specifics-of-mri-data">
 <h2>Specifics of MRI Data<a class="headerlink" href="#specifics-of-mri-data" title="Permalink to this headline">¶</a></h2>
 <p>MRI scanners output their neuroimaging data in a raw data format with which most analysis packages cannot work. <strong>DICOM</strong> is a common, standardized, raw medical image format, but the format of your raw data may be something else; e.g., <strong>PAR/REC</strong> format from Philips scanners. Raw data is saved in <a class="reference external" href="https://en.wikipedia.org/wiki/K-space_%28magnetic_resonance_imaging%29">k-space</a> format, and it needs to be converted into a format that the analysis packages can use. The most frequent format for newly generated data is called <a class="reference external" href="http://nifti.nimh.nih.gov/">NIfTI</a>. If you are working with older datasets, you may encounter data in <strong>Analyze</strong> format. MRI data formats will have an <strong>image</strong> and a <strong>header</strong> part. For NifTI format, they are in the same file (.nii-file), whereas in the older Analyze format, they are in separate files (.img and .hdr-file).</p>
 <ul class="simple">
-<li>The <strong>image</strong> is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.</li>
-<li>The <strong>header</strong> contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the <strong>image</strong> part in a 3D coordinate system, etc.</li>
+<li><p>The <strong>image</strong> is the actual data and is represented by a 3D matrix that contains a value (e.g. gray value) for each voxel.</p></li>
+<li><p>The <strong>header</strong> contains information about the data like voxel dimension, voxel extend in each dimension, number of measured time points, a transformation matrix that places the 3D matrix from the <strong>image</strong> part in a 3D coordinate system, etc.</p></li>
 </ul>
 </div>
 <div class="section" id="modalities-of-mri-data">
@@ -197,9 +199,9 @@
 <p>Because the BOLD signal has to be measured quickly, the resolution of functional images is normally lower (2-4mm) than the resolution of structural images (0.5-1.5mm). But this depends strongly on the strength of the magnetic field in the scanner, e.g. 1.5T, 3T or 7T. In a functional image, the gray matter is seen as bright and the white matter as dark colors, which is the exact opposite to structural images.</p>
 <p>Depending on the paradigm, we talk about <strong>event-related</strong>, <strong>block</strong> or <strong>resting-state</strong> designs.</p>
 <ul class="simple">
-<li><strong>event-related design</strong>: Event-related means that stimuli are administered to the subjects in the scanner for a short period. The stimuli are only administered briefly and generally in random order. Stimuli are typically visual, but audible or or other sensible stimuli could also be used. This means that the BOLD response consists of short bursts of activity, which should manifest as peaks, and should look more or less like the line shown in the graph above.</li>
-<li><strong>block design</strong>: If multiple stimuli of a similar nature are shown in a block, or phase, of 10-30 seconds, that is a block design. Such a design has the advantages that the peak in the BOLD signal is not just attained for a short period but elevated for a longer time, creating a plateau in the graph. This makes it easier to detect an underlying activation increase.</li>
-<li><strong>resting-state design</strong>: Resting-state designs acquire data in the absence of stimulation. Subjects are asked to lay still and rest in the scanner without falling asleep. The goal of such a scan is to record brain activation in the absence of an external task. This is sometimes done to analyze the functional connectivity of the brain.</li>
+<li><p><strong>event-related design</strong>: Event-related means that stimuli are administered to the subjects in the scanner for a short period. The stimuli are only administered briefly and generally in random order. Stimuli are typically visual, but audible or or other sensible stimuli could also be used. This means that the BOLD response consists of short bursts of activity, which should manifest as peaks, and should look more or less like the line shown in the graph above.</p></li>
+<li><p><strong>block design</strong>: If multiple stimuli of a similar nature are shown in a block, or phase, of 10-30 seconds, that is a block design. Such a design has the advantages that the peak in the BOLD signal is not just attained for a short period but elevated for a longer time, creating a plateau in the graph. This makes it easier to detect an underlying activation increase.</p></li>
+<li><p><strong>resting-state design</strong>: Resting-state designs acquire data in the absence of stimulation. Subjects are asked to lay still and rest in the scanner without falling asleep. The goal of such a scan is to record brain activation in the absence of an external task. This is sometimes done to analyze the functional connectivity of the brain.</p></li>
 </ul>
 </div>
 <div class="section" id="dmri-diffusion-mri">
@@ -214,9 +216,9 @@
 <h2>Analysis Steps<a class="headerlink" href="#analysis-steps" title="Permalink to this headline">¶</a></h2>
 <p>There are many different steps involved in a neuroimaging analysis and there is not just one order in which to perform them. Depending on the researcher, the paradigm at hand, or the modality analyzed (sMRI, fMRI, dMRI), the order can differ. Some steps may occur earlier or later or may be left out entirely. Nonetheless, the general procedure for fMRI analysis can be divided into the following three steps:</p>
 <ol class="arabic simple">
-<li><strong>Preprocessing</strong>: Spatial and temporal preprocessing of the data to prepare it for the 1st and 2nd level inferential analysis</li>
-<li><strong>Model Specification and Estimation</strong>: Specifying and estimating parameters of the statistical model</li>
-<li><strong>Statistical Inference</strong>: Making inferences about the estimated parameters using appropriate statistical methods</li>
+<li><p><strong>Preprocessing</strong>: Spatial and temporal preprocessing of the data to prepare it for the 1st and 2nd level inferential analysis</p></li>
+<li><p><strong>Model Specification and Estimation</strong>: Specifying and estimating parameters of the statistical model</p></li>
+<li><p><strong>Statistical Inference</strong>: Making inferences about the estimated parameters using appropriate statistical methods</p></li>
 </ol>
 <div class="section" id="step-1-preprocessing">
 <h3>Step 1: Preprocessing<a class="headerlink" href="#step-1-preprocessing" title="Permalink to this headline">¶</a></h3>
@@ -254,8 +256,8 @@
 <p>Every person’s brain is slightly different from every other’s. Brains differ in size and shape. To compare the images of one person’s brain to another’s, the images must first be translated onto a common shape and size, which is called <strong>normalization</strong>. Normalization maps data from the individual subject-space it was measured in onto a reference-space. Once this step is completed, a group analysis or comparison among data can be performed. There are different ways to normalize data but it always includes a template and a source image.</p>
 <a class="reference internal image-reference" href="_images/normalization.png"><img alt="_images/normalization.png" class="align-center" src="_images/normalization.png" style="width: 600pt;" /></a>
 <ul class="simple">
-<li>The <strong>template</strong> image is the standard brain in reference-space onto which you want to map your data. This can be a Talairach-, MNI-, or SPM-template, or some other reference image you choose to use.</li>
-<li>The <strong>source</strong> image (normally a higher resolution structural image) is used to calculate the transformation matrix necessary to map the source image onto the template image. This transformation matrix is then used to map the rest of your images (functional and structural) into the reference-space.</li>
+<li><p>The <strong>template</strong> image is the standard brain in reference-space onto which you want to map your data. This can be a Talairach-, MNI-, or SPM-template, or some other reference image you choose to use.</p></li>
+<li><p>The <strong>source</strong> image (normally a higher resolution structural image) is used to calculate the transformation matrix necessary to map the source image onto the template image. This transformation matrix is then used to map the rest of your images (functional and structural) into the reference-space.</p></li>
 </ul>
 </div>
 <div class="section" id="smoothing">
@@ -269,7 +271,7 @@
 <div class="section" id="segmentation-smri-only">
 <h4>Segmentation (sMRI only)<a class="headerlink" href="#segmentation-smri-only" title="Permalink to this headline">¶</a></h4>
 <a class="reference internal image-reference" href="_images/segmentation.gif"><img alt="_images/segmentation.gif" class="align-right" src="_images/segmentation.gif" style="width: 200pt;" /></a>
-<p>Segmentation is the process by which a brain is divided into neurological sections according to a given template specification. This can be rather general, for example, segmenting the brain into gray matter, white matter and cerebrospinal fluid, as is done with SPM’s Segmentation, or quite detailed, segmenting into specific functional regions and their subregions, as is done with FreeSurfer’s <code class="docutils literal"><span class="pre">recon-all</span></code>, and that is illustrated in the figure.</p>
+<p>Segmentation is the process by which a brain is divided into neurological sections according to a given template specification. This can be rather general, for example, segmenting the brain into gray matter, white matter and cerebrospinal fluid, as is done with SPM’s Segmentation, or quite detailed, segmenting into specific functional regions and their subregions, as is done with FreeSurfer’s <code class="docutils literal notranslate"><span class="pre">recon-all</span></code>, and that is illustrated in the figure.</p>
 <p>Segmentation can be used for different things. You can use the segmentation to aid the normalization process or use it to aid further analysis by using a specific segmentation as a mask or as the definition of a specific region of interest (ROI).</p>
 </div>
 </div>
@@ -281,24 +283,24 @@
 <p>A GLM describes a response (y), such as the BOLD response in a voxel, in terms of all its contributing factors (xβ) in a linear combination, whilst also accounting for the contribution of error (ε). The column (y) corresponds to one voxel and one row in this column corresponds to one time-point.</p>
 <a class="reference internal image-reference" href="_images/GLM.png"><img alt="_images/GLM.png" class="align-center" src="_images/GLM.png" style="width: 300pt;" /></a>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt><strong>y = dependent variable</strong></dt>
-<dd>observed data (e.g. BOLD response in a single voxel)</dd>
+<li><dl class="simple">
+<dt><strong>y = dependent variable</strong></dt><dd><p>observed data (e.g. BOLD response in a single voxel)</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>X = Independent Variable</strong> (aka. Predictor)</dt>
-<dd>e.g. <em>experimental conditions</em> (embodies all available knowledge about experimentally controlled factors and potential confounds), <em>stimulus information</em> (onset and duration of stimuli), <em>expected shape of BOLD response</em></dd>
+<li><dl class="simple">
+<dt><strong>X = Independent Variable</strong> (aka. Predictor)</dt><dd><p>e.g. <em>experimental conditions</em> (embodies all available knowledge about experimentally controlled factors and potential confounds), <em>stimulus information</em> (onset and duration of stimuli), <em>expected shape of BOLD response</em></p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>β = Parameters</strong> (aka regression coefficient/beta weights)</dt>
-<dd>Quantifies how much each predictor (<em>X</em>) independently influences the dependent variable (<em>Y</em>)</dd>
+<li><dl class="simple">
+<dt><strong>β = Parameters</strong> (aka regression coefficient/beta weights)</dt><dd><p>Quantifies how much each predictor (<em>X</em>) independently influences the dependent variable (<em>Y</em>)</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>ε = Error</strong></dt>
-<dd>Variance in the data (<em>Y</em>) which is not explained by the linear combination of predictors (<em>Xβ</em>). The error is assumed to be normally distributed.</dd>
+<li><dl class="simple">
+<dt><strong>ε = Error</strong></dt><dd><p>Variance in the data (<em>Y</em>) which is not explained by the linear combination of predictors (<em>Xβ</em>). The error is assumed to be normally distributed.</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -308,11 +310,11 @@
 <h4>Potential problems of the GLM approach<a class="headerlink" href="#potential-problems-of-the-glm-approach" title="Permalink to this headline">¶</a></h4>
 <p><strong>BOLD responses have a delayed and dispersed form</strong></p>
 <ul class="simple">
-<li>We have to take the time delay and the HRF shape of the BOLD response into account when we create our design matrix.</li>
+<li><p>We have to take the time delay and the HRF shape of the BOLD response into account when we create our design matrix.</p></li>
 </ul>
 <p><strong>BOLD signals include substantial amounts of low-frequency noise</strong></p>
 <ul class="simple">
-<li>By high pass filtering our data and adding time regressors of 1st, 2nd,… order we can correct for low-frequency drifts in our measured data. This low frequency signals are caused by non-experimental effects, such as scanner drift etc.</li>
+<li><p>By high pass filtering our data and adding time regressors of 1st, 2nd,… order we can correct for low-frequency drifts in our measured data. This low frequency signals are caused by non-experimental effects, such as scanner drift etc.</p></li>
 </ul>
 <a class="reference internal image-reference" href="_images/time.png"><img alt="_images/time.png" class="align-center" src="_images/time.png" style="width: 350pt;" /></a>
 <p>This <strong>High pass Filter</strong> is established by setting up discrete cosine functions over the time period of your acquisition. In the example below you see a constant term of 1, followed by half of a cosine function increasing by half a period for each following curve. Such regressors correct for the influence of changes in the low-frequency spectrum.</p>
@@ -327,8 +329,8 @@
 <p>The y-axis codes for the measured scan or the passed time, depending on the specification of your design. The x-axis stands for all the regressors that we specified.</p>
 <p>The regressors <em>Sn(1) R1</em> to <em>Sn(1) R6</em> stand for the movement parameters we got from the realignment process. The regressors <em>Sn(1) linear</em>, <em>Sn(1) quadratic</em>, <em>Sn(1) cubic</em> and <em>Sn(1) quartic</em> are just examples of correction for the low frequency in your data. If you are using a high-pass filter of e.g. 128 seconds you don’t need to specifically include those regressors in your design matrix.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Adding one more regressors to your model decrease the degrees of freedom in your statistical tests by one.</p>
+<p class="admonition-title">Note</p>
+<p>Adding one more regressors to your model decrease the degrees of freedom in your statistical tests by one.</p>
 </div>
 </div>
 <div class="section" id="model-estimation">
@@ -336,24 +338,24 @@
 <p>After we specified the parameters of our model in a design matrix we are ready to estimate our model. This means that we apply our model on the time course of each and every voxel.</p>
 <p>Depending on the software you are using you might get different types of results. If you are using <strong>SPM</strong> the following images are created each time an analysis is performed (1st or 2nd level):</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt><strong>beta images</strong></dt>
-<dd>images of estimated regression coefficients (parameter estimate). beta images contain information about the size of the effect of interest. A given voxel in each beta image will have a value related to the size of effect for that explanatory variable.</dd>
+<li><dl class="simple">
+<dt><strong>beta images</strong></dt><dd><p>images of estimated regression coefficients (parameter estimate). beta images contain information about the size of the effect of interest. A given voxel in each beta image will have a value related to the size of effect for that explanatory variable.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>error image</strong> - <code class="docutils literal"><span class="pre">ResMS</span></code>-image</dt>
-<dd>residual sum of squares or variance image. It is a measure of within-subject error at the 1st level or between-subject error at the 2nd level analysis. This image is used to produce spmT images.</dd>
+<li><dl class="simple">
+<dt><strong>error image</strong> - <code class="docutils literal notranslate"><span class="pre">ResMS</span></code>-image</dt><dd><p>residual sum of squares or variance image. It is a measure of within-subject error at the 1st level or between-subject error at the 2nd level analysis. This image is used to produce spmT images.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>con images</strong> - <code class="docutils literal"><span class="pre">con</span></code>-images</dt>
-<dd>during contrast estimation beta images are linearly combined to produce relevant <code class="docutils literal"><span class="pre">con</span></code>-images</dd>
+<li><dl class="simple">
+<dt><strong>con images</strong> - <code class="docutils literal notranslate"><span class="pre">con</span></code>-images</dt><dd><p>during contrast estimation beta images are linearly combined to produce relevant <code class="docutils literal notranslate"><span class="pre">con</span></code>-images</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>T images</strong> - <code class="docutils literal"><span class="pre">spmT</span></code>-images</dt>
-<dd>during contrast estimation the beta values of a <code class="docutils literal"><span class="pre">con</span></code>-image are combined with error values of the <code class="docutils literal"><span class="pre">ResMS</span></code>-image to calculate the t-value at each voxel</dd>
+<li><dl class="simple">
+<dt><strong>T images</strong> - <code class="docutils literal notranslate"><span class="pre">spmT</span></code>-images</dt><dd><p>during contrast estimation the beta values of a <code class="docutils literal notranslate"><span class="pre">con</span></code>-image are combined with error values of the <code class="docutils literal notranslate"><span class="pre">ResMS</span></code>-image to calculate the t-value at each voxel</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -362,11 +364,11 @@
 <div class="section" id="step-3-statistical-inference">
 <h3>Step 3: Statistical Inference<a class="headerlink" href="#step-3-statistical-inference" title="Permalink to this headline">¶</a></h3>
 <p>Before we go into the specifics of a statistical analysis, let me explain you the difference between a 1st and a 2nd level analysis.</p>
-<dl class="docutils">
-<dt><strong>1st level analysis (within-subject)</strong></dt>
-<dd>A 1st level analysis is the statistical analysis done on each and every subject by itself. For this procedure the data doesn’t have to be normalized, i.e in a common reference space. A design matrix on this level controls for subject specific parameters as movement, respiration, heart beat, etc.</dd>
-<dt><strong>2nd level analysis (between-subject)</strong></dt>
-<dd>A 2nd level analysis is the statistical analysis done on the group. To be able to do this, our subject specific data has to be normalized and transformed from subject-space into reference-space. Otherwise we wouldn’t be able to compare subjects between each other. Additionally, all contrasts of the 1st level analysis have to be estimated because the model of the 2nd level analysis is conducted on them. The design matrix of the 2nd level analysis controls for subject specific parameters such as age, gender, socio-economic parameters, etc. At this point we also specify the group assignment of each subject.</dd>
+<dl class="simple">
+<dt><strong>1st level analysis (within-subject)</strong></dt><dd><p>A 1st level analysis is the statistical analysis done on each and every subject by itself. For this procedure the data doesn’t have to be normalized, i.e in a common reference space. A design matrix on this level controls for subject specific parameters as movement, respiration, heart beat, etc.</p>
+</dd>
+<dt><strong>2nd level analysis (between-subject)</strong></dt><dd><p>A 2nd level analysis is the statistical analysis done on the group. To be able to do this, our subject specific data has to be normalized and transformed from subject-space into reference-space. Otherwise we wouldn’t be able to compare subjects between each other. Additionally, all contrasts of the 1st level analysis have to be estimated because the model of the 2nd level analysis is conducted on them. The design matrix of the 2nd level analysis controls for subject specific parameters such as age, gender, socio-economic parameters, etc. At this point we also specify the group assignment of each subject.</p>
+</dd>
 </dl>
 <div class="section" id="contrast-estimation">
 <h4>Contrast Estimation<a class="headerlink" href="#contrast-estimation" title="Permalink to this headline">¶</a></h4>
@@ -379,9 +381,9 @@
 <h4>Thresholding<a class="headerlink" href="#thresholding" title="Permalink to this headline">¶</a></h4>
 <p>After the contrasts are estimated there is only one final step to be taken before you get a scientific based answer to your question. You have to threshold your results. With that I mean, you have to specify the level of significance you want to test your data on, you have to correct for multiple comparison and you have to specify the parameters of the results you are looking for. E.g.:</p>
 <ul class="simple">
-<li><strong>FWE-correction</strong>: The family-wise error correction is one way to correct for multiple comparisons</li>
-<li><strong>p-value</strong>: specify the hight of the significance threshold that you want to use (e.g. z=1.6449 equals p&lt;0.05 (one-tailed); see image)</li>
-<li><strong>voxel extend</strong>: specify the minimum size of a “significant” cluster by specifying the number of voxel it at least has to contain.</li>
+<li><p><strong>FWE-correction</strong>: The family-wise error correction is one way to correct for multiple comparisons</p></li>
+<li><p><strong>p-value</strong>: specify the hight of the significance threshold that you want to use (e.g. z=1.6449 equals p&lt;0.05 (one-tailed); see image)</p></li>
+<li><p><strong>voxel extend</strong>: specify the minimum size of a “significant” cluster by specifying the number of voxel it at least has to contain.</p></li>
 </ul>
 <a class="reference internal image-reference" href="_images/pvalues.png"><img alt="_images/pvalues.png" class="align-center" src="_images/pvalues.png" style="width: 350pt;" /></a>
 <p>If you do all this correctly, you’ll end up with something as shown in the following picture. The picture shows you the average brain activation of 20 subjects during the presentation of an acoustic stimuli. The p-value are shown from red to yellow, representing values from 0.05 to 0.00. Shown are only cluster with a voxel extend of at least 100 voxels.</p>
@@ -419,8 +421,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

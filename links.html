@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -73,7 +75,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Links to Nipype, Programming and Neuroimaging</a><ul>
 <li><a class="reference internal" href="#nipype">Nipype</a></li>
@@ -96,15 +98,15 @@
   <p class="topless"><a href="faq.html"
                         title="next chapter">Frequently Asked Questions</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -121,17 +123,17 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="links-to-nipype-programming-and-neuroimaging">
 <h1>Links to Nipype, Programming and Neuroimaging<a class="headerlink" href="#links-to-nipype-programming-and-neuroimaging" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="nipype">
 <h2>Nipype<a class="headerlink" href="#nipype" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype</a>: The official homepage contains all about Nipype that you want to know.</li>
-<li><a class="reference external" href="https://github.com/mwaskom/nipype_concepts">Michael Waskom</a> has written very nice introductions about <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb">Workflows</a>, <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb">Interfaces</a> and <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb">Iteration</a>.</li>
-<li>A short and very nice introduction to Nipype, written by by Satra Ghosh, can be found <a class="reference external" href="http://nbviewer.jupyter.org/github/nipy/nipype/blob/master/examples/nipype_tutorial.ipynb">here</a>.</li>
+<li><p><a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype</a>: The official homepage contains all about Nipype that you want to know.</p></li>
+<li><p><a class="reference external" href="https://github.com/mwaskom/nipype_concepts">Michael Waskom</a> has written very nice introductions about <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/workflows.ipynb">Workflows</a>, <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/interfaces.ipynb">Interfaces</a> and <a class="reference external" href="http://nbviewer.jupyter.org/github/mwaskom/nipype_concepts/blob/master/iteration.ipynb">Iteration</a>.</p></li>
+<li><p>A short and very nice introduction to Nipype, written by by Satra Ghosh, can be found <a class="reference external" href="http://nbviewer.jupyter.org/github/nipy/nipype/blob/master/examples/nipype_tutorial.ipynb">here</a>.</p></li>
 </ul>
 </div>
 <div class="section" id="programming-python-git-more">
@@ -140,43 +142,43 @@
 <div class="section" id="learn-python">
 <h3>Learn Python<a class="headerlink" href="#learn-python" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="http://python.swaroopch.com/">A Byte of Python</a>: A very nice introduction to Python in general.</li>
-<li><a class="reference external" href="http://nbviewer.jupyter.org/gist/rpmuller/5920182">A Crash Course in Python for Scientists</a>: a very good introduction to Python and scientific programming (e.g. Numpy, Scipy, Matplotlib)</li>
-<li><a class="reference external" href="https://www.codecademy.com/learn/python">Codecademy - Python</a>: An interactive online training and introduction to Python.</li>
-<li><a class="reference external" href="http://learnpythonthehardway.org/book/index.html">Learn Python the Hard Way</a>: A very good step by step introduction to Python.</li>
-<li><a class="reference external" href="http://www.scipy-lectures.org/">Python Scientific Lecture Notes</a>: A very good and more detailed introduction to Python and scientific programming.</li>
-<li>If you’re looking for a Python based IDE like Eclipse or MATLAB, check out <a class="reference external" href="https://www.jetbrains.com/pycharm/">Pycharm</a> or <a class="reference external" href="https://github.com/spyder-ide/spyder/">Spyder</a>.</li>
-<li><a class="reference external" href="http://swcarpentry.github.io/python-novice-inflammation/">Programming with Python</a>: This short introduction by <em>software carpentry</em> teaches you the basics of scientific programming on very practical examples.</li>
+<li><p><a class="reference external" href="http://python.swaroopch.com/">A Byte of Python</a>: A very nice introduction to Python in general.</p></li>
+<li><p><a class="reference external" href="http://nbviewer.jupyter.org/gist/rpmuller/5920182">A Crash Course in Python for Scientists</a>: a very good introduction to Python and scientific programming (e.g. Numpy, Scipy, Matplotlib)</p></li>
+<li><p><a class="reference external" href="https://www.codecademy.com/learn/python">Codecademy - Python</a>: An interactive online training and introduction to Python.</p></li>
+<li><p><a class="reference external" href="http://learnpythonthehardway.org/book/index.html">Learn Python the Hard Way</a>: A very good step by step introduction to Python.</p></li>
+<li><p><a class="reference external" href="http://www.scipy-lectures.org/">Python Scientific Lecture Notes</a>: A very good and more detailed introduction to Python and scientific programming.</p></li>
+<li><p>If you’re looking for a Python based IDE like Eclipse or MATLAB, check out <a class="reference external" href="https://www.jetbrains.com/pycharm/">Pycharm</a> or <a class="reference external" href="https://github.com/spyder-ide/spyder/">Spyder</a>.</p></li>
+<li><p><a class="reference external" href="http://swcarpentry.github.io/python-novice-inflammation/">Programming with Python</a>: This short introduction by <em>software carpentry</em> teaches you the basics of scientific programming on very practical examples.</p></li>
 </ul>
 </div>
 <div class="section" id="learn-git">
 <h3>Learn Git<a class="headerlink" href="#learn-git" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="https://try.github.io/levels/1/challenges/1">Got 15 minutes and want to learn Git?</a>: Github’s own git tutorial. It’s fun and very short.</li>
-<li><a class="reference external" href="http://gitreal.codeschool.com/">Git Real</a> on <a class="reference external" href="https://www.codeschool.com/">Code School</a>: An interactive tutorial about GIT</li>
-<li><a class="reference external" href="http://sixrevisions.com/resources/git-tutorials-beginners/">Top 10 Git Tutorials for Beginners</a></li>
+<li><p><a class="reference external" href="https://try.github.io/levels/1/challenges/1">Got 15 minutes and want to learn Git?</a>: Github’s own git tutorial. It’s fun and very short.</p></li>
+<li><p><a class="reference external" href="http://gitreal.codeschool.com/">Git Real</a> on <a class="reference external" href="https://www.codeschool.com/">Code School</a>: An interactive tutorial about GIT</p></li>
+<li><p><a class="reference external" href="http://sixrevisions.com/resources/git-tutorials-beginners/">Top 10 Git Tutorials for Beginners</a></p></li>
 </ul>
 </div>
 <div class="section" id="learn-unix-shell">
 <h3>Learn Unix Shell<a class="headerlink" href="#learn-unix-shell" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="http://swcarpentry.github.io/shell-novice/">the Unix Shell</a>: If you’re new to Linux, here’s a quick starter guide by software carpentry that teaches you the basics.</li>
+<li><p><a class="reference external" href="http://swcarpentry.github.io/shell-novice/">the Unix Shell</a>: If you’re new to Linux, here’s a quick starter guide by software carpentry that teaches you the basics.</p></li>
 </ul>
 </div>
 <div class="section" id="learn-programming">
 <h3>Learn Programming<a class="headerlink" href="#learn-programming" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>A very good article that outlines what programming languages are and where they are coming from can be found on <a class="reference external" href="http://ithare.com/a-beginners-guide-to-programming-languages/">IT Hare’s Beginners Guide to Programming Languages</a>. A big thank you to Sarah and the class of Mrs. Lowe from Colorado for recommending this site to me!</li>
-<li>If you want to learn more about other programming languages such as HTML &amp; CSS, Javascript, jQuery, PHP, Python and Ruby, check out  <a class="reference external" href="https://www.vodien.com/blog/education/beginners-resources-to-learn-programming-languages.php">Beginner’s Resources to Learn Programming Languages</a>. A big thank you to Mr. Tom Coner and his group for recommending the site to me. It’s a great starting point to dive into any programming language.</li>
-<li>A great resource to better understand many programming and coding related words can be found on <a class="reference external" href="https://www.smartadvocate.com/News/Blog/software-programming-and-coding-glossary-for-kids">Software Programming and Coding Glossary for Kids</a>. A big thanks to Katie and the Lyndhurst STEM Club for Girls for sharing this resource with me! The glossary gives a great overview of many important concepts and the homepage includes tons of other games and practice websites to play with.</li>
+<li><p>A very good article that outlines what programming languages are and where they are coming from can be found on <a class="reference external" href="http://ithare.com/a-beginners-guide-to-programming-languages/">IT Hare’s Beginners Guide to Programming Languages</a>. A big thank you to Sarah and the class of Mrs. Lowe from Colorado for recommending this site to me!</p></li>
+<li><p>If you want to learn more about other programming languages such as HTML &amp; CSS, Javascript, jQuery, PHP, Python and Ruby, check out  <a class="reference external" href="https://www.vodien.com/blog/education/beginners-resources-to-learn-programming-languages.php">Beginner’s Resources to Learn Programming Languages</a>. A big thank you to Mr. Tom Coner and his group for recommending the site to me. It’s a great starting point to dive into any programming language.</p></li>
+<li><p>A great resource to better understand many programming and coding related words can be found on <a class="reference external" href="https://www.smartadvocate.com/News/Blog/software-programming-and-coding-glossary-for-kids">Software Programming and Coding Glossary for Kids</a>. A big thanks to Katie and the Lyndhurst STEM Club for Girls for sharing this resource with me! The glossary gives a great overview of many important concepts and the homepage includes tons of other games and practice websites to play with.</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="neuroimaging">
 <h2>Neuroimaging<a class="headerlink" href="#neuroimaging" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="https://neurostars.org/">Neurostars.org</a>: If you have any questions about Neuroinformatics, this is the place to go!</li>
-<li><a class="reference external" href="http://imaging.mrc-cbu.cam.ac.uk/imaging/DesignEfficiency">Design efficiency in FMRI</a>: A nice and detailed guide on how to design a good fMRI study.</li>
+<li><p><a class="reference external" href="https://neurostars.org/">Neurostars.org</a>: If you have any questions about Neuroinformatics, this is the place to go!</p></li>
+<li><p><a class="reference external" href="http://imaging.mrc-cbu.cam.ac.uk/imaging/DesignEfficiency">Design efficiency in FMRI</a>: A nice and detailed guide on how to design a good fMRI study.</p></li>
 </ul>
 </div>
 </div>
@@ -209,8 +211,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.

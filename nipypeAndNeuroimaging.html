@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -24,6 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="All you need to know to become an expert in Nipype" href="index.html" />
@@ -73,7 +75,7 @@
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/nipype-beginners-guide-html_logo.png" alt="Logo"/>
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Nipype and Neuroimaging</a><ul>
 <li><a class="reference internal" href="#neuroimaging-workflow">Neuroimaging Workflow</a></li>
@@ -89,15 +91,15 @@
   <p class="topless"><a href="installation.html"
                         title="next chapter">Download and Install Nipype</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -114,8 +116,8 @@
 
             
   <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
+<p class="admonition-title">Important</p>
+<p>This guide hasn’t been updated since January 2017 and is based on an older version of Nipype. The code in this guide is not tested against newer Nipype versions and might not work anymore. For a newer, more up to date and better introduction to Nipype, please check out the the <a class="reference external" href="https://miykael.github.io/nipype_tutorial/">Nipype Tutorial</a>.</p>
 </div>
 <div class="section" id="nipype-and-neuroimaging">
 <h1>Nipype and Neuroimaging<a class="headerlink" href="#nipype-and-neuroimaging" title="Permalink to this headline">¶</a></h1>
@@ -130,13 +132,12 @@
 <h2>Nipype Workflow<a class="headerlink" href="#nipype-workflow" title="Permalink to this headline">¶</a></h2>
 <p>Nipype enables you to create the exact workflow that you want and gives you the opportunity to switch between the software packages (e.g. <cite>FreeSurfer</cite>, <cite>FSL</cite>, <cite>SPM</cite>, <cite>ANTs</cite>, <cite>AFNI</cite>,…) as you like. The power to analyze your data exactly as you want it lies in your hand.</p>
 <p>Let’s get back to the workflow above. In the world of Nipype, this neuroimaging workflow would look something like this:</p>
-<a class="reference internal image-reference" href="_images/neuroimaging_nipype.svg"><div align="center" class="align-center"><img alt="_images/neuroimaging_nipype.svg" src="_images/neuroimaging_nipype.svg" width="750pt" /></div>
-</a>
+<a class="reference internal image-reference" href="_images/neuroimaging_nipype.svg"><img alt="_images/neuroimaging_nipype.svg" class="align-center" src="_images/neuroimaging_nipype.svg" width="750pt" /></a>
 <p>As you can see, each step of the process is represented by a node in the workflow (e.g. <cite>Motion Correction</cite>, <cite>Coregistration</cite>, <cite>Normalization</cite>, <cite>Smoothing</cite>, <cite>Model Estimation</cite>). And each of those nodes can come from a different software package (e.g. <cite>FreeSurfer</cite>, <cite>FSL</cite>, <cite>SPM</cite>, <cite>ANTs</cite>, <cite>AFNI</cite>, <cite>Nipype</cite>). The freedom to chose the software package to use, to guide the flow and sequential order of the execution is completely up to you. Even if you want to run a node with different parameters (e.g. <cite>fwhm = 4 and 8</cite>) this can be done with no problem. And the great thing about all this. All of those steps can be done in parallel!</p>
 <p>If you understand those concepts, you will be able to use Nipype in no time. Because this is all there is to know about Nipype. But before we’ll start with the first Nipype script, lets first make sure that your system is set up correctly. All about how to check that and how to install all required softwares can be found in the next chapter of this Beginner’s Guide.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This guide is meant as a general introduction. The implementation of Nipype is nearly unlimited and there is a lot of advanced knowledge that won’t be covered by this guide. But you can look it up at various places on the <a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype homepage</a>. A lot of very good tutorials and examples about the usage of workflows for specific situations can be found here: <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/pipeline_tutorial.html">Tutorials and Examples</a>.</p>
+<p class="admonition-title">Note</p>
+<p>This guide is meant as a general introduction. The implementation of Nipype is nearly unlimited and there is a lot of advanced knowledge that won’t be covered by this guide. But you can look it up at various places on the <a class="reference external" href="http://nipype.readthedocs.io/en/latest/">Nipype homepage</a>. A lot of very good tutorials and examples about the usage of workflows for specific situations can be found here: <a class="reference external" href="http://nipype.readthedocs.io/en/latest/users/pipeline_tutorial.html">Tutorials and Examples</a>.</p>
 </div>
 </div>
 </div>
@@ -169,8 +170,8 @@
     <div class="footer">
     <p>
         &copy; Copyright 2016, Michael Notter.
-      Last updated on July 16, 2018.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Last updated on June 10, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
     </p>
     <p>
     This page uses <a href="http://analytics.google.com/">Google Analytics</a> to collect statistics. You can disable it by blocking the JavaScript coming from www.google-analytics.com.
