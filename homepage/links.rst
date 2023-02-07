@@ -31,6 +31,7 @@ Learn Python
 - `Python Scientific Lecture Notes <http://www.scipy-lectures.org/>`_: A very good and more detailed introduction to Python and scientific programming.
 - If you're looking for a Python based IDE like Eclipse or MATLAB, check out `Pycharm <https://www.jetbrains.com/pycharm/>`_ or `Spyder <https://github.com/spyder-ide/spyder/>`_.
 - `Programming with Python <http://swcarpentry.github.io/python-novice-inflammation/>`_: This short introduction by *software carpentry* teaches you the basics of scientific programming on very practical examples.
+- `Learn Python Programming in detail <https://www.scaler.com/topics/python/>`_: Basic to advanced Python tutorial for programmers. Learn Python programming with step-by-step guide along with applications
 
 
 Learn Git
